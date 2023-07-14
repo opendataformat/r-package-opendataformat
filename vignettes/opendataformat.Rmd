@@ -60,7 +60,6 @@ View the R Dataset
 df
 ```
 
-
 ## Explore Dataset Information: `docu_opendf()`
 
 Explore dataset information through two methods. Firstly, you can browse metadata at the record level, providing an overview of the dataset. Alternatively, you have the option to examine specific variable details, allowing you to gain insights into selected data attributes.
@@ -425,8 +424,8 @@ names(df_rec)
 
 ```{r write_opendf, comment = "", eval = FALSE}
 write_opendf(
-  df_rec, 
-  "../data_rec"
+  input = df_rec, 
+  output = "../data_rec"
 )
 ```
 
@@ -505,8 +504,8 @@ To export a specific variable of interest, you can utilize the write_opendf() fu
 
 ```{r write_opendf variable selection, comment = "", eval = FALSE}
 write_opendf(
-  df_rec$bap87_rec, 
-  "../data_bap87_rec"
+  input = df_rec$bap87_rec, 
+  output = "../data_bap87_rec"
 )
 ```
 
@@ -592,8 +591,8 @@ If you wish to export only the metadata for documentation or archiving purposes,
 ```{r write_opendf variable, comment = "", eval = FALSE}
 write_opendf(
   df_rec$bap87_rec, 
-  "../data_bap87_rec_metadata",
-  export_data = "no"
+  input = "../data_bap87_rec_metadata",
+  output = export_data = "no"
 )
 ```
 
@@ -647,8 +646,8 @@ By default the `export_opendf()` function writes all available languages. When w
 
 ```{r write_opendf variable default, comment = "", eval = FALSE}
 write_opendf(
-  df$bap87, 
-  "../data_bap87_default",
+  input = df$bap87, 
+  output = "../data_bap87_default",
   languages = "default"
 )
 ```
@@ -700,8 +699,8 @@ Or you choose the language by language code:
 
 ```{r write_opendf variable de, comment = "", eval = FALSE}
 write_opendf(
-  df$bap87, 
-  "../data_bap87_de",
+  input = df$bap87, 
+  output = "../data_bap87_de",
   languages = "de"
 )
 ```
