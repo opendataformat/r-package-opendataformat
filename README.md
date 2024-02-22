@@ -19,7 +19,7 @@ Learn more about the Open Data Format in R in `vignette("opendataformat")`.
 ``` r
 # At this point you can install the development version from Gitlab:
 # install.packages("devtools")
-devtools::install_gitlab("opendata/r-package")
+devtools::install_git("https://git.soep.de/opendata/r-package.git")
 
 # If the package is published at CRAN, you can use the common way of installation
 install.packages("opendataformat")
