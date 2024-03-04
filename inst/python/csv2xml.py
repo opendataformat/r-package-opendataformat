@@ -143,9 +143,9 @@ def csv2xml(input_dir, output_dir):
                   # value label
                   if 'label' in list_keys:
                     labl = ET.SubElement(catgry, 'labl')
-                    labl.text = row['labels']
+                    labl.text = row['label']
                   if any(item.startswith('label_') for item in list_keys):  
-                    for lang in get_lang(input_dir,"categories.csv","labels"):
+                    for lang in get_lang(input_dir,"categories.csv","label"):
                       labl = ET.SubElement(catgry, 'labl')
                       labl.attrib['{http://www.w3.org/XML/1998/namespace}lang'] = lang
                       labl.text = row['label_'+lang]
