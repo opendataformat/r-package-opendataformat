@@ -25,6 +25,12 @@ load_csv <- function(input, filename) {
       paste0(input, "/", filename),
       fileEncoding = "UTF-8"
     )
+    #replace NAs in description, label, url and type with ""
+    for (col in 1:ncol(data)){
+      if (str_detect(names(data)[col], "label") | str_detect(names(data)[col], "description") | str_detect(names(data)[col], "url") | str_detect(names(data)[col], "type")){
+        if(anyNA(data[,col])) data[which(is.na(data[,col])),col]<-""
+      }
+    }
   return(data)
   }
   if (file.exists(paste0(input, "/", filename)) == FALSE) {
@@ -117,136 +123,149 @@ dataset_attributes <- function(dataframe, input) {
   if ('url' %in% names(dataset) == TRUE) {
     attributes(dataframe)["url"] <- enc2utf8(dataset[["url"]])
   }
-
   return(dataframe)
 }
 #' @noRd
 variables_attributes <- function(dataframe, input) {
   variables <- load_csv(input, "variables.csv")
+  #If variable from variables.csv is not in dataset, we display a warning
+  metadata_without_variable_exists=F
   for (var in variables$variable) {
-    # name
-    attributes(dataframe[[var]])$name <-
-      enc2utf8(
-        variables["variable"][variables["variable"] == var, ]
-        )
-    # label
-    if ('label' %in% names(variables) == TRUE) {
-      attributes(dataframe[[var]])["label"] <-
+    if(var %in% names(dataframe)){
+      attributes(dataframe[[var]])$name <-
         enc2utf8(
-          variables["label"][variables["variable"] == var, ]
+          variables["variable"][variables["variable"] == var, ]
         )
-    }
-    if ('label' %in% names(variables) == FALSE &
-        'TRUE' %in% startsWith(names(variables), "label_") == TRUE) {
-      attributes(dataframe[[var]])["label"] <-
-        enc2utf8(
-          variables[
-            paste0(
-              "label_",
-              get_lang_csv(variables, "label_")[1]
-              )
-            ][variables["variable"] == var, ]
+      # label
+      if ('label' %in% names(variables) == TRUE) {
+        attributes(dataframe[[var]])["label"] <-
+          enc2utf8(
+            variables["label"][variables["variable"] == var, ]
           )
-    }
-    if ('TRUE' %in% startsWith(names(variables), "label_") == TRUE) {
-      for (i in get_lang_csv(variables, "label_")) {
-        attributes(dataframe[[var]])[paste0("label_", i)] <-
+      }
+      if ('label' %in% names(variables) == FALSE &
+          'TRUE' %in% startsWith(names(variables), "label_") == TRUE) {
+        attributes(dataframe[[var]])["label"] <-
           enc2utf8(
             variables[
               paste0(
                 "label_",
-                i
-                )
-            ][variables["variable"] == var, ])
+                get_lang_csv(variables, "label_")[1]
+              )
+            ][variables["variable"] == var, ]
+          )
       }
-    }
-    # description
-    if ('description' %in% names(variables) == TRUE) {
-      attributes(dataframe[[var]])["description"] <-
-        enc2utf8(
-          variables["description"][variables["variable"] == var, ]
-        )
-    }
-    if ("TRUE" %in% startsWith(names(variables), "description_") == TRUE) {
-      for (i in get_lang_csv(variables, "description_")) {
+      if ('TRUE' %in% startsWith(names(variables), "label_") == TRUE) {
+        for (i in get_lang_csv(variables, "label_")) {
+          attributes(dataframe[[var]])[paste0("label_", i)] <-
+            enc2utf8(
+              variables[
+                paste0(
+                  "label_",
+                  i
+                )
+              ][variables["variable"] == var, ])
+        }
+      }
+      # description
+      if ('description' %in% names(variables) == TRUE) {
         attributes(dataframe[[var]])["description"] <-
           enc2utf8(
-            variables[
-              paste0(
-                "description_",
-                get_lang_csv(variables, "description_")[1]
+            variables["description"][variables["variable"] == var, ]
+          )
+      }
+      if ("TRUE" %in% startsWith(names(variables), "description_") == TRUE) {
+        for (i in get_lang_csv(variables, "description_")) {
+          attributes(dataframe[[var]])["description"] <-
+            enc2utf8(
+              variables[
+                paste0(
+                  "description_",
+                  get_lang_csv(variables, "description_")[1]
                 )
               ][variables["variable"] == var, ]
             )
+        }
       }
-    }
-    if ("TRUE" %in% startsWith(names(variables), "description_") == TRUE) {
-      for (i in get_lang_csv(variables, "description_")) {
-        attributes(dataframe[[var]])[paste0("description_", i)] <-
-          enc2utf8(
-            variables[
-              paste0(
-                "description_",
-                i
+      if ("TRUE" %in% startsWith(names(variables), "description_") == TRUE) {
+        for (i in get_lang_csv(variables, "description_")) {
+          attributes(dataframe[[var]])[paste0("description_", i)] <-
+            enc2utf8(
+              variables[
+                paste0(
+                  "description_",
+                  i
                 )
               ][variables["variable"] == var, ]
-          )
+            )
+        }
       }
-    }
-    # type
-    if ('type' %in% names(variables) == TRUE) {
-      attributes(dataframe[[var]])$type <-
-        enc2utf8(variables["type"][variables["variable"] == var, ])
-    }
-    # url
-    if ('url' %in% names(variables) == TRUE) {
-      attributes(dataframe[[var]])$url <-
-      enc2utf8(variables["url"][variables["variable"] == var, ])
+      # type
+      if ('type' %in% names(variables) == TRUE) {
+        attributes(dataframe[[var]])$type <-
+          enc2utf8(variables["type"][variables["variable"] == var, ])
+      }
+      # url
+      if ('url' %in% names(variables) == TRUE) {
+        attributes(dataframe[[var]])$url <-
+          enc2utf8(variables["url"][variables["variable"] == var, ])
+      }
+    } else {
+      metadata_without_variable_exists=T
+      warning(paste0("Metadata for ",var, " not assigned: variable not in the dataset."))
     }
   }
+  if (metadata_without_variable_exists==T) message("Some Variable Metadata could not be assigned: variable(s) not in the dataset. For further details, see warnings()")
   return(dataframe)
 }
 #' @noRd
 categories_attributes <- function(dataframe, input) {
-  variables <- load_csv(input, "variables.csv")
+  #variables <- load_csv(input, "variables.csv")
   categories <- load_csv(input, "categories.csv")
-  for (var in variables$variable) {
-    # value
-    attributes(dataframe[[var]])$labels <-
-      categories["value"][categories["variable"] == var, ]
-    # label
-    if ('label' %in% names(variables) == TRUE) {
-      names(attributes(dataframe[[var]])$labels) <-
-        enc2utf8(
-          categories["label"][categories["variable"] == var, ]
-        )
-    }
-    if ('label' %in% names(variables) == FALSE &
-        'TRUE' %in% startsWith(names(variables), "label_") == TRUE) {
-      names(attributes(dataframe[[var]])$labels) <-
-        enc2utf8(
-          categories[
-            paste0(
-              "label_",
-              get_lang_csv(categories, "label_")[1]
-            )
-          ][categories["variable"] == var, ]
-        )
-    }
-    if ('TRUE' %in% startsWith(names(variables), "label_") == TRUE) {
-      for (i in get_lang_csv(categories, "label_")) {
-        attributes(dataframe[[var]])[[paste0("labels_", i)]] <-
-          categories["value"][categories["variable"] == var, ]
-        names(attributes(dataframe[[var]])[[paste0("labels_", i)]]) <-
+  valuelabels_without_variable_exists=F
+  for (var in unique(categories$variable)) {
+    if(var %in% names(dataframe)){
+      # value
+      attributes(dataframe[[var]])$labels <-
+        categories["value"][categories["variable"] == var, ]
+      # label
+      if ('label' %in% names(categories) == TRUE) {
+        names(attributes(dataframe[[var]])$labels) <-
+          enc2utf8(
+            categories["label"][categories["variable"] == var, ]
+          )
+      }
+      if ('label' %in% names(categories) == FALSE &
+          'TRUE' %in% startsWith(names(categories), "label_") == TRUE) {
+        names(attributes(dataframe[[var]])$labels) <-
           enc2utf8(
             categories[
               paste0(
                 "label_",
-                i
+                get_lang_csv(categories, "label_")[1]
               )
-            ][categories["variable"] == var, ])
+            ][categories["variable"] == var, ]
+          )
       }
+      if ('TRUE' %in% startsWith(names(categories), "label_") == TRUE) {
+        for (i in get_lang_csv(categories, "label_")) {
+          attributes(dataframe[[var]])[[paste0("labels_", i)]] <-
+            categories["value"][categories["variable"] == var, ]
+          names(attributes(dataframe[[var]])[[paste0("labels_", i)]]) <-
+            enc2utf8(
+              categories[
+                paste0(
+                  "label_",
+                  i
+                )
+              ][categories["variable"] == var, ])
+        }
+      }
+    } else {
+      valuelabels_without_variable_exists=T
+      warning(paste0("Value Labels for ", var, " not assigned: variable not in the dataset."))
     }
   }
+  if (valuelabels_without_variable_exists==T) message("Some Value Labels could not be assigned: variable(s) not in the dataset. For further details, see warnings()")
   return(dataframe)
 }
