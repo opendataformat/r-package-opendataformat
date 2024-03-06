@@ -57,23 +57,25 @@ dataset_attributes <- function(dataframe, input) {
   attributes(dataframe)[["name"]] <- enc2utf8(dataset[["dataset"]])
   # label
   if ('label' %in% names(dataset) == TRUE) {
-    attributes(dataframe)[["languages"]]<-enc2utf8("default")
     attributes(dataframe)[["label"]] <-
       enc2utf8(
         dataset[["label"]]
       )
   }
+  if ('label' %in% names(dataset) == FALSE &
+      "TRUE" %in% startsWith(names(dataset), "label_") == TRUE) {
+    attributes(dataframe)[["label"]] <-
+      enc2utf8(
+        dataset[[
+          paste0(
+            "label_",
+            get_lang_csv(dataset, "label_")[1]
+          )
+        ]]
+      )
+  }
   if ("TRUE" %in% startsWith(names(dataset), "label_") == TRUE) {
     for (i in get_lang_csv(dataset, "label_")) {
-      #add each language to characteristic languages
-      if ("languages" %in% names(attributes(dataframe))){
-        attributes(dataframe)[["languages"]]<-enc2utf8(
-          paste0(attributes(dataframe)[["languages"]], " ", i)
-        )
-      } else {
-        attributes(dataframe)[["languages"]]<-enc2utf8(i)
-      }
-      
       attributes(dataframe)[paste0("label_", i)] <-
         enc2utf8(
           dataset[[
@@ -92,6 +94,18 @@ dataset_attributes <- function(dataframe, input) {
         dataset[["description"]]
       )
   }
+  if ('description' %in% names(dataset) == FALSE &
+      "TRUE" %in% startsWith(names(dataset), "description_") == TRUE) {
+    attributes(dataframe)["description"] <-
+      enc2utf8(
+        dataset[[
+          paste0(
+            "description_",
+            get_lang_csv(dataset, "description_")[1]
+            )
+          ]]
+        )
+  }
   if ("TRUE" %in% startsWith(names(dataset), "description_") == TRUE) {
     for (i in get_lang_csv(dataset, "description_")) {
       attributes(dataframe)[paste0("description_", i)] <-
@@ -109,7 +123,6 @@ dataset_attributes <- function(dataframe, input) {
   if ('url' %in% names(dataset) == TRUE) {
     attributes(dataframe)["url"] <- enc2utf8(dataset[["url"]])
   }
-  attributes(dataframe)["lang"]<-strsplit(unlist(attributes(dataframe)["languages"]), " ")[1]
   return(dataframe)
 }
 #' @noRd
@@ -130,6 +143,18 @@ variables_attributes <- function(dataframe, input) {
             variables["label"][variables["variable"] == var, ]
           )
       }
+      if ('label' %in% names(variables) == FALSE &
+          'TRUE' %in% startsWith(names(variables), "label_") == TRUE) {
+        attributes(dataframe[[var]])["label"] <-
+          enc2utf8(
+            variables[
+              paste0(
+                "label_",
+                get_lang_csv(variables, "label_")[1]
+              )
+            ][variables["variable"] == var, ]
+          )
+      }
       if ('TRUE' %in% startsWith(names(variables), "label_") == TRUE) {
         for (i in get_lang_csv(variables, "label_")) {
           attributes(dataframe[[var]])[paste0("label_", i)] <-
@@ -148,6 +173,19 @@ variables_attributes <- function(dataframe, input) {
           enc2utf8(
             variables["description"][variables["variable"] == var, ]
           )
+      }
+      if ("TRUE" %in% startsWith(names(variables), "description_") == TRUE) {
+        for (i in get_lang_csv(variables, "description_")) {
+          attributes(dataframe[[var]])["description"] <-
+            enc2utf8(
+              variables[
+                paste0(
+                  "description_",
+                  get_lang_csv(variables, "description_")[1]
+                )
+              ][variables["variable"] == var, ]
+            )
+        }
       }
       if ("TRUE" %in% startsWith(names(variables), "description_") == TRUE) {
         for (i in get_lang_csv(variables, "description_")) {
@@ -195,6 +233,18 @@ categories_attributes <- function(dataframe, input) {
         names(attributes(dataframe[[var]])$labels) <-
           enc2utf8(
             categories["label"][categories["variable"] == var, ]
+          )
+      }
+      if ('label' %in% names(categories) == FALSE &
+          'TRUE' %in% startsWith(names(categories), "label_") == TRUE) {
+        names(attributes(dataframe[[var]])$labels) <-
+          enc2utf8(
+            categories[
+              paste0(
+                "label_",
+                get_lang_csv(categories, "label_")[1]
+              )
+            ][categories["variable"] == var, ]
           )
       }
       if ('TRUE' %in% startsWith(names(categories), "label_") == TRUE) {
