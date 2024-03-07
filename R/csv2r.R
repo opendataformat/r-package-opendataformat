@@ -193,11 +193,10 @@ categories_attributes <- function(dataframe, input) {
   valuelabels_without_variable_exists=F
   for (var in unique(categories$variable)) {
     if(var %in% names(dataframe)){
-      # value
-      attributes(dataframe[[var]])$labels <-
-        categories["value"][categories["variable"] == var, ]
       # label
       if ('label' %in% names(categories) == TRUE) {
+        attributes(dataframe[[var]])$labels <-
+          categories["value"][categories["variable"] == var, ]
         names(attributes(dataframe[[var]])$labels) <-
           enc2utf8(
             categories["label"][categories["variable"] == var, ]
