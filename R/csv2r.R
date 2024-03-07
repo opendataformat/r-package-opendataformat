@@ -109,7 +109,13 @@ dataset_attributes <- function(dataframe, input) {
   if ('url' %in% names(dataset) == TRUE) {
     attributes(dataframe)["url"] <- enc2utf8(dataset[["url"]])
   }
+  #set first language as active language
   attributes(dataframe)["lang"]<-unlist(strsplit(unlist(attributes(dataframe)["languages"]), " "))[1]
+  #assign language attributes also to all variables
+  for(var in 1:ncol(dataframe)){
+    attr(dataframe[[var]], "languages")<-unlist(attributes(dataframe)["languages"])
+    attr(dataframe[[var]], "lang")<-unlist(attributes(dataframe)["lang"])
+  }
   return(dataframe)
 }
 #' @noRd
