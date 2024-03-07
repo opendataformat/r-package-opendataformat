@@ -109,7 +109,7 @@ dataset_attributes <- function(dataframe, input) {
   if ('url' %in% names(dataset) == TRUE) {
     attributes(dataframe)["url"] <- enc2utf8(dataset[["url"]])
   }
-  attributes(dataframe)["lang"]<-unlist(strsplit(unlist(attributes(testdata)["languages"]), " "))[1]
+  attributes(dataframe)["lang"]<-unlist(strsplit(unlist(attributes(dataframe)["languages"]), " "))[1]
   return(dataframe)
 }
 #' @noRd
