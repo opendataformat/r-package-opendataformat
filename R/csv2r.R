@@ -27,7 +27,7 @@ load_csv <- function(input, filename) {
     )
     #replace NAs in description, label, url and type with ""
     for (col in 1:ncol(data)){
-      if (str_detect(names(data)[col], "label") | str_detect(names(data)[col], "description") | str_detect(names(data)[col], "url") | str_detect(names(data)[col], "type")){
+      if (grepl("label", names(data)[col]) | grepl("description",names(data)[col]) | grepl("url",names(data)[col]) | grepl("type",names(data)[col])){
         if(anyNA(data[,col])) data[which(is.na(data[,col])),col]<-""
       }
     }
