@@ -61,11 +61,20 @@
 #' @export
 docu_opendf <- function(
   input,
-  languages = "default",
+  languages = "active",
   variables = "no",
   style = "html") {
   unlink(paste0(tempdir(), "/*"))
   if (style == "html" | style == "all") {
+    if(languages=="active"){
+      languages=attr(input, "lang", exact=T)
+    }
+    #if no language default exists, the active language is used
+    if(languages=="default"){
+      if(!("default" %in% unlist(strsplit(attr(input, "languages", exact=T), " ")))){
+        languages=attr(input, "lang", exact=T)
+      }
+    }
     suppressMessages(make_docu(input, languages, variables, style))
     # R html viewer
     viewer <- getOption("viewer")
