@@ -32,11 +32,13 @@ install.packages("opendataformat")
 library("opendataformat")
 ```
 
-The opendataformat package consists of three main functions:
+The opendataformat package consists of four main functions:
 
 - `read_opendf()` to read an Open Data Format file in R. This function takes an input parameter, which is the path to the Open Data Format ZIP file, and points to an R object for further processing.
 
 - `docu_opendf()` to explore the dataset information. You can set the whole dataset `df` or an selected variable `df$var` as input and you will get an HTML page, displayed either in the RStudio viewer or the Web Browser, with metadata on the respective data level. 
+
+- `setLanguage_opendf()` changes the "active" language of a dataset. The metadata for this language is by default displayed with `docu_opendf()`.
 
 - `write_opendf()` to write the R Dataframe to an Open Data Format ZIP file. By specifying the dataframe input and providing the output directory path the function will generate a ZIP file containing the dataset as "data.csv" and "metadata.xml".
 
