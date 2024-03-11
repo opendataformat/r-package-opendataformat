@@ -7,4 +7,3 @@ export(read_opendf)
 export(write_opendf)
 import(reticulate)
 import(utils)
-
