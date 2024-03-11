@@ -147,7 +147,7 @@ docu2_opendf<-function(input, languages="active"){
       printing_output<-c(
         paste0(printing_output),
         paste0("Value Labels ", gsub("_","",l), ":\n"),
-        paste0(valuelabels[[which(names(valuelabels)==l)]], "\n")
+        paste0(valuelabels[[which(names(valuelabels)==l)]])
       )
     }
     #Type
