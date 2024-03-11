@@ -2,6 +2,8 @@
 
 export(convert_opendf)
 export(docu_opendf)
+export(docu2_opendf)
+export(setLanguage_opendf)
 export(r2csv)
 export(read_opendf)
 export(write_opendf)
