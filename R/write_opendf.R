@@ -75,6 +75,17 @@ write_opendf <- function(input,
                         languages = "all",
                         variables = "yes",
                         export_data = "yes") {
+  #if no default labels and descriptions (labels and descriptions without language tag) are available, 
+  # return an warning and run write_opendf for the active language
+  if (languages=="default"){
+    if (!("default" %in% strsplit(unlist(attributes(input)["languages"])," "))){
+      message(paste0("Metadata saved in language: ",unlist(attributes(input)["lang"])))
+      languages=unlist(attributes(input)["lang"])
+    }else{
+      message("Metadata saved in language default without language tag")
+    }
+  }
+  
   unlink(paste0(tempdir(), "/*"))
   opendataformat::convert_opendf(
     format = "r2xml",
