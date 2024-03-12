@@ -16,8 +16,11 @@
 #' (\code{languages = "all"}).
 #' * You can also choose to export only the default language
 #' (\code{languages = "default"}),
+#' * Or only the current language
+#' (\code{languages = "current"}),
 #' * or you can select the language by language code, e.g.
 #' \code{languages = "en"}.
+#' 
 #'
 #' @param variables
 #' If you are exporting the entire dataset, you can choose whether or not to
@@ -85,7 +88,10 @@ write_opendf <- function(input,
       message("Metadata saved in language default without language tag")
     }
   }
-  
+  #set language to current language, if current language is indicated
+  if (languages=="current"){
+    languages=unlist(attributes(input)["lang"])
+  }
   unlink(paste0(tempdir(), "/*"))
   opendataformat::convert_opendf(
     format = "r2xml",
