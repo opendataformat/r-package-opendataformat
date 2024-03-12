@@ -11,8 +11,8 @@
 #' @param languages
 #' Select the language in which the descriptions and labels of the data will be displayed
 #'
-#' * By default the language that is set to default is displayed
-#' (\code{languages = "default"}).
+#' * By default the language that is set to currentlanguage is displayed
+#' (\code{languages = "currentlanguage"}).
 #' * You can choose to view all available language variants by selecting
 #' (\code{languages = "all"}),
 #' * or you can select the language by language code, e.g.
@@ -61,20 +61,15 @@
 #' @export
 docu_opendf <- function(
   input,
-  languages = "active",
+  languages = "current",
   variables = "no",
   style = "html") {
+  #set language to current language, if current language is indicated
+  if (languages=="current"){
+    languages=unlist(attributes(input)["lang"])
+  }
   unlink(paste0(tempdir(), "/*"))
   if (style == "html" | style == "all") {
-    if(languages=="active"){
-      languages=attr(input, "lang", exact=T)
-    }
-    #if no language default exists, the active language is used
-    if(languages=="default"){
-      if(!("default" %in% unlist(strsplit(attr(input, "languages", exact=T), " ")))){
-        languages=attr(input, "lang", exact=T)
-      }
-    }
     suppressMessages(make_docu(input, languages, variables, style))
     # R html viewer
     viewer <- getOption("viewer")
