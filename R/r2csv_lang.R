@@ -1,15 +1,16 @@
-#' @title RData to CSV for all languages
+#' @title RData to CSV for selected language
 #'
 #' @description Functions that are used to convert an R data frame
-#' to the internal Open Data Format (CSV files) if "all" languages are selected.
+#' to the internal Open Data Format (CSV files) if the language is selected
+#' by language code.
 #'
 #' @import utils
 #'
-#' @param input R data frame.
+#' @param input R data frame object.
 #'
 #' @param output Path to directory for saving the CSV files.
 #'
-#' @param languages The language option is set to "all".
+#' @param languages The language is set to the selected language code, e.g. "de" or "en".
 #'
 #' @param variables Choose "yes" if all data set variables should be
 #' converted or "no" if not.
@@ -17,13 +18,13 @@
 #' @param export_data Choose "yes" if the data set CSV should be copied
 #' to the output directory or "no" if not.
 #'
-#' @return CSV files holding the data and the metadata for all languages.
+#' @return CSV files holding the data and the metadata for the selected language.
 #'
 # --------------------
 # dataset.csv with DATA FRAME INPUT
 # --------------------
 #' @noRd
-get_dataset_all <- function(data) {
+get_dataset_lang <- function(data, languages) {
         header <- NULL
         metadata <- NULL
         # - data set name
@@ -36,26 +37,14 @@ get_dataset_all <- function(data) {
             metadata <- "dataset name"
         }
         # - data set label
-        label_list <- c()
-        for (attr in names(attributes(data))) {
-            if (startsWith(attr, "label") == TRUE) {
-                label_list <- append(label_list, attr)
-            }
-        }
-        header <- append(header, label_list)
-        for (lab in label_list) {
-            metadata <- append(metadata, attributes(data)[lab])
+        if (paste0("label_", languages) %in% names(attributes(data))) {
+          header <- append(header, paste0("label_", languages))
+          metadata <- append(metadata, attributes(data)[[paste0("label_", languages)]])
         }
         # - data set description
-        descr <- c()
-        for (attr in names(attributes(data))) {
-            if (startsWith(attr, "description") == TRUE) {
-                descr <- append(descr, attr)
-            }
-        }
-        header <- append(header, descr)
-        for (des in descr) {
-            metadata <- append(metadata, attributes(data)[des])
+        if (paste0("description_", languages) %in% names(attributes(data))) {
+          header <- append(header, paste0("description_", languages))
+          metadata <- append(metadata, attributes(data)[[paste0("description_", languages)]])
         }
         # - url
         if ("url" %in% names(attributes(data))) {
@@ -67,13 +56,13 @@ get_dataset_all <- function(data) {
         dataset_df <- rbind(dataset_df, metadata)
         names(dataset_df) <- header
         return(dataset_df)
-    }
+}
 # --------------------
 # variables.csv with DATA FRAME INPUT
 # --------------------
 #' variables header
 #' @noRd
-var_header_data <- function(data) {
+var_header_data_lang <- function(data, languages) {
     var_header <- c()
     # - get variable attributes from all variables in data set
     for (var in attributes(data)$names) {
@@ -88,14 +77,26 @@ var_header_data <- function(data) {
     } else {
         var_header <- append("variable", var_header)
     }
-    # - drop labels attributes (categories.csv)
+    # - drop labels attributes (categories.csv) and
+    # - not selected label and description
     var_header_reduced <- c()
     for (item in var_header) {
-        if (startsWith(item, "labels") == FALSE) {
+        if (startsWith(item, "labels") == FALSE &&
+            item != "label" &&
+            item != "description" &&
+            startsWith(item, "label_") == FALSE &&
+            startsWith(item, "description_") == FALSE
+            ) {
             var_header_reduced <- append(var_header_reduced, item)
         }
+        if (item == paste0("label_", languages)) {
+          var_header_reduced <- append(var_header_reduced, item)
+        }
+        if (item == paste0("description_", languages)) {
+          var_header_reduced <- append(var_header_reduced, item)
+        }
     }
-    #remove language attributes
+    #drop attributes languages and lang
     if ("languages" %in% var_header_reduced  | "lang" %in% var_header_reduced){
       var_header_reduced<-var_header_reduced[-which(var_header_reduced %in% c("languages", "lang"))]
     }
@@ -103,28 +104,28 @@ var_header_data <- function(data) {
 }
 #' variables matrix
 #' @noRd
-var_matrix <- function(data) {
+var_matrix_lang <- function(data, languages) {
     # - make matrix
     var_mat <- matrix(
         nrow = length(attributes(data)$names), # num variables
-        ncol = length(var_header_data(data)), # num header items
+        ncol = length(var_header_data_lang(data, languages)), # num header items
         dimnames = list(
             attributes(data)$names, # variable names from data
-            var_header_data(data) # header items
+            var_header_data_lang(data, languages) # header items
             )
         )
     return(var_mat)
 }
 #'  making column "variable" from "name" attribute
 #' @noRd
-var_variable_column <- function(data) {
+var_variable_column_lang <- function(data) {
     column <- NULL
     var_id <- 1
     # - iterate through all variables
     for (var in attributes(data)$names) {
-        # - if variable has "name" attribute
+        # -- if variable has "name" attribute
         if ("name" %in% names(attributes(data[[var]]))) {
-            # - if "name" attribute is empty
+            # --- if "name" attribute is empty
             if (attributes(data[[var]])$name == "") {
                 column <- append(
                     column, as.character(paste0("var_id_",var_id)))
@@ -136,23 +137,24 @@ var_variable_column <- function(data) {
                     column, attributes(data[[var]])$name)
             }
         } else { # if variable has no "name" attribute
-            column <- append(column, var)
-        } # end if variable has no "name" attribute
+            column <- append(
+                column, var)
+        } #  end if variable has no "name" attribute
             var_id <- var_id + 1
-        } # end iteration through variables
+        } #  end iteration through variables
     return(column)
 }
-#' making variables dataframe
+#' making variables data frame
 #' @noRd
-var_df <- function(data) {
+var_df_lang <- function(data, languages) {
     # - make data frame from matrix
-    var_df <- data.frame(var_matrix(data), row.names = NULL)
+    var_df <- data.frame(var_matrix_lang(data, languages), row.names = NULL)
     # - if column "variable" exists
-    if ("variable" %in% var_header_data(data) == TRUE) {
-        var_df[["variable"]] <- var_variable_column(data)
+    if ("variable" %in% var_header_data_lang(data, languages) == TRUE) {
+        var_df[["variable"]] <- var_variable_column_lang(data)
     }
     # - iterate through header to fill each column with metadata
-    for (item in var_header_data(data)) {
+    for (item in var_header_data_lang(data, languages)) {
         if (item != "variable") {
             column <- NULL
             for (var in attributes(data)$names) {
@@ -181,7 +183,7 @@ var_df <- function(data) {
 # --------------------
 #' variables header
 #' @noRd
-var_header_var <- function(variable) {
+var_header_var_lang <- function(variable, languages) {
     var_header <- c()
     # - get variable attributes from selected variable
     var_header <- append(var_header, names(attributes(variable)))
@@ -192,32 +194,43 @@ var_header_var <- function(variable) {
         var_header <- append("variable", var_header)
         message("Attention! Variable name is missing.")
     }
-    # - drop labels attributes (categories.csv)
+    # - drop labels attributes (categories.csv) and
+    # - not selected language attributes
     var_header_reduced <- c()
     for (item in var_header) {
-        if (startsWith(item, "labels") == FALSE) {
-            var_header_reduced <- append(var_header_reduced, item)
+      if (startsWith(item, "labels") == FALSE &&
+        item != "label" &&
+        item != "description" &&
+        startsWith(item, "label_") == FALSE &&
+        startsWith(item, "description_") == FALSE) {
+          var_header_reduced <- append(var_header_reduced, item)
+          }
+      if (item == paste0("label_", languages)) {
+        var_header_reduced <- append(var_header_reduced, item)
         }
-    }
+      if (item == paste0("description_", languages)) {
+        var_header_reduced <- append(var_header_reduced, item)
+        }
+      }
     return(var_header_reduced)
 }
 #' variables matrix
 #' @noRd
-var_matrix_var <- function(variable) {
+var_matrix_var_lang <- function(variable, languages) {
     # - make matrix
     var_mat <- matrix(
         nrow = 1, # num variables
-        ncol = length(var_header_var(variable)), # num header items
+        ncol = length(var_header_var_lang(variable, languages)), # num header items
         dimnames = list(
             attributes(variable)$name, # variable name
-            var_header_var(variable) # header items
+            var_header_var_lang(variable, languages) # header items
         )
     )
     return(var_mat)
 }
 #' making column "variable" from "name" attribute (get metadata)
 #' @noRd
-var_variable_column_var <- function(variable) {
+var_variable_column_var_lang <- function(variable) {
     column <- NULL
     # - if variable has "name" attribute
     if ("name" %in% names(attributes(variable))) {
@@ -240,15 +253,15 @@ var_variable_column_var <- function(variable) {
 }
 #' making variables data frame
 #' @noRd
-var_df_var <- function(variable) {
+var_df_var_lang <- function(variable, languages) {
     # - make data frame from matrix
-    var_df <- data.frame(var_matrix_var(variable), row.names = NULL)
+    var_df <- data.frame(var_matrix_var_lang(variable, languages), row.names = NULL)
     # - if column "variable exists
-    if ("variable" %in% var_header_var(variable) == TRUE) {
-        var_df[["variable"]] <- var_variable_column_var(variable)
+    if ("variable" %in% var_header_var_lang(variable, languages) == TRUE) {
+        var_df[["variable"]] <- var_variable_column_var_lang(variable)
     }
     # - iterate through header to fill each column with metadata
-    for (item in var_header_var(variable)) {
+    for (item in var_header_var_lang(variable, languages)) {
         if (item != "variable") {
             column <- NULL
             # -- if variable has attribute
@@ -257,28 +270,24 @@ var_df_var <- function(variable) {
                 if (attributes(variable)[[item]][1] == "") {
                     column <- append(column, "")
                 } else { # if attribute is not empty
-                    column <- append(column, attributes(variable)[[item]][1])
+                    column <- append(column, attributes(variable)[[item]])
                 }
             } else { # if variable has no attribute
                 column <- append(column, "")
             } #  end if variable has no attribute
         var_df[[item]] <- column
-        }
     }
-    #remove lang and languages attributes
-    if ("languages" %in% names(var_df) | "lang" %in% names(var_df)){
-      var_df<-var_df[-which(names(var_df) %in% c("languages", "lang"))]
-    }
+}
     return(var_df)
 }
 # --------------------
 # categories.csv with DATA FRAME INPUT
 # --------------------
-#' categories header
+#'  -- categories header
 #' @noRd
-cat_header_data <- function(data) {
+cat_header_data_lang <- function(data, languages) {
     cat_header <- NULL
-    # - get all attributes from all variables in dataset
+    # - get all attributes from all variables in data set
     for (var in attributes(data)$names) {
         cat_header <- append(cat_header,
                              names(attributes(data[[var]])))
@@ -288,7 +297,7 @@ cat_header_data <- function(data) {
     # - append mandatory attributes for categorical variables
     cat_header_reduced <- c("variable", "value")
     for (item in cat_header) {
-        if (startsWith(item, "labels") == TRUE) {
+        if (item == paste0("labels_", languages)) {
             cat_header_reduced <- append(cat_header_reduced, item)
         }
     }
@@ -296,28 +305,26 @@ cat_header_data <- function(data) {
 }
 #' making column "variable"
 #' @noRd
-cat_variable_column_data <- function(data) {
+cat_variable_column_data_lang <- function(data, languages) {
     var_names <- NULL
     var_id <- 1
-    #retrieve active language
-    lang=attr(data, "lang")
-    if (lang=="default") lang="" else lang=paste0("_", lang)
     for (var in attributes(data)$names) {
         # - is variable categorical?
-        if (paste0("labels", lang) %in% names(attributes(data[[var]])) | "labels" %in% names(attributes(data[[var]]))) {
-            # - no variable name > generate placeholder
+        if (paste0("labels_", languages) %in% names(attributes(data[[var]]))) {
+            # -- no variable name > generate placeholder
             if (is.null(attributes(data[[var]])$name) || attributes(data[[var]])$name == "") {
                 var_names <- append(
                     var_names,
                     rep(var,
-                        length(attributes(data[[var]])[paste0("labels", lang)])))
+                        length(attributes(data[[var]])$labels)))
+                    #
                     # rep(paste0("var_id_", var_id),
-                    #     length(attributes(data[[var]])$labels)))
+                    #     length(attributes(data[[var]])[[paste0("labels_", languages)]])))
             } else { # variable name is available
                 var_names <- append(
                     var_names,
                     rep(attributes(data[[var]])$name,
-                        length(attributes(data[[var]])[[paste0("labels", lang)]])))
+                        length(attributes(data[[var]])[[paste0("labels_", languages)]])))
             }
         }
         var_id <- var_id + 1
@@ -326,56 +333,64 @@ cat_variable_column_data <- function(data) {
 }
 #' categories matrix
 #' @noRd
-cat_matrix_data <- function(data) {
+cat_matrix_data_lang <- function(data, languages) {
     # - get number of categories over all variables of data set
     nrow = 0
-    lang=attr(data, "lang")
-    if (lang=="default") lang="" else lang=paste0("_", lang)
     for (var in attributes(data)$names) {
         # -- check if variable is categorical
-        if (paste0("labels", lang) %in% names(attributes(data[[var]])) | "labels" %in% names(attributes(data[[var]]))) {
-            nrow <- nrow + as.integer(length(attributes(data[[var]])[[paste0("labels", lang)]]))
+        if (paste0("labels_", languages) %in% names(attributes(data[[var]]))) {
+            nrow <- nrow + as.integer(
+              length(attributes(data[[var]])[[paste0("labels_", languages)]]))
         }
     }
     # - make matrix
     cat_mat <- matrix(
         nrow = nrow, # num of catgeories for all variables
-        ncol = length(cat_header_data(data)), # num header items
+        ncol = length(cat_header_data_lang(data, languages)), # num header items
         dimnames = list(
-            cat_variable_column_data(data), # variable name
-            cat_header_data(data) # header items
+            cat_variable_column_data_lang(data, languages), # variable name
+            cat_header_data_lang(data, languages) # header items
         )
     )
     return(cat_mat)
 }
 #' making column "value"
 #' @noRd
-cat_values_column_data <- function(data) {
+cat_values_column_data_lang <- function(data, languages) {
   values <- NULL
-  lang=attr(data, "lang")
-  if (lang=="default") lang="" else lang=paste0("_", lang)
   for (var in attributes(data)$names) {
     # - is variable categorical?
-    if (paste0("labels", lang) %in% names(attributes(data[[var]]))) {
-      values <- append(values, as.character(unname(attributes(data[[var]])[[paste0("labels", lang)]])))
+    if (paste0("labels_", languages) %in% names(attributes(data[[var]])) == TRUE) {
+      # -- is labels attribute empty?
+      if (is.null(names(attributes(data[[var]])[[
+        paste0("labels_", languages)
+      ]])) == TRUE) {
+        values <- append(values, "")
+      } else {
+        values <- append(values, as.character(unname(
+          attributes(data[[var]])[[paste0("labels_", languages)]]))
+        )
+      }
     }
   }
   return(as.character(values))
 }
 #' making columns "labels"
 #' @noRd
-cat_labels_column_data <- function(data, item) {
+cat_labels_column_data_lang <- function(data, languages) {
   labels <- NULL
   for (var in attributes(data)$names) {
     # - is variable categorical? Does labels attribute exist?
-    lang=attr(data, "lang")
-    if (lang=="default") lang="" else lang=paste0("_", lang)
-    if (paste0("labels", lang) %in% names(attributes(data[[var]])) == TRUE) {
-      # - is labels attribute empty?
-      if (is.null(names(attributes(data[[var]])[[paste0("labels", lang)]])) == TRUE) {
+    if (paste0("labels_", languages) %in% names(attributes(data[[var]])) == TRUE) {
+      # -- is labels attribute empty?
+      if (is.null(names(attributes(data[[var]])[[
+        paste0("labels_", languages)
+        ]])) == TRUE) {
         labels <- append(labels, "")
       } else {
-        labels <- append(labels, names(attributes(data[[var]])[[item]]))
+        labels <- append(labels, names(attributes(data[[var]])[[
+          paste0("labels_", languages)
+          ]]))
       }
     }
   }
@@ -383,22 +398,22 @@ cat_labels_column_data <- function(data, item) {
 }
 #' making categories data frame
 #' @noRd
-cat_df_data <- function(data) {
+cat_df_data_lang <- function(data, languages) {
   # - make data frame from matrix
-  cat_df <- data.frame(cat_matrix_data(data), row.names = NULL)
+  cat_df <- data.frame(cat_matrix_data_lang(data, languages), row.names = NULL)
   # - append columns
-  for (item in cat_header_data(data)) {
+  for (item in cat_header_data_lang(data, languages)) {
     # -- column "variable"
     if (item == "variable") {
-      cat_df[["variable"]] <- cat_variable_column_data(data)
+      cat_df[["variable"]] <- cat_variable_column_data_lang(data, languages)
     }
     # -- column "value
     if (item == "value") {
-      cat_df[["value"]] <- cat_values_column_data(data)
+      cat_df[["value"]] <- cat_values_column_data_lang(data, languages)
     }
     # -- columns "labels", "labels_de", ...
     if (startsWith(item, "labels") == TRUE) {
-      cat_df[[item]] <- cat_labels_column_data(data, item)
+      cat_df[[paste0("labels_", languages)]] <- cat_labels_column_data_lang(data, languages)
     }
   }
   return(cat_df)
@@ -408,14 +423,14 @@ cat_df_data <- function(data) {
 # --------------------
 #' categories header
 #' @noRd
-cat_header_var <- function(variable) {
+cat_header_var_lang <- function(variable, languages) {
   cat_header <- NULL
   # - get all attributes from selected variables
   cat_header <- append(cat_header, names(attributes(variable)))
   # - append mandatory attributes for categorical variable
   cat_header_reduced <- c("variable", "value")
   for (item in cat_header) {
-    if (startsWith(item, "labels") == TRUE) {
+    if (item == paste0("labels_", languages)) {
       cat_header_reduced <- append(cat_header_reduced, item)
     }
   }
@@ -423,44 +438,41 @@ cat_header_var <- function(variable) {
 }
 #' making column "variable"
 #' @noRd
-cat_variable_column_var <- function(variable) {
+cat_variable_column_var_lang <- function(variable, languages) {
   var_names <- NULL
-  lang=attr(data, "lang")
-  if (lang=="default") lang="" else lang=paste0("_", lang)
   # - is variable categorical?
-  if (paste0("labels", lang) %in% names(attributes(variable))) {
+  if (paste0("labels_", languages) %in% names(attributes(variable))) {
     # -- no variable name > generate placeholder
     if (is.null(attributes(variable)$name) || attributes(variable)$name == "") {
       var_names <- append(
         var_names,
         rep("var_id",
-        length(attributes(variable)[[paste0("labels", lang)]])))
+        length(attributes(variable)[[paste0("labels_", languages)]])))
       } else { # variable name is available
         var_names <- append(
           var_names,
           rep(attributes(variable)$name,
-              length(attributes(variable)[[paste0("labels", lang)]])))
+              length(attributes(variable)[[paste0("labels_", languages)]])))
     }
   }
   return(var_names)
 }
 #' categories matrix
 #' @noRd
-cat_matrix_var <- function(variable) {
+cat_matrix_var_lang <- function(variable, languages) {
   # - get number of categories from variable
   nrow = 0
-  lang=attr(data, "lang")
-  if (lang=="default") lang="" else lang=paste0("_", lang)
   # - check if variable is categorical
-  if (paste0("labels", lang) %in% names(attributes(variable))) {
-    nrow <- nrow + as.integer(length(attributes(variable)[[paste0("labels", lang)]]))
+  if (paste0("labels_", languages) %in% names(attributes(variable))) {
+    nrow <- nrow + as.integer(length(attributes(variable)[[
+      paste0("labels_", languages)]]))
     # -- make matrix
     cat_mat <- matrix(
-      nrow = nrow, # num of catgeories for variable
-      ncol = length(cat_header_var(variable)), # num header items
+      nrow = nrow, # num of categories for variable
+      ncol = length(cat_header_var_lang(variable, languages)), # num header items
       dimnames = list(
-        cat_variable_column_var(variable), # variable name
-        cat_header_var(variable) # header items
+        cat_variable_column_var_lang(variable, languages), # variable name
+        cat_header_var_lang(variable, languages) # header items
       )
     )
     return(cat_mat)
@@ -471,51 +483,53 @@ cat_matrix_var <- function(variable) {
 }
 #' making column "value"
 #' @noRd
-cat_values_column_var <- function(variable) {
+cat_values_column_var_lang <- function(variable, languages) {
   values <- NULL
-  lang=attr(data, "lang")
-  if (lang=="default") lang="" else lang=paste0("_", lang)
   # - is variable categorical?
-  if (paste0("labels", lang) %in% names(attributes(variable))) {
-    values <- append(values, as.character(unname(attributes(variable)[[paste0("labels", lang)]])))
+  if (paste0("labels_", languages) %in% names(attributes(variable))) {
+    values <- append(values, as.character(unname(attributes(variable)[[
+      paste0("labels_", languages)]])))
     return(as.character(values))
   }
 }
 #' making columns "labels"
 #' @noRd
-cat_labels_column_var <- function(variable, item) {
+cat_labels_column_var_lang <- function(variable, languages) {
   labels <- NULL
-  lang=attr(data, "lang")
-  if (item=="labels") lang="" else lang=paste0("_",lang)
   # - is variable categorical? Does labels attribute exist?
-  if (paste0("labels",lang) %in% names(attributes(variable)) == TRUE) {
+  if (paste0("labels_", languages) %in% names(attributes(variable)) == TRUE) {
     # -- is labels attribute empty?
-    if (is.null(names(attributes(variable)[[paste0("labels",lang)]])) == TRUE) {
+    if (is.null(names(attributes(variable)[[
+      paste0("labels_", languages)
+      ]])) == TRUE) {
       labels <- append(labels, "")
     } else {
-      labels <- append(labels, names(attributes(variable)[[item]]))
+      labels <- append(labels, names(attributes(variable)[[
+        paste0("labels_", languages)
+      ]]))
     }
     return(labels)
   }
 }
 #' making categories data frame
 #' @noRd
-cat_df_var <- function(variable) {
+cat_df_var_lang <- function(variable, languages) {
   # - make data frame from matrix
-  cat_df <- data.frame(cat_matrix_var(variable), row.names = NULL)
+  cat_df <- data.frame(cat_matrix_var_lang(variable, languages),
+                       row.names = NULL)
   # - append columns
-  for (item in cat_header_var(variable)) {
+  for (item in cat_header_var_lang(variable, languages)) {
     # -- column "variable"
     if (item == "variable") {
-      cat_df[["variable"]] <- cat_variable_column_var(variable)
+      cat_df[["variable"]] <- cat_variable_column_var_lang(variable, languages)
     }
     # -- column "value
     if (item == "value") {
-      cat_df[["value"]] <- cat_values_column_var(variable)
+      cat_df[["value"]] <- cat_values_column_var_lang(variable, languages)
     }
     # -- columns "labels", "labels_de", ...
-    if (startsWith(item, "labels") == TRUE) {
-      cat_df[[item]] <- cat_labels_column_var(variable, item)
+    if (item == paste0("labels_", languages)) {
+      cat_df[[item]] <- cat_labels_column_var_lang(variable, languages)
     }
   }
   return(cat_df)
@@ -524,41 +538,41 @@ cat_df_var <- function(variable) {
 # MAKE CSV FILES
 # --------------------
 #' @noRd
-get_csv_all <- function(input, output, variables) {
+get_csv_lang <- function(input, output, variables, languages) {
   # - data frame input
   if ("data.frame" %in% class(input) == TRUE) {
     if (variables == "no") {
       write_odf_csv(
-        get_dataset_all(input),
+        get_dataset_lang(input, languages),
         "/dataset.csv",
         output)
     }
     if (variables == "yes") {
       write_odf_csv(
-        get_dataset_all(input),
+        get_dataset_lang(input, languages),
         "/dataset.csv",
         output)
       write_odf_csv(
-        var_df(input),
+        var_df_lang(input, languages),
         "/variables.csv",
         output)
-      write_odf_csv(
-        cat_df_data(input),
-        "/categories.csv",
-        output)
+       write_odf_csv(
+         cat_df_data_lang(input, languages),
+         "/categories.csv",
+         output)
       }
   }
   # - variable input
   else {
     write_odf_csv(
-      var_df_var(input),
+      var_df_var_lang(input, languages),
       "/variables.csv",
       output)
-    if (length(cat_df_var(input)) > 0 ) {
-      write_odf_csv(
-        cat_df_var(input),
-        "/categories.csv",
-        output)
+    if (length(cat_df_var_default(input)) > 0) {
+       write_odf_csv(
+         cat_df_var_lang(input, languages),
+         "/categories.csv",
+         output)
     }
   }
 }
