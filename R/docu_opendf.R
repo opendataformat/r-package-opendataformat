@@ -10,9 +10,9 @@
 #'
 #' @param languages
 #' Select the language in which the descriptions and labels of the data will be displayed
-#'
-#' * By default the language that is set to currentlanguage is displayed
-#' (\code{languages = "currentlanguage"}).
+
+#' * By default the language that is set to current is displayed
+#' (\code{languages = "current"}).
 #' * You can choose to view all available language variants by selecting
 #' (\code{languages = "all"}),
 #' * or you can select the language by language code, e.g.
