@@ -508,6 +508,14 @@ cat_df_var_default <- function(variable) {
 # --------------------
 #' @noRd
 get_csv_default <- function(input, output, variables) {
+  #if no default labels and descriptions (labels and descriptions without language tag) are available, 
+  # return an warning and run write_opendf for the active language
+  if (!("default" %in% strsplit(unlist(attributes(input)["languages"])," "))){
+    message(paste0("Metadata saved in language: ",unlist(attributes(input)["lang"])))
+    get_csv_lang(input=input, output=output, variables=variables, languages=unlist(attributes(input)["lang"]))
+  }else{
+    message("Metadata saved in language default without language tag")
+  }
   # - data frame input
   if ("data.frame" %in% class(input) == TRUE) {
       if (variables == "no") {
