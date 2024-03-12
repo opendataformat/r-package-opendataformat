@@ -96,7 +96,7 @@ docu2_opendf<-function(input, languages="current"){
   
   #get url
   url=attr(input, "url")
-  if (url!=""){
+  if (url!="" & exists(style_hyperlink)){
     interactive_url<- cli::style_hyperlink(
       text = url,
       url = url
