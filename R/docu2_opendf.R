@@ -46,7 +46,7 @@
 #'
 #' @export
  
-docu2_opendf<-function(input, languages="active"){
+docu2_opendf<-function(input, languages="current"){
   
   #check whether input is dataset or variable
   if ("data.frame" %in% class(input)){
@@ -61,10 +61,10 @@ docu2_opendf<-function(input, languages="active"){
   input_lang<-unlist(attr(input, "lang"))
   
   #Check if languages argument is valid
-  if (!(languages %in% c(input_languages, "active", "default", "all"))) stop("Invalid argument language.")
+  if (!(languages %in% c(input_languages, "current", "default", "all"))) stop("Invalid argument language.")
   
   
-  #if languages is set to default, but no default language exists, the active language is used
+  #if languages is set to default, but no default language exists, the current language is used
   if(languages=="default"){
     if(!("default"%in%input_languages)){
       languages=attr(input, "lang")
@@ -73,8 +73,8 @@ docu2_opendf<-function(input, languages="active"){
       languages<-""
     }
   }
-  #if languages is set to active, the active language is used
-  if(languages=="active"){
+  #if languages is set to current, the current language is used
+  if(languages=="current"){
     languages=attr(input, "lang")
   }
   #transform "de" to "_de"
@@ -150,7 +150,7 @@ docu2_opendf<-function(input, languages="active"){
           paste0("Value Labels ", gsub("_","",l), ":\n"),
           paste0(valuelabels[[which(names(valuelabels)==l)]])
         )
-      }        
+      }
     }
     #Type
     printing_output<-c(
