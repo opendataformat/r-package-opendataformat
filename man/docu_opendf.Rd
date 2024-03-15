@@ -4,15 +4,15 @@
 \alias{docu_opendf}
 \title{Get documentation from R data frame.}
 \usage{
-docu_opendf(input, languages = "default", variables = "no", style = "html")
+docu_opendf(input, languages = "current", variables = "no", style = "html")
 }
 \arguments{
 \item{input}{R data frame (df) or variable from an R data frame (df$var).}
 
 \item{languages}{Select the language in which the descriptions and labels of the data will be displayed
 \itemize{
-\item By default the language that is set to default is displayed
-(\code{languages = "default"}).
+\item By default the language that is set to current is displayed
+(\code{languages = "current"}).
 \item You can choose to view all available language variants by selecting
 (\code{languages = "all"}),
 \item or you can select the language by language code, e.g.

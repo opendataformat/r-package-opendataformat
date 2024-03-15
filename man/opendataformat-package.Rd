@@ -3,7 +3,6 @@
 \docType{package}
 \name{opendataformat-package}
 \alias{opendataformat-package}
-\alias{_PACKAGE}
 \alias{opendataformat}
 \title{Open Data Format}
 \description{
