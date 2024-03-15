@@ -23,6 +23,8 @@ write_opendf(
 (\code{languages = "all"}).
 \item You can also choose to export only the default language
 (\code{languages = "default"}),
+\item Or only the current language
+(\code{languages = "current"}),
 \item or you can select the language by language code, e.g.
 \code{languages = "en"}.
 }}
