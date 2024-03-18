@@ -1,4 +1,5 @@
-.r-package-new.Rproj
+**.Rproj
+**.doc
 .Rproj.user
 .Rhistory
 .RData
