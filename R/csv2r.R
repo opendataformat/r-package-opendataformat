@@ -154,8 +154,8 @@ dataset_attributes <- function(dataframe, input) {
 variables_attributes <- function(dataframe, input) {
   variables <- load_csv(input, "variables.csv")
   #check for new languages
-  langs_var<-get_lang_csv(dataset, "label_")
-  langs_var2<-get_lang_csv(dataset, "description_")
+  langs_var<-get_lang_csv(dataframe, "label_")
+  langs_var2<-get_lang_csv(dataframe, "description_")
   if (!is.null(langs_var) | !is.null(langs_var2)){
     for (lang in c(langs_var, langs_var2)){
       if (!("languages" %in% names(attributes(dataframe)))){
