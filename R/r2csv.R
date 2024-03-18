@@ -24,6 +24,24 @@ r2csv <- function(
   languages,
   variables,
   export_data) {
+  #remove labels (duplicate of current/active language labels)
+  attributes(input, "label") <- NULL
+  for (var in names(input)){
+    attributes(input[[var]], "label") <- NULL
+  }
+  #assign labels and description of default language to "label" and "description" and remove duplicate
+  if ("default" %in% attr(input, "languages")){
+    attributes(input, "label") <- attributes(input, "label_default")
+    attributes(input, "label_default")<-NULL
+    attributes(input, "description") <- attributes(input, "description_default")
+    attributes(input, "description_default")<-NULL
+    for (var in names(input)){
+      attributes(input[[var]], "label") <- attributes(input[[var]], "label_default")
+      attributes(input[[var]], "label_default")<-NULL
+      attributes(input[[var]], "description") <- attributes(input[[var]], "description_default")
+      attributes(input[[var]], "description_default")<-NULL
+    }
+  }
   # export_data
   if (export_data == "yes") {
     df <- make_data(input)

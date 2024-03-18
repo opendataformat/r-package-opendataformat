@@ -57,7 +57,7 @@ docu2_opendf<-function(input, languages="current"){
   }
   
   #assign languages and currentlanguage
-  input_languages<-unlist(strsplit(attr(input, "languages"), " "))
+  input_languages<-attr(input, "languages")
   input_lang<-unlist(attr(input, "lang"))
   
   #Check if languages argument is valid
@@ -68,9 +68,6 @@ docu2_opendf<-function(input, languages="current"){
   if(languages=="default"){
     if(!("default"%in%input_languages)){
       languages=attr(input, "lang")
-    } else {
-      #Language default is saved without language tag.
-      languages<-""
     }
   }
   #if languages is set to current, the current language is used
@@ -78,7 +75,7 @@ docu2_opendf<-function(input, languages="current"){
     languages=attr(input, "lang")
   }
   #transform "de" to "_de"
-  if (languages!="" & languages!="all") languages=paste0("_", languages)
+  if (languages!="all") languages=paste0("_", languages)
   #if languages is set to all, all languages of the dataset ate assigned to languages
   if (languages=="all"){
     languages<-input_languages
@@ -127,8 +124,8 @@ docu2_opendf<-function(input, languages="current"){
   for (l in languages){
     printing_output<-c(
       paste0(printing_output),
-      paste0("Label ", gsub("_","",l), ":\n"),
-      paste0("    ", label[[which(names(label)==l)]], "\n")
+      paste0("Label (", gsub("_","",l), "):\n"),
+      paste0("    ", label[[l]], "\n")
     )
   }
   
@@ -136,8 +133,8 @@ docu2_opendf<-function(input, languages="current"){
   for (l in languages){
     printing_output<-c(
       paste0(printing_output),
-      paste0("Description ", gsub("_","",l), ":\n"),
-      paste0("    ", description[[which(names(description)==l)]], "\n")
+      paste0("Description (", gsub("_","",l), "):\n"),
+      paste0("    ", description[[l]], "\n")
     )
   }
   
