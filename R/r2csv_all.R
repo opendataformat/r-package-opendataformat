@@ -425,7 +425,7 @@ cat_header_var <- function(variable) {
 #' @noRd
 cat_variable_column_var <- function(variable) {
   var_names <- NULL
-  lang=attr(data, "lang")
+  lang=attr(variable, "lang")
   if (lang=="default") lang="" else lang=paste0("_", lang)
   # - is variable categorical?
   if (paste0("labels", lang) %in% names(attributes(variable))) {
@@ -449,7 +449,7 @@ cat_variable_column_var <- function(variable) {
 cat_matrix_var <- function(variable) {
   # - get number of categories from variable
   nrow = 0
-  lang=attr(data, "lang")
+  lang=attr(variable, "lang")
   if (lang=="default") lang="" else lang=paste0("_", lang)
   # - check if variable is categorical
   if (paste0("labels", lang) %in% names(attributes(variable))) {
@@ -473,7 +473,7 @@ cat_matrix_var <- function(variable) {
 #' @noRd
 cat_values_column_var <- function(variable) {
   values <- NULL
-  lang=attr(data, "lang")
+  lang=attr(variable, "lang")
   if (lang=="default") lang="" else lang=paste0("_", lang)
   # - is variable categorical?
   if (paste0("labels", lang) %in% names(attributes(variable))) {
@@ -485,7 +485,7 @@ cat_values_column_var <- function(variable) {
 #' @noRd
 cat_labels_column_var <- function(variable, item) {
   labels <- NULL
-  lang=attr(data, "lang")
+  lang=attr(variable, "lang")
   if (item=="labels") lang="" else lang=paste0("_",lang)
   # - is variable categorical? Does labels attribute exist?
   if (paste0("labels",lang) %in% names(attributes(variable)) == TRUE) {
@@ -547,9 +547,7 @@ get_csv_all <- function(input, output, variables) {
         "/categories.csv",
         output)
       }
-  }
-  # - variable input
-  else {
+  } else {# - variable input
     write_odf_csv(
       var_df_var(input),
       "/variables.csv",
