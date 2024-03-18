@@ -89,7 +89,6 @@ def csv2xml(input_dir, output_dir):
         notes=ET.SubElement(fileDscr,'notes')
         extlink=ET.SubElement(notes,'ExtLink')
         extlink.attrib['URI']=row['url']
-  variables_arg = "yes"
   if variables_arg == "yes" :
     
     if os.path.exists(input_dir+"/categories.csv") == True :
