@@ -5,6 +5,7 @@
 #' and variables via the R-Studio Viewer or the web browser.
 #'
 #' @import cli
+#' @import crayon
 #'
 #' @param input R data frame (df) or variable from an R data frame (df$var).
 #'
@@ -50,9 +51,9 @@ docu2_opendf<-function(input, languages="current"){
   
   #check whether input is dataset or variable
   if ("data.frame" %in% class(input)){
-    input_type<-"dataset"
+    input_type<-"Dataset"
   } else {
-    input_type="variable"
+    input_type="Variable"
     if (class(input)=="NULL") stop(paste0(variable," not found"))
   }
   
@@ -103,7 +104,7 @@ docu2_opendf<-function(input, languages="current"){
   }
   
   #get value labels for each language
-  if(input_type=="variable"){
+  if(input_type=="Variable"){
     valuelabels=list()
     type=attr(input, "type")
     for (l in languages){
@@ -116,7 +117,7 @@ docu2_opendf<-function(input, languages="current"){
   #######  format output ######
   #name and url
   printing_output<-c(
-    paste0(input_type, ":\n"),
+    underline(bold(paste0(input_type, ":\n"))),
     paste0("    ", name, "\n")
   )
   
@@ -124,7 +125,7 @@ docu2_opendf<-function(input, languages="current"){
   for (l in languages){
     printing_output<-c(
       paste0(printing_output),
-      paste0("Label (", gsub("_","",l), "):\n"),
+      bold(paste0("Label (", gsub("_","",l), "):\n")),
       paste0("    ", label[[l]], "\n")
     )
   }
@@ -133,18 +134,18 @@ docu2_opendf<-function(input, languages="current"){
   for (l in languages){
     printing_output<-c(
       paste0(printing_output),
-      paste0("Description (", gsub("_","",l), "):\n"),
+      bold(paste0("Description (", gsub("_","",l), "):\n")),
       paste0("    ", description[[l]], "\n")
     )
   }
   
   #Value Labels
-  if (input_type=="variable"){
+  if (input_type=="Variable"){
     for (l in languages){
       if (valuelabels[[which(names(valuelabels)==l)]] != "    : \n"){
         printing_output<-c(
           paste0(printing_output),
-          paste0("Value Labels ", gsub("_","",l), ":\n"),
+          bold(paste0("Value Labels ", gsub("_","",l), ":\n")),
           paste0(valuelabels[[which(names(valuelabels)==l)]])
         )
       }
@@ -152,16 +153,16 @@ docu2_opendf<-function(input, languages="current"){
     #Type
     printing_output<-c(
       paste0(printing_output),
-      paste0("type:\n"),
+      bold("type:\n"),
       paste0("    ", type, "\n")
     )
   }
   
   #languages
-  if (input_type=="dataset"){
+  if (input_type=="Dataset"){
     printing_output<-c(
       paste0(printing_output),
-      paste0("languages:\n"),
+      bold("languages:\n"),
       paste0("    ", paste0(input_languages,collapse = " "), " (active: ", input_lang, ")", "\n")
     )
   }
@@ -169,7 +170,7 @@ docu2_opendf<-function(input, languages="current"){
   #url
   printing_output<-c(
     paste0(printing_output),
-    paste0("url:\n"),
+    bold("url:\n"),
     paste0("    ", interactive_url, "\n")
   )
   #print meta data in console
