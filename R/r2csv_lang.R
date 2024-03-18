@@ -204,14 +204,17 @@ var_header_var_lang <- function(variable, languages) {
         startsWith(item, "label_") == FALSE &&
         startsWith(item, "description_") == FALSE) {
           var_header_reduced <- append(var_header_reduced, item)
-          }
+      }
       if (item == paste0("label_", languages)) {
         var_header_reduced <- append(var_header_reduced, item)
-        }
+      }
       if (item == paste0("description_", languages)) {
         var_header_reduced <- append(var_header_reduced, item)
-        }
       }
+      if ("lang" %in% var_header_reduced | "languages" %in% var_header_reduced){
+        var_header_reduced<-var_header_reduced[-which(var_header_reduced %in% c("lang", "languages"))]
+      }
+    }
     return(var_header_reduced)
 }
 #' variables matrix
