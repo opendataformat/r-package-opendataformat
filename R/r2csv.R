@@ -24,8 +24,17 @@ r2csv <- function(
   languages,
   variables,
   export_data) {
+  #if no default labels and descriptions (labels and descriptions without language tag) are available, 
+  # return an warning and run write_opendf for the active language
+  if (languages=="default"){
+    if (!("default" %in% attributes(input)[["languages"]])){
+      message(paste0("Metadata saved in language: ",attributes(input)[["lang"]]))
+      languages=attributes(input)[["lang"]]
+    }else{
+      message("Metadata saved in language default without language tag")
+    }
+  }
   #remove labels (duplicate of current/active language labels)
-  
   attr(input, "label") <- NULL
   for (var in names(input)){
     attr(input[[var]], "label") <- NULL

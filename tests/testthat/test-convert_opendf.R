@@ -106,16 +106,15 @@ test_that("convert_opendf_r2csv_lang", {
   df_variables <- read.csv(file = paste0(tempdir(),"/variables.csv"))
   expect_equal(attributes(df_variables)$names, c(
     "variable",
-    "label",
     "label_en",
     "label_de",
-    "description",
     "description_en",
     "description_de",
     "type",
     "url"
   ))
-  expect_equal(df_variables$label[1], "Current Health")
+  expect_equal(df_variables$label[1], NULL)
+  expect_equal(df_variables$label_en[1], "Current Health")
   expect_equal(df_variables$label_de[1], "Gesundheitszustand gegenwärtig")
   unlink(paste0(tempdir(),"/*"))
   # --- variable input
@@ -130,17 +129,16 @@ test_that("convert_opendf_r2csv_lang", {
   df_variables <- read.csv(file = paste0(tempdir(),"/variables.csv"))
   expect_equal(attributes(df_variables)$names, c(
     "variable",
-    "label",
     "label_en",
     "label_de",
-    "description",
     "description_en",
     "description_de",
     "type",
     "url"
   ))
-  expect_equal(df_variables$label, "Current Health")
-  expect_equal(df_variables$label_de, "Gesundheitszustand gegenwärtig")
+  expect_equal(df_variables$label[1], NULL)
+  expect_equal(df_variables$label_en[1], "Current Health")
+  expect_equal(df_variables$label_de[1], "Gesundheitszustand gegenwärtig")
   unlink(paste0(tempdir(),"/*"))
   # -- test "default":
   # --- data set input
@@ -154,6 +152,8 @@ test_that("convert_opendf_r2csv_lang", {
   )
   df_variables <- read.csv(file = paste0(tempdir(),"/variables.csv"))
   expect_equal(attributes(df_variables)$names, c(
+    "languages",
+    "lang",
     "variable",
     "label",
     "description",
@@ -1444,7 +1444,7 @@ test_that("convert_opendf_xml2_lang_default_xml", {
   expect_equal(attributes(df$bap96)$url, "https://paneldata.org/soep-core/data/bap/bap96")
   expect_equal(unname(attributes(df$bap96)$labels_en),c(-2,-1))
   expect_equal(names(attributes(df$bap96)$labels_en), c("Does not apply", "No Answer"))
-  xpect_equal(names(attributes(df$bap96)$labels_de), c("trifft nicht zu",    "keine Angabe"))
+  expect_equal(names(attributes(df$bap96)$labels_de), c("trifft nicht zu",    "keine Angabe"))
 })
 # convert_opendf_r2xml: test export_data,
 # export_data = yes, variables = yes, languages = all
