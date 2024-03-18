@@ -117,7 +117,7 @@ docu2_opendf<-function(input, languages="current"){
   #######  format output ######
   #name and url
   printing_output<-c(
-    underline(bold(paste0(input_type, ":\n"))),
+    crayon::underline(crayon::bold(paste0(input_type, ":\n"))),
     paste0("    ", name, "\n")
   )
   
@@ -125,7 +125,7 @@ docu2_opendf<-function(input, languages="current"){
   for (l in languages){
     printing_output<-c(
       paste0(printing_output),
-      bold(paste0("Label (", gsub("_","",l), "):\n")),
+      crayon::bold(paste0("Label (", gsub("_","",l), "):\n")),
       paste0("    ", label[[l]], "\n")
     )
   }
@@ -134,7 +134,7 @@ docu2_opendf<-function(input, languages="current"){
   for (l in languages){
     printing_output<-c(
       paste0(printing_output),
-      bold(paste0("Description (", gsub("_","",l), "):\n")),
+      crayon::bold(paste0("Description (", gsub("_","",l), "):\n")),
       paste0("    ", description[[l]], "\n")
     )
   }
@@ -145,7 +145,7 @@ docu2_opendf<-function(input, languages="current"){
       if (valuelabels[[which(names(valuelabels)==l)]] != "    : \n"){
         printing_output<-c(
           paste0(printing_output),
-          bold(paste0("Value Labels ", gsub("_","",l), ":\n")),
+          crayon::bold(paste0("Value Labels ", gsub("_","",l), ":\n")),
           paste0(valuelabels[[which(names(valuelabels)==l)]])
         )
       }
@@ -153,7 +153,7 @@ docu2_opendf<-function(input, languages="current"){
     #Type
     printing_output<-c(
       paste0(printing_output),
-      bold("type:\n"),
+      crayon::bold("type:\n"),
       paste0("    ", type, "\n")
     )
   }
@@ -162,7 +162,7 @@ docu2_opendf<-function(input, languages="current"){
   if (input_type=="Dataset"){
     printing_output<-c(
       paste0(printing_output),
-      bold("languages:\n"),
+      crayon::bold("languages:\n"),
       paste0("    ", paste0(input_languages,collapse = " "), " (active: ", input_lang, ")", "\n")
     )
   }
@@ -170,7 +170,7 @@ docu2_opendf<-function(input, languages="current"){
   #url
   printing_output<-c(
     paste0(printing_output),
-    bold("url:\n"),
+    crayon::bold("url:\n"),
     paste0("    ", interactive_url, "\n")
   )
   #print meta data in console
