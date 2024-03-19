@@ -571,7 +571,7 @@ get_csv_lang <- function(input, output, variables, languages) {
       var_df_var_lang(input, languages),
       "/variables.csv",
       output)
-    if (length(cat_df_var_default(input)) > 0) {
+    if (length(cat_df_var_lang(input, languages)) > 0) {
        write_odf_csv(
          cat_df_var_lang(input, languages),
          "/categories.csv",
