@@ -4,9 +4,10 @@
 #' Get access to information about the dataset
 #' and variables via the R-Studio Viewer or the web browser.
 #'
-#' @import cli
-#' @import crayon
-#'
+#' @importFrom cli style_hyperlink
+#' @importFrom crayon underline
+#' @importFrom crayon bold
+#' 
 #' @param input R data frame (df) or variable from an R data frame (df$var).
 #'
 #' @param languages
