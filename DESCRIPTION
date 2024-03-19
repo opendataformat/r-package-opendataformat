@@ -13,11 +13,11 @@ RoxygenNote: 7.3.1
 Depends: 
     R (>= 2.10),
     reticulate,
-    cli,
     crayon
 Suggests: 
     testthat (>= 3.0.0),
     knitr,
+    cli,
     rmarkdown
 VignetteBuilder: knitr
 Config/testthat/edition: 3
