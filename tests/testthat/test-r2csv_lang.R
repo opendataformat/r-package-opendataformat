@@ -7,7 +7,7 @@ test_that("get_dataset_lang", {
   # --- test column 'label_de'
   expect_equal(get_dataset_lang(df, "en")[["label_en"]], "Data from individual questionnaires 2010")
   # --- test_column 'description_en'
-  expect_equal(get_dataset_lang(df, "en")[["description_en"]], "The data were collected as part of the SOEP-Core study using the questionnaire \"Living in Germany - Survey 2010 on the social situation - Personal questionnaire for all.\" This questionnaire is addressed to the individual persons in the household. A view of the survey instrument can be found here: https://www.diw.de/documents/dokumentenarchiv/17/diw_01.c.369781.de/soepfrabo_personen_2010.pdf")
+  expect_equal(get_dataset_lang(df, "en")[["description_en"]], "The data were collected as part of the SOEP-Core study using the questionnaire \"Living in Germany - Survey 2010 on the social situation - Personal questionnaire for all. This questionnaire is addressed to the individual persons in the household. A view of the survey instrument can be found here: https://www.diw.de/documents/dokumentenarchiv/17/diw_01.c.369781.de/soepfrabo_personen_2010.pdf")
   # --- test_column 'url'
   expect_equal(get_dataset_lang(df, "en")[["url"]], "https://paneldata.org/soep-core/data/bap")
   # manipulate data: empty label_de

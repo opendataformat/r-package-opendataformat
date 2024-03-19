@@ -311,7 +311,6 @@ cat_header_data_lang <- function(data, languages) {
 cat_variable_column_data_lang <- function(data, languages) {
     var_names <- NULL
     var_id <- 1
-    if (lang=="default") lang="" else lang=paste0("_", lang)
     for (var in names(data)) {
         # - is variable categorical?
         if (paste0("labels_", languages) %in% names(attributes(data[[var]]))) {
