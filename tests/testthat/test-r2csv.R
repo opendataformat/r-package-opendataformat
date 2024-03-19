@@ -205,21 +205,17 @@ test_that("r2csv_languages_all",{
   df_variables <- read.csv(file = paste0(tempdir(),"/variables.csv"))
   expect_equal(attributes(df_dataset)$names, c(
     "dataset",
-    "label",
     "label_en",
     "label_de",
-    "description",
     "description_en",
     "description_de",
     "url"
   ))
-  expect_equal(df_dataset$label,"Data from individual questionnaires 2010")
+  expect_equal(df_dataset$label,NULL)
   expect_equal(attributes(df_variables)$names, c(
     "variable",
-    "label",
     "label_en",
     "label_de",
-    "description",
     "description_en",
     "description_de",
     "type",
@@ -240,10 +236,8 @@ test_that("r2csv_languages_all",{
   df_variables <- read.csv(file = paste0(tempdir(),"/variables.csv"))
   expect_equal(attributes(df_variables)$names, c(
     "variable",
-    "label",
     "label_en",
     "label_de",
-    "description",
     "description_en",
     "description_de",
     "type",
@@ -256,7 +250,7 @@ test_that("r2csv_languages_all",{
 #' r2csv: test argument: languages = "default"
 test_that("r2csv_languages_default",{
   # - get data
-  df <- get(load("testdata/data_odf.RData"))
+  df <- get(load("testdata/data_odf_with_default.RData"))
   # --- data set input
   r2csv(
     input = df,
@@ -276,13 +270,13 @@ test_that("r2csv_languages_default",{
     "url"
   ))
   expect_equal(df_dataset$label,"Data from individual questionnaires 2010")
-  expect_equal(attributes(df_variables)$names, c(
+  expect_equal(sort(attributes(df_variables)$names), sort(c(
     "variable",
     "label",
     "description",
     "type",
     "url"
-  ))
+  )))
   expect_equal(df_variables$label[1], "Current Health")
   unlink(paste0(tempdir(),"/*"))
   # --- variable input
@@ -296,12 +290,12 @@ test_that("r2csv_languages_default",{
   expect_false(file.exists(paste0(tempdir(),"/dataset.csv")))
   expect_true(file.exists(paste0(tempdir(),"/variables.csv")))
   df_variables <- read.csv(file = paste0(tempdir(),"/variables.csv"))
-  expect_equal(attributes(df_variables)$names, c(
+  expect_equal(sort(attributes(df_variables)$names), sort(c(
     "variable",
     "label",
     "description",
     "type",
-    "url")
+    "url"))
   )
   unlink(paste0(tempdir(),"/*"))
   expect_equal(df_variables$label_en, NULL)
