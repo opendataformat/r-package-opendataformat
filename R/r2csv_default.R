@@ -296,7 +296,7 @@ cat_header_data_default <- function(data) {
 cat_variable_column_data_default <- function(data) {
     var_names <- NULL
     var_id <- 1
-    for (var in attributes(data)$names) {
+    for (var in names(data)) {
         # - is variable categorical?
         if ("labels" %in% names(attributes(data[[var]]))) {
             # -- no variable name > generate placeholder
@@ -317,7 +317,7 @@ cat_variable_column_data_default <- function(data) {
               } else { # variable name is available
                   var_names <- append(
                       var_names,
-                      rep(attributes(data[[var]])$name,
+                      rep(var,
                           length(attributes(data[[var]])$labels)))
               }
             }
@@ -366,9 +366,9 @@ cat_labels_column_data_default <- function(data, item) {
   labels <- NULL
   for (var in attributes(data)$names) {
     # -- is variable categorical? Does labels attribute exist?
-    if ("labels" %in% names(attributes(data[[var]])) == TRUE) {
+    if (item %in% names(attributes(data[[var]])) == TRUE) {
       # --- is labels attribute empty?
-      if (is.null(names(attributes(data[[var]])[["labels"]])) == TRUE) {
+      if (is.null(names(attributes(data[[var]])[[item]])) == TRUE) {
         labels <- append(labels, "")
       } else {
         labels <- append(labels, names(attributes(data[[var]])[[item]]))
@@ -478,9 +478,9 @@ cat_values_column_var_default <- function(variable) {
 cat_labels_column_var_default <- function(variable, item) {
   labels <- NULL
   # - is variable categorical? Does labels attribute exist?
-  if ("labels" %in% names(attributes(variable)) == TRUE) {
+  if (item %in% names(attributes(variable)) == TRUE) {
     # - is labels attribute empty?
-    if (is.null(names(attributes(variable)[["labels"]])) == TRUE) {
+    if (is.null(names(attributes(variable)[[item]])) == TRUE) {
       labels <- append(labels, "")
     } else {
       labels <- append(labels, names(attributes(variable)[[item]]))
@@ -553,4 +553,3 @@ get_csv_default <- function(input, output, variables) {
     }
   }
 }
-

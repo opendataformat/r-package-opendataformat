@@ -311,7 +311,8 @@ cat_header_data_lang <- function(data, languages) {
 cat_variable_column_data_lang <- function(data, languages) {
     var_names <- NULL
     var_id <- 1
-    for (var in attributes(data)$names) {
+    if (lang=="default") lang="" else lang=paste0("_", lang)
+    for (var in names(data)) {
         # - is variable categorical?
         if (paste0("labels_", languages) %in% names(attributes(data[[var]]))) {
             # -- no variable name > generate placeholder
@@ -319,14 +320,14 @@ cat_variable_column_data_lang <- function(data, languages) {
                 var_names <- append(
                     var_names,
                     rep(var,
-                        length(attributes(data[[var]])$labels)))
+                        length(attributes(data[[var]])[[paste0("labels_", languages)]])))
                     #
                     # rep(paste0("var_id_", var_id),
                     #     length(attributes(data[[var]])[[paste0("labels_", languages)]])))
             } else { # variable name is available
                 var_names <- append(
                     var_names,
-                    rep(attributes(data[[var]])$name,
+                    rep(var,
                         length(attributes(data[[var]])[[paste0("labels_", languages)]])))
             }
         }
