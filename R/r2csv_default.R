@@ -181,8 +181,9 @@ var_header_var_default <- function(variable) {
     if ("name" %in% var_header) {
         var_header <- gsub("name", "variable", var_header)
     } else {
-        var_header <- append("variable", var_header)
-        message("Attention! Variable name is missing.")
+      var_header <- append("variable", var_header)
+      message("Attention! Variable name is missing.")
+      
     }
     # - drop labels attributes (categories.csv)
     var_header_reduced <- c()
