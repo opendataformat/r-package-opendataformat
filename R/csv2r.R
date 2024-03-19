@@ -24,10 +24,10 @@ csv2r <- function(input) {
     attributes(data)[["label"]]<-attr(data, paste0("label_", attr(data, "lang")))
     for(var in 1:ncol(data)){
       #assign language attributes also to all variables
-      attr(data[[var]], "languages")<-attributes(data)[["languages"]]
-      attr(data[[var]], "lang")<-attributes(data)[["lang"]]
+      attr(data[[var]], "languages")<-attributes(data[[var]])[["languages"]]
+      attr(data[[var]], "lang")<-attributes(data[[var]])[["lang"]]
       #assign label of active (current) language to "label"
-      attr(data[[var]], "label")<-attributes(data)[[paste0("label_", attr(data[[var]], "lang"))]]
+      attr(data[[var]], "label")<-attributes(data[[var]])[[paste0("label_", attr(data[[var]], "lang"))]]
     }
   } else {
     message("No labels or descriptions available for dataset and variables.")
