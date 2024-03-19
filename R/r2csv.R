@@ -50,6 +50,8 @@ r2csv <- function(
       attr(input[[var]], "label_default")<-NULL
       attr(input[[var]], "description") <- attr(input[[var]], "description_default")
       attr(input[[var]], "description_default")<-NULL
+      attr(input[[var]], "labels") <- attr(input[[var]], "labels_default")
+      attr(input[[var]], "labels_default")<-NULL
     }
   }
   # export_data
