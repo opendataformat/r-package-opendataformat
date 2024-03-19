@@ -172,10 +172,10 @@ test_that("dataset_attributes", {
     "bap96",
     "name"))
   expect_equal(attributes(df)$name, "bap")
-  expect_equal(attributes(df)$label, "Data from individual questionnaires 2010")
+  expect_equal(attributes(df)$label, NULL)
   expect_equal(attributes(df)$label_de, "Daten vom Personenfragebogen 2010")
   expect_equal(attributes(df)$label_en, "Data from individual questionnaires 2010")
-  expect_equal(attributes(df)$description, "The data were collected as part of the SOEP-Core study using the questionnaire \"Living in Germany - Survey 2010 on the social situation - Personal questionnaire for all. This questionnaire is addressed to the individual persons in the household. A view of the survey instrument can be found here: https://www.diw.de/documents/dokumentenarchiv/17/diw_01.c.369781.de/soepfrabo_personen_2010.pdf ")
+  expect_equal(attributes(df)$description, NULL)
   expect_equal(attributes(df)$description_de, "Die Daten wurden im Rahmen der Studie SOEP-Core mittels des Fragebogens „Leben in Deutschland – Befragung 2010 zur sozialen Lage - Personenfragebogen für alle“ erhoben. Dieser Fragebogen richtet sich an die einzelnen Personen im Haushalt. Eine Ansicht des Erhebungsinstrumentes finden Sie hier: https://www.diw.de/documents/dokumentenarchiv/17/diw_01.c.369781.de/soepfrabo_personen_2010.pdf ")
   expect_equal(attributes(df)$description_en, "The data were collected as part of the SOEP-Core study using the questionnaire \"Living in Germany - Survey 2010 on the social situation - Personal questionnaire for all. This questionnaire is addressed to the individual persons in the household. A view of the survey instrument can be found here: https://www.diw.de/documents/dokumentenarchiv/17/diw_01.c.369781.de/soepfrabo_personen_2010.pdf ")
   expect_equal(attributes(df)$url, "https://paneldata.org/soep-core/data/bap")
@@ -197,9 +197,8 @@ test_that("dataset_attributes_manipulated", {
   # dataset attributes
   expect_equal(attributes(df)$name, "bap")
   expect_equal(attributes(df)$label, "Data from individual questionnaires 2010")
-  expect_equal(attributes(df)$label_de, "Daten vom Personenfragebogen 2010")
+  expect_equal(attributes(df)$label_de, NULL)
   expect_equal(attributes(df)$label_en, "Data from individual questionnaires 2010")
-  expect_equal(attributes(df)$description, "Die Daten wurden im Rahmen der Studie SOEP-Core mittels des Fragebogens „Leben in Deutschland – Befragung 2010 zur sozialen Lage - Personenfragebogen für alle“ erhoben. Dieser Fragebogen richtet sich an die einzelnen Personen im Haushalt. Eine Ansicht des Erhebungsinstrumentes finden Sie hier: https://www.diw.de/documents/dokumentenarchiv/17/diw_01.c.369781.de/soepfrabo_personen_2010.pdf ")
   expect_equal(attributes(df)$description_de, "Die Daten wurden im Rahmen der Studie SOEP-Core mittels des Fragebogens „Leben in Deutschland – Befragung 2010 zur sozialen Lage - Personenfragebogen für alle“ erhoben. Dieser Fragebogen richtet sich an die einzelnen Personen im Haushalt. Eine Ansicht des Erhebungsinstrumentes finden Sie hier: https://www.diw.de/documents/dokumentenarchiv/17/diw_01.c.369781.de/soepfrabo_personen_2010.pdf ")
   expect_equal(attributes(df)$description_en, NULL)
   expect_equal(attributes(df)$url, NULL)
@@ -222,10 +221,9 @@ test_that("variable_attributes", {
     "name"))
   # - variable attributes
   expect_equal(attributes(df$bap87)$name, "bap87")
-  expect_equal(attributes(df$bap87)$label, "Current Health")
+  expect_equal(attributes(df$bap87)$label, NULL)
   expect_equal(attributes(df$bap87)$label_de, "Gesundheitszustand gegenwärtig ")
   expect_equal(attributes(df$bap87)$label_en, "Current Health")
-  expect_equal(attributes(df$bap87)$description, "Question: How would you describe your current health?")
   expect_equal(attributes(df$bap87)$description_de, "Frage: Wie würden Sie Ihren gegenwärtigen Gesundheitszustand beschreiben?")
   expect_equal(attributes(df$bap87)$description_en, "Question: How would you describe your current health?")
   expect_equal(attributes(df$bap87)$type, "numeric")
@@ -251,10 +249,9 @@ test_that("variable_attributes_manipulated", {
     "name"))
   # - variable attributes
   expect_equal(attributes(df$bap87)$name, "bap87")
-  expect_equal(attributes(df$bap87)$label, "Current Health")
+  expect_equal(attributes(df$bap87)$label, NULL)
   expect_equal(attributes(df$bap87)$label_de, "Gesundheitszustand gegenwärtig ")
   expect_equal(attributes(df$bap87)$label_en, "Current Health")
-  expect_equal(attributes(df$bap87)$description, "Frage: Wie würden Sie Ihren gegenwärtigen Gesundheitszustand beschreiben?")
   expect_equal(attributes(df$bap87)$description_de, "Frage: Wie würden Sie Ihren gegenwärtigen Gesundheitszustand beschreiben?")
   expect_equal(attributes(df$bap87)$type, "numeric")
   expect_equal(attributes(df$bap87)$url, NULL)
@@ -278,15 +275,7 @@ test_that("categories_attributes", {
     "bap96",
     "name"))
   # - categories attributes
-  expect_equal(names(attributes(df$bap87)$labels), c(
-    "Does not apply",
-    "No Answer",
-    "Very good",
-    "Good",
-    "Satisfactory",
-    "Poor",
-    "Bad"
-  ))
+  expect_equal(names(attributes(df$bap87)$labels), NULL)
   expect_equal(names(attributes(df$bap87)$labels_en), c(
     "Does not apply",
     "No Answer",
@@ -296,7 +285,7 @@ test_that("categories_attributes", {
     "Poor",
     "Bad"
   ))
-  expect_equal(as.character(unname(attributes(df$bap87)$labels)), c(
+  expect_equal(as.character(unname(attributes(df$bap87)$labels_en)), c(
     "-2",
     "-1",
     "1",
@@ -305,11 +294,11 @@ test_that("categories_attributes", {
     "4",
     "5"
   ))
-  expect_equal(names(attributes(df$name)$labels), c(
+  expect_equal(names(attributes(df$name)$labels_en), c(
     "Does not apply",
     "No Answer"
   ))
-  expect_equal(as.character(unname(attributes(df$name)$labels)), c(
+  expect_equal(as.character(unname(attributes(df$name)$labels_en)), c(
     "-2",
     "-1"))
   expect_equal(as.character(unname(attributes(df$name)$labels_de)), c(
@@ -338,7 +327,6 @@ test_that("csv2r", {
   expect_equal(attributes(df)$label, "Data from individual questionnaires 2010")
   expect_equal(attributes(df)$label_de, "Daten vom Personenfragebogen 2010")
   expect_equal(attributes(df)$label_en, "Data from individual questionnaires 2010")
-  expect_equal(attributes(df)$description, "The data were collected as part of the SOEP-Core study using the questionnaire \"Living in Germany - Survey 2010 on the social situation - Personal questionnaire for all. This questionnaire is addressed to the individual persons in the household. A view of the survey instrument can be found here: https://www.diw.de/documents/dokumentenarchiv/17/diw_01.c.369781.de/soepfrabo_personen_2010.pdf ")
   expect_equal(attributes(df)$description_de, "Die Daten wurden im Rahmen der Studie SOEP-Core mittels des Fragebogens „Leben in Deutschland – Befragung 2010 zur sozialen Lage - Personenfragebogen für alle“ erhoben. Dieser Fragebogen richtet sich an die einzelnen Personen im Haushalt. Eine Ansicht des Erhebungsinstrumentes finden Sie hier: https://www.diw.de/documents/dokumentenarchiv/17/diw_01.c.369781.de/soepfrabo_personen_2010.pdf ")
   expect_equal(attributes(df)$description_en, "The data were collected as part of the SOEP-Core study using the questionnaire \"Living in Germany - Survey 2010 on the social situation - Personal questionnaire for all. This questionnaire is addressed to the individual persons in the household. A view of the survey instrument can be found here: https://www.diw.de/documents/dokumentenarchiv/17/diw_01.c.369781.de/soepfrabo_personen_2010.pdf ")
   expect_equal(attributes(df)$url, "https://paneldata.org/soep-core/data/bap")
@@ -347,7 +335,6 @@ test_that("csv2r", {
   expect_equal(attributes(df$bap87)$label, "Current Health")
   expect_equal(attributes(df$bap87)$label_de, "Gesundheitszustand gegenwärtig ")
   expect_equal(attributes(df$bap87)$label_en, "Current Health")
-  expect_equal(attributes(df$bap87)$description, "Question: How would you describe your current health?")
   expect_equal(attributes(df$bap87)$description_de, "Frage: Wie würden Sie Ihren gegenwärtigen Gesundheitszustand beschreiben?")
   expect_equal(attributes(df$bap87)$description_en, "Question: How would you describe your current health?")
   expect_equal(attributes(df$bap87)$type, "numeric")
@@ -364,7 +351,7 @@ test_that("csv2r", {
     "Poor",
     "Bad"
   ))
-  expect_equal(as.character(unname(attributes(df$bap87)$labels)), c(
+  expect_equal(as.character(unname(attributes(df$bap87)$labels_en)), c(
     "-2",
     "-1",
     "1",
