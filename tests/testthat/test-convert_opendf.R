@@ -1110,7 +1110,6 @@ test_that("convert_opendf_xml2csv_lang_default_xml", {
     "label_de"
   ))
 })
-############################################################################################################
 #' convert_opendf_xml2r_standard_xml: all languages
 test_that("convert_opendf_xml2_all_standard_xml", {
   # xml without default
@@ -1166,12 +1165,12 @@ test_that("convert_opendf_xml2_all_standard_xml", {
   expect_equal(attributes(df$bap96)$label, "Height")
   expect_equal(attributes(df$bap96)$label_de, "Körpergröße")
   expect_equal(attributes(df$bap96)$label_en, "Height")
-  expect_equal(attributes(df$bap96)$description, "Body size")
+  expect_equal(attributes(df$bap96)$description, NULL)
   expect_equal(attributes(df$bap96)$description_de, "Körpergröße")
   expect_equal(attributes(df$bap96)$description_en, "Body size")
   expect_equal(attributes(df$bap96)$url, "https://paneldata.org/soep-core/data/bap/bap96")
-  expect_equal(unname(attributes(df$bap96)$labels),c(-2,-1))
-  expect_equal(names(attributes(df$bap96)$labels), c("Does not apply", "No Answer"))
+  expect_equal(unname(attributes(df$bap96)$labels),NULL)
+  expect_equal(names(attributes(df$bap96)$labels), NULL)
   expect_equal(unname(attributes(df$bap96)$labels_en),c(-2,-1))
   expect_equal(names(attributes(df$bap96)$labels_en), c("Does not apply", "No Answer"))
   expect_equal(unname(attributes(df$bap96)$labels_de),c(-2,-1))
@@ -1189,13 +1188,16 @@ test_that("convert_opendf_xml2_all_default_xml", {
     "names",
     "row.names",
     "name",
-    "label",
+    "languages",
+    "label_default",
     "label_en",
     "label_de",
-    "description",
+    "description_default",
     "description_en",
     "description_de",
     "url",
+    "lang",
+    "label",
     "class"
   ))
   # - dataset content
@@ -1205,7 +1207,7 @@ test_that("convert_opendf_xml2_all_default_xml", {
   expect_equal(attributes(df)$label, "Data from individual questionnaires 2010")
   expect_equal(attributes(df)$label_de, "Daten vom Personenfragebogen 2010")
   expect_equal(attributes(df)$label_en, "Data from individual questionnaires 2010")
-  expect_equal(attributes(df)$description, "The data were collected as part of the SOEP-Core study using the questionnaire \"Living in Germany - Survey 2010 on the social situation - Personal questionnaire for all. This questionnaire is addressed to the individual persons in the household. A view of the survey instrument can be found here: https://www.diw.de/documents/dokumentenarchiv/17/diw_01.c.369781.de/soepfrabo_personen_2010.pdf")
+  expect_equal(attributes(df)$description, NULL)
   expect_equal(attributes(df)$description_en, "The data were collected as part of the SOEP-Core study using the questionnaire \"Living in Germany - Survey 2010 on the social situation - Personal questionnaire for all. This questionnaire is addressed to the individual persons in the household. A view of the survey instrument can be found here: https://www.diw.de/documents/dokumentenarchiv/17/diw_01.c.369781.de/soepfrabo_personen_2010.pdf")
   expect_equal(attributes(df)$description_de, "Die Daten wurden im Rahmen der Studie SOEP-Core mittels des Fragebogens „Leben in Deutschland – Befragung 2010 zur sozialen Lage - Personenfragebogen für alle“ erhoben. Dieser Fragebogen richtet sich an die einzelnen Personen im Haushalt. Eine Ansicht des Erhebungsinstrumentes finden Sie hier: https://www.diw.de/documents/dokumentenarchiv/17/diw_01.c.369781.de/soepfrabo_personen_2010.pdf")
   expect_equal(attributes(df)$url, "https://paneldata.org/soep-core/data/bap")
@@ -1213,37 +1215,39 @@ test_that("convert_opendf_xml2_all_default_xml", {
   # - variable attributes
   expect_equal(names(attributes(df$bap87)), c(
     "name",
-    "label",
+    "label_default",
     "label_en",
     "label_de",
-    "description",
+    "description_default",
     "description_en",
     "description_de",
     "type",
     "url",
-    "labels",
+    "labels_default",
     "labels_en",
-    "labels_de"
+    "labels_de",
+    "languages",
+    "lang",
+    "label"
   ))
   # - variables content
   expect_equal(attributes(df$bap96)$name, "bap96")
   expect_equal(attributes(df$bap96)$label, "Height")
   expect_equal(attributes(df$bap96)$label_de, "Körpergröße")
   expect_equal(attributes(df$bap96)$label_en, "Height")
-  expect_equal(attributes(df$bap96)$description, "Body size")
+  expect_equal(attributes(df$bap96)$description, NULL)
   expect_equal(attributes(df$bap96)$description_de, "Körpergröße")
   expect_equal(attributes(df$bap96)$description_en, "Body size")
   expect_equal(attributes(df$bap96)$url, "https://paneldata.org/soep-core/data/bap/bap96")
-  expect_equal(unname(attributes(df$bap96)$labels),c(-2,-1))
-  expect_equal(names(attributes(df$bap96)$labels), c("Does not apply", "No Answer"))
+  expect_equal(unname(attributes(df$bap96)$labels), NULL)
+  expect_equal(names(attributes(df$bap96)$labels), NULL)
   expect_equal(unname(attributes(df$bap96)$labels_en),c(-2,-1))
   expect_equal(names(attributes(df$bap96)$labels_en), c("Does not apply", "No Answer"))
   expect_equal(unname(attributes(df$bap96)$labels_de),c(-2,-1))
   expect_equal(names(attributes(df$bap96)$labels_de), c("trifft nicht zu", "keine Angabe"))
 })
 #' convert_opendf_xml2r_standard_xml: default languages
-test_that("convert_opendf_xml2_default_standard_xml", {
-  # xml without default
+test_that("convert_opendf_xml2_default_default_xml", {
   df <- convert_opendf(
     format = "xml2r",
     input = "testdata/data.zip",
@@ -1261,22 +1265,27 @@ test_that("convert_opendf_xml2_default_standard_xml", {
   expect_equal(attributes(df)$names, c("bap87","bap9201","bap9001","bap9002",
                                        "bap9003","bap96","name"))
   expect_equal(attributes(df)$name, "bap")
+  expect_equal(attributes(df)$label, NULL)
+  expect_equal(attributes(df)$description, NULL)
   expect_equal(attributes(df)$url, "https://paneldata.org/soep-core/data/bap")
   expect_equal(attributes(df)$class, "data.frame")
   # - variable attributes
   expect_equal(names(attributes(df$bap87)), c(
     "name",
     "type",
-    "url",
-    "labels"
+    "url"
   ))
   # - variables content
   expect_equal(attributes(df$bap96)$name, "bap96")
+  expect_equal(attributes(df$bap96)$label, NULL)
+  expect_equal(attributes(df$bap96)$description, NULL)
   expect_equal(attributes(df$bap96)$url, "https://paneldata.org/soep-core/data/bap/bap96")
-  expect_equal(unname(attributes(df$bap96)$labels),c(-2,-1))
+  expect_equal(unname(attributes(df$bap96)$labels),NULL)
+  expect_equal(names(attributes(df$bap96)$labels), NULL)
 })
 #' convert_opendf_xml2r_default_xml: default languages
-test_that("convert_opendf_xml2_default_default_xml", {
+test_that("convert_opendf_xml2_default_standard_xml", {
+  # xml without default
   df <- convert_opendf(
     format = "xml2r",
     input = "testdata/data_with_default.zip",
@@ -1287,41 +1296,43 @@ test_that("convert_opendf_xml2_default_default_xml", {
     "names",
     "row.names",
     "name",
-    "label",
-    "description",
+    "languages",
+    "label_default",
+    "description_default",
     "url",
+    "lang",
+    "label",
     "class"
   ))
   # - dataset content
   expect_equal(attributes(df)$names, c("bap87","bap9201","bap9001","bap9002",
                                        "bap9003","bap96","name"))
   expect_equal(attributes(df)$name, "bap")
-  expect_equal(attributes(df)$label, "Data from individual questionnaires 2010")
-  expect_equal(attributes(df)$description, "The data were collected as part of the SOEP-Core study using the questionnaire \"Living in Germany - Survey 2010 on the social situation - Personal questionnaire for all. This questionnaire is addressed to the individual persons in the household. A view of the survey instrument can be found here: https://www.diw.de/documents/dokumentenarchiv/17/diw_01.c.369781.de/soepfrabo_personen_2010.pdf")
+  expect_equal(attributes(df)$label_default, "Data from individual questionnaires 2010")
+  expect_equal(attributes(df)$description_default, "The data were collected as part of the SOEP-Core study using the questionnaire \"Living in Germany - Survey 2010 on the social situation - Personal questionnaire for all. This questionnaire is addressed to the individual persons in the household. A view of the survey instrument can be found here: https://www.diw.de/documents/dokumentenarchiv/17/diw_01.c.369781.de/soepfrabo_personen_2010.pdf")
+  expect_equal(attributes(df)$languages, "default")
   expect_equal(attributes(df)$url, "https://paneldata.org/soep-core/data/bap")
   expect_equal(attributes(df)$class, "data.frame")
   # - variable attributes
   expect_equal(names(attributes(df$bap87)), c(
-    "languages",
-    "lang",
     "name",
-    "label_en",
-    "label_de",
-    "description_en",
-    "description_de",
+    "label_default",
+    "description_default",
     "type",
     "url",
-    "labels_en",
-    "labels_de"
+    "labels_default",
+    "languages",
+    "lang",
+    "label"
   ))
   # - variables content
   expect_equal(attributes(df$bap96)$name, "bap96")
-  expect_equal(attributes(df$bap96)$label, "Height")
-  expect_equal(attributes(df$bap96)$description, "Body size")
+  expect_equal(attributes(df$bap96)$label_default, "Height")
+  expect_equal(attributes(df$bap96)$description_default, "Body size")
+  expect_equal(attributes(df$bap96)$languages, "default")
   expect_equal(attributes(df$bap96)$url, "https://paneldata.org/soep-core/data/bap/bap96")
   expect_equal(unname(attributes(df$bap96)$labels),c(-2,-1))
-  expect_equal(names(attributes(df$bap96)$labels), c("Does not apply", "No Answer"))
-  })
+})
 #' convert_opendf_xml2r_standard_xml: language selection
 test_that("convert_opendf_xml2_lang_standard_xml", {
   # xml without default
@@ -1335,11 +1346,12 @@ test_that("convert_opendf_xml2_lang_standard_xml", {
     "names",
     "row.names",
     "name",
-    "label",
+    "languages",
     "label_en",
-    "description",
     "description_en",
     "url",
+    "lang",
+    "label",
     "class"
   ))
   # - dataset content
@@ -1348,34 +1360,30 @@ test_that("convert_opendf_xml2_lang_standard_xml", {
   expect_equal(attributes(df)$name, "bap")
   expect_equal(attributes(df)$label, "Data from individual questionnaires 2010")
   expect_equal(attributes(df)$label_en, "Data from individual questionnaires 2010")
-  expect_equal(attributes(df)$description, "The data were collected as part of the SOEP-Core study using the questionnaire \"Living in Germany - Survey 2010 on the social situation - Personal questionnaire for all. This questionnaire is addressed to the individual persons in the household. A view of the survey instrument can be found here: https://www.diw.de/documents/dokumentenarchiv/17/diw_01.c.369781.de/soepfrabo_personen_2010.pdf")
   expect_equal(attributes(df)$description_en, "The data were collected as part of the SOEP-Core study using the questionnaire \"Living in Germany - Survey 2010 on the social situation - Personal questionnaire for all. This questionnaire is addressed to the individual persons in the household. A view of the survey instrument can be found here: https://www.diw.de/documents/dokumentenarchiv/17/diw_01.c.369781.de/soepfrabo_personen_2010.pdf")
   expect_equal(attributes(df)$url, "https://paneldata.org/soep-core/data/bap")
   expect_equal(attributes(df)$class, "data.frame")
   # - variable attributes
   expect_equal(names(attributes(df$bap87)), c(
-    "languages",
-    "lang",
     "name",
     "label_en",
-    "label_de",
     "description_en",
-    "description_de",
     "type",
     "url",
     "labels_en",
-    "labels_de"
+    "languages",
+    "lang",
+    "label"
   ))
   # - variables content
   expect_equal(attributes(df$bap96)$name, "bap96")
-  expect_equal(attributes(df$bap96)$label, NULL)
+  expect_equal(attributes(df$bap96)$label, "Height")
   expect_equal(attributes(df$bap96)$label_en, "Height")
-  expect_equal(attributes(df$bap96)$description, NULL)
   expect_equal(attributes(df$bap96)$description_en, "Body size")
   expect_equal(attributes(df$bap96)$url, "https://paneldata.org/soep-core/data/bap/bap96")
-  expect_equal(unname(attributes(df$bap96)$labels_de),c(-2,-1))
+  expect_equal(unname(attributes(df$bap96)$labels_de),NULL)
   expect_equal(unname(attributes(df$bap96)$labels_en),c(-2,-1))
-  expect_equal(names(attributes(df$bap96)$labels_de), c("trifft nicht zu", "keine Angabe"))
+  expect_equal(names(attributes(df$bap96)$labels_de), NULL)
   expect_equal(names(attributes(df$bap96)$labels_en), c("Does not apply", "No Answer"))
 })
 #' convert_opendf_xml2r_default_xml: language selection
@@ -1391,53 +1399,47 @@ test_that("convert_opendf_xml2_lang_default_xml", {
     "row.names",
     "name",
     "languages",
-    "label",
     "label_en",
-    "label_de",
     "description_en",
-    "description_de",
     "url",
     "lang",
+    "label",
     "class"
   ))
   # - dataset content
   expect_equal(attributes(df)$names, c("bap87","bap9201","bap9001","bap9002",
                                        "bap9003","bap96","name"))
   expect_equal(attributes(df)$name, "bap")
-  expect_equal(attributes(df)$label, NULL)
+  expect_equal(attributes(df)$label, "Data from individual questionnaires 2010")
   expect_equal(attributes(df)$label_en, "Data from individual questionnaires 2010")
-  expect_equal(attributes(df)$label_de, "Daten vom Personenfragebogen 2010")
-  expect_equal(attributes(df)$description, NULL)
+  expect_equal(attributes(df)$label_de, NULL)
   expect_equal(attributes(df)$description_en, "The data were collected as part of the SOEP-Core study using the questionnaire \"Living in Germany - Survey 2010 on the social situation - Personal questionnaire for all. This questionnaire is addressed to the individual persons in the household. A view of the survey instrument can be found here: https://www.diw.de/documents/dokumentenarchiv/17/diw_01.c.369781.de/soepfrabo_personen_2010.pdf")
-  expect_equal(attributes(df)$description_de, "Die Daten wurden im Rahmen der Studie SOEP-Core mittels des Fragebogens „Leben in Deutschland – Befragung 2010 zur sozialen Lage - Personenfragebogen für alle“ erhoben. Dieser Fragebogen richtet sich an die einzelnen Personen im Haushalt. Eine Ansicht des Erhebungsinstrumentes finden Sie hier: https://www.diw.de/documents/dokumentenarchiv/17/diw_01.c.369781.de/soepfrabo_personen_2010.pdf")
+  expect_equal(attributes(df)$description_de, NULL)
   expect_equal(attributes(df)$url, "https://paneldata.org/soep-core/data/bap")
   expect_equal(attributes(df)$class, "data.frame")
   # - variable attributes
   expect_equal(names(attributes(df$bap87)), c(
-    "languages", 
-    "lang", 
     "name",
     "label_en",
-    "label_de",
     "description_en",
-    "description_de",
     "type",
     "url",
     "labels_en",
-    "labels_de"
+    "languages",
+    "lang",
+    "label" 
   ))
   # - variables content
   expect_equal(attributes(df$bap96)$name, "bap96")
-  expect_equal(attributes(df$bap96)$label_de, "Körpergröße")
+  expect_equal(attributes(df$bap96)$label_de, NULL)
   expect_equal(attributes(df$bap96)$label_en, "Height")
-  expect_equal(attributes(df$bap96)$label, NULL)
-  expect_equal(attributes(df$bap96)$description, NULL)
+  expect_equal(attributes(df$bap96)$label, "Height")
   expect_equal(attributes(df$bap96)$description_en, "Body size")
-  expect_equal(attributes(df$bap96)$description_de, "Körpergröße")
+  expect_equal(attributes(df$bap96)$description_de, NULL)
   expect_equal(attributes(df$bap96)$url, "https://paneldata.org/soep-core/data/bap/bap96")
   expect_equal(unname(attributes(df$bap96)$labels_en),c(-2,-1))
   expect_equal(names(attributes(df$bap96)$labels_en), c("Does not apply", "No Answer"))
-  expect_equal(names(attributes(df$bap96)$labels_de), c("trifft nicht zu",    "keine Angabe"))
+  expect_equal(names(attributes(df$bap96)$labels_de), NULL)
 })
 # convert_opendf_r2xml: test export_data,
 # export_data = yes, variables = yes, languages = all
@@ -1558,8 +1560,6 @@ test_that("convert_opendf_r2xml_languages", {
 # convert_opendf_csv2xml: test export_data,
 # export_data = yes, variables = yes, languages = all
 test_that("convert_opendf_csv2xml_export_data", {
-  # - get data
-  df <- get(load("testdata/data_odf.RData"))
   # - make xml and data
   convert_opendf(
     format = "csv2xml",
@@ -1578,15 +1578,15 @@ test_that("convert_opendf_csv2xml_export_data", {
   convert_opendf(
     format = "csv2xml",
     input = "testdata/csv",
-    output = paste0(tempdir(),"/MY_XML"),
+    output = paste0(tempdir(),"/MY_XML2"),
     languages = "all",
     variables = "yes",
     export_data = "no" # changed
   )
   # -- test if file exists
-  expect_false(file.exists(paste0(tempdir(),"/MY_XML/data.csv")))
-  expect_true(file.exists(paste0(tempdir(),"/MY_XML/metadata.xml")))
-  expect_true(file.exists(paste0(tempdir(),"/MY_XML.zip")))
+  expect_false(file.exists(paste0(tempdir(),"/MY_XML2/data.csv")))
+  expect_true(file.exists(paste0(tempdir(),"/MY_XML2/metadata.xml")))
+  expect_true(file.exists(paste0(tempdir(),"/MY_XML2.zip")))
   unlink(paste0(tempdir(),"/*"), recursive = TRUE)
 })
 # convert_opendf_csv2xml: test variables,
