@@ -86,6 +86,9 @@ var_header_data_default <- function(data) {
             var_header_reduced <- append(var_header_reduced, item)
         }
     }
+    if ("languages" %in% var_header_reduced  | "lang" %in% var_header_reduced){
+      var_header_reduced<-var_header_reduced[-which(var_header_reduced %in% c("languages", "lang"))]
+    }
     return(var_header_reduced)
 }
 #' variables matrix
@@ -190,6 +193,9 @@ var_header_var_default <- function(variable) {
             ) {
             var_header_reduced <- append(var_header_reduced, item)
         }
+    }
+    if ("languages" %in% var_header_reduced  | "lang" %in% var_header_reduced){
+      var_header_reduced<-var_header_reduced[-which(var_header_reduced %in% c("languages", "lang"))]
     }
     return(var_header_reduced)
 }
