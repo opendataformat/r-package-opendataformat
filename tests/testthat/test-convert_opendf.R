@@ -150,19 +150,17 @@ test_that("convert_opendf_r2csv_lang", {
     variables = "yes",
     export_data = "yes"
   )
-  ############################################################################################################
   df_variables <- read.csv(file = paste0(tempdir(),"/variables.csv"))
   expect_equal(attributes(df_variables)$names, c(
-    "languages",
-    "lang",
     "variable",
-    "label",
-    "description",
+    "label_en",
+    "description_en",
     "type",
     "url"
   ))
-  expect_equal(df_variables$label[1], "Current Health")
+  expect_equal(df_variables$label_en[1], "Current Health")
   expect_equal(df_variables$label_de[1], NULL)
+  ############################################################################################################
   unlink(paste0(tempdir(),"/*"))
   # --- variable input
   convert_opendf(
