@@ -10,9 +10,8 @@
 #' 
 #' @param input R data frame (df) or variable from an R data frame (df$var).
 #'
-#' @param languages
-#' Select the language in which the descriptions and labels of the data will be displayed
-#'
+#' @param languages Select the language in which the descriptions and labels of the data will be displayed
+#' 
 #' * By default the language that is set to current is displayed
 #' (\code{languages = "current"}).
 #' * The default-option chooses either the default language(if labels and descriptions without a language tag exist)
@@ -22,7 +21,19 @@
 #' (\code{languages = "all"}),
 #' * or you can select the language by language code, e.g.
 #' \code{languages = "en"}.
-#'
+#' 
+#' @param style Selects where the output should be displayed (console ore viewer).
+#' * By default the metadata information is displayed in both the console and the viewer.
+#' (\code{style = "both"}).
+#' (\code{style = "all"}).
+#' @param style Selects where the output should be displayed (console ore viewer). Default is "both"
+#' * You can choose to display the code only in the console
+#' (\code{style = "console"}).
+#' (\code{style = "print"}).
+#' * You can choose to display the code only in the viewer
+#' (\code{style = "viewer"}).
+#' (\code{style = "html"}).
+#' 
 #' @return Documentation.
 #'
 #' @examples
@@ -48,7 +59,7 @@
 #'
 #' @export
  
-docu2_opendf<-function(input, languages="current"){
+docu2_opendf<-function(input, languages="current", style="both"){
   
   #check whether input is dataset or variable
   if ("data.frame" %in% class(input)){
@@ -107,11 +118,13 @@ docu2_opendf<-function(input, languages="current"){
   #get value labels for each language
   if(input_type=="Variable"){
     valuelabels=list()
+    valuelabels_html=list()
     type=attr(input, "type")
     for (l in languages){
       labels=attr(input, paste0("labels",l))
       labels_names=names(attr(input, paste0("labels",l)))
       valuelabels[l]<-paste0("    ",labels, ": ", labels_names, "\n", collapse="")
+      valuelabels_html[l]<-paste0("<tr><td>&#160;&#160;&#160;&#160;",labels, "</td><td>&#160;&#160;&#160;&#160;", labels_names, "</td></tr>", collapse="")
     }
   }
   
@@ -121,7 +134,11 @@ docu2_opendf<-function(input, languages="current"){
     crayon::underline(crayon::bold(paste0(input_type, ":\n"))),
     paste0("    ", name, "\n")
   )
-  
+  html_output<-paste0(
+    "<html><body>",
+    "<h2>", input_type, ": ",  name,"</h2>"
+    )
+
   #label
   for (l in languages){
     printing_output<-c(
@@ -129,14 +146,22 @@ docu2_opendf<-function(input, languages="current"){
       crayon::bold(paste0("Label (", gsub("_","",l), "):\n")),
       paste0("    ", label[[l]], "\n")
     )
+    html_output<-paste0(
+      html_output,
+      "<h3>Label (", gsub("_","",l), "):","</h3>", "<p>", label[[l]], "</p>"
+    )
   }
   
-  #languages
+  #Description
   for (l in languages){
     printing_output<-c(
       paste0(printing_output),
       crayon::bold(paste0("Description (", gsub("_","",l), "):\n")),
       paste0("    ", description[[l]], "\n")
+    )
+    html_output<-paste0(
+      html_output,
+      "<h3>Description (", gsub("_","",l), "):","</h3>", "<p>", description[[l]], "</p>"
     )
   }
   
@@ -149,6 +174,13 @@ docu2_opendf<-function(input, languages="current"){
           crayon::bold(paste0("Value Labels ", gsub("_","",l), ":\n")),
           paste0(valuelabels[[which(names(valuelabels)==l)]])
         )
+        html_output<-paste0(
+          html_output,
+          "<h3>Value Labels (", gsub("_","",l), "):",
+          "<table><tr><th>Values</th><th>Labels</th></tr>", 
+          paste0(valuelabels_html[[which(names(valuelabels_html)==l)]]),
+          "</table>"
+        )
       }
     }
     #Type
@@ -156,6 +188,10 @@ docu2_opendf<-function(input, languages="current"){
       paste0(printing_output),
       crayon::bold("type:\n"),
       paste0("    ", type, "\n")
+    )
+    html_output<-paste0(
+      html_output,
+      "<h3>type:","</h3>", type
     )
   }
   
@@ -166,6 +202,10 @@ docu2_opendf<-function(input, languages="current"){
       crayon::bold("languages:\n"),
       paste0("    ", paste0(input_languages,collapse = " "), " (active: ", input_lang, ")", "\n")
     )
+    html_output<-paste0(
+      html_output,
+      "<h3>languages:","</h3>", paste0("<p>", paste0(input_languages,collapse = " "), " (active: ", input_lang, ")", "</p>")
+    )
   }
   
   #url
@@ -174,8 +214,27 @@ docu2_opendf<-function(input, languages="current"){
     crayon::bold("url:\n"),
     paste0("    ", interactive_url, "\n")
   )
+  html_output<-paste0(
+    html_output,
+    "<h3>url:","</h3>", paste0("<p><a href='",url,"'>",url,"</a></p>")
+  )
+  
+  html_output<-paste0(html_output,"</html></body>")
   #print meta data in console
-  for (i in 1:length(printing_output)){
-    cat(printing_output[i])
+  if (style %in% c("both", "all", "print", "console")){
+    for (i in 1:length(printing_output)){
+      cat(printing_output[i])
+    }
+  }
+  #print meta data in viewer
+  if (style %in% c("both", "all", "html", "viewer")){
+    #create html tempfile and write html output
+    tempDir <- tempfile()
+    dir.create(tempDir)
+    htmlFile <- file.path(tempDir, "docu.html")
+    viewer <- getOption("viewer")
+    writeLines(html_output
+               , htmlFile)
+    viewer(htmlFile)
   }
 }

@@ -4,7 +4,7 @@
 \alias{docu2_opendf}
 \title{Get documentation from R data frame.}
 \usage{
-docu2_opendf(input, languages = "current")
+docu2_opendf(input, languages = "current", style = "both")
 }
 \arguments{
 \item{input}{R data frame (df) or variable from an R data frame (df$var).}
@@ -20,6 +20,16 @@ docu2_opendf(input, languages = "current")
 (\code{languages = "all"}),
 \item or you can select the language by language code, e.g.
 \code{languages = "en"}.
+}}
+
+\item{style}{Selects where the output should be displayed (console ore viewer). Default is "both"
+\itemize{
+\item You can choose to display the code only in the console
+(\code{style = "console"}).
+(\code{style = "print"}).
+\item You can choose to display the code only in the viewer
+(\code{style = "viewer"}).
+(\code{style = "html"}).
 }}
 }
 \value{
