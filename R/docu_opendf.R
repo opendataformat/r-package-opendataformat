@@ -70,7 +70,7 @@
  
 docu_opendf<-function(input, languages="current", style="both"){
   if (!("opendf" %in% class(input))){
-    stop(paste0(input), " not a data frame in the opendf-format")
+    stop("Input not a data frame in the opendf-format.")
   }
   
   #check whether input is dataset or variable
