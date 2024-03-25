@@ -69,8 +69,10 @@
 #' @export
  
 docu_opendf<-function(input, languages="current", style="both"){
-  if ((data.frame %in% class(input) & !("opendf" %in% class(input)))| (!("lang" %in% names(attributes(input))) & !("languages" %in% names(attributes(input)))) ){
-    stop("Input not a data frame in the opendf-format.")
+
+  
+  if (("data.frame" %in% class(input) & !("opendf" %in% class(input)))| (!("lang" %in% names(attributes(input))) & !("languages" %in% names(attributes(input)))) ){
+    stop("Input is not a dataframe or variable in the opendf-format.")
   }
   
   #check whether input is dataset or variable
@@ -78,7 +80,7 @@ docu_opendf<-function(input, languages="current", style="both"){
     input_type<-"Dataset"
   } else {
     input_type="Variable"
-    if (class(input)=="NULL") stop(paste0(variable," not found"))
+    if (class(input)=="NULL") stop("Input not found")
   }
   
   #assign languages and currentlanguage
@@ -86,7 +88,7 @@ docu_opendf<-function(input, languages="current", style="both"){
   input_lang<-unlist(attr(input, "lang"))
   
   #Check if languages argument is valid
-  if (!(languages %in% c(input_languages, "current", "default", "all"))) stop("Invalid argument language.")
+  if (!(languages %in% c(input_languages, "current", "default", "all"))) stop("Your language selection is not valid.")
   
   
   #if languages is set to default, but no default language exists, the current language is used
