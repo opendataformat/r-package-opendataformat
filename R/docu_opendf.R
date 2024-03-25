@@ -131,14 +131,23 @@ docu_opendf<-function(input, languages="current", style="both"){
   
   #get value labels for each language
   if(input_type=="Variable"){
-    valuelabels=list()
-    valuelabels_html=list()
+    valuelabels_tab<-data.frame()
     type=attr(input, "type")
     for (l in languages){
       labels=attr(input, paste0("labels",l))
       labels_names=names(attr(input, paste0("labels",l)))
-      valuelabels[l]<-paste0("    ",labels, ": ", labels_names, "\n", collapse="")
-      valuelabels_html[l]<-paste0("<tr><td>&#160;&#160;&#160;&#160;",labels, "</td><td>&#160;&#160;&#160;&#160;", labels_names, "</td></tr>", collapse="")
+      if(length(valuelabels_tab)==0) {
+        valuelabels_tab<-data.frame(Value=labels, Label=labels_names)
+        colnames(valuelabels_tab)[2]<-sub("_","", l)
+      } else {
+        valuelabels_tab_new<-data.frame(Value=labels, Label=labels_names)
+        colnames(valuelabels_tab_new)[2]<-sub("_","", l)
+        valuelabels_tab<-merge(valuelabels_tab, valuelabels_tab_new , by="Value", all=T)
+      }
+    }
+    valuelabels_html=paste0("<tr>", paste0("<th>",names(valuelabels_tab), "</th>", collapse=""),"</tr>")
+    for (i in 1:nrow(valuelabels_tab)){
+      valuelabels_html<-paste0(valuelabels_html, "<tr>", paste0("<td>&#160;&#160;&#160;&#160;",valuelabels_tab[i,], "</td>", collapse=""),"</tr>")
     }
   }
   
@@ -149,54 +158,74 @@ docu_opendf<-function(input, languages="current", style="both"){
     paste0("    ", name, "\n")
   )
   html_output<-paste0(
-    "<html><body>",
-    "<h2>", input_type, ": ",  name,"</h2>"
+    "<html><head><meta charset='utf-8'><style>body {
+    word-break: break-word;
+    overflow-wrap: break-word;
+    }
+</style></head><body>",
+    "<h3>", input_type, ": ",  name,"</h3>"
     )
 
   #label
+  printing_output<-c(
+    paste0(printing_output),
+    crayon::bold("Label:\n")
+    )
+  html_output<-paste0(
+    html_output,
+    "<p><b>Label:</b>"
+    )
   for (l in languages){
     printing_output<-c(
       paste0(printing_output),
-      crayon::bold(paste0("Label (", gsub("_","",l), "):\n")),
-      paste0("    ", label[[l]], "\n")
+      "[",gsub("_","",l), "]", label[[l]], "\n"
     )
     html_output<-paste0(
       html_output,
-      "<h3>Label (", gsub("_","",l), "):","</h3>", "<p>", label[[l]], "</p>"
+      "<br>[", gsub("_","",l), "] ",label[[l]]
     )
   }
+  html_output<-paste0(
+    html_output, "</p>"
+    )
   
   #Description
+  #label
+  printing_output<-c(
+    paste0(printing_output),
+    crayon::bold("Description:\n")
+  )
+  html_output<-paste0(
+    html_output,
+    "<p><b>Description:</b>"
+  )
   for (l in languages){
     printing_output<-c(
       paste0(printing_output),
-      crayon::bold(paste0("Description (", gsub("_","",l), "):\n")),
-      paste0("    ", description[[l]], "\n")
+      "[",gsub("_","",l), "]", description[[l]], "\n"
     )
     html_output<-paste0(
       html_output,
-      "<h3>Description (", gsub("_","",l), "):","</h3>", "<p>", description[[l]], "</p>"
+      "<br>[", gsub("_","",l), "] ",description[[l]]
     )
   }
+  html_output<-paste0(
+    html_output, "</p>"
+  )
   
   #Value Labels
   if (input_type=="Variable"){
-    for (l in languages){
-      if (valuelabels[[which(names(valuelabels)==l)]] != "    : \n"){
-        printing_output<-c(
-          paste0(printing_output),
-          crayon::bold(paste0("Value Labels ", gsub("_","",l), ":\n")),
-          paste0(valuelabels[[which(names(valuelabels)==l)]])
-        )
-        html_output<-paste0(
-          html_output,
-          "<h3>Value Labels (", gsub("_","",l), "):",
-          "<table><tr><th>Values</th><th>Labels</th></tr>", 
-          paste0(valuelabels_html[[which(names(valuelabels_html)==l)]]),
-          "</table>"
-        )
-      }
-    }
+    printing_output<-c(
+        paste0(printing_output),
+        crayon::bold("Value Labels:\n"),
+        "valuelabels"
+      )
+    html_output<-paste0(
+      html_output,
+      "<p><b>Value Labels: </b><br>",
+      "<table>", valuelabels_html,"</table></p>"
+    )
+    
     #Type
     printing_output<-c(
       paste0(printing_output),
@@ -205,7 +234,7 @@ docu_opendf<-function(input, languages="current", style="both"){
     )
     html_output<-paste0(
       html_output,
-      "<h3>type:","</h3>", type
+      "<p><b>type:","</b><br>", type, "</p>"
     )
   }
   
@@ -218,7 +247,7 @@ docu_opendf<-function(input, languages="current", style="both"){
     )
     html_output<-paste0(
       html_output,
-      "<h3>languages:","</h3>", paste0("<p>", paste0(input_languages,collapse = " "), " (active: ", input_lang, ")", "</p>")
+      "<p><b>languages:","</b><br>", paste0(paste0(input_languages,collapse = " "), " (active: ", input_lang, ")", "</p>")
     )
   }
   
@@ -230,14 +259,14 @@ docu_opendf<-function(input, languages="current", style="both"){
   )
   html_output<-paste0(
     html_output,
-    "<h3>url:","</h3>", paste0("<p><a href='",url,"'>",url,"</a></p>")
+    "<p><b>url:","</b><br>", paste0("<a href='",url,"'>",url,"</a></p>")
   )
   
   html_output<-paste0(html_output,"</html></body>")
   #print meta data in console
   if (style %in% c("both", "all", "print", "console")){
     for (i in 1:length(printing_output)){
-      cat(printing_output[i])
+      if (printing_output[i] != "valuelabels") {cat(printing_output[i])} else print(valuelabels_tab, row.names = FALSE)
     }
   }
   #print meta data in viewer
