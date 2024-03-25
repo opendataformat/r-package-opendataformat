@@ -69,7 +69,7 @@
 #' @export
  
 docu_opendf<-function(input, languages="current", style="both"){
-  if (!("opendf" %in% class(input))){
+  if ((data.frame %in% class(input) & !("opendf" %in% class(input)))| (!("lang" %in% names(attributes(input))) & !("languages" %in% names(attributes(input)))) ){
     stop("Input not a data frame in the opendf-format.")
   }
   
@@ -241,8 +241,7 @@ docu_opendf<-function(input, languages="current", style="both"){
   #print meta data in viewer
   if (style %in% c("both", "all", "html", "viewer")){
     #create html tempfile and write html output
-    tempDir <- tempfile()
-    dir.create(tempDir)
+    tempDir <- tempdir()
     htmlFile <- file.path(tempDir, "docu.html")
     viewer <- getOption("viewer")
     writeLines(html_output
