@@ -5,32 +5,10 @@ test_that("make_data", {
   # - get data
   df <- get(load("testdata/data_odf.RData"))
   # -- test if class is data.frame
-  expect_equal(class(df), "data.frame")
+  expect_equal(class(df), c("data.frame", "opendf"))
   expect_equal(class(make_data(df)$bap96), "numeric")
   expect_equal(class(make_data(df)$bap87), "integer")
 
-  # # - manipulate data: make data frame tibble
-  # library("tidyverse")
-  # df_tib <- as_tibble(df)
-  # # -- test
-  # expect_equal(class(df_tib$bap96), "numeric")
-  # # - manipulate data: make variable from class "haven labelled"
-  # library("haven")
-  # df_tib$bap87 <- labelled(
-  #   df_tib$bap87, c(
-  #     "Does not apply" = -2,
-  #     "No Answer" = -1,
-  #     "very good" = 1,
-  #     "Good" = 2,
-  #     "Satisfactory" = 3,
-  #     "Poor" = 4,
-  #     "Bad" = 5 )
-  # )
-  # expect_equal(class(df_tib$bap87)[1], "haven_labelled")
-  # # - test conversion from class "numeric" to "character"
-  # expect_equal(class(make_data(df_tib)$bap96), "character")
-  # # - test conversion from class "haven_labelled" to "character"
-  # expect_equal(class(make_data(df_tib)$bap87), "character")
 })
 #' write_odf_csv: checks if output dir exists, and writes rdata to CSV in dir
 test_that("write_odf_csv", {
