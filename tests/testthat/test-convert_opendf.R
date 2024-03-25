@@ -1144,7 +1144,7 @@ test_that("convert_opendf_xml2_all_standard_xml", {
   expect_equal(attributes(df)$description_en, "The data were collected as part of the SOEP-Core study using the questionnaire \"Living in Germany - Survey 2010 on the social situation - Personal questionnaire for all. This questionnaire is addressed to the individual persons in the household. A view of the survey instrument can be found here: https://www.diw.de/documents/dokumentenarchiv/17/diw_01.c.369781.de/soepfrabo_personen_2010.pdf")
   expect_equal(attributes(df)$description_de, "Die Daten wurden im Rahmen der Studie SOEP-Core mittels des Fragebogens „Leben in Deutschland – Befragung 2010 zur sozialen Lage - Personenfragebogen für alle“ erhoben. Dieser Fragebogen richtet sich an die einzelnen Personen im Haushalt. Eine Ansicht des Erhebungsinstrumentes finden Sie hier: https://www.diw.de/documents/dokumentenarchiv/17/diw_01.c.369781.de/soepfrabo_personen_2010.pdf")
   expect_equal(attributes(df)$url, "https://paneldata.org/soep-core/data/bap")
-  expect_equal(attributes(df)$class, "data.frame")
+  expect_equal(attributes(df)$class, c("data.frame", "opendf"))
   # - variable attributes
   expect_equal(names(attributes(df$bap87)), c(
     "name",
@@ -1211,7 +1211,7 @@ test_that("convert_opendf_xml2_all_default_xml", {
   expect_equal(attributes(df)$description_en, "The data were collected as part of the SOEP-Core study using the questionnaire \"Living in Germany - Survey 2010 on the social situation - Personal questionnaire for all. This questionnaire is addressed to the individual persons in the household. A view of the survey instrument can be found here: https://www.diw.de/documents/dokumentenarchiv/17/diw_01.c.369781.de/soepfrabo_personen_2010.pdf")
   expect_equal(attributes(df)$description_de, "Die Daten wurden im Rahmen der Studie SOEP-Core mittels des Fragebogens „Leben in Deutschland – Befragung 2010 zur sozialen Lage - Personenfragebogen für alle“ erhoben. Dieser Fragebogen richtet sich an die einzelnen Personen im Haushalt. Eine Ansicht des Erhebungsinstrumentes finden Sie hier: https://www.diw.de/documents/dokumentenarchiv/17/diw_01.c.369781.de/soepfrabo_personen_2010.pdf")
   expect_equal(attributes(df)$url, "https://paneldata.org/soep-core/data/bap")
-  expect_equal(attributes(df)$class, "data.frame")
+  expect_equal(attributes(df)$class, c("data.frame", "opendf"))
   # - variable attributes
   expect_equal(names(attributes(df$bap87)), c(
     "name",
@@ -1268,7 +1268,7 @@ test_that("convert_opendf_xml2_default_default_xml", {
   expect_equal(attributes(df)$label, NULL)
   expect_equal(attributes(df)$description, NULL)
   expect_equal(attributes(df)$url, "https://paneldata.org/soep-core/data/bap")
-  expect_equal(attributes(df)$class, "data.frame")
+  expect_equal(attributes(df)$class, c("data.frame", "opendf"))
   # - variable attributes
   expect_equal(names(attributes(df$bap87)), c(
     "name",
@@ -1312,7 +1312,7 @@ test_that("convert_opendf_xml2_default_standard_xml", {
   expect_equal(attributes(df)$description_default, "The data were collected as part of the SOEP-Core study using the questionnaire \"Living in Germany - Survey 2010 on the social situation - Personal questionnaire for all. This questionnaire is addressed to the individual persons in the household. A view of the survey instrument can be found here: https://www.diw.de/documents/dokumentenarchiv/17/diw_01.c.369781.de/soepfrabo_personen_2010.pdf")
   expect_equal(attributes(df)$languages, "default")
   expect_equal(attributes(df)$url, "https://paneldata.org/soep-core/data/bap")
-  expect_equal(attributes(df)$class, "data.frame")
+  expect_equal(attributes(df)$class, c("data.frame", "opendf"))
   # - variable attributes
   expect_equal(names(attributes(df$bap87)), c(
     "name",
@@ -1362,7 +1362,7 @@ test_that("convert_opendf_xml2_lang_standard_xml", {
   expect_equal(attributes(df)$label_en, "Data from individual questionnaires 2010")
   expect_equal(attributes(df)$description_en, "The data were collected as part of the SOEP-Core study using the questionnaire \"Living in Germany - Survey 2010 on the social situation - Personal questionnaire for all. This questionnaire is addressed to the individual persons in the household. A view of the survey instrument can be found here: https://www.diw.de/documents/dokumentenarchiv/17/diw_01.c.369781.de/soepfrabo_personen_2010.pdf")
   expect_equal(attributes(df)$url, "https://paneldata.org/soep-core/data/bap")
-  expect_equal(attributes(df)$class, "data.frame")
+  expect_equal(attributes(df)$class, c("data.frame", "opendf"))
   # - variable attributes
   expect_equal(names(attributes(df$bap87)), c(
     "name",
@@ -1416,7 +1416,7 @@ test_that("convert_opendf_xml2_lang_default_xml", {
   expect_equal(attributes(df)$description_en, "The data were collected as part of the SOEP-Core study using the questionnaire \"Living in Germany - Survey 2010 on the social situation - Personal questionnaire for all. This questionnaire is addressed to the individual persons in the household. A view of the survey instrument can be found here: https://www.diw.de/documents/dokumentenarchiv/17/diw_01.c.369781.de/soepfrabo_personen_2010.pdf")
   expect_equal(attributes(df)$description_de, NULL)
   expect_equal(attributes(df)$url, "https://paneldata.org/soep-core/data/bap")
-  expect_equal(attributes(df)$class, "data.frame")
+  expect_equal(attributes(df)$class, c("data.frame", "opendf"))
   # - variable attributes
   expect_equal(names(attributes(df$bap87)), c(
     "name",
