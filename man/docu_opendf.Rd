@@ -4,7 +4,7 @@
 \alias{docu_opendf}
 \title{Get documentation from R data frame.}
 \usage{
-docu_opendf(input, languages = "current", variables = "no", style = "html")
+docu_opendf(input, languages = "current", style = "both")
 }
 \arguments{
 \item{input}{R data frame (df) or variable from an R data frame (df$var).}
@@ -13,26 +13,23 @@ docu_opendf(input, languages = "current", variables = "no", style = "html")
 \itemize{
 \item By default the language that is set to current is displayed
 (\code{languages = "current"}).
+\item The default-option chooses either the default language(if labels and descriptions without a language tag exist)
+\item Otherwise the current language is displayed.
+(\code{languages = "default"}).
 \item You can choose to view all available language variants by selecting
 (\code{languages = "all"}),
 \item or you can select the language by language code, e.g.
 \code{languages = "en"}.
 }}
 
-\item{variables}{You can choose whether or not to display all the available metadata
-(labels and descriptions of the data set and the variables).
+\item{style}{Selects where the output should be displayed (console ore viewer). Default is "both"
 \itemize{
-\item By default, information describing the dataset is displayed (\code{variables = "no"}).
-\item Selecting \code{variables = "yes"} will also display information about
-the variables included in the dataset.
-}}
-
-\item{style}{You can choose between three display formats:
-\itemize{
-\item By default the documentation is displayed
-as an HTML page (\code{style = "html"}).
-\item To view the documentation within the R console, select \code{style = "print"}
-\item If you want to take a look at both styles, use \code{style = "all"}.
+\item You can choose to display the code only in the console
+(\code{style = "console"}).
+(\code{style = "print"}).
+\item You can choose to display the code only in the viewer
+(\code{style = "viewer"}).
+(\code{style = "html"}).
 }}
 }
 \value{
@@ -46,22 +43,29 @@ and variables via the R-Studio Viewer or the web browser.
 # get example data from the opendataformat package
 df <- get(data("data_opendf"))
 
+# view documentation about the dataset in the language that is currently set
 \dontrun{
-# view documentation about the dataset
 docu_opendf(df)
+}
 
-# view information from a selected variable
-docu_opendf(df$bap87)
+# view information from a selected variable in language "en"
+\dontrun{
+docu_opendf(df$bap87, languages = "en")
+}
 
-# view dataset and variable information
-docu_opendf(df, variables = "yes")
-
-# view information for all available languages
+# view dataset information for all available languages
+\dontrun{
 docu_opendf(df, languages = "all")
+}
 
 # print information to the R console
+\dontrun{
 docu_opendf(df$bap87, style = "print")
 }
 
+# print information to the R viewer
+\dontrun{
+docu_opendf(df$bap87, style = "viewer")
+}
 
 }

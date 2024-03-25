@@ -16,6 +16,7 @@ csv2r <- function(input) {
   data <- dataset_attributes(data, input)
   data <- variables_attributes(data, input)
   data <- categories_attributes(data, input)
+  attr(data, "class") <- c(class(data), "opendf")
   
   if("languages" %in% names(attributes(data))){
     #set first language as active language
