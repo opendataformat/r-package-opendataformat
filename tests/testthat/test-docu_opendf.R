@@ -1,5 +1,5 @@
 #' docu_opendf: test if documentation is generated: 'html'
-test_that("make_docu_html", {
+test_that("docu_opendf", {
   #' - get data
   df <- get(load("testdata/data_odf.RData"))
   #' - test
