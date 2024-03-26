@@ -5,9 +5,9 @@
 #'
 #' @import reticulate
 #'
-#' @param input R data frame (df).
+#' @param x R data frame (df) to be writtem.
 #'
-#' @param output Path to ZIP file.
+#' @param file Path to ZIP file or name of zip file to save the opendf-dataset in the working directory.
 #'
 #' @param languages
 #' Select the language in which the descriptions and labels of the data will be exported
@@ -73,30 +73,32 @@
 #'
 #'
 #' @export
-write_opendf <- function(input,
-                        output,
+write_opendf <- function(x,
+                        file,
                         languages = "all",
                         variables = "yes",
                         export_data = "yes") {
   #if no default labels and descriptions (labels and descriptions without language tag) are available, 
   # return an warning and run write_opendf for the active language
   if (languages=="default"){
-    if (!("default" %in% unlist(attributes(input)["languages"]))){
-      message(paste0("Metadata saved in language: ",unlist(attributes(input)["lang"])))
-      languages=unlist(attributes(input)["lang"])
+    if (!("default" %in% unlist(attributes(x)["languages"]))){
+      message(paste0("Metadata saved in language: ",unlist(attributes(x)["lang"])))
+      languages=unlist(attributes(x)["lang"])
     }else{
       message("Metadata saved in language default without language tag")
     }
   }
   #set language to current language, if current language is indicated
   if (languages=="current"){
-    languages=unlist(attributes(input)["lang"])
+    languages=unlist(attributes(x)["lang"])
   }
   unlink(paste0(tempdir(), "/*"))
+  #remove .zip from file name
+  file<-gsub(".zip","", file)
   opendataformat::convert_opendf(
     format = "r2xml",
-    input,
-    output,
+    x,
+    file,
     languages,
     variables,
     export_data)

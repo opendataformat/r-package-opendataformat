@@ -5,17 +5,17 @@
 \title{Write R data frame to the Open Data Format.}
 \usage{
 write_opendf(
-  input,
-  output,
+  x,
+  file,
   languages = "all",
   variables = "yes",
   export_data = "yes"
 )
 }
 \arguments{
-\item{input}{R data frame (df).}
+\item{x}{R data frame (df) to be writtem.}
 
-\item{output}{Path to ZIP file.}
+\item{file}{Path to ZIP file or name of zip file to save the opendf-dataset in the working directory.}
 
 \item{languages}{Select the language in which the descriptions and labels of the data will be exported
 \itemize{
