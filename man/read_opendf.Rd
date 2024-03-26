@@ -4,10 +4,10 @@
 \alias{read_opendf}
 \title{Read data specified as Open Data Format.}
 \usage{
-read_opendf(input, languages = "all")
+read_opendf(file, languages = "all")
 }
 \arguments{
-\item{input}{Path to ZIP file containing data and metadata specified
+\item{file}{Path to ZIP file containing data and metadata specified
 as Open Data Format.}
 
 \item{languages}{Select the language in which the descriptions and labels of the data will be imported.

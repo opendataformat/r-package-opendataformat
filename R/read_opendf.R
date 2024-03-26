@@ -4,7 +4,7 @@
 #'
 #' @import reticulate
 #'
-#' @param input Path to ZIP file containing data and metadata specified
+#' @param file Path to ZIP file containing data and metadata specified
 #' as Open Data Format.
 #'
 #' @param languages
@@ -33,10 +33,10 @@
 #' attributes(df$bap87)
 #'
 #' @export
-read_opendf <- function(input, languages = "all") {
+read_opendf <- function(file, languages = "all") {
   opendataformat::convert_opendf(
     format = "xml2r",
-    input,
+    file,
     languages = languages
   )
 }
