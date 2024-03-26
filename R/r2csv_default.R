@@ -548,8 +548,10 @@ get_csv_default <- function(input, output, variables) {
       output)
     # - write categories.csv
     if (length(cat_df_var_default(input)) > 0) {
+      cat_csv<-cat_df_var_default(input)
+      colnames(cat_csv)<-gsub("labels", "label", colnames(cat_csv))
       write_odf_csv(
-        cat_df_var_default(input),
+        cat_csv,
         "/categories.csv",
         output)
     }

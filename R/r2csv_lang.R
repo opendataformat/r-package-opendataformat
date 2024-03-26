@@ -561,7 +561,7 @@ get_csv_lang <- function(input, output, variables, languages) {
         output)
       cat_csv<-cat_df_data_lang(input, languages)
       colnames(cat_csv)<-gsub("labels", "label", colnames(cat_csv))
-      cat_df_data_defaultwrite_odf_csv(
+      write_odf_csv(
         cat_csv,
          "/categories.csv",
          output)
@@ -574,10 +574,12 @@ get_csv_lang <- function(input, output, variables, languages) {
       "/variables.csv",
       output)
     if (length(cat_df_var_lang(input, languages)) > 0) {
-       write_odf_csv(
-         cat_df_var_lang(input, languages),
-         "/categories.csv",
-         output)
+      cat_csv<-cat_df_var_lang(input, languages)
+      colnames(cat_csv)<-gsub("labels", "label", colnames(cat_csv))
+      write_odf_csv(
+        cat_csv,
+        "/categories.csv",
+        output)
     }
   }
 }
