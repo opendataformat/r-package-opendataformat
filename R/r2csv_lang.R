@@ -559,8 +559,10 @@ get_csv_lang <- function(input, output, variables, languages) {
         var_df_lang(input, languages),
         "/variables.csv",
         output)
-       write_odf_csv(
-         cat_df_data_lang(input, languages),
+      cat_csv<-cat_df_data_lang(input, languages)
+      colnames(cat_csv)<-gsub("labels", "label", colnames(cat_csv))
+      cat_df_data_defaultwrite_odf_csv(
+        cat_csv,
          "/categories.csv",
          output)
       }

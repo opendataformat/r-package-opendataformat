@@ -543,8 +543,10 @@ get_csv_all <- function(input, output, variables) {
         var_df(input),
         "/variables.csv",
         output)
+      cat_csv<-cat_df_data(input)
+      colnames(cat_csv)<-gsub("labels", "label", colnames(cat_csv))
       write_odf_csv(
-        cat_df_data(input),
+        cat_csv,
         "/categories.csv",
         output)
       }
