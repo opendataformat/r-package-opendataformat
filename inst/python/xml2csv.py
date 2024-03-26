@@ -19,7 +19,6 @@ def make_csvs(input_zip, output_dir, languages = languages):
   write_dataset_csv(output_dir, languages)
   write_variables_csv(output_dir, languages)
   write_categories_csv(output_dir, languages)
-  copy_data_csv(input_zip, output_dir)
   
 
 #########################
@@ -28,10 +27,9 @@ def make_csvs(input_zip, output_dir, languages = languages):
 
 # load zip and make root
 def load(input_zip):
-  path_to_dir = os.path.splitext(input_zip)[0]
   with zipfile.ZipFile(input_zip, 'r') as zip_ref: # unzip and get tree
-    zip_ref.extractall(path_to_dir)
-    tree=ET.parse(path_to_dir+'/metadata.xml')
+    zip_ref.extractall(output_dir)
+    tree=ET.parse(output_dir+'/metadata.xml')
   root=tree.getroot() #  get root
   for i in root.iter(): # cut namespace
     i.tag=i.tag.split('}')[-1]
@@ -309,16 +307,6 @@ def write_categories_csv(output_dir, languages):
     writer.writeheader()
     writer.writerows(make_categories_dictionary(languages))
 
-#####################
-# COPY DATA ARGUMENT
-#####################
-
-def copy_data_csv(input_zip, output_dir):
-  input_dir = os.path.splitext(input_zip)[0]
-  shutil.copy(
-    input_dir+'/data.csv',
-    output_dir+'/data.csv'
-    )
 
 if __name__ == '__main__':
   make_csvs(input_zip, output_dir)    
