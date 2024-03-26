@@ -203,8 +203,7 @@ convert_opendf <- function(format,
     cat(
       paste0(
         "The XML file metadata.xml and the CSV file data.csv
-        are saved within the directory '",output,"',
-        as well as within the ZIP file '",output,".zip."
+        are saved within the ZIP file '",output,".zip."
         )
       )
   }
@@ -227,8 +226,7 @@ convert_opendf <- function(format,
       message(
         paste0(
           "The XML file metadata.xml and the CSV file data.csv
-          are saved within the directory '",output,"',
-          as well as within the ZIP file '",output,".zip."
+          are saved within the ZIP file '",output,".zip."
           )
         )
     }
