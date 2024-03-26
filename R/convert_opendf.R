@@ -182,6 +182,12 @@ convert_opendf <- function(format,
     return(csv2r(tempdir())) # input
   }
   if (format == "r2csv") {
+    message(
+      paste0(
+        "Your CSV files are stored within the directory:\n",
+        output,"."
+      )
+    )
     return(r2csv(input,
                  output,
                  languages,

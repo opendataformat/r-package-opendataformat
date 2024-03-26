@@ -4,8 +4,8 @@ test_that("write_opendf_default_setting", {
   df <- get(load("testdata/data_odf.RData"))
   # make xml and data
   write_opendf(
-    input = df,
-    output = paste0(tempdir(),"/MY_XML")
+    x = df,
+    file = paste0(tempdir(),"/MY_XML")
   )
   # -- test if file exists
   expect_true(file.exists(paste0(tempdir(),"/MY_XML/data.csv")))
@@ -19,8 +19,8 @@ test_that("write_opendf_export_data", {
   df <- get(load("testdata/data_odf.RData"))
   # make xml and data with export_datat = yes
   write_opendf(
-    input = df,
-    output = paste0(tempdir(),"/MY_XML"),
+    x = df,
+    file = paste0(tempdir(),"/MY_XML"),
     export_data = "yes"
   )
   # -- test if file exists
@@ -30,8 +30,8 @@ test_that("write_opendf_export_data", {
   unlink(paste0(tempdir(),"/*"), recursive = TRUE)
   # make xml and data with export_datat = no
   write_opendf(
-    input = df,
-    output = paste0(tempdir(),"/MY_XML"),
+    x = df,
+    file = paste0(tempdir(),"/MY_XML"),
     export_data = "no" # changed
   )
   # -- test if file exists
@@ -46,8 +46,8 @@ test_that("write_opendf_variables", {
   df <- get(load("testdata/data_odf.RData"))
   # make xml and data with variables = no
   write_opendf(
-    input = df,
-    output = paste0(tempdir(),"/MY_XML"),
+    x = df,
+    file = paste0(tempdir(),"/MY_XML"),
     variables = "no"
   )
   # -- test if file exists
@@ -62,8 +62,8 @@ test_that("write_opendf_languages", {
   df <- get(load("testdata/data_odf.RData"))
   # make xml and data with languages = default
   write_opendf(
-    input = df,
-    output = paste0(tempdir(),"/MY_XML"),
+    x = df,
+    file = paste0(tempdir(),"/MY_XML"),
     languages = "default"
   )
   # -- test if file exists
@@ -73,8 +73,8 @@ test_that("write_opendf_languages", {
   unlink(paste0(tempdir(),"/*"), recursive = TRUE)
   # make xml and data with languages = de
   write_opendf(
-    input = df,
-    output = paste0(tempdir(),"/MY_XML"),
+    x = df,
+    file = paste0(tempdir(),"/MY_XML"),
     languages = "de"
   )
   # -- test if file exists
@@ -84,8 +84,8 @@ test_that("write_opendf_languages", {
   unlink(paste0(tempdir(),"/*"), recursive = TRUE)
   # make xml and data with languages = notvalid
   write_opendf(
-    input = df,
-    output = paste0(tempdir(),"/MY_XML"),
+    x = df,
+    file = paste0(tempdir(),"/MY_XML"),
     languages = "notvalid"
   )
   # -- test if file exists

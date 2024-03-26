@@ -1,7 +1,7 @@
 #' read_opendf: all languages
 test_that("read_opendf_all", {
   df <- read_opendf(
-    input = "testdata/data.zip",
+    file = "testdata/data.zip",
     languages = "all"
   )
   # - dataset attributes
@@ -65,7 +65,7 @@ test_that("read_opendf_all", {
 #' read_opendf: default languages
 test_that("read_opendf_default", {
   df <- read_opendf(
-    input = "testdata/data_with_default.zip",
+    file = "testdata/data_with_default.zip",
     languages = "default"
   )
   # - dataset attributes
@@ -107,7 +107,7 @@ test_that("read_opendf_default", {
 #' read_opendf: "de" languages
 test_that("read_opendf_de", {
   df <- read_opendf(
-    input = "testdata/data.zip",
+    file = "testdata/data.zip",
     languages = "de"
   )
   # - dataset attributes

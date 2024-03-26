@@ -168,7 +168,8 @@ def csv2xml(input_dir, output_dir):
   tree.write(temp_output_dir+"/metadata.xml", xml_declaration=True, encoding="utf-8")
   copy_data_csv(input_dir, temp_output_dir, export_data)
   shutil.make_archive(temp_output_dir, "zip", temp_output_dir)
-  shutil.copyfile(temp_output_dir+".zip",output_dir+'.zip')
+  if temp_output_dir != output_dir:
+    shutil.copyfile(temp_output_dir+".zip",output_dir+'.zip')
 
 if __name__ == '__main__':
   csv2xml(input_dir, output_dir)

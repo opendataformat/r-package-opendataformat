@@ -1569,6 +1569,7 @@ test_that("convert_opendf_csv2xml_export_data", {
     variables = "yes",
     export_data = "yes"
   )
+  unzip(paste0(tempdir(),"/MY_XML.zip"),exdir=paste0(tempdir(),"/MY_XML"))
   # -- test if file exists
   expect_true(file.exists(paste0(tempdir(),"/MY_XML/data.csv")))
   expect_true(file.exists(paste0(tempdir(),"/MY_XML/metadata.xml")))
@@ -1584,6 +1585,7 @@ test_that("convert_opendf_csv2xml_export_data", {
     export_data = "no" # changed
   )
   # -- test if file exists
+  unzip(paste0(tempdir(),"/MY_XML2.zip"),exdir=paste0(tempdir(),"/MY_XML2"))
   expect_false(file.exists(paste0(tempdir(),"/MY_XML2/data.csv")))
   expect_true(file.exists(paste0(tempdir(),"/MY_XML2/metadata.xml")))
   expect_true(file.exists(paste0(tempdir(),"/MY_XML2.zip")))
@@ -1603,6 +1605,7 @@ test_that("convert_opendf_csv2xml_variables", {
     variables = "yes",
     export_data = "yes"
   )
+  unzip(paste0(tempdir(),"/MY_XML.zip"),exdir=paste0(tempdir(),"/MY_XML"))
   # -- test if file exists
   expect_true(file.exists(paste0(tempdir(),"/MY_XML/data.csv")))
   expect_true(file.exists(paste0(tempdir(),"/MY_XML/metadata.xml")))
@@ -1617,6 +1620,7 @@ test_that("convert_opendf_csv2xml_variables", {
     variables = "no", # changed
     export_data = "yes"
   )
+  unzip(paste0(tempdir(),"/MY_XML.zip"),exdir=paste0(tempdir(),"/MY_XML"))
   # -- test if file exists
   expect_true(file.exists(paste0(tempdir(),"/MY_XML/data.csv")))
   expect_true(file.exists(paste0(tempdir(),"/MY_XML/metadata.xml")))
@@ -1637,6 +1641,7 @@ test_that("convert_opendf_csv2xml_languages", {
     variables = "yes",
     export_data = "yes"
   )
+  unzip(paste0(tempdir(),"/MY_XML.zip"),exdir=paste0(tempdir(),"/MY_XML"))
   # -- test if file exists
   expect_true(file.exists(paste0(tempdir(),"/MY_XML/data.csv")))
   expect_true(file.exists(paste0(tempdir(),"/MY_XML/metadata.xml")))
@@ -1651,6 +1656,7 @@ test_that("convert_opendf_csv2xml_languages", {
     variables = "yes",
     export_data = "yes"
   )
+  unzip(paste0(tempdir(),"/MY_XML.zip"),exdir=paste0(tempdir(),"/MY_XML"))
   # -- test if file exists
   expect_true(file.exists(paste0(tempdir(),"/MY_XML/data.csv")))
   expect_true(file.exists(paste0(tempdir(),"/MY_XML/metadata.xml")))
@@ -1665,6 +1671,7 @@ test_that("convert_opendf_csv2xml_languages", {
     variables = "yes",
     export_data = "yes"
   )
+  unzip(paste0(tempdir(),"/MY_XML.zip"),exdir=paste0(tempdir(),"/MY_XML"))
   # -- test if file exists
   expect_true(file.exists(paste0(tempdir(),"/MY_XML/data.csv")))
   expect_true(file.exists(paste0(tempdir(),"/MY_XML/metadata.xml")))
