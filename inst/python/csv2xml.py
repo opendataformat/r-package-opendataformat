@@ -148,14 +148,14 @@ def csv2xml(input_dir, output_dir):
                   catValu = ET.SubElement(catgry, 'catValu')
                   catValu.text = line['value']
                   # value label
-                  if 'label' in list_keys:
+                  if 'labels' in list_keys:
                     labl = ET.SubElement(catgry, 'labl')
-                    labl.text = line['label']
-                  if any(item.startswith('label_') for item in list_keys):  
-                    for lang in get_lang(input_dir,"categories.csv","label"):
+                    labl.text = line['labels']
+                  if any(item.startswith('labels_') for item in list_keys):  
+                    for lang in get_lang(input_dir,"categories.csv","labels"):
                       labl = ET.SubElement(catgry, 'labl')
                       labl.attrib['{http://www.w3.org/XML/1998/namespace}lang'] = lang
-                      labl.text = line['label_'+lang]
+                      labl.text = line['labels_'+lang]
   # write xml
   make_output_dir(output_dir)
   pretty_print(root)

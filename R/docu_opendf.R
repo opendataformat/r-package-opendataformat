@@ -154,8 +154,8 @@ docu_opendf<-function(input, languages="current", style="both"){
   #######  format output ######
   #name and url
   printing_output<-c(
-    crayon::underline(crayon::bold(paste0(input_type, ":\n"))),
-    paste0("    ", name, "\n")
+    crayon::underline(crayon::bold(paste0(input_type, ":"))),
+    paste0("  ", name, "\n")
   )
   html_output<-paste0(
     "<html><head><meta charset='utf-8'><style>body {
