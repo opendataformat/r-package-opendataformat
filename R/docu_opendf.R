@@ -68,7 +68,7 @@
 #'
 #' @export
  
-docu_opendf<-function(input, languages="current", style="both"){
+docu_opendf<-function(input, languages="current", style="both", replace_missing=F){
 
   
   if (("data.frame" %in% class(input) & !("opendf" %in% class(input)))| (!("lang" %in% names(attributes(input))) & !("languages" %in% names(attributes(input)))) ){
@@ -112,12 +112,61 @@ docu_opendf<-function(input, languages="current", style="both"){
   name=attr(input, "name")
   #get label and description for every language
   label=list()
+  label_console=list()
+  label_html=list()
   description=list()
   for (l in languages){
     label[l]=attr(input, paste0("label",l))
     description[l]=attr(input, paste0("description",l))
   }
-  
+  label_console<-label
+  label_html<-label
+  if (length(languages)==1 & label[[l]]=="" & replace_missing==T){
+    if (!is.null(attr(input, "label_default"))){
+      if(attr(input, "label_default")!="" ){
+        label_console[languages]<-paste0("\n[default] ", attr(input, "label_default"))
+        label_html[languages]<-paste0("<br>[default] ", attr(input, "label_default"))
+      } else {
+        if (!is.null(attr(input, "label_en"))){
+          if(attr(input, "label_en")!="" ){
+            label_console[languages]<-paste0("\n[en] ", attr(input, "label_en"))
+            label_html[languages]<-paste0("<br>[en] ", attr(input, "label_en"))
+          }
+        }
+      }
+    } else {
+      if (!is.null(attr(input, "label_en"))){
+        if(attr(input, "label_en")!="" ){
+          label_console[languages]<-paste0("\n[en] ", attr(input, "label_en"))
+          label_html[languages]<-paste0("<br>[en] ", attr(input, "label_en"))
+        }
+      }
+    }
+  }
+  description_console<-description
+  description_html<-description
+  if (length(languages)==1 & description[[l]]=="" & replace_missing==T){
+    if (!is.null(attr(input, "description_default"))){
+      if(attr(input, "description_default")!="" ){
+        description_console[languages]<-paste0("\n[default] ", attr(input, "description_default"))
+        description_html[languages]<-paste0("<br>[default] ", attr(input, "description_default"))
+      } else {
+        if (!is.null(attr(input, "description_en"))){
+          if(attr(input, "description_en")!="" ){
+            description_console[languages]<-paste0("\n[en] ", attr(input, "description_en"))
+            description_html[languages]<-paste0("<br>[en] ", attr(input, "description_en"))
+          }
+        }
+      }
+    } else {
+      if (!is.null(attr(input, "description_en"))){
+        if(attr(input, "description_en")!="" ){
+          description_console[languages]<-paste0("\n[en] ", attr(input, "description_en"))
+          description_html[languages]<-paste0("<br>[en] ", attr(input, "description_en"))
+        }
+      }
+    }
+  }
   #get url
   url=attr(input, "url")
   if (url!="" & exists("style_hyperlink")){
@@ -178,11 +227,11 @@ docu_opendf<-function(input, languages="current", style="both"){
   for (l in languages){
     printing_output<-c(
       paste0(printing_output),
-      "[",gsub("_","",l), "]", label[[l]], "\n"
+      "[",gsub("_","",l), "]", label_console[[l]], "\n"
     )
     html_output<-paste0(
       html_output,
-      "<br>[", gsub("_","",l), "] ",label[[l]]
+      "<br>[", gsub("_","",l), "] ",label_html[[l]]
     )
   }
   html_output<-paste0(
@@ -202,11 +251,11 @@ docu_opendf<-function(input, languages="current", style="both"){
   for (l in languages){
     printing_output<-c(
       paste0(printing_output),
-      "[",gsub("_","",l), "]", description[[l]], "\n"
+      "[",gsub("_","",l), "]", description_console[[l]], "\n"
     )
     html_output<-paste0(
       html_output,
-      "<br>[", gsub("_","",l), "] ",description[[l]]
+      "<br>[", gsub("_","",l), "] ",description_html[[l]]
     )
   }
   html_output<-paste0(
