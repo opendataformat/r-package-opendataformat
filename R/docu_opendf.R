@@ -78,7 +78,10 @@
 #'
 #' @export
  
-docu_opendf<-function(input, languages="current", style="both", replace_missing=F){
+docu_opendf<-function(input, 
+                      languages="current", 
+                      style="both", 
+                      replace_missing=F){
 
   
   if (("data.frame" %in% class(input) & !("opendf" %in% class(input)))| (!("lang" %in% names(attributes(input))) & !("languages" %in% names(attributes(input)))) ){
