@@ -93,7 +93,7 @@ docu_opendf<-function(input,
     input_type<-"Dataset"
   } else {
     input_type="Variable"
-    if (class(input)=="NULL") stop("Input not found")
+    if (class(input)=="NULL") stop(paste0("Object '", deparse(substitute(input)), "' not found."))
   }
   
   #assign languages and currentlanguage
