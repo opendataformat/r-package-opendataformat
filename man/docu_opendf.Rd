@@ -4,7 +4,12 @@
 \alias{docu_opendf}
 \title{Get documentation from R data frame.}
 \usage{
-docu_opendf(input, languages = "current", style = "both", replace_missing = F)
+docu_opendf(
+  input, 
+  languages = "current", 
+  style = "both", 
+  replace_missing = F
+)
 }
 \arguments{
 \item{input}{R data frame (df) or variable from an R data frame (df$var).}
