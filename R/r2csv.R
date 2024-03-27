@@ -73,20 +73,20 @@ r2csv <- function(
   # languages = all
   if (languages == "all") {
     get_csv_all(input, output, variables)
-    message("Your CSV files are stored within the directory:")
-    message(  output)
+    #message("Your CSV files are stored within the directory:")
+    #message(  output)
   }
   # languages = default
   if (languages == "default") {
     get_csv_default(input, output, variables)
-    message("Your CSV files are stored within the directory:")
-    message(  output)
+    #message("Your CSV files are stored within the directory:")
+    #message(  output)
   }
   # languages = code
   if (paste0("label_", languages) %in% names(attributes(input)) == TRUE) {
     get_csv_lang(input, output, variables, languages)
-    message("Your CSV files are stored within the directory:")
-    message(  output)
+    #message("Your CSV files are stored within the directory:")
+    #message(  output)
   }
   # no valid language selection
   if (languages != "all" &
