@@ -10,7 +10,11 @@
 #' 
 #' @param input R data frame (df) or variable from an R data frame (df$var).
 #'
-#' @param languages Select the language in which the descriptions and labels of the data will be displayed
+#' @param languages Select the language in which the descriptions and labels of the data will be displayed.
+#' 
+#' @param replace_missing If only one language is specified in languages and replace_missings is set to TRUE.
+#' in case of a missing label or description, the default or english label/description is displayed additionally
+#' (if one of these is available).
 #' 
 #' * By default the language that is set to current is displayed
 #' (\code{languages = "current"}).
@@ -64,6 +68,12 @@
 #' # print information to the R viewer
 #' \dontrun{
 #' docu_opendf(df$bap87, style = "viewer")
+#' }
+#' 
+#' # Since the label for language de is missing, in this case the english label will be displayed additionally.
+#' \dontrun{
+#' attributes(df$bap87)["label_de"]<-""
+#' docu_opendf(df$bap87, languages="de", style = "console", replace_missing=T)
 #' }
 #'
 #' @export
