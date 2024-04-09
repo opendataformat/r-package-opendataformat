@@ -26,6 +26,8 @@ r2csv <- function(
   export_data) {
   #if no default labels and descriptions (labels and descriptions without language tag) are available, 
   # return an warning and run write_opendf for the active language
+  
+  #if label or descriptions attributes is available, but no label or description with language tag, the label or description is assigned to label_default and description_default
   if (languages=="default"){
     if (!("default" %in% attributes(input)[["languages"]])){
       message(paste0("Metadata saved in language: ",attributes(input)[["lang"]]))
@@ -34,6 +36,36 @@ r2csv <- function(
       message("Metadata saved in language default without language tag")
     }
   }
+  #If no language is defined, change language attribute to "default"
+  if (!"languages" %in% names(attributes(input))) {
+    attributes(input)["languages"]<-"default"
+    attributes(input)["lang"]<-"default"
+  }
+  
+  if (!(TRUE %in% grepl("label_", names(attributes(input)))) & "label" %in% names(attributes(input))){
+    attributes(input)["label_default"]<-attributes(input)["label"]
+  }
+  if (!(TRUE %in% grepl("description_", names(attributes(input)))) & "description" %in% names(attributes(input))){
+    attributes(input)["description_default"]<-attributes(input)["description"]
+    if (!"languages" %in% names(attributes(input))) {
+      attributes(input)["languages"]<-"default"
+      attributes(input)["lang"]<-"default"
+    }
+  }
+  for (var in names(input)){
+    if (!"languages" %in% names(attributes(input[[var]]))) {
+      attributes(input[[var]])["languages"]<-attributes(input)["languages"]
+      attributes(input[[var]])["lang"]<-attributes(input)["lang"]
+    }
+    if (!(TRUE %in% grepl("label_", names(attributes(input[[var]])))) & "label" %in% names(attributes(input[[var]]))){
+      attributes(input[[var]])["label_default"]<-attributes(input[[var]])["label"]
+    }
+    if (!(TRUE %in% grepl("description_", names(attributes(input[[var]])))) & "description" %in% names(attributes(input[[var]]))){
+      attributes(input[[var]])["description_default"]<-attributes(input[[var]])["description"]
+    }
+  }
+  
+  
   #remove labels (duplicate of current/active language labels)
   attr(input, "label") <- NULL
   for (var in names(input)){
