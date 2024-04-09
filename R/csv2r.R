@@ -72,6 +72,12 @@ get_lang_csv <- function(entity, attribute) {
 #' @noRd
 dataset_attributes <- function(dataframe, input) {
   dataset <- load_csv(input, "dataset.csv")
+  for (col in names(dataset)){
+    if(any(is.na(dataset[col]))){
+      dataset[,col]<-as.character(dataset[,col])
+      dataset[is.na(dataset[,col]),col]<-""
+    }
+  }
   metadata_without_lang_exists=F
   # name
   attributes(dataframe)[["name"]] <- enc2utf8(dataset[["dataset"]])
