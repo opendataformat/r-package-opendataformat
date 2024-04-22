@@ -84,9 +84,9 @@ docu_opendf<-function(input,
                       replace_missing=F) {
 
   
-  if (("data.frame" %in% class(input) & !("opendf" %in% class(input)))| (!("lang" %in% names(attributes(input))) & !("languages" %in% names(attributes(input)))) ){
-    stop("Input is not a dataframe or variable in the opendf-format.")
-  }
+  #if (("data.frame" %in% class(input) & !("opendf" %in% class(input)))| (!("lang" %in% names(attributes(input))) & !("languages" %in% names(attributes(input)))) ){
+  #  stop("Input is not a dataframe or variable in the opendf-format.")
+  #}
   
   #check whether input is dataset or variable
   if ("data.frame" %in% class(input)){
@@ -200,7 +200,7 @@ docu_opendf<-function(input,
       labels_names=names(attr(input, paste0("labels",l)))
       if(length(valuelabels_tab)==0) {
         valuelabels_tab<-data.frame(Value=labels, Label=labels_names)
-        colnames(valuelabels_tab)[2]<-sub("_","", l)
+        if (nrow(valuelabels_tab)>0) colnames(valuelabels_tab)[2]<-sub("_","", l)
       } else {
         valuelabels_tab_new<-data.frame(Value=labels, Label=labels_names)
         colnames(valuelabels_tab_new)[2]<-sub("_","", l)
