@@ -21,8 +21,9 @@
 #' * or you can select the language by language code, e.g.
 #' \code{languages = "en"}.
 #' 
-#'
-#' @param variables
+#' 
+#' 
+#' @param variable_metadata
 #' If you are exporting the entire dataset, you can choose whether or not to
 #' export all available metadata (labels and descriptions of the dataset and the variables).
 #'
@@ -76,7 +77,7 @@
 write_opendf <- function(x,
                         file,
                         languages = "all",
-                        variables = "yes",
+                        variable_metadata = "yes",
                         export_data = "yes") {
   #if no default labels and descriptions (labels and descriptions without language tag) are available, 
   # return an warning and run write_opendf for the active language
@@ -100,6 +101,6 @@ write_opendf <- function(x,
     x,
     file,
     languages,
-    variables,
+    variables=variable_metadata,
     export_data)
 }
