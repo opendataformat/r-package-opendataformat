@@ -21,8 +21,7 @@ Learn more about the Open Data Format in R in `vignette("opendataformat")`.
 # install.packages("devtools")
 devtools::install_git("https://git.soep.de/thartl/r-package-new.git")
 
-# If the package is published at CRAN, you can use the common way of installation
-install.packages("opendataformat")
+
 
 ```
 
