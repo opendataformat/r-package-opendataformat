@@ -1,4 +1,4 @@
-#' write_opendf: default setting: languages = "all", variables = "yes", export_data = "yes"
+#' write_opendf: default setting: languages = "all", variable_metadata = "yes", export_data = "yes"
 test_that("write_opendf_default_setting", {
   # - get data
   df <- get(load("testdata/data_odf.RData"))
@@ -48,7 +48,7 @@ test_that("write_opendf_variables", {
   write_opendf(
     x = df,
     file = paste0(tempdir(),"/MY_XML"),
-    variables = "no"
+    variable_metadata = "no"
   )
   # -- test if file exists
   expect_true(file.exists(paste0(tempdir(),"/MY_XML/data.csv")))

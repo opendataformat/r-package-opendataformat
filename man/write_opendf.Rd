@@ -8,7 +8,7 @@ write_opendf(
   x,
   file,
   languages = "all",
-  variables = "yes",
+  variable_metadata = "yes",
   export_data = "yes"
 )
 }
@@ -29,7 +29,7 @@ write_opendf(
 \code{languages = "en"}.
 }}
 
-\item{variables}{If you are exporting the entire dataset, you can choose whether or not to
+\item{variable_metadata}{If you are exporting the entire dataset, you can choose whether or not to
 export all available metadata (labels and descriptions of the dataset and the variables).
 \itemize{
 \item By default, all metadata is exported: information describing the dataset
