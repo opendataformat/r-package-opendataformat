@@ -74,7 +74,7 @@ read_opendf2 <- function(file,
   dataset_descrsub<-xml_children(xml_children(dataset_metadata)[xml_name(xml_children(dataset_metadata))=="fileTxt"])
   
   #get dataset name
-  dataset_attr$filename<-xml_text(dataset_descrsub[xml_name(dataset_descrsub)=="fileName"])
+  dataset_attr$name<-xml_text(dataset_descrsub[xml_name(dataset_descrsub)=="fileName"])
   #get dataset descriptions
   dataset_descriptions<-dataset_descrsub[xml_name(dataset_descrsub)=="fileCont"]
   for (description in dataset_descriptions){
