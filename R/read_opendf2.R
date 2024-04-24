@@ -177,14 +177,15 @@ read_opendf2 <- function(file,
 
   #Assign language and activa language attributes
   lang_attr<-names(attributes(data))[c(grep("label", names(attributes(data))),grep("description", names(attributes(data))))]
-  languages<-unique(unlist(lapply(lang_attr, function(x) strsplit(x, "_")[[1]][[2]])))
+  langs<-unique(unlist(lapply(lang_attr, function(x) strsplit(x, "_")[[1]][[2]])))
   #strsplit(names(attributes(data))[c(grep("label", names(attributes(data))),grep("description", names(attributes(data))))], "_")
-  attr(data, "languages")<-languages
-  if("en" %in% languages) lang<- "en" else lang<-languages[1]
+  attr(data, "languages")<-langs
+  if("en" %in% langs) lang<- "en" else lang<-langs[1]
   attr(data, "lang")<-lang
   for (var in names(data)){
-    attr(data[,var], "languages")<- languages
+    attr(data[,var], "languages")<- langs
     attr(data[,var], "lang")<- lang
   }
+  attr(data, "class")<-c(attr(data, "class"), "opendf")
   return(data)
 }
