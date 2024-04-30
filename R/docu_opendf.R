@@ -78,8 +78,8 @@
 #'
 #' @export
  
-docu_opendf<-function(input, 
-                      languages="current", 
+docu_opendf<-function(input,
+                      languages="current",
                       style="both", 
                       replace_missing=F) {
 
