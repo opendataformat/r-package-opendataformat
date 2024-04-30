@@ -34,9 +34,9 @@ setLanguage_opendf<-function(dataframe, language){
   if (language %in% df_languages){
     attr(dataframe, "lang")<-language
     attributes(dataframe)[["label"]]<-attr(dataframe, paste0("label_", language))
-    for (var in names(var)){
+    for (var in names(dataframe)){
       attr(dataframe[[var]], "lang")<-language
-      attr(dataframe[[var]], "label")<-attributes(dataframe)[[paste0("label_", language)]]
+      attr(dataframe[[var]], "label")<-attributes(dataframe[[var]])[[paste0("label_", language)]]
     }
   } else {
     stop(paste0("Language '", language, "' not available for the dataset."))

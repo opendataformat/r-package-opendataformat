@@ -53,7 +53,7 @@ read_opendf2 <- function(file,
                          check.names=T,
                          colClasses=NA) {
   #file="H:/Testdaten/testdata.zip"
-  files<-as.character(unzip(file, list = TRUE)$Name)
+  files<-as.character(utils::unzip(file, list = TRUE)$Name)
   # load the data csv "data.csv"
   data <- read.csv(unz(file, "data.csv"), header = TRUE,
                    sep = ",", skip=skip, nrows=nrows, check.names=check.names, colClasses=colClasses)
