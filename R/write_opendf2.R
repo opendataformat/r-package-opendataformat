@@ -84,8 +84,12 @@ write_opendf2 <- function(x,
   if (languages!="all" & !all(languages %in% attr(x, "languages"))) stop("languages not valid")
   unlink(paste0(tempdir(),"/*"), recursive=T)
   folder_url<-gsub(".zip", "",file)
+  folder_url<-gsub("\\\\", "/", folder_url)
   folder_name<-strsplit(folder_url, "/")[[1]][length(strsplit(folder_url, "/")[[1]])]
-  folder_name<-strsplit(folder_name, "\\\\")[[1]][length(strsplit(folder_name, "\\\\")[[1]])]
+  root_dir<-paste0(strsplit(folder_url, "/")[[1]][-length(strsplit(folder_url, "/")[[1]])], "/", collapse="/")
+  if (dir.exists(root_dir)==FALSE){
+    stop("File path not found")
+  }
   
   dir.create(paste0(tempdir(), "/", folder_name),  showWarnings = F)
   write.csv(x, paste0(tempdir(), "/", folder_name, "/data.csv"), row.names = F, na = "")
