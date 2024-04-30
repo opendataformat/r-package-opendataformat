@@ -184,7 +184,7 @@ write_opendf2 <- function(x,
   #Zip directory
   old_wd<-getwd()
   setwd(paste0(tempdir(), "/",folder_name))
-  utils::zip(zipfile=file,c("data.csv", "metadata.xml", flags="-q"))
+  utils::zip(zipfile=file,c("data.csv", "metadata.xml"), flags="-q")
   setwd(old_wd)
   
   #check if write_opendf was successful
