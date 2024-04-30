@@ -87,7 +87,7 @@ write_opendf2 <- function(x,
   folder_url<-gsub("\\\\", "/", folder_url)
   folder_name<-strsplit(folder_url, "/")[[1]][length(strsplit(folder_url, "/")[[1]])]
   root_dir<-paste0(strsplit(folder_url, "/")[[1]][-length(strsplit(folder_url, "/")[[1]])], "/", collapse="/")
-  if (dir.exists(root_dir)==FALSE){
+  if (dir.exists(root_dir)==FALSE & dir.exists(paste0("/",root_dir))==FALSE & dir.exists(paste0("//",root_dir))==FALSE){
     stop("File path not found")
   }
   
