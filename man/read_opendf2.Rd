@@ -14,7 +14,7 @@ By default all available language variants are imported (\code{languages = "all"
 
 \item{nrows}{Maximum number of lines to read.}
 
-\item{skip}{Select the number of rows to be skipped.}
+\item{skip}{Select the number of rows to be skipped (without the column names).}
 
 \item{variables}{Columns to include in the results. You can use the same mini-language as dplyr::select() to refer to the columns by name. Use c() to use more than one selection expression.
 Although this usage is less common, col_select also accepts a numeric column index. See ?tidyselect::language for full details on the selection language.}
