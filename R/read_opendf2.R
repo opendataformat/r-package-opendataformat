@@ -4,6 +4,7 @@
 #'
 #' @import utils
 #' @import xml2
+#' @import readr
 #' 
 #' 
 #' @param file
@@ -14,17 +15,14 @@
 #' integer: the maximum number of rows to read in. Negative and other invalid values are ignored.
 #' 
 #' @param nrows
-#' Select the number of rows to be skipped.
+#' Maximum number of lines to read.
 #' 
 #' @param skip
-#' integer: the number of lines of the data file to skip before beginning to read data.
+#' Select the number of rows to be skipped.
 #' 
-#' @param check.names
-#' logical. If TRUE then the names of the variables in the data frame are checked to ensure that they are syntactically valid variable names. If necessary they are adjusted (by make.names) so that they are, and also to ensure that there are no duplicates.
-#' 
-#' @param colClasses
-#' Possible values are NA (the default, when type.convert is used), "NULL" (when the column is skipped), one of the atomic vector classes (logical, integer, numeric, complex, character, raw), or "factor", "Date" or "POSIXct". Otherwise there needs to be an as method (from package methods) for conversion from "character" to the specified formal class.
-#' Note that colClasses is specified per column (not per variable) and so includes the column of row names (if any).
+#' @param variables
+#' Columns to include in the results. You can use the same mini-language as dplyr::select() to refer to the columns by name. Use c() to use more than one selection expression. 
+#' Although this usage is less common, col_select also accepts a numeric column index. See ?tidyselect::language for full details on the selection language.
 #'
 #'
 #' @return R dataframe with attributes including dataset and variable information.
@@ -48,25 +46,16 @@
 #' @export
 read_opendf2 <- function(file,
                          languages = "all",
-                         nrows = -1,
+                         nrows = Inf,
                          skip = 0,
-                         check.names=T,
-                         colClasses=NA) {
+                         variables=NULL) {
   #file="H:/Testdaten/testdata.zip"
+  #file<-"//hume/soep-data/MA/kwenzig/opendataformat/soep-core/pequiv.zip"
   files<-as.character(utils::unzip(file, list = TRUE)$Name)
-  # load the data csv "data.csv"
-  data <- read.csv(unz(file, "data.csv"), header = TRUE,
-                   sep = ",", skip=skip, nrows=nrows, check.names=check.names, colClasses=colClasses)
-  vars<-names(data)
-  #library("XML")
-  #install.packages("xml2")
-  library(xml2)
+
+  #read xml from zipped folder
   metadata<-read_xml(x = unz(file, "metadata.xml"))
-  #metadata <- xmlParse(file = unz(file, "metadata.xml"))
-  #xml_find_all(metadata, ".//fileDscr")
-  
-  
-  #xml_name(metadata)
+
   
   #Extract dataset description
   dataset_metadata<-xml_children(metadata)[1]
@@ -96,7 +85,7 @@ read_opendf2 <- function(file,
   
   
   #Extract variable description
-  variable_metadata<-xml_children(xml_children(metadata)[2])[xml_attr(xml_children(xml_children(metadata)[2]), attr="name") %in% vars]
+  variable_metadata<-xml_children(xml_children(metadata)[2])
   variable_attr<-list()
   #Loop over MEtadata for each variable to extract
   for (var in variable_metadata){
@@ -161,6 +150,37 @@ read_opendf2 <- function(file,
     variable_attr[[var_attr$name]]<-var_attr
   }
   
+  #extract variable types
+  #var_types<-rep(NA, length(variable_attr))
+  #use var_types from xml
+  #var_types<-lapply(variable_attr, function(x) x$type)
+  #if (any(!(var_types %in% c("logical", "integer", "numeric", "complex", "character", "raw","factor", "Date","POSIXct")))){
+  #  var_types[!(var_types %in% c("logical", "integer", "numeric", "complex", "character", "raw","factor", "Date","POSIXct"))]<-NA
+  #}
+  #if (length(variables)>1 | (all(!is.null(variables)) & length(variables)==1)){
+  #  if (class(variables)=="numeric"){
+  #    var_types[!c(1:length(var_types))%in%variables]<-"NULL"
+  #  }
+  #  if (class(variables)=="character"){
+  #    var_types[!names(var_types)%in%variables]<-"NULL"
+  #  }
+  #}
+  
+  
+  # load the data csv "data.csv"
+  #data <- utils::read.csv(unz(file, "data.csv"), header = TRUE,
+  #                 sep = ",", skip=skip, nrows=nrows, check.names=check.names, colClasses=var_types)
+  
+  if (is.null(variables)){
+    data <- readr::read_csv(file=unz(file, "data.csv"), progress=F,
+                            skip=skip, n_max=nrows, show_col_types = FALSE)#, col_types=var_types)
+    
+  } else {
+    data <- readr::read_csv(file=unz(file, "data.csv"),progress=F,
+                            skip=skip, n_max=nrows, show_col_types = FALSE, col_select=variables)#, col_types=var_types)
+  }
+  data<-as.data.frame(data)
+  
   
   #Assign metadata to attributes
   #for dataset
@@ -170,11 +190,13 @@ read_opendf2 <- function(file,
   #for variables
   for (var in 1:length(names(variable_attr))){
     variablename<-names(variable_attr)[var]
-    for (i in 1:length(variable_attr[[var]])){
-      attr(data[,variablename], names(variable_attr[[var]])[i])<-variable_attr[[var]][[i]]
+    if (variablename %in% names(data)){
+      for (i in 1:length(variable_attr[[var]])){
+        attr(data[,variablename],as.character(names(variable_attr[[var]])[i]))<-variable_attr[[var]][[i]]
+      }
     }
   }
-
+  attributes(data$pgnation)
   #Assign language and activa language attributes
   lang_attr<-names(attributes(data))[c(grep("label", names(attributes(data))),grep("description", names(attributes(data))))]
   langs<-unique(unlist(lapply(lang_attr, function(x) strsplit(x, "_")[[1]][[2]])))

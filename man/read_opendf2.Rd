@@ -4,14 +4,7 @@
 \alias{read_opendf2}
 \title{Read data specified as Open Data Format.}
 \usage{
-read_opendf2(
-  file,
-  languages = "all",
-  nrows = -1,
-  skip = 0,
-  check.names = T,
-  colClasses = NA
-)
+read_opendf2(file, languages = "all", nrows = Inf, skip = 0, variables = NULL)
 }
 \arguments{
 \item{file}{the name of the file which the data are to be read from.
@@ -19,14 +12,12 @@ By default all available language variants are imported (\code{languages = "all"
 
 \item{languages}{integer: the maximum number of rows to read in. Negative and other invalid values are ignored.}
 
-\item{nrows}{Select the number of rows to be skipped.}
+\item{nrows}{Maximum number of lines to read.}
 
-\item{skip}{integer: the number of lines of the data file to skip before beginning to read data.}
+\item{skip}{Select the number of rows to be skipped.}
 
-\item{check.names}{logical. If TRUE then the names of the variables in the data frame are checked to ensure that they are syntactically valid variable names. If necessary they are adjusted (by make.names) so that they are, and also to ensure that there are no duplicates.}
-
-\item{colClasses}{Possible values are NA (the default, when type.convert is used), "NULL" (when the column is skipped), one of the atomic vector classes (logical, integer, numeric, complex, character, raw), or "factor", "Date" or "POSIXct". Otherwise there needs to be an as method (from package methods) for conversion from "character" to the specified formal class.
-Note that colClasses is specified per column (not per variable) and so includes the column of row names (if any).}
+\item{variables}{Columns to include in the results. You can use the same mini-language as dplyr::select() to refer to the columns by name. Use c() to use more than one selection expression.
+Although this usage is less common, col_select also accepts a numeric column index. See ?tidyselect::language for full details on the selection language.}
 }
 \value{
 R dataframe with attributes including dataset and variable information.

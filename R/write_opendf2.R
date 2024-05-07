@@ -6,6 +6,7 @@
 #' @import utils
 #' @import xml2
 #' @import magrittr
+#' @import readr
 #'
 #' @param x R data frame (df) to be writtem.
 #'
@@ -23,21 +24,11 @@
 #' * or you can select the language by language code, e.g.
 #' \code{languages = "en"}.
 #' 
-#' 
-#' 
-#' @param variable_metadata
-#' If you are exporting the entire dataset, you can choose whether or not to
-#' export all available metadata (labels and descriptions of the dataset and the variables).
-#'
-#' * By default, all metadata is exported: information describing the dataset
-#' itself, as well as information describing all variables in
-#' the dataset (\code{variables = "yes"}).
-#' * If you set \code{variables = "no"}, only the information describing the
-#' dataset is exported.
+
 #'
 #' @param export_data
 #' Choose, if you want to export the file that holds the
-#' data (data.csv).
+#' data (data.csv).Default is  TRUE.
 #'
 #' * By default the data and metadata are exported (\code{export_data = "yes"}).
 #' * To export only metadata and no data, select \code{export_data = "no"}
@@ -78,7 +69,8 @@
 #' @export
 write_opendf2 <- function(x,
                          file,
-                         languages = "all") {
+                         languages = "all",
+                         export_data=TRUE) {
   #if no default labels and descriptions (labels and descriptions without language tag) are available, 
   # return an warning and run write_opendf for the active language
   if (languages!="all" & !all(languages %in% attr(x, "languages"))) stop("languages not valid")
@@ -92,7 +84,10 @@ write_opendf2 <- function(x,
   }
   
   dir.create(paste0(tempdir(), "/", folder_name),  showWarnings = F)
-  write.csv(x, paste0(tempdir(), "/", folder_name, "/data.csv"), row.names = F, na = "")
+
+  if (export_data==T) readr::write_csv(x=x, file=paste0(tempdir(), "/", folder_name, "/data.csv"), na = "", progress=F)
+
+  
   
   #create xml root node with codeBook attributes
   metadata<-xml_new_root(.value="codeBook")
@@ -130,7 +125,7 @@ write_opendf2 <- function(x,
           #create dataset url
           (xml_add_child(., "notes") %>% xml_add_child("ExtLink", "URI"=attr(x, "url"))) 
         }
-      #add dtata (variable) metadata
+      #add data (variable) metadata
       xml_add_child(., "dataDscr") %>%
         {
           #add metadata for each variable
@@ -169,7 +164,9 @@ write_opendf2 <- function(x,
                       for (labl in labels){
                         lang<-strsplit(labl, "_")[[1]][2]
                         if (languages=="all" | lang %in% languages){
-                          if (lang=="NA") xml_add_child(.,"labl", names(attr(x[,var], labl))[attr(x[,var], labl)==val]) else xml_add_child(.,"labl", names(attr(x[,var], labl))[attr(x[,var], labl)==val], "xml:lang"=lang)
+                          labl_new<-names(attr(x[,var], labl))[attr(x[,var], labl)==val]
+                          if(is.na(labl_new)) labl_new<-""
+                          if (lang=="NA") xml_add_child(.,"labl", labl_new) else xml_add_child(.,"labl", labl_new, "xml:lang"=lang)
                         }
                       }
                     }
@@ -184,7 +181,11 @@ write_opendf2 <- function(x,
   #Zip directory
   old_wd<-getwd()
   setwd(paste0(tempdir(), "/",folder_name))
-  utils::zip(zipfile=file,c("data.csv", "metadata.xml"), flags="-q")
+  if (export_data==T) {
+    utils::zip(zipfile=gsub("/", "\\\\", file),c("data.csv", "metadata.xml"), flags="-q")
+  } else {
+    utils::zip(zipfile=gsub("/", "\\\\", file),c("metadata.xml"), flags="-q")
+  }
   setwd(old_wd)
   
   #check if write_opendf was successful
@@ -196,4 +197,3 @@ write_opendf2 <- function(x,
     )
   }
 }
-
