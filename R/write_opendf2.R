@@ -71,6 +71,16 @@ write_opendf2 <- function(x,
                          file,
                          languages = "all",
                          export_data=TRUE) {
+  #Remove label attributes for haven
+  if(!is.null(attr(x,"label"))){
+    attr(x,"label")<-NULL
+  }
+  for (var in names(x)){
+    if(!is.null(attr(x[,var],"label"))){
+      attr(x[,var],"label")<-NULL
+    }
+  }
+  
   #if no default labels and descriptions (labels and descriptions without language tag) are available, 
   # return an warning and run write_opendf for the active language
   if (languages!="all" & !all(languages %in% attr(x, "languages"))) stop("languages not valid")

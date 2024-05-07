@@ -208,6 +208,15 @@ read_opendf2 <- function(file,
     attr(data[,var], "languages")<- langs
     attr(data[,var], "lang")<- lang
   }
+  
+   #add label in active language for haven
+  attr(data, "label")<-attr(data, paste0("label_", lang))
+  for (var in names(data)){
+    attr(data[,var], "label")<-attr(data[,var], paste0("label_", lang))
+  }
+  
+  #add opendf class
   attr(data, "class")<-c(attr(data, "class"), "opendf")
+  
   return(data)
 }
