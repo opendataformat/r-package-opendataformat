@@ -18,7 +18,7 @@
 #' Maximum number of lines to read.
 #' 
 #' @param skip
-#' Select the number of rows to be skipped.
+#' Select the number of rows to be skipped (without the column names).
 #' 
 #' @param variables
 #' Columns to include in the results. You can use the same mini-language as dplyr::select() to refer to the columns by name. Use c() to use more than one selection expression. 
@@ -110,15 +110,17 @@ read_opendf2 <- function(file,
       }
     }
     
+    #Get variable type
+    type_node<-xml_children(var)[xml_name(xml_children(var))=="varFormat"]
+    type<-xml_attr(type_node, attr="type")
+    if (length(type>0))var_attr$type<-type else var_attr$type<-""
+    
+    
     #Get variable url
     url_node<-xml_children(xml_children(var)[xml_name(xml_children(var))=="notes"])
     url<-xml_attr(url_node, attr="URI")
     if (length(url)>0) var_attr$url<-url else var_attr$url<-""
     
-    #Get variable type
-    type_node<-xml_children(var)[xml_name(xml_children(var))=="varFormat"]
-    type<-xml_attr(type_node, attr="type")
-    if (length(type>0))var_attr$type<-type else var_attr$type<-""
     
     #Get variable value labels
     varlabel_nodes<-xml_children(var)[xml_name(xml_children(var))=="catgry"]
@@ -170,17 +172,30 @@ read_opendf2 <- function(file,
   # load the data csv "data.csv"
   #data <- utils::read.csv(unz(file, "data.csv"), header = TRUE,
   #                 sep = ",", skip=skip, nrows=nrows, check.names=check.names, colClasses=var_types)
-  
-  if (is.null(variables)){
-    data <- readr::read_csv(file=unz(file, "data.csv"), progress=F,
-                            skip=skip, n_max=nrows, show_col_types = FALSE)#, col_types=var_types)
-    
+  options(warn=-1)
+  if (skip != 0){
+    if (is.null(variables)){
+      row_names<-names(readr::read_csv(file=unz(file, "data.csv"), progress=F, n_max=0, show_col_types = FALSE))
+      data <- readr::read_csv(file=unz(file, "data.csv"), progress=F,
+                              skip=skip+1, n_max=nrows, show_col_types = FALSE, col_names = row_names)
+    } else {
+      row_names <- names(readr::read_csv(file=unz(file, "data.csv"),progress=F,n_max=0, show_col_types = FALSE))
+      data <- readr::read_csv(file=unz(file, "data.csv"),progress=F,
+                              skip=skip+1, n_max=nrows, show_col_types = FALSE, col_select=variables, col_names = row_names)
+    }
   } else {
-    data <- readr::read_csv(file=unz(file, "data.csv"),progress=F,
-                            skip=skip, n_max=nrows, show_col_types = FALSE, col_select=variables)#, col_types=var_types)
+    if (is.null(variables)){
+      data <- readr::read_csv(file=unz(file, "data.csv"), progress=F,
+                              skip=skip, n_max=nrows, show_col_types = FALSE)#, col_types=var_types)
+      
+    } else {
+      data <- readr::read_csv(file=unz(file, "data.csv"),progress=F,
+                              skip=skip, n_max=nrows, show_col_types = FALSE, col_select=variables)#, col_types=var_types)
+    }
   }
+  options(warn=0)
   data<-as.data.frame(data)
-  
+  attr(data, "spec")<-NULL
   
   #Assign metadata to attributes
   #for dataset
