@@ -28,7 +28,7 @@
 #'
 #' @param export_data
 #' Choose, if you want to export the file that holds the
-#' data (data.csv).Default is  TRUE.
+#' data (data.csv).Default is TRUE.
 #'
 #' * By default the data and metadata are exported (\code{export_data = "yes"}).
 #' * To export only metadata and no data, select \code{export_data = "no"}

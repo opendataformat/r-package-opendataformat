@@ -5,7 +5,7 @@ test_that("write_opendf2_default_setting", {
   # make xml and data
   write_opendf2(
     x = df,
-    file = paste0(tempdir(),"/MY_XML")
+    file = paste0(tempdir(),"/MY_XML.zip")
   )
   # -- test if file exists
   expect_true(file.exists(paste0(tempdir(),"/MY_XML/data.csv")))
@@ -21,7 +21,7 @@ test_that("write_opendf2_export_data", {
   write_opendf2(
     x = df,
     file = paste0(tempdir(),"/MY_XML"),
-    export_data = "yes"
+    export_data = TRUE
   )
   # -- test if file exists
   expect_true(file.exists(paste0(tempdir(),"/MY_XML/data.csv")))
@@ -32,7 +32,7 @@ test_that("write_opendf2_export_data", {
   write_opendf2(
     x = df,
     file = paste0(tempdir(),"/MY_XML"),
-    export_data = "no" # changed
+    export_data = FALSE # changed
   )
   # -- test if file exists
   expect_false(file.exists(paste0(tempdir(),"/MY_XML/data.csv")))

@@ -24,7 +24,7 @@ write_opendf2(x, file, languages = "all", export_data = TRUE)
 }}
 
 \item{export_data}{Choose, if you want to export the file that holds the
-data (data.csv).Default is  TRUE.
+data (data.csv).Default is TRUE.
 \itemize{
 \item By default the data and metadata are exported (\code{export_data = "yes"}).
 \item To export only metadata and no data, select \code{export_data = "no"}
