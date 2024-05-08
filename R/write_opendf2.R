@@ -188,7 +188,7 @@ write_opendf2 <- function(x,
                 #add value labels
                 if(length(names(attributes(x[,var]))[grepl("labels", names(attributes(x[,var])))])>0){
                   labels<-names(attributes(x[,var]))[grepl("labels", names(attributes(x[,var])))]
-                  values<-attr(x[,var], labels[2])
+                  values<-attr(x[,var], labels[1])
                   for (val in values){
                     xml_add_child(., "catgry") %>% 
                       {
@@ -197,8 +197,9 @@ write_opendf2 <- function(x,
                           lang<-strsplit(labl, "_")[[1]][2]
                           if (languages=="all" | lang %in% languages){
                             labl_new<-names(attr(x[,var], labl))[attr(x[,var], labl)==val]
-                            if(is.na(labl_new)) labl_new<-""
-                            if (lang=="NA") xml_add_child(.,"labl", labl_new) else xml_add_child(.,"labl", labl_new, "xml:lang"=lang)
+                            if(!is.na(labl_new)) {
+                              if (lang=="NA") xml_add_child(.,"labl", labl_new) else xml_add_child(.,"labl", labl_new, "xml:lang"=lang)
+                            }
                           }
                         }
                       }
