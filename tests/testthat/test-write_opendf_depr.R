@@ -1,11 +1,11 @@
-#' write_opendf2: default setting: languages = "all", variable_metadata = "yes", export_data = "yes"
-test_that("write_opendf2_default_setting", {
+#' write_opendf_depr: default setting: languages = "all", variable_metadata = "yes", export_data = "yes"
+test_that("write_opendf_depr_default_setting", {
   # - get data
   df <- get(load("testdata/data_odf.RData"))
   # make xml and data
-  write_opendf2(
+  write_opendf_depr(
     x = df,
-    file = paste0(tempdir(),"/MY_XML.zip")
+    file = paste0(tempdir(),"/MY_XML")
   )
   # -- test if file exists
   expect_true(file.exists(paste0(tempdir(),"/MY_XML/data.csv")))
@@ -13,15 +13,15 @@ test_that("write_opendf2_default_setting", {
   expect_true(file.exists(paste0(tempdir(),"/MY_XML.zip")))
   unlink(paste0(tempdir(),"/*"), recursive = TRUE)
 })
-#' write_opendf2 test export_data argument
-test_that("write_opendf2_export_data", {
+#' write_opendf_depr test export_data argument
+test_that("write_opendf_depr_export_data", {
   # - get data
   df <- get(load("testdata/data_odf.RData"))
   # make xml and data with export_datat = yes
-  write_opendf2(
+  write_opendf_depr(
     x = df,
     file = paste0(tempdir(),"/MY_XML"),
-    export_data = TRUE
+    export_data = "yes"
   )
   # -- test if file exists
   expect_true(file.exists(paste0(tempdir(),"/MY_XML/data.csv")))
@@ -29,10 +29,10 @@ test_that("write_opendf2_export_data", {
   expect_true(file.exists(paste0(tempdir(),"/MY_XML.zip")))
   unlink(paste0(tempdir(),"/*"), recursive = TRUE)
   # make xml and data with export_datat = no
-  write_opendf2(
+  write_opendf_depr(
     x = df,
     file = paste0(tempdir(),"/MY_XML"),
-    export_data = FALSE # changed
+    export_data = "no" # changed
   )
   # -- test if file exists
   expect_false(file.exists(paste0(tempdir(),"/MY_XML/data.csv")))
@@ -40,29 +40,39 @@ test_that("write_opendf2_export_data", {
   expect_true(file.exists(paste0(tempdir(),"/MY_XML.zip")))
   unlink(paste0(tempdir(),"/*"), recursive = TRUE)
 })
-
-#' write_opendf2 test languages argument
-test_that("write_opendf2_languages", {
+#' write_opendf_depr test variables argument
+test_that("write_opendf_depr_variables", {
   # - get data
   df <- get(load("testdata/data_odf.RData"))
-  # make xml and data with languages = default
-  write_opendf2(
+  # make xml and data with variables = no
+  write_opendf_depr(
     x = df,
     file = paste0(tempdir(),"/MY_XML"),
-    languages = "en"
+    variable_metadata = "no"
   )
   # -- test if file exists
   expect_true(file.exists(paste0(tempdir(),"/MY_XML/data.csv")))
   expect_true(file.exists(paste0(tempdir(),"/MY_XML/metadata.xml")))
   expect_true(file.exists(paste0(tempdir(),"/MY_XML.zip")))
-  df<-read_opendf2(paste0(tempdir(),"/MY_XML.zip"),
-                   languages = "all",
-                   nrows = 0)
-  expect_equal(attr(df, "languages"), "en")
   unlink(paste0(tempdir(),"/*"), recursive = TRUE)
+})
+#' write_opendf_depr test languages argument
+test_that("write_opendf_depr_languages", {
+  # - get data
   df <- get(load("testdata/data_odf.RData"))
+  # make xml and data with languages = default
+  write_opendf_depr(
+    x = df,
+    file = paste0(tempdir(),"/MY_XML"),
+    languages = "default"
+  )
+  # -- test if file exists
+  expect_true(file.exists(paste0(tempdir(),"/MY_XML/data.csv")))
+  expect_true(file.exists(paste0(tempdir(),"/MY_XML/metadata.xml")))
+  expect_true(file.exists(paste0(tempdir(),"/MY_XML.zip")))
+  unlink(paste0(tempdir(),"/*"), recursive = TRUE)
   # make xml and data with languages = de
-  write_opendf2(
+  write_opendf_depr(
     x = df,
     file = paste0(tempdir(),"/MY_XML"),
     languages = "de"
@@ -71,24 +81,19 @@ test_that("write_opendf2_languages", {
   expect_true(file.exists(paste0(tempdir(),"/MY_XML/data.csv")))
   expect_true(file.exists(paste0(tempdir(),"/MY_XML/metadata.xml")))
   expect_true(file.exists(paste0(tempdir(),"/MY_XML.zip")))
-  df<-read_opendf2(paste0(tempdir(),"/MY_XML.zip"),
-               languages = "all",
-               nrows = 0)
-  expect_equal(attr(df, "languages"), "de")
   unlink(paste0(tempdir(),"/*"), recursive = TRUE)
-  df <- get(load("testdata/data_odf.RData"))
   # make xml and data with languages = notvalid
-  expect_error(write_opendf2(
+  write_opendf_depr(
     x = df,
     file = paste0(tempdir(),"/MY_XML"),
     languages = "notvalid"
-  ) , "languages not valid")
+  )
   # -- test if file exists
-  expect_false(file.exists(paste0(tempdir(),"/MY_XML/data.csv")))
-  expect_false(file.exists(paste0(tempdir(),"/MY_XML/metadata.xml")))
-  expect_false(file.exists(paste0(tempdir(),"/MY_XML.zip")))
+  expect_true(file.exists(paste0(tempdir(),"/MY_XML/data.csv")))
+  expect_true(file.exists(paste0(tempdir(),"/MY_XML/metadata.xml")))
+  expect_true(file.exists(paste0(tempdir(),"/MY_XML.zip")))
   unlink(paste0(tempdir(),"/*"), recursive = TRUE)
 })
-# testthat::test_file("tests/testthat/test-write_opendf2.R")
+# testthat::test_file("tests/testthat/test-write_opendf_depr.R")
 # covr::package_coverage()
 

@@ -3,7 +3,10 @@
 #' @description Export data from an R data frame to a ZIP file that stores
 #' the data as Open Data Format.
 #'
-#' @import reticulate
+#' @import utils
+#' @import xml2
+#' @import magrittr
+#' @import readr
 #'
 #' @param x R data frame (df) to be writtem.
 #'
@@ -21,21 +24,11 @@
 #' * or you can select the language by language code, e.g.
 #' \code{languages = "en"}.
 #' 
-#' 
-#' 
-#' @param variable_metadata
-#' If you are exporting the entire dataset, you can choose whether or not to
-#' export all available metadata (labels and descriptions of the dataset and the variables).
-#'
-#' * By default, all metadata is exported: information describing the dataset
-#' itself, as well as information describing all variables in
-#' the dataset (\code{variables = "yes"}).
-#' * If you set \code{variables = "no"}, only the information describing the
-#' dataset is exported.
+
 #'
 #' @param export_data
 #' Choose, if you want to export the file that holds the
-#' data (data.csv).
+#' data (data.csv).Default is TRUE.
 #'
 #' * By default the data and metadata are exported (\code{export_data = "yes"}).
 #' * To export only metadata and no data, select \code{export_data = "no"}
@@ -51,56 +44,190 @@
 #' # write R data frame with attributes to the file my_data.zip specified
 #' # as Open Data Format.
 #' \dontrun{
-#' write_opendf(input = df, output = "my_data")
+#' write_opendf(x = df, file = "my_data.zip")
 #' }
 #'
 #' # write variable from R data frame with attributes to the file my_data.zip specified
 #' # as Open Data Format.
 #' \dontrun{
-#' write_opendf(input = df$bap87, output = "my_data")
+#' write_opendf(x = df$bap87,  file = "my_data.zip")
 #' }
 #'
 #' # write R data frame with attributes to the file my_data.zip
 #' # with selected language.
 #' \dontrun{
-#' write_opendf(input = df, output = "my_data", languages = "en")
+#' write_opendf(x = df,  file = "my_data.zip", languages = "en")
 #' }
 #'
 #' # write R data frame with attributes to the file my_data.zip but only
 #' # metadata, no data.
 #' \dontrun{
-#' write_opendf(input = df, output = "my_data", export_data = "no")
+#' write_opendf(x = df,  file = "my_data.zip", export_data = "no")
 #' }
 #'
 #'
 #' @export
 write_opendf <- function(x,
-                        file,
-                        languages = "all",
-                        variable_metadata = "yes",
-                        export_data = "yes") {
-  #if no default labels and descriptions (labels and descriptions without language tag) are available, 
-  # return an warning and run write_opendf for the active language
-  if (languages=="default"){
-    if (!("default" %in% unlist(attributes(x)["languages"]))){
-      message(paste0("Metadata saved in language: ",unlist(attributes(x)["lang"])))
-      languages=unlist(attributes(x)["lang"])
-    }else{
-      message("Metadata saved in language default without language tag")
+                         file,
+                         languages = "all",
+                         export_data=TRUE) {
+  #Remove label attributes for haven
+  if(!is.null(attr(x,"label"))){
+    attr(x,"label")<-NULL
+  }
+  for (var in names(x)){
+    if(!is.null(attr(x[,var],"label"))){
+      attr(x[,var],"label")<-NULL
     }
   }
-  #set language to current language, if current language is indicated
-  if (languages=="current"){
-    languages=unlist(attributes(x)["lang"])
+  
+  #if no default labels and descriptions (labels and descriptions without language tag) are available, 
+  # return an warning and run write_opendf for the active language
+  if (languages!="all" & !all(languages %in% attr(x, "languages"))) stop("languages not valid")
+  unlink(paste0(tempdir(),"/*"), recursive=T)
+  folder_url<-gsub(".zip", "",file)
+  folder_url<-gsub("\\\\", "/", folder_url)
+  folder_name<-strsplit(folder_url, "/")[[1]][length(strsplit(folder_url, "/")[[1]])]
+  root_dir<-paste0(strsplit(folder_url, "/")[[1]][-length(strsplit(folder_url, "/")[[1]])], "/", collapse="/")
+  if (dir.exists(root_dir)==FALSE & dir.exists(paste0("/",root_dir))==FALSE & dir.exists(paste0("//",root_dir))==FALSE){
+    stop("File path not found")
   }
-  unlink(paste0(tempdir(), "/*"))
-  #remove .zip from file name
-  file<-gsub(".zip","", file)
-  opendataformat::convert_opendf(
-    format = "r2xml",
-    x,
-    file,
-    languages,
-    variables=variable_metadata,
-    export_data)
+  
+  dir.create(paste0(tempdir(), "/", folder_name),  showWarnings = F)
+
+  if (export_data==T) readr::write_csv(x=x, file=paste0(tempdir(), "/", folder_name, "/data.csv"), na = "", progress=F)
+
+  
+  
+  #create xml root node with codeBook attributes
+  metadata<-xml_new_root(.value="codeBook")
+  #create codebook attributes
+  xml_attr(metadata, attr="xmlns:xsi")<-"http://www.w3.org/2001/XMLSchema-instance"
+  xml_attr(metadata, attr="xmlns")<-"ddi:codebook:2_5"
+  xml_attr(metadata, attr="xsi:schemaLocation")<-"ddi:codebook:2_5 http://www.ddialliance.org/Specification/DDI-Codebook/2.5/XMLSchema/codebook.xsd"
+  xml_attr(metadata, attr="version")<-"2.5"
+  metadata %>% 
+    {
+      #create dataset/file metadata
+      xml_add_child(., "fileDscr") %>%
+        {
+          xml_add_child(., "fileTxt") %>% 
+            {
+              xml_add_child(.,"fileName", attr(x, "name"))
+              #add dataset descriptions
+              if(length(names(attributes(x))[grepl("description", names(attributes(x)))])>0){
+                for (descr in names(attributes(x))[grepl("description", names(attributes(x)))]){
+                  lang<-strsplit(descr, "_")[[1]][2]
+                  if (languages=="all" | lang %in% languages){
+                    if (lang=="NA") xml_add_child(.,"fileCont", attr(x, descr)) else xml_add_child(.,"fileCont", attr(x, descr), "xml:lang"=lang)
+                  }
+                }
+              }
+              
+              #add dataset labels
+              xml_add_child(.,"fileCitation") %>%
+                xml_add_child(.,"titlStmt") %>%
+                  {
+                    if(length(names(attributes(x))[grepl("label", names(attributes(x)))])>0){
+                      for (labl in names(attributes(x))[grepl("label", names(attributes(x)))]){
+                        lang<-strsplit(labl, "_")[[1]][2]
+                        if (languages=="all" | lang %in% languages){
+                          if (lang=="NA") xml_add_child(.,"titl", attr(x, labl)) else xml_add_child(.,"titl", attr(x, labl), "xml:lang"=lang)
+                        }
+                      }
+                    }
+                  }
+            }
+          #create dataset url
+          url<-attr(x, "url")
+          if (is.null(url)) url<-""
+          (xml_add_child(., "notes") %>% xml_add_child("ExtLink", "URI"=url)) 
+        }
+      #add data (variable) metadata
+      xml_add_child(., "dataDscr") %>%
+        {
+          #add metadata for each variable
+          for (var in names(x)){
+            #variable name
+            xml_add_child(., "var", "name"=var) %>%
+              {
+                #add variable labels
+                if(length(names(attributes(x[,var]))[grepl("label", names(attributes(x[,var])))])>0){
+                  for (labl in names(attributes(x[,var]))[grepl("label", names(attributes(x[,var])))]){
+                    if (!grepl("labels", labl)) {
+                      lang<-strsplit(labl, "_")[[1]][2]
+                      if (languages=="all" | lang %in% languages){
+                        if (lang=="NA") xml_add_child(.,"labl", attr(x[,var], labl)) else xml_add_child(.,"labl", attr(x[,var], labl), "xml:lang"=lang)
+                      }
+                    }
+                  }
+                }
+                
+                #add variable descriptions
+                if(length(names(attributes(x[,var]))[grepl("description", names(attributes(x[,var])))])>0){
+                  for (descr in names(attributes(x[,var]))[grepl("description", names(attributes(x[,var])))]){
+                    if (!grepl("labels", descr)) {
+                      lang<-strsplit(descr, "_")[[1]][2]
+                      if (languages=="all" | lang %in% languages){
+                        if (lang=="NA") xml_add_child(.,"txt", attr(x[,var], descr)) else xml_add_child(.,"txt", attr(x[,var], descr), "xml:lang"=lang)
+                      }
+                    }
+                  }
+                }
+                
+                #add url
+                url<-attr(x[,var], "url")
+                if (is.null(url)) url<-""
+                xml_add_child(., "notes") %>% xml_add_child("ExtLink", "URI"=url)
+                
+                #add variable type
+                type<-attr(x[,var], "type")
+                if (is.null(type)) type <-class(x[,var])
+                xml_add_child(.,"varFormat", "type"=type)
+                
+                #add value labels
+                if(length(names(attributes(x[,var]))[grepl("labels", names(attributes(x[,var])))])>0){
+                  labels<-names(attributes(x[,var]))[grepl("labels", names(attributes(x[,var])))]
+                  values<-attr(x[,var], labels[1])
+                  for (val in values){
+                    xml_add_child(., "catgry") %>% 
+                      {
+                        xml_add_child(., "catValu", val)
+                        for (labl in labels){
+                          lang<-strsplit(labl, "_")[[1]][2]
+                          if (languages=="all" | lang %in% languages){
+                            labl_new<-names(attr(x[,var], labl))[attr(x[,var], labl)==val]
+                            if(!is.na(labl_new)) {
+                              if (lang=="NA") xml_add_child(.,"labl", labl_new) else xml_add_child(.,"labl", labl_new, "xml:lang"=lang)
+                            }
+                          }
+                        }
+                      }
+                  }
+                }
+              }
+          }
+        }
+    }
+  #write metadata.xml
+  write_xml(metadata, paste0(tempdir(), "/", folder_name, "/metadata.xml"))
+  
+  #Zip directory
+  old_wd<-getwd()
+  setwd(paste0(tempdir(), "/",folder_name))
+  if (export_data==T) {
+    utils::zip(zipfile=gsub("/", "\\\\", file),c("data.csv", "metadata.xml"), flags="-q")
+  } else {
+    utils::zip(zipfile=gsub("/", "\\\\", file),c("metadata.xml"), flags="-q")
+  }
+  setwd(old_wd)
+  
+  #check if write_opendf was successful
+  if (file.exists(file)){
+    print(
+      paste0(
+        "Dataset successfully written to '",file,"'"
+      )
+    )
+  }
 }

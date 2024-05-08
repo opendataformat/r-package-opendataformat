@@ -4,13 +4,7 @@
 \alias{write_opendf}
 \title{Write R data frame to the Open Data Format.}
 \usage{
-write_opendf(
-  x,
-  file,
-  languages = "all",
-  variable_metadata = "yes",
-  export_data = "yes"
-)
+write_opendf(x, file, languages = "all", export_data = TRUE)
 }
 \arguments{
 \item{x}{R data frame (df) to be writtem.}
@@ -29,18 +23,8 @@ write_opendf(
 \code{languages = "en"}.
 }}
 
-\item{variable_metadata}{If you are exporting the entire dataset, you can choose whether or not to
-export all available metadata (labels and descriptions of the dataset and the variables).
-\itemize{
-\item By default, all metadata is exported: information describing the dataset
-itself, as well as information describing all variables in
-the dataset (\code{variables = "yes"}).
-\item If you set \code{variables = "no"}, only the information describing the
-dataset is exported.
-}}
-
 \item{export_data}{Choose, if you want to export the file that holds the
-data (data.csv).
+data (data.csv).Default is TRUE.
 \itemize{
 \item By default the data and metadata are exported (\code{export_data = "yes"}).
 \item To export only metadata and no data, select \code{export_data = "no"}
@@ -62,25 +46,25 @@ df
 # write R data frame with attributes to the file my_data.zip specified
 # as Open Data Format.
 \dontrun{
-write_opendf(input = df, output = "my_data")
+write_opendf(x = df, file = "my_data.zip")
 }
 
 # write variable from R data frame with attributes to the file my_data.zip specified
 # as Open Data Format.
 \dontrun{
-write_opendf(input = df$bap87, output = "my_data")
+write_opendf(x = df$bap87,  file = "my_data.zip")
 }
 
 # write R data frame with attributes to the file my_data.zip
 # with selected language.
 \dontrun{
-write_opendf(input = df, output = "my_data", languages = "en")
+write_opendf(x = df,  file = "my_data.zip", languages = "en")
 }
 
 # write R data frame with attributes to the file my_data.zip but only
 # metadata, no data.
 \dontrun{
-write_opendf(input = df, output = "my_data", export_data = "no")
+write_opendf(x = df,  file = "my_data.zip", export_data = "no")
 }
 
 

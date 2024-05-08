@@ -4,18 +4,20 @@
 \alias{read_opendf}
 \title{Read data specified as Open Data Format.}
 \usage{
-read_opendf(file, languages = "all")
+read_opendf(file, languages = "all", nrows = Inf, skip = 0, variables = NULL)
 }
 \arguments{
-\item{file}{Path to ZIP file containing data and metadata specified
-as Open Data Format.}
+\item{file}{the name of the file which the data are to be read from.
+By default all available language variants are imported (\code{languages = "all"}).}
 
-\item{languages}{Select the language in which the descriptions and labels of the data will be imported.
-\itemize{
-\item By default all available language variants are imported (\code{languages = "all"}).
-\item You can also choose to import only the default language (\code{languages = "default"}),
-\item or you can select the language by language code, e.g. \code{languages = "en"}.
-}}
+\item{languages}{integer: the maximum number of rows to read in. Negative and other invalid values are ignored.}
+
+\item{nrows}{Maximum number of lines to read.}
+
+\item{skip}{Select the number of rows to be skipped (without the column names).}
+
+\item{variables}{Columns to include in the results. You can use the same mini-language as dplyr::select() to refer to the columns by name. Use c() to use more than one selection expression.
+Although this usage is less common, col_select also accepts a numeric column index. See ?tidyselect::language for full details on the selection language.}
 }
 \value{
 R dataframe with attributes including dataset and variable information.
@@ -29,13 +31,13 @@ path <- system.file("extdata", "data.zip", package="opendataformat")
 path
 
 # read example data specified as Open Data Format from ZIP file
-df <- read_opendf(input = path)
+df <- read_opendf(file = path)
 df
 attributes(df)
 attributes(df$bap87)
 
 # read example data with language selection
-df <- read_opendf(input = path, languages = "de")
+df <- read_opendf(file = path, languages = "de")
 attributes(df$bap87)
 
 }
