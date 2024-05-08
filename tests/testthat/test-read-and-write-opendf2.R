@@ -1,3 +1,4 @@
+
 #' write_opendf2 and read_opendf2: default setting
 test_that("read_write_opendf2_default_setting", {
   # - get data
@@ -62,7 +63,7 @@ test_that("read_write_opendf2_with_default_language", {
 #' write_opendf2 and read_opendf2: with auto
 test_that("read_write_opendf2_with_default_language", {
   # - get data
-  library(ISLR)
+
   data(Auto)
   # make xml and data
   write_opendf2(
