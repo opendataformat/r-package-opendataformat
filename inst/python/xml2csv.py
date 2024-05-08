@@ -1,3 +1,5 @@
+# version 1.0 (17 Apr 2024)
+
 #########################
 # MODULES
 #########################
@@ -12,9 +14,9 @@ import zipfile
 # MAIN FUNCTION
 #########################
 
-def make_csvs(input_zip, output_dir, languages = 'all'):
+def make_csvs(input_zip, output_dir, languages):
   global root
-  root = load(input_zip)
+  root = load(input_zip, output_dir)
   make_dir(output_dir)
   write_dataset_csv(output_dir, languages)
   write_variables_csv(output_dir, languages)
@@ -26,7 +28,7 @@ def make_csvs(input_zip, output_dir, languages = 'all'):
 #########################
 
 # load zip and make root
-def load(input_zip):
+def load(input_zip, output_dir):
   with zipfile.ZipFile(input_zip, 'r') as zip_ref: # unzip and get tree
     zip_ref.extractall(output_dir)
     tree=ET.parse(output_dir+'/metadata.xml')
@@ -67,7 +69,7 @@ def header_if_exists(element, xpath):
   return items
 
 # check for language specific elements 
-def header_lang_spec(element, xpath, languages):
+def header_lang_spec(element, xpath, languages='all'):
   items = []
   if languages == "all":
     for ele in root.findall(xpath):
@@ -266,6 +268,7 @@ def make_categories_dictionary(languages):
   ## make list of dictionaries
   list_of_dictionaries=[]
   for var in root.findall('.//dataDscr/var'):
+    lang_list = get_lang('.//dataDscr/var/catgry/labl')
     for cat in var.findall('catgry'):
       #### header as keys
       dictionary = {key:"" for key in header}
@@ -288,7 +291,7 @@ def make_categories_dictionary(languages):
         for lab in cat.findall('labl'):
           if lab.get('{http://www.w3.org/XML/1998/namespace}lang') is None:
             dictionary['label'] = lab.text
-      if languages in get_lang('.//dataDscr/var/catgry/labl'):      
+      if languages in lang_list:      
         for lab in cat.findall('labl'):
           if lab.get('{http://www.w3.org/XML/1998/namespace}lang') == languages:
             dictionary['label' + '_' + lab.get('{http://www.w3.org/XML/1998/namespace}lang')] = lab.text
@@ -309,5 +312,4 @@ def write_categories_csv(output_dir, languages):
 
 
 if __name__ == '__main__':
-  make_csvs(input_zip, output_dir, languages)    
-
+  make_csvs(input_zip, output_dir, languages)   
