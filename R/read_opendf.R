@@ -4,7 +4,7 @@
 #'
 #' @import utils
 #' @import xml2
-#' @import readr
+#' @import data.table
 #' 
 #' 
 #' @param file
@@ -175,22 +175,18 @@ read_opendf <- function(file,
   options(warn=-1)
   if (skip != 0){
     if (is.null(variables)){
-      cnames<-names(readr::read_csv(file=unz(file, "data.csv"), progress=F, n_max=0, show_col_types = FALSE))
-      data <- readr::read_csv(file=unz(file, "data.csv"), progress=F,
-                              skip=skip+1, n_max=nrows, show_col_types = FALSE, col_names = cnames)
+      cnames<-names(fread(cmd = paste0('unzip -p ',file, ' data.csv'), skip=0, nrows=0))
+      data<-fread(cmd = paste0('unzip -p ',file, ' data.csv'), skip=skip+1, nrows=nrows, col.names=cnames)
+      
     } else {
-      cnames <- names(readr::read_csv(file=unz(file, "data.csv"),progress=F,n_max=0, show_col_types = FALSE))
-      data <- readr::read_csv(file=unz(file, "data.csv"),progress=F,
-                              skip=skip+1, n_max=nrows, show_col_types = FALSE, col_select=variables, col_names = cnames)
+      cnames<-names(fread(cmd = paste0('unzip -p ',file, ' data.csv'), select=variables, skip=0, nrows=0))
+      data<-fread(cmd = paste0('unzip -p ',file, ' data.csv'), select=variables, header=F, skip=skip+1, nrows=nrows, col.names=cnames, verbose=T)
     }
   } else {
     if (is.null(variables)){
-      data <- readr::read_csv(file=unz(file, "data.csv"), progress=F,
-                              skip=skip, n_max=nrows, show_col_types = FALSE)#, col_types=var_types)
-      
+      data<-fread(cmd = paste0('unzip -p ',file, ' data.csv'), skip=skip, nrows=nrows)
     } else {
-      data <- readr::read_csv(file=unz(file, "data.csv"),progress=F,
-                              skip=skip, n_max=nrows, show_col_types = FALSE, col_select=variables)#, col_types=var_types)
+      data<-fread(cmd = paste0('unzip -p ',file, ' data.csv'), select=variables, skip=skip, nrows=nrows)
     }
   }
   options(warn=0)

@@ -6,9 +6,9 @@ test_that("read_opendf_all", {
   )
   # - dataset attributes
   expect_equal(names(attributes(df)),c(
-    "row.names",
-    "names",
-    "name",
+   "names",
+   "row.names",
+   "name",
     "description_en",
     "description_de",
     "label_en",
@@ -70,8 +70,8 @@ test_that("read_opendf_variables", {
   )
   # - dataset attributes
   expect_equal(names(attributes(df)),c(
-    "row.names",
     "names",
+    "row.names",
     "name",
     "description_NA",
     "description_en",
@@ -123,8 +123,8 @@ test_that("read_opendf_de", {
   )
   # - dataset attributes
   expect_equal(names(attributes(df)),c(
-    "row.names",
     "names",
+    "row.names",
     "name",
     "description_de",
     "label_de",
@@ -177,8 +177,8 @@ test_that("read_opendf_specific_rows", {
   )
   # - dataset attributes
   expect_equal(names(attributes(df)),c(
-    "row.names",
     "names",
+    "row.names",
     "name",
     "description_en",
     "description_de",
@@ -245,8 +245,8 @@ test_that("read_opendf_specific_rows2", {
   )
   # - dataset attributes
   expect_equal(names(attributes(df)),c(
-    "row.names",
     "names",
+    "row.names",
     "name",
     "description_en",
     "description_de",
@@ -552,8 +552,9 @@ test_that("read_opendf_specific_rows_and_cols2", {
   )
   # - dataset attributes
   expect_equal(names(attributes(df)),c(
-    "names",
+    "class",
     "row.names",
+    "names",
     "name",
     "description_en",
     "description_de",
@@ -562,8 +563,7 @@ test_that("read_opendf_specific_rows_and_cols2", {
     "url",
     "languages",
     "lang",
-    "label",
-    "class"
+    "label"
   ))
   # - variable attributes
   expect_equal(names(attributes(df$bap87)), c(
