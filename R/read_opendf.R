@@ -175,13 +175,13 @@ read_opendf <- function(file,
   options(warn=-1)
   if (skip != 0){
     if (is.null(variables)){
-      row_names<-names(readr::read_csv(file=unz(file, "data.csv"), progress=F, n_max=0, show_col_types = FALSE))
+      cnames<-names(readr::read_csv(file=unz(file, "data.csv"), progress=F, n_max=0, show_col_types = FALSE))
       data <- readr::read_csv(file=unz(file, "data.csv"), progress=F,
-                              skip=skip+1, n_max=nrows, show_col_types = FALSE, col_names = row_names)
+                              skip=skip+1, n_max=nrows, show_col_types = FALSE, col_names = cnames)
     } else {
-      row_names <- names(readr::read_csv(file=unz(file, "data.csv"),progress=F,n_max=0, show_col_types = FALSE))
+      cnames <- names(readr::read_csv(file=unz(file, "data.csv"),progress=F,n_max=0, show_col_types = FALSE))
       data <- readr::read_csv(file=unz(file, "data.csv"),progress=F,
-                              skip=skip+1, n_max=nrows, show_col_types = FALSE, col_select=variables, col_names = row_names)
+                              skip=skip+1, n_max=nrows, show_col_types = FALSE, col_select=variables, col_names = cnames)
     }
   } else {
     if (is.null(variables)){
