@@ -16,7 +16,8 @@ Depends:
     crayon,
     readr,
     magrittr,
-    xml2
+    xml2,
+    data.table
 Suggests: 
     testthat (>= 3.0.0),
     knitr,
