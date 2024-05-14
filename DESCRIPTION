@@ -13,7 +13,6 @@ RoxygenNote: 7.3.1
 Depends: 
     R (>= 2.10),
     crayon,
-    readr,
     magrittr,
     xml2,
     data.table
