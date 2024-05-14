@@ -63,7 +63,7 @@ test_that("read_write_opendf_with_default_language", {
 #' write_opendf and read_opendf: with auto
 test_that("read_write_opendf_with_default_language", {
   # - get data
-
+  library(ISLR)
   data(Auto)
   # make xml and data
   write_opendf(
