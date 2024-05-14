@@ -46,13 +46,13 @@ path <- system.file("extdata", "data.zip", package="opendataformat")
 
 
 ```{r read_opendf, comment = ""}
-df <- read_opendf(input = path)
+df <- read_opendf(file = path)
 ```
 
 If you prefer not to use the example data provided and instead want to work with an Open Data Format file of your own choice, simply specify the file path to access your desired dataset. For instance:
 
 ```{r read_opendf choice, eval = FALSE, comment = ""}
-df <- read_opendf(input = "../my_data.zip")
+df <- read_opendf(file = "../my_data.zip")
 ```
 
 View the R Dataset
@@ -95,7 +95,7 @@ docu_opendf(df, style = "print")
 To obtain a comprehensive overview of all variables within the dataset, simply set the `variables` argument to `yes`.
 
 ```{r docu_opendf variables, eval = FALSE}
-docu_opendf(df, variables = "yes")
+docu_opendf(df)
 ```
 
 If you are interested in just one specific variable, you can do this:
@@ -207,7 +207,7 @@ docu_opendf(df$bap9001, style = "print", languages = "de")
 Certainly! You can apply this function to the entire dataset, allowing you to access the desired information across all variables.
 
 ```{r docu_opendf languages code all data, eval = FALSE}
-docu_opendf(df, variables = "yes", languages = "de")
+docu_opendf(df, languages = "de")
 ```
 
 If you prefer another display style you can use the datasets' metadata and write your own code: 
@@ -273,7 +273,7 @@ table(df$bap87, useNA = "ifany")
 As expected, the frequency table displays the occurrence count of each variable value. Now, let's enhance the convenience of the frequency table by utilizing the value labels associated with the variables. To access the value labels, as explained in the preceding section, you can utilize the base R function `attributes()`. Let's proceed to examine them now:
 
 ```{r table attributes labels, comment = ""}
-attributes(df$bap87)$labels
+attributes(df$bap87)$labels_en
 ```
 
 ```{r table attributes labels_de, comment = ""}
@@ -283,7 +283,7 @@ attributes(df$bap87)$labels_de
 ```{r table factor, comment = ""}
 table(
   factor(
-    df$bap87, labels = names(attributes(df$bap87)$labels
+    df$bap87, labels = names(attributes(df$bap87)$labels_en
                              )
     )
   )
@@ -329,16 +329,16 @@ table(bap87_rec, useNA = "ifany")
 We notice that the copied values and value labels do not fit anymore:
 
 ```{r check metadata again, comment = ""}
-attributes(bap87_rec)$labels
+attributes(bap87_rec)$labels_en
 ```
 
 We'll change that specifically copy positions `3` to `7`, retaining the desired range of values and their respective value labels. 
 
 ```{r copy metadata to recoded var, comment = ""}
-attributes(bap87_rec)$labels <- unname(attributes(df$bap87)$labels)[3:7] # values
-names(attributes(bap87_rec)$labels) <- names(attributes(df$bap87)$labels)[3:7] # labels
+attributes(bap87_rec)$labels_en <- unname(attributes(df$bap87)$labels_en)[3:7] # values
+names(attributes(bap87_rec)$labels_en) <- names(attributes(df$bap87)$labels_en)[3:7] # labels
 
-attributes(bap87_rec)$labels
+attributes(bap87_rec)$labels_en
 ```
 
 Do the same for the other language versions of the new recoded variable:
@@ -366,7 +366,7 @@ Now we generate the frequency table by using the variable as a factor variable.
 table(
   factor(
     bap87_rec,
-      labels=names(attributes(bap87_rec)$labels)
+      labels=names(attributes(bap87_rec)$labels_en)
     )
   )
 ```
@@ -380,10 +380,10 @@ barplot(
   table(
   factor(
     bap87_rec,
-      labels=names(attributes(bap87_rec)$labels)
+      labels=names(attributes(bap87_rec)$labels_en)
     )
   ),
-  main = attributes(bap87_rec)$description, # title
+  main = attributes(bap87_rec)$description_en, # title
   xlab = paste0(
     attributes(bap87_rec)$name,": ", attributes(bap87_rec)$label), # label 
   sub = attributes(bap87_rec)$url, # subtitle
@@ -424,8 +424,8 @@ names(df_rec)
 
 ```{r write_opendf, comment = "", eval = FALSE}
 write_opendf(
-  input = df_rec, 
-  output = "../data_rec"
+  x = df_rec, 
+  file = "../data_rec.zip"
 )
 ```
 
@@ -504,8 +504,8 @@ To export a specific variable of interest, you can utilize the write_opendf() fu
 
 ```{r write_opendf variable selection, comment = "", eval = FALSE}
 write_opendf(
-  input = df_rec$bap87_rec, 
-  output = "../data_bap87_rec"
+  x = df_rec$bap87_rec, 
+  file = "../data_bap87_rec.zip"
 )
 ```
 
@@ -590,9 +590,9 @@ If you wish to export only the metadata for documentation or archiving purposes,
 
 ```{r write_opendf variable, comment = "", eval = FALSE}
 write_opendf(
-  df_rec$bap87_rec, 
-  input = "../data_bap87_rec_metadata",
-  output = export_data = "no"
+  x=df_rec, 
+  file = "../data_bap87_rec_metadata.zip",
+  export_data = "no"
 )
 ```
 
@@ -603,13 +603,13 @@ write_opendf(
 By default the `read_opendf()` function imports all available languages. When working with a multilingual dataset and having a specific language of interest, you can make use of the `languages` argument to import only the desired language. By specifying either the `default` language or the language `code` corresponding to your preferred language, you can selectively import the dataset with the specific language variant you require. 
 
 ```{r read_opendf de, comment = ""}
-df_de<- read_opendf(input = path, languages = "de")
+df_de<- read_opendf(file = path, languages = "de")
 ```
 
 or
 
 ```{r read_opendf choice de, eval = FALSE, comment = ""}
-df_de <- read_opendf(input = "../my_data.zip", languages = "de")
+df_de <- read_opendf(file = "../my_data.zip", languages = "de")
 ```
 
 Check the import with `docu_opendf()`:
@@ -646,8 +646,8 @@ By default the `export_opendf()` function writes all available languages. When w
 
 ```{r write_opendf variable default, comment = "", eval = FALSE}
 write_opendf(
-  input = df$bap87, 
-  output = "../data_bap87_default",
+  x = df, 
+  file = "../data_bap87_default",
   languages = "default"
 )
 ```
@@ -699,8 +699,8 @@ Or you choose the language by language code:
 
 ```{r write_opendf variable de, comment = "", eval = FALSE}
 write_opendf(
-  input = df$bap87, 
-  output = "../data_bap87_de",
+  x = df, 
+  file = "../data_bap87_de",
   languages = "de"
 )
 ```

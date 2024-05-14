@@ -172,21 +172,26 @@ read_opendf <- function(file,
   # load the data csv "data.csv"
   #data <- utils::read.csv(unz(file, "data.csv"), header = TRUE,
   #                 sep = ",", skip=skip, nrows=nrows, check.names=check.names, colClasses=var_types)
-  options(warn=-1)
+  options(warn = -1)
   if (skip != 0){
     if (is.null(variables)){
-      cnames<-names(fread(cmd = paste0('unzip -p ',file, ' data.csv'), skip=0, nrows=0))
-      data<-fread(cmd = paste0('unzip -p ',file, ' data.csv'), skip=skip+1, nrows=nrows, col.names=cnames)
+      cnames<-names(data.table::fread(cmd = paste0('unzip -p ',file, ' data.csv'), skip=0, nrows=0))
+      data<-data.table::fread(cmd = paste0('unzip -p ',file, ' data.csv'), skip=skip+1, nrows=nrows, col.names=cnames)
       
     } else {
-      cnames<-names(fread(cmd = paste0('unzip -p ',file, ' data.csv'), select=variables, skip=0, nrows=0))
-      data<-fread(cmd = paste0('unzip -p ',file, ' data.csv'), select=variables, header=F, skip=skip+1, nrows=nrows, col.names=cnames, verbose=T)
+      cnames<-names(data.table::fread(cmd = paste0('unzip -p ',file, ' data.csv'), skip=0, nrows=0))
+      if (class(variables)!="numeric"){
+        cindex<-which(cnames %in% variables)
+      } else {
+        cindex<-variables
+      }
+      data<-data.table::fread(cmd = paste0('unzip -p ',file, ' data.csv'), select=cindex, header=F, skip=skip+1, nrows=nrows, col.names=cnames[cindex])
     }
   } else {
     if (is.null(variables)){
-      data<-fread(cmd = paste0('unzip -p ',file, ' data.csv'), skip=skip, nrows=nrows)
+      data<-data.table::fread(cmd = paste0('unzip -p ',file, ' data.csv'), skip=skip, nrows=nrows)
     } else {
-      data<-fread(cmd = paste0('unzip -p ',file, ' data.csv'), select=variables, skip=skip, nrows=nrows)
+      data<-data.table::fread(cmd = paste0('unzip -p ',file, ' data.csv'), select=variables, skip=skip, nrows=nrows)
     }
   }
   options(warn=0)

@@ -6,7 +6,7 @@
 #' @import utils
 #' @import xml2
 #' @import magrittr
-#' @import readr
+#' @import data.table
 #'
 #' @param x R data frame (df) to be writtem.
 #'
@@ -89,13 +89,17 @@ write_opendf <- function(x,
   folder_url<-gsub("\\\\", "/", folder_url)
   folder_name<-strsplit(folder_url, "/")[[1]][length(strsplit(folder_url, "/")[[1]])]
   root_dir<-paste0(strsplit(folder_url, "/")[[1]][-length(strsplit(folder_url, "/")[[1]])], "/", collapse="/")
+  if (root_dir=="/") {
+    root_dir<-getwd()
+    file=paste0(getwd(),"/", file)
+    }
   if (dir.exists(root_dir)==FALSE & dir.exists(paste0("/",root_dir))==FALSE & dir.exists(paste0("//",root_dir))==FALSE){
     stop("File path not found")
   }
   
   dir.create(paste0(tempdir(), "/", folder_name),  showWarnings = F)
 
-  if (export_data==T) readr::write_csv(x=x, file=paste0(tempdir(), "/", folder_name, "/data.csv"), na = "", progress=F)
+  if (export_data==T) data.table::fwrite(x=x, file=paste0(tempdir(), "/", folder_name, "/data.csv"), na = "",encoding="UTF-8")
 
   
   

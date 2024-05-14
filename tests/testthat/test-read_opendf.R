@@ -552,9 +552,8 @@ test_that("read_opendf_specific_rows_and_cols2", {
   )
   # - dataset attributes
   expect_equal(names(attributes(df)),c(
-    "class",
-    "row.names",
     "names",
+    "row.names",
     "name",
     "description_en",
     "description_de",
@@ -563,7 +562,8 @@ test_that("read_opendf_specific_rows_and_cols2", {
     "url",
     "languages",
     "lang",
-    "label"
+    "label",
+    "class"
   ))
   # - variable attributes
   expect_equal(names(attributes(df$bap87)), c(
@@ -704,4 +704,6 @@ test_that("read_opendf_specific_language_rows_and_cols", {
   expect_equal(names(attributes(df$bap96)$labels_en), NULL)
   expect_equal(unname(attributes(df$bap96)$labels_de),NULL)
   expect_equal(names(attributes(df$bap96)$labels_de), NULL)
+  unlink(paste0(tempdir(),"/*"), recursive = TRUE)
 })
+
