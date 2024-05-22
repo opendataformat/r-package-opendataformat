@@ -52,6 +52,7 @@ opendf_labels<-function(input,
   } else {
     lang<-language
   }
+  if (length(lang)>1) stop("Input for language invalid. Please specify only one language.")
   if (!(lang %in% attr(input, "languages"))){
     stop("Input for language invalid.")
   }
