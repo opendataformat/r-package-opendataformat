@@ -33,17 +33,17 @@
 
 #' # view the variable labels for all variables in english
 #' \dontrun{
-#' opendf_labels(input=df, languages="en", valuelabels=F)
+#' labels_opendf(input=df, languages="en", valuelabels=F)
 #' }
 #'
 #' # view the value labels for variable bap87 in english
 #' \dontrun{
-#' opendf_labels(input=df$bap87, languages="en", valuelabels=F)
+#' labels_opendf(input=df$bap87, languages="en", valuelabels=F)
 #' }
 #'
 #' @export
 
-opendf_labels<-function(input,
+labels_opendf<-function(input,
                         language="current",
                         valuelabels=F,
                         retrieve="labels") {
