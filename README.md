@@ -31,7 +31,7 @@ devtools::install_git("https://git.soep.de/thartl/r-package-opendataformat.git")
 library("opendataformat")
 ```
 
-The opendataformat package consists of four main functions:
+The opendataformat package consists of five main functions:
 
 - `read_opendf()` to read an Open Data Format file in R. This function takes an input parameter, which is the path to the Open Data Format ZIP file, and points to an R object for further processing.
 
@@ -41,14 +41,17 @@ The opendataformat package consists of four main functions:
 
 - `write_opendf()` to write the R Dataframe to an Open Data Format ZIP file. By specifying the dataframe input and providing the output directory path the function will generate a ZIP file containing the dataset as "data.csv" and "metadata.xml".
 
+- `opendf_labels()` to retrieve labels and other metadata from an opendf-data.frame-object.
+
 ### Multilingual Datasets
 
-When working with a multilingual dataset, the `opendataformatr` package provides the option to specify the language you want to work with for the main functions: `read_opendf()`, `docu_opendf()`, `write_opendf()`
+When working with a multilingual dataset, the `opendataformatr` package provides the option to specify the language you want to work with for the main functions: `read_opendf()`, `docu_opendf()`, `write_opendf()`, and `opendf_labels()`.
  
 You can achieve this by using the `languages` argument and setting it to either 
-`all` to include all languages, `default` to use the default language, or by specifying the language code such as `de` for German or `en` for English. 
+`all` to include all languages, `current` (or `default`) to use the currently activated language, or by specifying the language code such as `de` for German or `en` for English. 
 This allows you to easily select the desired language for your dataset operations.
 The language codes are defined by the [ISO 639-1](https://de.wikipedia.org/wiki/Liste_der_ISO-639-1-Codes).
+Note that for the function `opendf_labels()` you can specify only one language, therefore the `language` argument only takes single languages as input.
 
 
 ## Getting help
