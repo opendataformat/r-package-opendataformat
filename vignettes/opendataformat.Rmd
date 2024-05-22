@@ -52,7 +52,7 @@ df <- read_opendf(file = path)
 If you prefer not to use the example data provided and instead want to work with an Open Data Format file of your own choice, simply specify the file path to access your desired dataset. For instance:
 
 ```{r read_opendf choice, eval = FALSE, comment = ""}
-df <- read_opendf(file = "../my_data.zip")
+#df <- read_opendf(file = "../my_data.zip")
 ```
 
 View the R Dataset
@@ -60,11 +60,18 @@ View the R Dataset
 df
 ```
 
+If you load the haven package, you see the variable labels in the active language.
+
+```{r view df haven, comment = ""}
+#library(haven)
+#View(df)
+```
+
 ## Explore Dataset Information: `docu_opendf()`
 
 Explore dataset information through two methods. Firstly, you can browse metadata at the record level, providing an overview of the dataset. Alternatively, you have the option to examine specific variable details, allowing you to gain insights into selected data attributes.
 
-By default, when using the `docu_opendf()` function, dataset-level information is presented through an HTML page. If you're utilizing RStudio, this page will be displayed within the RStudio viewer. Otherwise, it will open in your system's default web browser for seamless accessibility.
+By default, when using the `docu_opendf()` function, dataset-level information is presented through an HTML page. If you're utilizing RStudio, this page will be displayed within the RStudio viewer. 
 
 ```{r docu_opendf, eval = FALSE}
 docu_opendf(df)
@@ -95,7 +102,7 @@ docu_opendf(df, style = "print")
 To obtain a comprehensive overview of all variables within the dataset, simply set the `variables` argument to `yes`.
 
 ```{r docu_opendf variables, eval = FALSE}
-docu_opendf(df)
+docu_opendf(df, variables="yes")
 ```
 
 If you are interested in just one specific variable, you can do this:
@@ -135,13 +142,13 @@ docu_opendf(df$bap9001, style = "print")
 Certain datasets offer metadata such as variable labels or value labels in multiple languages. To determine the languages supported by your dataset, you can simply set the `languages` argument to `all`. This setting enables you to identify the range of languages available for accessing the relevant metadata within your dataset.
 
 ```{r docu_opendf languages all, eval = FALSE}
-docu_opendf(df$bap9001, languages = "all")
+docu_opendf(df$bap9001, languages = "all", variables="yes")
 ```
 
 or 
 
 ```{r docu_opendf languages all print, eval = FALSE}
-docu_opendf(df$bap9001, style = "print", languages = "all")
+docu_opendf(df$bap9001, style = "print", variables="yes", languages = "all")
 ```
 
 <div>
@@ -204,11 +211,21 @@ docu_opendf(df$bap9001, style = "print", languages = "de")
 </pre>
 </div>    
 
+
 Certainly! You can apply this function to the entire dataset, allowing you to access the desired information across all variables.
 
 ```{r docu_opendf languages code all data, eval = FALSE}
-docu_opendf(df, languages = "de")
+docu_opendf(df, variables="yes", languages = "de")
 ```
+
+Alternatively you can set the current or active language for a dataset. (This function tries to copy the label language function from stata.)
+
+```{r docu_opendf setLanguage2, eval = FALSE}
+df<-setLanguage_opendf(df, language="de")
+
+docu_opendf(df$bap9001, style = "print")
+```
+
 
 If you prefer another display style you can use the datasets' metadata and write your own code: 
 
@@ -219,23 +236,17 @@ for (i in names(df)) {
   )
 }
 ```
+You can also use the labels_opendf() function to retrieve labels and other metadata for the variables:
 
-Or you can use tools from other packages:
-
-```{r docu alternative, eval = FALSE, comment = ""}
-library("labelled")
-look_for(df, details = TRUE)
+```{r labels_opendf1, eval = FALSE, comment = ""}
+labels_opendf(df)
 ```
 
-```
-pos variable label                           col_type values          
- 1   bap87    Current Health                  int      range: -2 - 5   
- 2   bap9201  hours of sleep, normal workday  int      range: -2 - 9   
- 3   bap9001  Pressed For Time Last 4 Weeks   int      range: -2 - 5   
- 4   bap9002  Run-down, Melancholy Last 4 We~ int      range: -2 - 4   
- 5   bap9003  Well-balanced Last 4 Weeks      int      range: -2 - 5   
- 6   bap96    Height                          dbl      range: -2 - 1.98
- 7   name     Firstname                       chr      range:  - Paul  
+
+or the value labels:
+
+```{r labels_opendf2, eval = FALSE, comment = ""}
+labels_opendf(df$bap87, valuelabels=T)
 ```
 
 ## Access Metadata
@@ -261,6 +272,69 @@ attributes(df$bap87)$label
 ```
 
 Moreover, you have the flexibility to copy, remove, and modify these attributes to suit your needs.
+
+```{r attributes deletion, comment = ""}
+attributes(df$bap87)$description<-NULL
+attributes(df$bap87)$description
+```
+
+
+As shown before, you can also use the labels_opendf() function to retrieve labels and other metadata for the variables:
+
+```{r labels_opendf3, eval = FALSE, comment = ""}
+labels_opendf(df)
+```
+
+or for a specific variable::
+
+```{r labels_opendf4, eval = FALSE, comment = ""}
+labels_opendf(df$bap96)
+```
+
+To retrieve labels in a specific language, use the language parameter:
+
+```{r labels_opendf5, eval = FALSE, comment = ""}
+labels_opendf(df, languages="en")
+```
+
+Or you set the active language of the dataset using the setLanguage_opendf() function:
+```{r labels_opendf6, eval = FALSE, comment = ""}
+df<-setLanguage_opendf(df, languages="en")
+labels_opendf(df)
+```
+
+
+You can use the labels_opendf function also to retrieve value labels for a specific variable:
+
+```{r labels_opendf valuelabels, eval = FALSE, comment = ""}
+labels_opendf(df$bap9001, valuelabels=T)
+```
+The value labels for each value are stored in the namespace:
+
+```{r labels_opendf valuelabels names, eval = FALSE, comment = ""}
+names(labels_opendf(df$bap9001, valuelabels=T))
+```
+
+
+You can also retrieve variable description(s):
+
+```{r labels_opendf descriptions, eval = FALSE, comment = ""}
+names(labels_opendf(df, retrieve="description"))
+```
+
+the variable url(s):
+
+```{r labels_opendf url, eval = FALSE, comment = ""}
+names(labels_opendf(df, retrieve="url"))
+```
+
+and the variable type(s):
+
+```{r labels_opendf type, eval = FALSE, comment = ""}
+names(labels_opendf(df, retrieve="type"))
+```
+
+
 
 ## Let's analyse and make use of the metadata
 
