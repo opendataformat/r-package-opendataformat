@@ -176,22 +176,22 @@ read_opendf <- function(file,
   if (skip != 0){
     if (is.null(variables)){
       cnames<-names(data.table::fread(cmd = paste0('unzip -p ',file, ' data.csv'), skip=0, nrows=0))
-      data<-data.table::fread(cmd = paste0('unzip -p ',file, ' data.csv'), skip=skip+1, nrows=nrows, col.names=cnames)
+      data<-data.table::fread(cmd = paste0('unzip -p "',file, '" data.csv'), skip=skip+1, nrows=nrows, col.names=cnames)
       
     } else {
-      cnames<-names(data.table::fread(cmd = paste0('unzip -p ',file, ' data.csv'), skip=0, nrows=0))
+      cnames<-names(data.table::fread(cmd = paste0('unzip -p "',file, '" data.csv'), skip=0, nrows=0))
       if (class(variables)!="numeric"){
         cindex<-which(cnames %in% variables)
       } else {
         cindex<-variables
       }
-      data<-data.table::fread(cmd = paste0('unzip -p ',file, ' data.csv'), select=cindex, header=F, skip=skip+1, nrows=nrows, col.names=cnames[cindex])
+      data<-data.table::fread(cmd = paste0('unzip -p "',file, '" data.csv'), select=cindex, header=F, skip=skip+1, nrows=nrows, col.names=cnames[cindex])
     }
   } else {
     if (is.null(variables)){
-      data<-data.table::fread(cmd = paste0('unzip -p ',file, ' data.csv'), skip=skip, nrows=nrows)
+      data<-data.table::fread(cmd = paste0('unzip -p "',file, '" data.csv'), skip=skip, nrows=nrows)
     } else {
-      data<-data.table::fread(cmd = paste0('unzip -p ',file, ' data.csv'), select=variables, skip=skip, nrows=nrows)
+      data<-data.table::fread(cmd = paste0('unzip -p "',file, '" data.csv'), select=variables, skip=skip, nrows=nrows)
     }
   }
   options(warn=0)

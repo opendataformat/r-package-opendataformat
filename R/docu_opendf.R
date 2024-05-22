@@ -12,6 +12,10 @@
 #'
 #' @param languages Select the language in which the descriptions and labels of the data will be displayed.
 #' 
+#' @param variables Indicate whether a list with all the variables should be displayed with the dataset metadata. 
+#' If the input is a variable/column, the variables-argument will be ignored.
+#' Set (\code{variables="yes"}) to display the list of variables.
+#' 
 #' @param replace_missing If only one language is specified in languages and replace_missings is set to TRUE.
 #' in case of a missing label or description, the default or english label/description is displayed additionally
 #' (if one of these is available).
@@ -81,7 +85,8 @@
 docu_opendf<-function(input,
                       languages="current",
                       style="both", 
-                      replace_missing=F) {
+                      replace_missing=F,
+                      variables="no") {
 
   
   #if (("data.frame" %in% class(input) & !("opendf" %in% class(input)))| (!("lang" %in% names(attributes(input))) & !("languages" %in% names(attributes(input)))) ){
@@ -213,6 +218,27 @@ docu_opendf<-function(input,
     }
   }
   
+  if (input_type=="Dataset" & variables=="yes"){
+    labels_vars<-list()
+    varlist_html<-paste0("<tr><th>Variables&#160;&#160;&#160;&#160;</th>", paste0("<th align=left>label", languages,"</th>", collapse=""), "</tr>")
+    var_list=c()
+    
+    for (var in names(input)){
+      var_list<-c(var_list,var)
+      labls_var<-c()
+      for (lang in languages){
+        labls_var<-c(labls_var,attr(input[,var], paste0("label", lang)))
+        labels_vars[[paste0("label", lang)]]<-as.character(c(unlist(labels_vars[paste0("label", lang)]), attr(input[,var], paste0("label", lang))))
+      }
+      row_html<-paste0("<tr><td>", var, "</td>",paste0("<td>", labls_var,"</td>", collapse=""), "</tr>" )
+      varlist_html<-paste0(varlist_html,row_html)
+    }
+    varlist<-data.frame("Variable"=var_list)
+    for (lang in languages){
+      varlist[,paste0("Label ",gsub("_","", lang))]<-labels_vars[[paste0("label",lang)]]
+    }
+  }
+  
   #######  format output ######
   #name and url
   printing_output<-c(
@@ -279,8 +305,8 @@ docu_opendf<-function(input,
   if (input_type=="Variable"){
     printing_output<-c(
         paste0(printing_output),
-        crayon::bold("Value Labels:\n"),
-        "valuelabels"
+        crayon::bold("Value Labels:\n")#,
+        #"valuelabels"
       )
     html_output<-paste0(
       html_output,
@@ -319,16 +345,38 @@ docu_opendf<-function(input,
     crayon::bold("url:\n"),
     paste0("    ", interactive_url, "\n")
   )
+  
   html_output<-paste0(
     html_output,
     "<p><b>url:","</b><br>", paste0("<a href='",url,"'>",url,"</a></p>")
   )
+  
+  #add variables information to dataset information
+  if (input_type=="Dataset" & variables=="yes"){
+    printing_output<-c(
+      paste0(printing_output),
+      crayon::bold("Variables:\n")#,
+      #"valuelabels"
+    )
+    html_output<-paste0(
+      html_output,
+      "<p><b>Variables: </b><br>",
+      "<table>", varlist_html,"</table></p>"
+    )
+    
+  }
   
   html_output<-paste0(html_output,"</html></body>")
   #print meta data in console
   if (style %in% c("both", "all", "print", "console")){
     for (i in 1:length(printing_output)){
       if (printing_output[i] != "valuelabels") {cat(printing_output[i])} else print(valuelabels_tab, row.names = FALSE)
+    }
+    if (input_type=="Variable"){
+      print(valuelabels_tab)
+    }
+    if (input_type=="Dataset" & variables=="yes"){
+      print(varlist)
     }
   }
   #print meta data in viewer
