@@ -4,7 +4,13 @@
 \alias{docu_opendf}
 \title{Get documentation from R data frame.}
 \usage{
-docu_opendf(input, languages = "current", style = "both", replace_missing = F)
+docu_opendf(
+  input,
+  languages = "current",
+  style = "both",
+  replace_missing = F,
+  variables = "no"
+)
 }
 \arguments{
 \item{input}{R data frame (df) or variable from an R data frame (df$var).}
@@ -35,6 +41,10 @@ in case of a missing label or description, the default or english label/descript
 \item or you can select the language by language code, e.g.
 \code{languages = "en"}.
 }}
+
+\item{variables}{Indicate whether a list with all the variables should be displayed with the dataset metadata.
+If the input is a variable/column, the variables-argument will be ignored.
+Set (\code{variables="yes"}) to display the list of variables.}
 }
 \value{
 Documentation.

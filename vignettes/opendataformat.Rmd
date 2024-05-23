@@ -238,14 +238,14 @@ for (i in names(df)) {
 ```
 You can also use the labels_opendf() function to retrieve labels and other metadata for the variables:
 
-```{r labels_opendf1, eval = FALSE, comment = ""}
+```{r labels_opendf1, comment = ""}
 labels_opendf(df)
 ```
 
 
 or the value labels:
 
-```{r labels_opendf2, eval = FALSE, comment = ""}
+```{r labels_opendf2, comment = ""}
 labels_opendf(df$bap87, valuelabels=T)
 ```
 
@@ -281,24 +281,24 @@ attributes(df$bap87)$description
 
 As shown before, you can also use the labels_opendf() function to retrieve labels and other metadata for the variables:
 
-```{r labels_opendf3, eval = FALSE, comment = ""}
+```{r labels_opendf3, comment = ""}
 labels_opendf(df)
 ```
 
 or for a specific variable::
 
-```{r labels_opendf4, eval = FALSE, comment = ""}
+```{r labels_opendf4, comment = ""}
 labels_opendf(df$bap96)
 ```
 
 To retrieve labels in a specific language, use the language parameter:
 
-```{r labels_opendf5, eval = FALSE, comment = ""}
+```{r labels_opendf5, comment = ""}
 labels_opendf(df, languages="en")
 ```
 
 Or you set the active language of the dataset using the setLanguage_opendf() function:
-```{r labels_opendf6, eval = FALSE, comment = ""}
+```{r labels_opendf6, comment = ""}
 df<-setLanguage_opendf(df, languages="en")
 labels_opendf(df)
 ```
@@ -306,32 +306,32 @@ labels_opendf(df)
 
 You can use the labels_opendf function also to retrieve value labels for a specific variable:
 
-```{r labels_opendf valuelabels, eval = FALSE, comment = ""}
+```{r labels_opendf valuelabels, comment = ""}
 labels_opendf(df$bap9001, valuelabels=T)
 ```
 The value labels for each value are stored in the namespace:
 
-```{r labels_opendf valuelabels names, eval = FALSE, comment = ""}
+```{r labels_opendf valuelabels names, comment = ""}
 names(labels_opendf(df$bap9001, valuelabels=T))
 ```
 
 
 You can also retrieve variable description(s):
 
-```{r labels_opendf descriptions, eval = FALSE, comment = ""}
-names(labels_opendf(df, retrieve="description"))
+```{r labels_opendf descriptions, comment = ""}
+labels_opendf(df, retrieve="description")
 ```
 
 the variable url(s):
 
 ```{r labels_opendf url, eval = FALSE, comment = ""}
-names(labels_opendf(df, retrieve="url"))
+labels_opendf(df, retrieve="url")
 ```
 
 and the variable type(s):
 
 ```{r labels_opendf type, eval = FALSE, comment = ""}
-names(labels_opendf(df, retrieve="type"))
+labels_opendf(df, retrieve="type")
 ```
 
 
