@@ -101,8 +101,8 @@ docu_opendf(df, style = "print")
 
 To obtain a comprehensive overview of all variables within the dataset, simply set the `variables` argument to `yes`.
 
-```{r docu_opendf variables, eval = FALSE}
-docu_opendf(df, variables="yes")
+```{r docu_opendf variables, comment=""}
+docu_opendf(df, variables="yes", style="print")
 ```
 
 If you are interested in just one specific variable, you can do this:
@@ -268,14 +268,14 @@ attributes(df$bap87)
 If you're interested in a particular attribute, you can access it using the dollar sign followed by the attribute name. For instance, let's consider accessing a variable label as an example. 
 
 ```{r variable label attributes, comment = ""}
-attributes(df$bap87)$label
+attributes(df$bap87)$label_de
 ```
 
 Moreover, you have the flexibility to copy, remove, and modify these attributes to suit your needs.
 
 ```{r attributes deletion, comment = ""}
-attributes(df$bap87)$description<-NULL
-attributes(df$bap87)$description
+attributes(df$bap87)$description_de<-NULL
+attributes(df$bap87)$description_de
 ```
 
 
@@ -294,12 +294,12 @@ labels_opendf(df$bap96)
 To retrieve labels in a specific language, use the language parameter:
 
 ```{r labels_opendf5, comment = ""}
-labels_opendf(df, languages="en")
+labels_opendf(df, language="en")
 ```
 
 Or you set the active language of the dataset using the setLanguage_opendf() function:
 ```{r labels_opendf6, comment = ""}
-df<-setLanguage_opendf(df, languages="en")
+df<-setLanguage_opendf(df, language="en")
 labels_opendf(df)
 ```
 
@@ -363,6 +363,16 @@ table(
   )
 ```
 
+Alternatively you can use the labels_opendf()-function to get the value labels:
+
+```{r table factor labels_opendf, eval=F, comment = ""}
+table(
+  factor(
+    df$bap87, labels = names(labels_opendf(df$bap87, valuelabels=T))
+    )
+  )
+```
+
 To display the data in a language other than the default one, let's try German by appending the respective language code to the attribute name. For example, you can use $labels_de to access the German language labels and present the information accordingly.
 
 ```{r table factor german, comment = ""}
@@ -373,7 +383,16 @@ table(
     )
   )
 ```
+Or using labels_opendf()-function:
 
+```{r table factor german labels_opendf, comment = ""}
+table(
+  factor(
+    df$bap87,
+      labels=names(labels_opendf(df$bap87, valuelabels=T, language="de"))
+    )
+  )
+```
 ### Recoding a Variable
 
 We want to display the table with only valid answers. Therefore we set the values `-2` and `-1` to `NA`. Because we do not want to overwrite the original variable, we generate a new one:
