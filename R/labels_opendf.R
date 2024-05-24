@@ -14,10 +14,10 @@
 #' If no language is selected, the current/active language of the data frame will be used.
 #' 
 #' @param valuelabels You can choose to display the value labels instead of the variable label,
-#' if the input is a variable.
+#' if the input is a variable by setting \code{valuelabels=T} or \code{valuelabels="yes}". If the input is a dataset, this argument is ignored.
 #' 
-#' @param retrieve You can choose to display another attribute(meta data) instead of the variable label(s).
-#' Possible options are "description", "url" or "type". If valuelabels=TRUE, this argument is ignored.
+#' @param retrieve You can choose to display another attribute/metadata instead of the variable label(s).
+#' Possible options are "description", "url", "type" or "languages". If valuelabels=TRUE/"yes" and the input us a variable, this argument is ignored.
 #' 
 #' * By default the language that is set to current is displayed
 #' (\code{languages = "current"}).
@@ -76,7 +76,7 @@ labels_opendf<-function(input,
   }
   
   #check if retrieve is valid
-  if (!(retrieve %in% c("labels", "type", paste0("description_", lang ), "url"))){
+  if (!(retrieve %in% c("labels", "type", paste0("description_", lang ), "url", "languages"))){
     stop(paste0("Function input retrieve ", output, " is not valid"))
   }
   
@@ -94,7 +94,7 @@ labels_opendf<-function(input,
     }
     names(output)<-output_names
   } else {
-    if (valuelabels==F){
+    if (valuelabels==F | valuelabels=="no"){
       output_names<-attr(input, "name")
       if (retrieve=="labels"){
         output<-attr(input, paste0("label_", lang))
@@ -103,7 +103,7 @@ labels_opendf<-function(input,
       }
       names(output)<-output_names
     } else {
-      output<-attr(input, paste0("labels_", lang))
+      if ( valuelabels==T | valuelabels=="yes" ) output<-attr(input, paste0("labels_", lang)) else stop("Function input valuelabels not valid")
     }
   }
   return(output)

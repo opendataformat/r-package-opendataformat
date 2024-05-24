@@ -18,10 +18,10 @@ labels_opendf(
 If no language is selected, the current/active language of the data frame will be used.}
 
 \item{valuelabels}{You can choose to display the value labels instead of the variable label,
-if the input is a variable.}
+if the input is a variable by setting \code{valuelabels=T} or \code{valuelabels="yes}". If the input is a dataset, this argument is ignored.}
 
-\item{retrieve}{You can choose to display another attribute(meta data) instead of the variable label(s).
-Possible options are "description", "url" or "type". If valuelabels=TRUE, this argument is ignored.
+\item{retrieve}{You can choose to display another attribute/metadata instead of the variable label(s).
+Possible options are "description", "url", "type" or "languages". If valuelabels=TRUE/"yes" and the input us a variable, this argument is ignored.
 \itemize{
 \item By default the language that is set to current is displayed
 (\code{languages = "current"}).
