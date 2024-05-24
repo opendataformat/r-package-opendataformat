@@ -30,7 +30,11 @@ This vignette will guide you through a series of examples that demonstrate the p
 
 ## Setup 
 
+You can install and update the package from gitlab using the `install_git()`-function from the devtools-library.
+
 ```{r setup}
+library(devtools)
+devtools::install_git("https://git.soep.de/opendata/r-package-opendataformat.git")
 library(opendataformat)
 ```
 
