@@ -70,7 +70,7 @@ labels_opendf<-function(input,
   if (retrieve == "types"){
     retrieve <- "type"
   }
-  if (retrieve=="valuelabels" | retrieve=="valuelabel"){
+  if (retrieve=="valuelabels" | retrieve=="valuelabel" | retrieve=="value labels" | retrieve=="value label"){
     valuelabels <- T
     retrieve <- "labels"
   }
