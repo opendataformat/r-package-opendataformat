@@ -303,17 +303,6 @@ docu_opendf<-function(input,
   
   #Value Labels
   if (input_type=="Variable"){
-    printing_output<-c(
-        paste0(printing_output),
-        crayon::bold("Value Labels:\n")#,
-        #"valuelabels"
-      )
-    html_output<-paste0(
-      html_output,
-      "<p><b>Value Labels: </b><br>",
-      "<table>", valuelabels_html,"</table></p>"
-    )
-    
     #Type
     printing_output<-c(
       paste0(printing_output),
@@ -345,6 +334,18 @@ docu_opendf<-function(input,
     crayon::bold("url:\n"),
     paste0("    ", interactive_url, "\n")
   )
+  
+  if (input_type=="Variable"){
+    printing_output<-c(
+      paste0(printing_output),
+      crayon::bold("Value Labels:\n")
+    )
+    html_output<-paste0(
+      html_output,
+      "<p><b>Value Labels: </b><br>",
+      "<table>", valuelabels_html,"</table></p>"
+    )
+  }
   
   html_output<-paste0(
     html_output,
