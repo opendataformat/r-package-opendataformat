@@ -33,4 +33,6 @@ Suggests:
     cli,
     rmarkdown
 VignetteBuilder: knitr
+VignetteEngine: knitr::rmarkdown
+VignetteIndexEntry: "opendataformat"
 Config/testthat/edition: 3
