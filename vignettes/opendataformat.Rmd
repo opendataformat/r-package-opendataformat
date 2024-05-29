@@ -3,11 +3,11 @@ title: "opendataformat"
 output:
   pdf_document:
     toc: true
-  rmarkdown::html_vignette:
-    toc: true
   html_document:
     toc: true
     df_print: paged
+  rmarkdown::html_vignette:
+    toc: true
 vignette: "%\\VignetteIndexEntry{opendataformat} %\\VignetteEngine{knitr::rmarkdown}
   %\\VignetteEncoding{UTF-8}\n"
 ---
@@ -41,12 +41,13 @@ You can install and update the package from gitlab using the `install_git()`-fun
 
 ```{r setup, results = 'hide', messages=FALSE, warning = FALSE}
 library(devtools)
-devtools::install_git("https://git.soep.de/opendata/r-package-opendataformat.git")
+devtools::install_git("https://git.soep.de/opendata/r-package-opendataformat.git",  
+                      quiet = TRUE)
 library(opendataformat)
 ```
 
 
-# Functions in the `openmetadata` Package
+# Functions in the openmetadata Package
 
 ## Read the Open Data Format: `read_opendf()`
 
@@ -364,7 +365,6 @@ The XML file metadata.xml and the CSV file data.csv are saved within the directo
 				<labl xml:lang="en">Very good</labl>
 				<labl xml:lang="de">Sehr gut</labl>
 ...
-...
 
 ```
 The data.csv file now includes just four columns:
@@ -378,7 +378,6 @@ The data.csv file now includes just four columns:
 -1,4,2,3
 3,4,-1,4
 1,9,2,-1
-...
 ...
 
 ```
