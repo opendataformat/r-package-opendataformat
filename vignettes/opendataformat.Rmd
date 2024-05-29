@@ -1,9 +1,9 @@
 ---
 title: "opendataformat"
 output:
-  rmarkdown::html_vignette:
-    toc: true
   pdf_document:
+    toc: true
+  rmarkdown::html_vignette:
     toc: true
 vignette: >
   %\VignetteIndexEntry{opendataformat}
