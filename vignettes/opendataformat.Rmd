@@ -31,7 +31,7 @@ Tired of struggling to convert open data formats into R dataframes? Look no furt
 
 With just a few lines of code, you can convert a data package specified as opendataformat into an R dataframe (`read_opendf()`) or convert an R dataframe into a data package specified in the opendataformat (`write_opendf()`).
 
-But wait, there's more! Our package goes beyond parsing. Accessing metadata has never been easier. Dive into the treasure trove of information stored in your R dataframes. Explore dataset labels, descriptions and valuable details about variables such as labels and value labels with the `docu_opendf()` function and the `labels_opendf()` function.
+But wait, there's more! Our package goes beyond parsing. Accessing metadata has never been easier. Dive into the treasure trove of information stored in your R dataframes. Explore dataset labels, descriptions, and valuable details about variables such as labels and value labels with the `docu_opendf()` function and the `labels_opendf()` function.
 
 This vignette will guide you through a series of examples that demonstrate the possibilities of these functions. Let's get started!
 
@@ -50,10 +50,10 @@ library(opendataformat)
 
 ## Read the Open Data Format: `read_opendf()`
 
-The opendataformat package provides example data that is specified as 'Open Data Format'. Data in the open data format is a ZIP file containing a csv-file and a xml-file. The example data contains the data-csv (`data.csv`) with 20 rows and 7 columns and the metadata-XML (`metadata.xml`). The metadata file describes the dataset and its variables. If you are interested in how these files look like, you can find an example in the Open Data Format git repository: [https://git.soep.de/opendata/specification/-/tree/main/external/example](https://git.soep.de/opendata/specification/-/tree/main/external/example)
+The opendataformat package provides example data that is specified as 'Open Data Format'. Data in the open data format is a ZIP file containing a csv-file and a xml-file. The example data contains the data-csv (`data.csv`) with 20 rows and 7 columns and the metadata-XML (`metadata.xml`). The metadata file describes the dataset and its variables. If you are interested in what these files look like, you can find an example in the Open Data Format git repository: [https://git.soep.de/opendata/specification/-/tree/main/external/example](https://git.soep.de/opendata/specification/-/tree/main/external/example)
 To load the data, we need to specify the path to the zip-file.
-First we get the path to the example data and load the file using `read_opendf()`
-Alternatively you can set `file` to a zip-file in the working directory.
+Here the example data is loaded using `read_opendf()`
+Alternatively, you can set `file` to a zip-file in the working directory.
 
 ```{r read_opendf}
 path <- system.file("extdata", "data.zip", package="opendataformat")
@@ -61,8 +61,8 @@ df <- read_opendf(file = path)
 #df <- read_opendf(file = "../my_data.zip")
 ```
 
-The output of the `read_opendf()` function is a R-data.frame object, that has the additional class `opendf`. It has additional metadata stored in the attributes of the dataframe and the variables/columns. These include the languages of the metadata, labels, descriptions, urls, variable types and value labels.
-View the R Dataset.
+The output of the `read_opendf()` function is an R-data.frame object, that has the additional class `opendf`. It has additional metadata stored in the attributes of the dataframe and the variables/columns. These include the languages of the metadata, labels, descriptions, urls, variable types, and value labels.
+
 ```{r view df, comment = ""}
 df
 ```
@@ -74,7 +74,7 @@ If you load the haven package, you see the variable labels in the [active langua
 #View(df)
 ```
 
-If you want to import a dataset with metadata only in one or some specific languages. You can use the `languages`-argument. To load the example data only with english labels and descriptions, set `languages="en"`:
+If you want to import a dataset with metadata only in one or several languages. You can use the `languages`-argument. To load the example data only with english labels and descriptions, set `languages="en"`:
 
 ```{r read_opendf language, eval=FALSE}
 df_en <- read_opendf(file = path, languages="en")
@@ -96,7 +96,7 @@ df_en <- read_opendf(file = path, languages=c("en", "de"))
 ## Explore Dataset Information: `docu_opendf()`
 
 ### Display Medatata
-You can explore dataset information through two methods. Firstly, you can browse metadata at the record level, providing an overview of the dataset. Alternatively, you have the option to examine specific variable details, allowing you to gain insights into selected data attributes.
+You can explore dataset information using two methods. Firstly, you can browse metadata at the record level, providing an overview of the dataset. Alternatively, you have the option to examine specific variable details, allowing you to gain insights into selected data attributes.
 
 By default, when using the `docu_opendf()` function, dataset-level information is presented through the console and an HTML page. If you're utilizing RStudio, this html-page will be displayed within the RStudio viewer. 
 
@@ -104,7 +104,7 @@ By default, when using the `docu_opendf()` function, dataset-level information i
 docu_opendf(df)
 ```
 
-To display the metadata only in the console, utilize the `style` argument with the value set to `print` (or `console`). This ensures that the information is conveniently displayed through the R console, serving our specific demonstration purposes. To display metadata information only in the viewer, set `style="viewer"` or `style="html"`. By default `style="both"`.
+To display the metadata only in the console, utilize the `style` argument with the value set to `print` (or `console`). This ensures that the information is conveniently displayed on the R console, serving our specific demonstration purposes. To display metadata information only in the viewer, set `style="viewer"` or `style="html"`. By default `style="both"`.
 
 ```{r docu_opendf print}
 docu_opendf(df, style = "print")
@@ -124,14 +124,14 @@ docu_opendf(df$bap9001, style = "print")
 
 ### Display Metadata in a Specific Language
 
-Certain datasets offer metadata such as labels, descriptions or value labels in multiple languages. To display the metadata in all languages supported by your dataset, you can simply set the `languages` argument to `all`. This setting enables you to identify the range of languages available for accessing the relevant metadata within your dataset.
+Certain datasets offer metadata such as labels, descriptions, or value labels in multiple languages. To display the metadata in all languages supported by your dataset, you can simply set the `languages` argument to `all`. This setting enables you to identify the range of languages available for accessing the relevant metadata within your dataset.
 
 ```{r docu_opendf languages all, eval = FALSE}
 docu_opendf(df$bap9001, style = "print", variables="yes", languages = "all")
 ```
 
 
-If you have a specific language of interest, you can easily display it by utilizing the corresponding language code. Simply specify the desired language code to retrieve the metadata in the language of your choice. This enables you to access the specific language variant of variable labels, value labels. In this example we display the german version:
+If you have a specific language of interest, you can easily display it by utilizing the corresponding language code. Simply specify the desired language code to retrieve the metadata in the language of your choice. This enables you to access the specific language variant of variable labels, value labels. In this example, we display the German version:
 
 ```{r docu_opendf languages code print}
 docu_opendf(df$bap9001, style = "print", languages = "de")
@@ -144,7 +144,7 @@ You can apply this function to the entire dataset, allowing you to access the de
 docu_opendf(df, style = "print", variables="yes", languages = "de")
 ```
 
-If you prefer another display style you can use the datasets' metadata directly from the attributes and write your own code: 
+If you prefer another display style, you can use the datasets' metadata directly from the attributes and write your own code: 
 
 ```{r docu own style, eval = TRUE, comment = ""}
 for (i in names(df)) {
@@ -169,7 +169,7 @@ labels_opendf(df$bap87, valuelabels=T)
 
 
 ## Set the Active Language of a Data Frame: `setLanguage_opendf()`
-Alternatively you can set the current (active) language for a dataset-object. (This function tries to copy the label language function from stata.)
+Alternatively, you can set the current (active) language for a dataset-object. (This function tries to copy the label language function from Stata.)
 
 ```{r docu_opendf setLanguage2, eval = FALSE}
 df<-setLanguage_opendf(df, language="de")
@@ -194,7 +194,7 @@ A easy way to retrieve metadata is to use the `labels_opendf()` function to get 
 
 ### Retrieve the Attributes with `attributes()` and `attr()`
 
-Alternatively you can retrieve it directly from the attributes. The metadata imported from the Open Data Format file into an R dataframe is stored as R attributes. By using the base R functions `attributes()` and `attr()`, you can easily access this metadata. When providing the entire dataset to the function, R will display all the metadata describing the dataset as a whole in your console. 
+Another way is to retrieve metadata directly from the attributes. The metadata imported from the Open Data Format file into an R dataframe is stored as R attributes. By using the base R functions `attributes()` and `attr()`, you can easily access this metadata. When providing the entire dataset to the function, R will display all the metadata describing the dataset as a whole in your console. 
 
 ```{r dataset attributes, comment = ""}
 attributes(df)
@@ -213,7 +213,7 @@ attributes(df$bap87)$label_de
 ```
 
 
-Alternatively you can use the `attr()` function to get the same result:
+Alternatively, you can use the `attr()` function to get the same result:
 
 ```{r variable label attributes2, eval = FALSE, comment = ""}
 attr(df$bap87, "label_de")
@@ -230,7 +230,7 @@ attributes(df$bap87)$description_de
 ### Retrieve Metadata with `labels_opendf()`
 
 You can also use the `labels_opendf()` function to retrieve labels and other metadata for the variables.
-By default the function will return the variable labels for a dataset:
+By default, the function will return the variable labels for a dataset:
 
 ```{r labels_opendf3, comment = ""}
 labels_opendf(df)
@@ -262,7 +262,7 @@ labels_opendf(df$bap9001, valuelabels=T)
 
 ```
 
-Alternatively you can set the argument `retrieve="valuelabels"`:
+Alternatively, you can set the argument `retrieve="valuelabels"`:
 ```{r labels_opendf valuelabels2, eval=FALSE, comment = ""}
 labels_opendf(df$bap9001, retrieve="valuelabels")
 
@@ -277,19 +277,19 @@ names(labels_opendf(df$bap9001, valuelabels=T))
 
 You can use the `labels_opendf()` function to return descriptions, urls, variable types and metadata languages as well:
 
-To retrieve variable description(s) set the argument `retrieve="description"`:
+To retrieve variable description(s), set the argument `retrieve="description"`:
 
 ```{r labels_opendf descriptions, comment = ""}
 labels_opendf(df, retrieve="description")
 ```
 
-To retrieve variable url(s) set the argument `retrieve="url"`:
+To retrieve variable url(s), set the argument `retrieve="url"`:
 
 ```{r labels_opendf url, eval = FALSE, comment = ""}
 labels_opendf(df, retrieve="url")
 ```
 
-To retrieve variable type(s) set the argument `retrieve="type"`:
+To retrieve variable type(s), set the argument `retrieve="type"`:
 
 ```{r labels_opendf type, eval = FALSE, comment = ""}
 labels_opendf(df, retrieve="type")
@@ -300,8 +300,8 @@ labels_opendf(df, retrieve="type")
 
 ## Export to the Open Data Format: `write_opendf()`
 
-To save an dataset as opendf-file again, we can use the `write_opendf()` function. 
-Let's assume we want to save the first for columns of our dataset as a new opendf-file.
+To save a dataset as opendf-file, we can use the `write_opendf()` function. 
+Let's assume we want to save the first four columns of our dataset as a new opendf-file.
 We use the `write_opendf()` function and indicate the r-dataframe and the file name (and location if it).
 
 ```{r write_opendf, comment = "", eval = FALSE}
@@ -318,7 +318,7 @@ write_opendf(
 )
 ```
 
-The XML file metadata.xml and the CSV file data.csv are saved within the directory 'data_rec',as well as within the ZIP file 'data_rec.zip. The dataset looks the same as before just with a fewer variables:
+The XML file metadata.xml and the CSV file data.csv are saved within the directory 'data_rec', as well as within the ZIP file 'data_rec.zip. The dataset looks the same as before, just with fewer variables:
 
 ```xml
 <?xml version='1.0' encoding='utf-8'?>
@@ -367,7 +367,7 @@ The XML file metadata.xml and the CSV file data.csv are saved within the directo
 ...
 
 ```
-And also the data.csv file now includes just four columns:
+The data.csv file now includes just four columns:
 
 ```csv
 "bap87","bap9201","bap9001","bap9002"
@@ -383,7 +383,7 @@ And also the data.csv file now includes just four columns:
 
 ```
 
-If you wish to export only the metadata for documentation or archiving purposes, you can achieve this by setting the export_data argument to "no". By doing so, the resulting directory or zip file will solely contain the metadata XML file, excluding the data CSV file. This allows you to specifically capture and preserve the metadata without including the actual data, providing a solution for documentation or archiving needs.
+If you wish to export only the metadata for documentation or archiving purposes, you can achieve this by setting the argument `export_data="no"`. By doing so, the resulting directory or zip file will solely contain the metadata XML file, excluding the data CSV file. This allows you to specifically capture and preserve the metadata without including the actual data, providing a solution for documentation or archiving needs.
 
 
 ```{r write_opendf metadata, comment = "", eval = FALSE}
@@ -405,7 +405,7 @@ write_opendf(
 )
 ```
 
-By default languages is set to`languages="all"`. You can also define a list of languages to be exported:
+By default, languages is set to`languages="all"`. You can also define a list of languages to be exported:
 ```{r write_opendf english german, comment = "", eval = FALSE}
 write_opendf(
   x=df, 
@@ -415,7 +415,7 @@ write_opendf(
 ```
 
 
-# Let's analyse and make use of the metadata
+# Let's Analyse and Make Use of the Metadata
 
 Now let's see how we can use the metadata to better understand the data and make more informative plots.
 
@@ -479,7 +479,7 @@ table(
 
 ### Recoding a Variable
 
-We want to display the table with only valid answers. Therefore we set the values `-2` and `-1` to `NA`. Because we do not want to overwrite the original variable, we generate a new one:
+We want to display the table with only valid answers. Therefore, we set the values `-2` and `-1` to `NA`. Because we do not want to overwrite the original variable, we generate a new one:
 
 ```{r copy data, comment = ""}
 bap87_rec <- df$bap87
@@ -509,7 +509,7 @@ We notice that the copied values and value labels do not fit anymore:
 attributes(bap87_rec)$labels_en
 ```
 
-We'll change that specifically copy positions `3` to `7`, retaining the desired range of values and their respective value labels. 
+To change that, we'll copy positions `3` to `7`, retaining the desired range of values and their respective value labels. 
 
 ```{r copy metadata to recoded var, comment = ""}
 attributes(bap87_rec)$labels_en <- unname(attributes(df$bap87)$labels_en)[3:7] # values
