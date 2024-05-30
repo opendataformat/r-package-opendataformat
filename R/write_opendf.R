@@ -70,7 +70,7 @@
 write_opendf <- function(x,
                          file,
                          languages = "all",
-                         export_data=TRUE) {
+                         export_data=TRUE, verbose=T) {
   #Remove label attributes for haven
   if(!is.null(attr(x,"label"))){
     attr(x,"label")<-NULL
@@ -99,7 +99,7 @@ write_opendf <- function(x,
   
   dir.create(paste0(tempdir(), "/", folder_name),  showWarnings = F)
 
-  if (export_data==T) data.table::fwrite(x=x, file=paste0(tempdir(), "/", folder_name, "/data.csv"), na = "",encoding="UTF-8")
+  if (export_data == T) data.table::fwrite(x = x, file = paste0(tempdir(), "/", folder_name, "/data.csv"), quote = T,  na = "",encoding = "UTF-8")
 
   
   
@@ -227,11 +227,13 @@ write_opendf <- function(x,
   setwd(old_wd)
   
   #check if write_opendf was successful
-  if (file.exists(file)){
+  if (file.exists(file) & verbose==T){
     print(
       paste0(
         "Dataset successfully written to '",file,"'"
       )
     )
+  } else {
+    if (!file.exists(file)) stop("Datasaet was not written successfully")
   }
 }
