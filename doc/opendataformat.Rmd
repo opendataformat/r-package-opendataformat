@@ -3,8 +3,6 @@ title: "opendataformat"
 output:
   rmarkdown::html_vignette:
     toc: true
-  pdf_document:
-    toc: true
 vignette: >
   %\VignetteIndexEntry{opendataformat}
   %\VignetteEncoding{UTF-8}

@@ -10,10 +10,12 @@
 #'
 #' @param x R data frame (df) to be writtem.
 #'
-#' @param file Path to ZIP file or name of zip file to save the opendf-dataset in the working directory.
+#' @param file Path to ZIP file or name of zip file to save the opendf-dataset 
+#' in the working directory.
 #'
 #' @param languages
-#' Select the language in which the descriptions and labels of the data will be exported
+#' Select the language in which the descriptions and labels of the data will be 
+#' exported
 #'
 #' * By default all available language variants are exported
 #' (\code{languages = "all"}).
@@ -24,7 +26,6 @@
 #' * or you can select the language by language code, e.g.
 #' \code{languages = "en"}.
 #' 
-
 #'
 #' @param export_data
 #' Choose, if you want to export the file that holds the
@@ -32,6 +33,8 @@
 #'
 #' * By default the data and metadata are exported (\code{export_data = "yes"}).
 #' * To export only metadata and no data, select \code{export_data = "no"}
+#'
+#' @param verbose Display more messages.
 #'
 #' @return ZIP file and unzipped directory containing the data as CSV file and
 #' the metadata as XML file (DDI Codebook 2.5.).
@@ -47,8 +50,8 @@
 #' write_opendf(x = df, file = "my_data.zip")
 #' }
 #'
-#' # write variable from R data frame with attributes to the file my_data.zip specified
-#' # as Open Data Format.
+#' # write variable from R data frame with attributes to the file my_data.zip 
+#' # specified as Open Data Format.
 #' \dontrun{
 #' write_opendf(x = df$bap87,  file = "my_data.zip")
 #' }
@@ -70,7 +73,8 @@
 write_opendf <- function(x,
                          file,
                          languages = "all",
-                         export_data=TRUE, verbose=T) {
+                         export_data=TRUE, 
+                         verbose=T) {
   #Remove label attributes for haven
   if(!is.null(attr(x,"label"))){
     attr(x,"label")<-NULL

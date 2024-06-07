@@ -2,7 +2,7 @@
 % Please edit documentation in R/labels_opendf.R
 \name{labels_opendf}
 \alias{labels_opendf}
-\title{Get variable labels or other metadata from a data frame in opendataformat .}
+\title{Get variable labels or other metadata from a data frame in opendataformat.}
 \usage{
 labels_opendf(
   input,
@@ -14,20 +14,23 @@ labels_opendf(
 \arguments{
 \item{input}{R data frame (df) or variable from an R data frame (df$var).}
 
-\item{language}{Select the language in which the labels of the variables will be displayed.
-If no language is selected, the current/active language of the data frame will be used.}
-
-\item{valuelabels}{You can choose to display the value labels instead of the variable label,
-if the input is a variable by setting \code{valuelabels=T} or \code{valuelabels="yes}". If the input is a dataset, this argument is ignored.}
-
-\item{retrieve}{You can choose to display another attribute/metadata instead of the variable label(s).
-Possible options are "description", "url", "type" or "languages". If valuelabels=TRUE/"yes" and the input us a variable, this argument is ignored.
+\item{language}{Select the language in which the labels of the variables
+will be displayed. If no language is selected, the current/active language
+of the data frame will be used.
 \itemize{
-\item By default the language that is set to current is displayed
-(\code{languages = "current"}).
-\item You can select the language by language code, e.g.
-\code{languages = "en"}.
+\item By default the language that is set to current is displayed (\code{language = "current"}).
+\item You can select the language by language code, e.g. \code{language = "en"}.
 }}
+
+\item{valuelabels}{You can choose to display the value labels instead of
+the variable label, if the input is a variable by setting \code{valuelabels=TRUE}
+or \code{valuelabels="yes"}. If the input is a dataset, this argument is
+ignored.}
+
+\item{retrieve}{You can choose to display another attribute/metadata instead
+of the variable label(s). Possible options are "description", "url", "type"
+or "languages".If \code{valuelabels=TRUE} or \code{valuelabels="yes"} and
+the input is a variable, this argument is ignored.}
 }
 \value{
 Documentation.
@@ -39,15 +42,13 @@ and variables via the R-Studio Viewer or the web browser.
 \examples{
 # get example data from the opendataformat package
 df <- get(data("data_opendf"))
+# view the variable labels for all variables in English
+labels_opendf(input = df, language = "en", valuelabels = FALSE)
 
-# view the variable labels for all variables in english
-\dontrun{
-labels_opendf(input=df, languages="en", valuelabels=F)
-}
+# view the value labels for variable bap87 in English
+labels_opendf(input = df$bap87, language = "en", valuelabels = FALSE)
 
-# view the value labels for variable bap87 in english
-\dontrun{
-labels_opendf(input=df$bap87, languages="en", valuelabels=F)
-}
+# view the description for variable bap87 in English
+labels_opendf(input = df$bap87, language = "en", retrieve = "description")
 
 }

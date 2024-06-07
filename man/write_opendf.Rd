@@ -4,14 +4,16 @@
 \alias{write_opendf}
 \title{Write R data frame to the Open Data Format.}
 \usage{
-write_opendf(x, file, languages = "all", export_data = TRUE)
+write_opendf(x, file, languages = "all", export_data = TRUE, verbose = T)
 }
 \arguments{
 \item{x}{R data frame (df) to be writtem.}
 
-\item{file}{Path to ZIP file or name of zip file to save the opendf-dataset in the working directory.}
+\item{file}{Path to ZIP file or name of zip file to save the opendf-dataset
+in the working directory.}
 
-\item{languages}{Select the language in which the descriptions and labels of the data will be exported
+\item{languages}{Select the language in which the descriptions and labels of the data will be
+exported
 \itemize{
 \item By default all available language variants are exported
 (\code{languages = "all"}).
@@ -29,6 +31,8 @@ data (data.csv).Default is TRUE.
 \item By default the data and metadata are exported (\code{export_data = "yes"}).
 \item To export only metadata and no data, select \code{export_data = "no"}
 }}
+
+\item{verbose}{Display more messages.}
 }
 \value{
 ZIP file and unzipped directory containing the data as CSV file and
@@ -49,8 +53,8 @@ df
 write_opendf(x = df, file = "my_data.zip")
 }
 
-# write variable from R data frame with attributes to the file my_data.zip specified
-# as Open Data Format.
+# write variable from R data frame with attributes to the file my_data.zip 
+# specified as Open Data Format.
 \dontrun{
 write_opendf(x = df$bap87,  file = "my_data.zip")
 }

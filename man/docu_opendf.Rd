@@ -15,26 +15,14 @@ docu_opendf(
 \arguments{
 \item{input}{R data frame (df) or variable from an R data frame (df$var).}
 
-\item{languages}{Select the language in which the descriptions and labels of the data will be displayed.}
-
-\item{style}{Selects where the output should be displayed (console ore viewer). Default is "both"
-\itemize{
-\item You can choose to display the code only in the console
-(\code{style = "console"}).
-(\code{style = "print"}).
-\item You can choose to display the code only in the viewer
-(\code{style = "viewer"}).
-(\code{style = "html"}).
-}}
-
-\item{replace_missing}{If only one language is specified in languages and replace_missings is set to TRUE.
-in case of a missing label or description, the default or english label/description is displayed additionally
-(if one of these is available).
+\item{languages}{Select the language in which the descriptions and labels of
+the data will be displayed.
 \itemize{
 \item By default the language that is set to current is displayed
 (\code{languages = "current"}).
-\item The default-option chooses either the default language(if labels and descriptions without a language tag exist)
-\item Otherwise the current language is displayed.
+\item The default-option chooses either the default language(if labels and
+\item descriptions without a language tag exist)Otherwise the current language
+\item is displayed.
 (\code{languages = "default"}).
 \item You can choose to view all available language variants by selecting
 (\code{languages = "all"}),
@@ -42,7 +30,27 @@ in case of a missing label or description, the default or english label/descript
 \code{languages = "en"}.
 }}
 
-\item{variables}{Indicate whether a list with all the variables should be displayed with the dataset metadata.
+\item{style}{Selects where the output should be displayed (console ore
+viewer).By default the metadata information is displayed in both the
+console and the viewer.
+(\code{style = "both"})
+(\code{style = "all"})
+\itemize{
+\item You can choose to display the code only in the console
+(\code{style = "console"})
+(\code{style = "print"})
+\item You can choose to display the code only in the viewer
+(\code{style = "viewer"})
+(\code{style = "html"})
+}}
+
+\item{replace_missing}{If only one language is specified in languages and
+replace_missings is set to TRUE. In case of a missing label or description,
+the default or english label/description is displayed additionally (if
+one of these is available).}
+
+\item{variables}{Indicate whether a list with all the variables should be
+displayed with the dataset metadata.
 If the input is a variable/column, the variables-argument will be ignored.
 Set (\code{variables="yes"}) to display the list of variables.}
 }
@@ -82,7 +90,8 @@ docu_opendf(df$bap87, style = "print")
 docu_opendf(df$bap87, style = "viewer")
 }
 
-# Since the label for language de is missing, in this case the english label will be displayed additionally.
+# Since the label for language de is missing, in this case the 
+# english label will be displayed additionally.
 \dontrun{
 attributes(df$bap87)["label_de"]<-""
 docu_opendf(df$bap87, languages="de", style = "console", replace_missing=T)

@@ -10,37 +10,44 @@
 #' 
 #' @param input R data frame (df) or variable from an R data frame (df$var).
 #'
-#' @param languages Select the language in which the descriptions and labels of the data will be displayed.
-#' 
-#' @param variables Indicate whether a list with all the variables should be displayed with the dataset metadata. 
-#' If the input is a variable/column, the variables-argument will be ignored.
-#' Set (\code{variables="yes"}) to display the list of variables.
-#' 
-#' @param replace_missing If only one language is specified in languages and replace_missings is set to TRUE.
-#' in case of a missing label or description, the default or english label/description is displayed additionally
-#' (if one of these is available).
-#' 
+#'
+#' @param languages Select the language in which the descriptions and labels of 
+#' the data will be displayed.
 #' * By default the language that is set to current is displayed
 #' (\code{languages = "current"}).
-#' * The default-option chooses either the default language(if labels and descriptions without a language tag exist)
-#' * Otherwise the current language is displayed.
+#' * The default-option chooses either the default language(if labels and 
+#' * descriptions without a language tag exist)Otherwise the current language 
+#' * is displayed.
 #' (\code{languages = "default"}).
 #' * You can choose to view all available language variants by selecting
 #' (\code{languages = "all"}),
 #' * or you can select the language by language code, e.g.
 #' \code{languages = "en"}.
 #' 
-#' @param style Selects where the output should be displayed (console ore viewer).
-#' * By default the metadata information is displayed in both the console and the viewer.
-#' (\code{style = "both"}).
-#' (\code{style = "all"}).
-#' @param style Selects where the output should be displayed (console ore viewer). Default is "both"
+#' 
+#' @param variables Indicate whether a list with all the variables should be 
+#' displayed with the dataset metadata. 
+#' If the input is a variable/column, the variables-argument will be ignored.
+#' Set (\code{variables="yes"}) to display the list of variables.
+#' 
+#' 
+#' @param replace_missing If only one language is specified in languages and 
+#' replace_missings is set to TRUE. In case of a missing label or description, 
+#' the default or english label/description is displayed additionally (if 
+#' one of these is available).
+#' 
+#' 
+#' @param style Selects where the output should be displayed (console ore 
+#' viewer).By default the metadata information is displayed in both the 
+#' console and the viewer.
+#' (\code{style = "both"})
+#' (\code{style = "all"})
 #' * You can choose to display the code only in the console
-#' (\code{style = "console"}).
-#' (\code{style = "print"}).
+#' (\code{style = "console"})
+#' (\code{style = "print"})
 #' * You can choose to display the code only in the viewer
-#' (\code{style = "viewer"}).
-#' (\code{style = "html"}).
+#' (\code{style = "viewer"})
+#' (\code{style = "html"})
 #' 
 #' @return Documentation.
 #'
@@ -74,7 +81,8 @@
 #' docu_opendf(df$bap87, style = "viewer")
 #' }
 #' 
-#' # Since the label for language de is missing, in this case the english label will be displayed additionally.
+#' # Since the label for language de is missing, in this case the 
+#' # english label will be displayed additionally.
 #' \dontrun{
 #' attributes(df$bap87)["label_de"]<-""
 #' docu_opendf(df$bap87, languages="de", style = "console", replace_missing=T)

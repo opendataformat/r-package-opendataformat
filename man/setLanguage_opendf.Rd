@@ -7,30 +7,26 @@
 setLanguage_opendf(dataframe, language)
 }
 \arguments{
-\item{dataframe}{R data frame (df) enriched with metadata in the opendf-format.}
+\item{dataframe}{R data frame (df) enriched with metadata in the
+opendf-format.}
 
-\item{languages}{Select the language to which you want to switch the metadata.}
+\item{language}{Select the language to which you want to switch the metadata.}
 }
 \value{
 Dataframe
 }
 \description{
-Changes the active language of a dataframe with metadata for the docu_opendf function.
+Changes the active language of a dataframe with metadata for the
+docu_opendf function.
 }
 \examples{
 # get example data from the opendataformat package
-\dontrun{
 df <- get(data("data_opendf"))
-}
 
 # Switch dataset df to language "en" 
-\dontrun{
-df <- setLanguage_opendf(df, languages = "en")
-}
+df <- setLanguage_opendf(df, language = "en")
 
-# Display dataset information for dataset df. Metadata for language "en" is displayed.
-\dontrun{
-docu2_opendf(df)
-}
+# Display dataset information for dataset df in language "en"
+docu_opendf(df)
 
 }

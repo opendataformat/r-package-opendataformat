@@ -1,8 +1,6 @@
 ---
 title: "opendataformat"
 output:
-  pdf_document:
-    toc: true
   rmarkdown::html_vignette:
     toc: true
 vignette: >
@@ -39,7 +37,6 @@ This vignette will guide you through a series of examples that demonstrate the p
 You can install and update the package from gitlab using the `install_git()`-function from the devtools-library.
 
 ```{r setup, results = 'hide', messages=FALSE, warning = FALSE}
-library(devtools)
 devtools::install_git("https://git.soep.de/opendata/r-package-opendataformat.git",  
                       quiet = TRUE)
 library(opendataformat)

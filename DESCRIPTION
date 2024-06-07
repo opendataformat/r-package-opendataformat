@@ -6,14 +6,8 @@ Maintainer: Tom Hartl <thartl@diw.de>
 Authors@R: c(
     person("Tom", "Hartl", , "thartl@diw.de", role = c("aut", "cre"))
   )
-Description: The package is specifically designed to facilitate the seamless
-    utilization of the open data format. It offers functionality to import data
-    from the Open Data Format into an R data frame, as well as export data from
-    an R data frame to the open data format. Additionally, you can easily access
-    comprehensive information about the dataset and variables using either the
-    RStudio Viewer or your web browser. This user-friendly approach ensures 
-    convenient exploration and utilization of dataset information within your 
-    preferred environment.
+Description: Reading and writing of data files in the open data format, 
+    displaying metadata in different languages.
 URL: https://git.soep.de/opendata/r-package-opendataformat
 BugReports: https://git.soep.de/opendata/r-package-opendataformat/-/issues
 License: MIT + file LICENSE
@@ -24,14 +18,16 @@ RoxygenNote: 7.3.1
 Depends: 
     R (>= 2.10),
     crayon,
+    cli,
     magrittr,
     xml2,
     data.table
 Suggests: 
     testthat (>= 3.0.0),
     knitr,
-    cli,
-    rmarkdown
+    rmarkdown,
+    devtools,
+    ISLR
 VignetteBuilder: knitr
 VignetteEngine: knitr::rmarkdown
 VignetteIndexEntry: "opendataformat"

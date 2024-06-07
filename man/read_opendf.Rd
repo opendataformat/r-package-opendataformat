@@ -10,17 +10,22 @@ read_opendf(file, languages = "all", nrows = Inf, skip = 0, variables = NULL)
 \item{file}{the name of the file which the data are to be read from.
 By default all available language variants are imported (\code{languages = "all"}).}
 
-\item{languages}{integer: the maximum number of rows to read in. Negative and other invalid values are ignored.}
+\item{languages}{integer: the maximum number of rows to read in. Negative and other invalid
+values are ignored.}
 
 \item{nrows}{Maximum number of lines to read.}
 
 \item{skip}{Select the number of rows to be skipped (without the column names).}
 
-\item{variables}{Columns to include in the results. You can use the same mini-language as dplyr::select() to refer to the columns by name. Use c() to use more than one selection expression.
-Although this usage is less common, col_select also accepts a numeric column index. See ?tidyselect::language for full details on the selection language.}
+\item{variables}{Columns to include in the results. You can use the same mini-language as
+dplyr::select() to refer to the columns by name. Use c() to use more than
+one selection expression.
+Although this usage is less common, col_select also accepts a numeric column
+index. See ?tidyselect::language for full details on the selection language.}
 }
 \value{
-R dataframe with attributes including dataset and variable information.
+R dataframe with attributes including dataset and variable
+information.
 }
 \description{
 Import data from the Open Data Format to an R data frame.
