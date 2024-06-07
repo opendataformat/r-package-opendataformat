@@ -1,0 +1,9 @@
+data_opendf             data_opendf
+docu_opendf             Get documentation from R data frame.
+labels_opendf           Get variable labels or other metadata from a
+                        data frame in opendataformat.
+opendataformat-package
+                        Open Data Format
+read_opendf             Read data specified as Open Data Format.
+setLanguage_opendf      Change language of dataframe metadata
+write_opendf            Write R data frame to the Open Data Format.

@@ -1,0 +1,186 @@
+Hmm ... looks like a package
+Converting parsed Rd's to LaTeX 
+Creating pdf output from LaTeX ...
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+(./Rd2.tex
+LaTeX2e <2024-06-01>
+L3 programming layer <2024-05-08>
+
+(c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2024/02/08 v1.4n Standard LaTeX document class
+(c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/bk10.clo)) (c:/Program Files/R/R-4.4.0/share/texmf/tex/latex/Rd.sty (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/ifthen.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/longtable.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/bm.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/alltt.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/verbatim.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/url/url.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/textcomp.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsmath.sty
+For additional information on amsmath, use the `?' option.
+(c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amstext.sty (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsgen.sty)) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsbsy.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsopn.sty)) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/amsfonts.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/amssymb.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/eucal.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/fontenc.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/times.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/inconsolata/zi4.sty `inconsolata-zi4' v1.12, 2019/05/17 Text macros for Inconsolata (msharpe) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/xkeyval/xkeyval.sty (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/xkeyval/xkeyval.tex (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/xkeyval/xkvutils.tex (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/xkeyval/keyval.tex))))) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/color.sty (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.cfg) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-def/pdftex.def) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/mathcolor.ltx)) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pdfescape/pdfescape.sty (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/infwarerr/infwarerr.sty))) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hycolor/hycolor.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/refcount/refcount.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/kvoptions/kvoptions.sty))) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/etoolbox/etoolbox.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/stringenc/stringenc.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/bitset/bitset.sty (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty)) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/atbegshi-ltx.sty)) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex.def (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/atveryend-ltx.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty)))) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/makeidx.sty)
+Writing index file Rd2.idx
+(c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/t1ptm.fd) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def)
+No file Rd2.aux.
+(c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/inconsolata/t1zi4.fd) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/ts1ptm.fd)
+No file Rd2.toc.
+
+[1{c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.enc}{c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-0.enc}]
+Overfull \hbox (48.14929pt too wide) in paragraph at lines 69--71
+[]\T1/ptm/m/n/10 Claudia Saal-bach (\T1/zi4/m/n/10 <csaalbach@diw.de>\T1/ptm/m/n/10 ), Xi-aoyao Han (\T1/zi4/m/n/10 <xhan@diw.de>\T1/ptm/m/n/10 ), Knut Wen-zig (\T1/zi4/m/n/10 <kwenzig@diw.de>\T1/ptm/m/n/10 ) 
+
+[2]
+Overfull \hbox (13.42824pt too wide) in paragraph at lines 145--147
+[]\T1/ptm/m/n/10 You can choose to view all avail-able lan-guage vari-ants by se-lect-ing ([]\T1/zi4/m/n/10 languages
+
+Overfull \hbox (2.17917pt too wide) in paragraph at lines 160--163
+[]\T1/ptm/m/n/10 You can choose to dis-play the code only in the con-sole ([]\T1/zi4/m/n/10 style = "console"[]\T1/ptm/m/n/10 )
+
+Overfull \hbox (22.9872pt too wide) in paragraph at lines 170--174
+\T1/ptm/m/n/10 TRUE. In case of a miss-ing la-bel or de-scrip-tion, the de-fault or en-glish la-bel/description
+
+[3]
+[4]
+Overfull \hbox (48.54787pt too wide) in paragraph at lines 269--273
+\T1/ptm/m/n/10 bel(s). Pos-si-ble op-tions are "de-scrip-tion", "url", "type" or "lan-guages".If []\T1/zi4/m/n/10 valuelabels=TRUE
+
+[5]
+[6]
+Overfull \hbox (4.65862pt too wide) in paragraph at lines 413--415
+[]\T1/ptm/m/n/10 By de-fault all avail-able lan-guage vari-ants are ex-ported ([]\T1/zi4/m/n/10 languages = "all"[]\T1/ptm/m/n/10 ). 
+
+[7]
+No file Rd2.ind.
+
+[8] (./Rd2.aux)
+
+Package rerunfilecheck Warning: File `Rd2.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+ )
+(see the transcript file for additional information) <c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk><c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb><c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on Rd2.pdf (8 pages, 89241 bytes).
+Transcript written on Rd2.log.
+This is makeindex, version 2.17 [TeX Live 2024] (kpathsea + Thai support).
+Scanning input file Rd2.idx....done (9 entries accepted, 0 rejected).
+Sorting entries....done (27 comparisons).
+Generating output file Rd2.ind....done (33 lines written, 0 warnings).
+Output written in Rd2.ind.
+Transcript written in Rd2.ilg.
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+(./Rd2.tex
+LaTeX2e <2024-06-01>
+L3 programming layer <2024-05-08>
+
+(c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2024/02/08 v1.4n Standard LaTeX document class
+(c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/bk10.clo)) (c:/Program Files/R/R-4.4.0/share/texmf/tex/latex/Rd.sty (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/ifthen.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/longtable.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/bm.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/alltt.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/verbatim.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/url/url.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/textcomp.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsmath.sty
+For additional information on amsmath, use the `?' option.
+(c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amstext.sty (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsgen.sty)) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsbsy.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsopn.sty)) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/amsfonts.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/amssymb.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/eucal.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/fontenc.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/times.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/inconsolata/zi4.sty `inconsolata-zi4' v1.12, 2019/05/17 Text macros for Inconsolata (msharpe) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/xkeyval/xkeyval.sty (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/xkeyval/xkeyval.tex (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/xkeyval/xkvutils.tex (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/xkeyval/keyval.tex))))) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/color.sty (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.cfg) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-def/pdftex.def) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/mathcolor.ltx)) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pdfescape/pdfescape.sty (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/infwarerr/infwarerr.sty))) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hycolor/hycolor.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/refcount/refcount.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/kvoptions/kvoptions.sty))) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/etoolbox/etoolbox.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/stringenc/stringenc.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/bitset/bitset.sty (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty)) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/atbegshi-ltx.sty)) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex.def (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/atveryend-ltx.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty)))) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/makeidx.sty)
+Writing index file Rd2.idx
+(c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/t1ptm.fd) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def) (./Rd2.aux) (./Rd2.out) (./Rd2.out) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/inconsolata/t1zi4.fd) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/ts1ptm.fd) (./Rd2.toc)
+[1{c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.enc}{c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-0.enc}]
+Overfull \hbox (48.14929pt too wide) in paragraph at lines 69--71
+[]\T1/ptm/m/n/10 Claudia Saal-bach (\T1/zi4/m/n/10 <csaalbach@diw.de>\T1/ptm/m/n/10 ), Xi-aoyao Han (\T1/zi4/m/n/10 <xhan@diw.de>\T1/ptm/m/n/10 ), Knut Wen-zig (\T1/zi4/m/n/10 <kwenzig@diw.de>\T1/ptm/m/n/10 ) 
+
+[2]
+Overfull \hbox (13.42824pt too wide) in paragraph at lines 145--147
+[]\T1/ptm/m/n/10 You can choose to view all avail-able lan-guage vari-ants by se-lect-ing ([]\T1/zi4/m/n/10 languages
+
+Overfull \hbox (2.17917pt too wide) in paragraph at lines 160--163
+[]\T1/ptm/m/n/10 You can choose to dis-play the code only in the con-sole ([]\T1/zi4/m/n/10 style = "console"[]\T1/ptm/m/n/10 )
+
+Overfull \hbox (22.9872pt too wide) in paragraph at lines 170--174
+\T1/ptm/m/n/10 TRUE. In case of a miss-ing la-bel or de-scrip-tion, the de-fault or en-glish la-bel/description
+
+[3]
+[4]
+Overfull \hbox (48.54787pt too wide) in paragraph at lines 269--273
+\T1/ptm/m/n/10 bel(s). Pos-si-ble op-tions are "de-scrip-tion", "url", "type" or "lan-guages".If []\T1/zi4/m/n/10 valuelabels=TRUE
+
+[5]
+[6]
+Overfull \hbox (4.65862pt too wide) in paragraph at lines 413--415
+[]\T1/ptm/m/n/10 By de-fault all avail-able lan-guage vari-ants are ex-ported ([]\T1/zi4/m/n/10 languages = "all"[]\T1/ptm/m/n/10 ). 
+
+[7] (./Rd2.ind
+[8]
+
+LaTeX Font Warning: Font shape `T1/zi4/m/it' undefined
+(Font)              using `T1/zi4/m/n' instead on input line 17.
+
+
+
+[9]) (./Rd2.aux)
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+
+Package rerunfilecheck Warning: File `Rd2.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+ )
+(see the transcript file for additional information) <c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk><c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb><c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on Rd2.pdf (9 pages, 99648 bytes).
+Transcript written on Rd2.log.
+This is makeindex, version 2.17 [TeX Live 2024] (kpathsea + Thai support).
+Scanning input file Rd2.idx....done (9 entries accepted, 0 rejected).
+Sorting entries....done (27 comparisons).
+Generating output file Rd2.ind....done (33 lines written, 0 warnings).
+Output written in Rd2.ind.
+Transcript written in Rd2.ilg.
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+(./Rd2.tex
+LaTeX2e <2024-06-01>
+L3 programming layer <2024-05-08>
+
+(c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2024/02/08 v1.4n Standard LaTeX document class
+(c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/bk10.clo)) (c:/Program Files/R/R-4.4.0/share/texmf/tex/latex/Rd.sty (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/ifthen.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/longtable.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/bm.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/alltt.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/verbatim.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/url/url.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/textcomp.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsmath.sty
+For additional information on amsmath, use the `?' option.
+(c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amstext.sty (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsgen.sty)) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsbsy.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsopn.sty)) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/amsfonts.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/amssymb.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/eucal.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/fontenc.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/times.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/inconsolata/zi4.sty `inconsolata-zi4' v1.12, 2019/05/17 Text macros for Inconsolata (msharpe) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/xkeyval/xkeyval.sty (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/xkeyval/xkeyval.tex (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/xkeyval/xkvutils.tex (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/xkeyval/keyval.tex))))) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/color.sty (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.cfg) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-def/pdftex.def) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/mathcolor.ltx)) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pdfescape/pdfescape.sty (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/infwarerr/infwarerr.sty))) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hycolor/hycolor.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/refcount/refcount.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/kvoptions/kvoptions.sty))) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/etoolbox/etoolbox.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/stringenc/stringenc.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/bitset/bitset.sty (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty)) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/atbegshi-ltx.sty)) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex.def (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/atveryend-ltx.sty) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty)))) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/makeidx.sty)
+Writing index file Rd2.idx
+(c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/t1ptm.fd) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def) (./Rd2.aux) (./Rd2.out) (./Rd2.out) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/inconsolata/t1zi4.fd) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd) (c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/ts1ptm.fd) (./Rd2.toc)
+[1{c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.enc}{c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-0.enc}]
+Overfull \hbox (48.14929pt too wide) in paragraph at lines 69--71
+[]\T1/ptm/m/n/10 Claudia Saal-bach (\T1/zi4/m/n/10 <csaalbach@diw.de>\T1/ptm/m/n/10 ), Xi-aoyao Han (\T1/zi4/m/n/10 <xhan@diw.de>\T1/ptm/m/n/10 ), Knut Wen-zig (\T1/zi4/m/n/10 <kwenzig@diw.de>\T1/ptm/m/n/10 ) 
+
+[2]
+Overfull \hbox (13.42824pt too wide) in paragraph at lines 145--147
+[]\T1/ptm/m/n/10 You can choose to view all avail-able lan-guage vari-ants by se-lect-ing ([]\T1/zi4/m/n/10 languages
+
+Overfull \hbox (2.17917pt too wide) in paragraph at lines 160--163
+[]\T1/ptm/m/n/10 You can choose to dis-play the code only in the con-sole ([]\T1/zi4/m/n/10 style = "console"[]\T1/ptm/m/n/10 )
+
+Overfull \hbox (22.9872pt too wide) in paragraph at lines 170--174
+\T1/ptm/m/n/10 TRUE. In case of a miss-ing la-bel or de-scrip-tion, the de-fault or en-glish la-bel/description
+
+[3]
+[4]
+Overfull \hbox (48.54787pt too wide) in paragraph at lines 269--273
+\T1/ptm/m/n/10 bel(s). Pos-si-ble op-tions are "de-scrip-tion", "url", "type" or "lan-guages".If []\T1/zi4/m/n/10 valuelabels=TRUE
+
+[5]
+[6]
+Overfull \hbox (4.65862pt too wide) in paragraph at lines 413--415
+[]\T1/ptm/m/n/10 By de-fault all avail-able lan-guage vari-ants are ex-ported ([]\T1/zi4/m/n/10 languages = "all"[]\T1/ptm/m/n/10 ). 
+
+[7] (./Rd2.ind
+[8]
+
+LaTeX Font Warning: Font shape `T1/zi4/m/it' undefined
+(Font)              using `T1/zi4/m/n' instead on input line 17.
+
+
+
+[9]) (./Rd2.aux)
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+ )
+(see the transcript file for additional information) <c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk><c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb><c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/Users/thartl/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on Rd2.pdf (9 pages, 99737 bytes).
+Transcript written on Rd2.log.
+Saving output to 'opendataformat-manual.pdf' ...
+Done
+You may want to clean up by 'rm -Rf C:/Users/thartl/AppData/Local/Temp/Rtmp67fnpg/Rd2pdf212075bc7f47'

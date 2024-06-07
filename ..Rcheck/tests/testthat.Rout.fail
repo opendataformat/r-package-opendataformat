@@ -1,0 +1,63 @@
+
+R version 4.4.0 (2024-04-24 ucrt) -- "Puppy Cup"
+Copyright (C) 2024 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(testthat)
+> library(ISLR)
+> library(opendataformat)
+Loading required package: crayon
+Loading required package: cli
+
+Attaching package: 'cli'
+
+The following object is masked from 'package:crayon':
+
+    num_ansi_colors
+
+Loading required package: magrittr
+
+Attaching package: 'magrittr'
+
+The following objects are masked from 'package:testthat':
+
+    equals, is_less_than, not
+
+Loading required package: xml2
+Loading required package: data.table
+> 
+> test_check("opendataformat")
+[1] "Dataset successfully written to 'C:\\Users\\thartl\\AppData\\Local\\Temp\\Rtmp67fnpg/working_dir\\Rtmpu0ob6R/MY_XML.zip'"
+[1] "Dataset successfully written to 'C:\\Users\\thartl\\AppData\\Local\\Temp\\Rtmp67fnpg/working_dir\\Rtmpu0ob6R/MY_XML.zip'"
+[1] "Dataset successfully written to 'C:\\Users\\thartl\\AppData\\Local\\Temp\\Rtmp67fnpg/working_dir\\Rtmpu0ob6R/MY_XML.zip'"
+[1] "Dataset successfully written to 'C:\\Users\\thartl\\AppData\\Local\\Temp\\Rtmp67fnpg/working_dir\\Rtmpu0ob6R/MY_XML.zip'"
+[1] "Dataset successfully written to 'C:\\Users\\thartl\\AppData\\Local\\Temp\\Rtmp67fnpg/working_dir\\Rtmpu0ob6R/MY_XML2.zip'"
+[1] "Dataset successfully written to 'C:\\Users\\thartl\\AppData\\Local\\Temp\\Rtmp67fnpg/working_dir\\Rtmpu0ob6R/MY_XML.zip'"
+[1] "Dataset successfully written to 'C:\\Users\\thartl\\AppData\\Local\\Temp\\Rtmp67fnpg/working_dir\\Rtmpu0ob6R/MY_XML'"
+[1] "Dataset successfully written to 'C:\\Users\\thartl\\AppData\\Local\\Temp\\Rtmp67fnpg/working_dir\\Rtmpu0ob6R/MY_XML'"
+[1] "Dataset successfully written to 'C:\\Users\\thartl\\AppData\\Local\\Temp\\Rtmp67fnpg/working_dir\\Rtmpu0ob6R/MY_XML'"
+[1] "Dataset successfully written to 'C:\\Users\\thartl\\AppData\\Local\\Temp\\Rtmp67fnpg/working_dir\\Rtmpu0ob6R/MY_XML'"
+[ FAIL 1 | WARN 0 | SKIP 0 | PASS 375 ]
+
+══ Failed tests ════════════════════════════════════════════════════════════════
+── Error ('test-docu_opendf.R:10:3'): docu_opendf ──────────────────────────────
+Error in `viewer(htmlFile)`: could not find function "viewer"
+Backtrace:
+    ▆
+ 1. └─opendataformat::docu_opendf(input = df, languages = "all", style = "html") at test-docu_opendf.R:10:3
+
+[ FAIL 1 | WARN 0 | SKIP 0 | PASS 375 ]
+Error: Test failures
+Execution halted
