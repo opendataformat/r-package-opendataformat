@@ -224,9 +224,9 @@ write_opendf <- function(x,
   old_wd<-getwd()
   setwd(paste0(tempdir(), "/",folder_name))
   if (export_data==T) {
-    utils::zip(zipfile=gsub("/", "\\\\", file),c("data.csv", "metadata.xml"), flags="-q")
+    utils::zip(zipfile=file,c("data.csv", "metadata.xml"), flags="-q")
   } else {
-    utils::zip(zipfile=gsub("/", "\\\\", file),c("metadata.xml"), flags="-q")
+    utils::zip(zipfile=file,c("metadata.xml"), flags="-q")
   }
   setwd(old_wd)
   
