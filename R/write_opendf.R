@@ -92,7 +92,7 @@ write_opendf <- function(x,
   folder_url<-gsub(".zip", "",file)
   folder_url<-gsub("\\\\", "/", folder_url)
   folder_name<-strsplit(folder_url, "/")[[1]][length(strsplit(folder_url, "/")[[1]])]
-  root_dir<-paste0(strsplit(folder_url, "/")[[1]][-length(strsplit(folder_url, "/")[[1]])], "/", collapse="/")
+  root_dir<-paste0(strsplit(folder_url, "/")[[1]][-length(strsplit(folder_url, "/")[[1]])], "/", collapse="")
   if (root_dir=="/") {
     root_dir<-getwd()
     file=paste0(getwd(),"/", file)

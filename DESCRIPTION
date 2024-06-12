@@ -21,7 +21,8 @@ Depends:
     cli,
     magrittr,
     xml2,
-    data.table
+    data.table,
+    utils
 Suggests: 
     testthat (>= 3.0.0),
     knitr,
