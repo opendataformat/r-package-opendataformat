@@ -147,7 +147,7 @@ docu_opendf<-function(input,
   }
   label_console<-label
   label_html<-label
-  if (length(languages)==1 & label[[l]]=="" & replace_missing==T){
+  if (length(languages)==1 & any(c(label[[l]]=="", is.null(label[[l]]))) & replace_missing==T){
     if (!is.null(attr(input, "label_default"))){
       if(attr(input, "label_default")!="" ){
         label_console[languages]<-paste0("\n[default] ", attr(input, "label_default"))
@@ -171,7 +171,7 @@ docu_opendf<-function(input,
   }
   description_console<-description
   description_html<-description
-  if (length(languages)==1 & description[[l]]=="" & replace_missing==T){
+  if (length(languages)==1 & any(c(description[[l]]=="", is.null(description[[l]]))) & replace_missing==T){
     if (!is.null(attr(input, "description_default"))){
       if(attr(input, "description_default")!="" ){
         description_console[languages]<-paste0("\n[default] ", attr(input, "description_default"))
@@ -382,7 +382,7 @@ docu_opendf<-function(input,
       if (printing_output[i] != "valuelabels") {cat(printing_output[i])} else print(valuelabels_tab, row.names = FALSE)
     }
     if (input_type=="Variable"){
-      print(valuelabels_tab)
+      if (nrow(valuelabels_tab>0)) print(valuelabels_tab) else print("No value labels")
     }
     if (input_type=="Dataset" & variables=="yes"){
       print(varlist)
