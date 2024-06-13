@@ -89,6 +89,12 @@ You can also give a list of languages::
 df_en <- read_opendf(file = path, languages=c("en", "de"))
 ```
 
+You can set further arguments for the `read_opendf()` function. With the `nrows` argument you define how many rows to read excluding the header. With the `skip` parameter you set how many rows to skip (excluding the header).With the `variables` input you determine which columns/variables to load with a vector of indices or variable/column names.
+
+```{r read_opendf all inputs, eval=FALSE}
+df<-read_opendf(file, languages = "all", nrows = Inf, skip = 0, variables = NULL)
+```
+
 
 ## Explore Dataset Information: `docu_opendf()`
 
@@ -107,7 +113,7 @@ To display the metadata only in the console, utilize the `style` argument with t
 docu_opendf(df, style = "print")
 ```
 
-To obtain a comprehensive overview of all variables within the dataset, simply set the agrument `variables="yes"`.
+To obtain a comprehensive overview of all variables within the dataset, simply set the argument `variables="yes"`.
 
 ```{r docu_opendf variables, comment=""}
 docu_opendf(df, variables="yes", style="print")
