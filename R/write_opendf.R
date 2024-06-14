@@ -75,6 +75,10 @@ write_opendf <- function(x,
                          languages = "all",
                          export_data=TRUE, 
                          verbose=T) {
+  # Normalize path from from relative to absolute
+  file<-normalizePath(file, winslash = "/", mustWork = FALSE)
+  
+  
   #Remove label attributes for haven
   if(!is.null(attr(x,"label"))){
     attr(x,"label")<-NULL
