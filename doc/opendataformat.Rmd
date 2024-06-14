@@ -37,7 +37,6 @@ This vignette will guide you through a series of examples that demonstrate the p
 You can install and update the package from gitlab using the `install_git()`-function from the devtools-library.
 
 ```{r setup, results = 'hide', messages=FALSE, warning = FALSE}
-library(devtools)
 devtools::install_git("https://git.soep.de/opendata/r-package-opendataformat.git",  
                       quiet = TRUE)
 library(opendataformat)
@@ -90,6 +89,12 @@ You can also give a list of languages::
 df_en <- read_opendf(file = path, languages=c("en", "de"))
 ```
 
+You can set further arguments for the `read_opendf()` function. With the `nrows` argument you define how many rows to read excluding the header. With the `skip` parameter you set how many rows to skip (excluding the header).With the `variables` input you determine which columns/variables to load with a vector of indices or variable/column names.
+
+```{r read_opendf all inputs, eval=FALSE}
+df<-read_opendf(file, languages = "all", nrows = Inf, skip = 0, variables = NULL)
+```
+
 
 ## Explore Dataset Information: `docu_opendf()`
 
@@ -108,7 +113,7 @@ To display the metadata only in the console, utilize the `style` argument with t
 docu_opendf(df, style = "print")
 ```
 
-To obtain a comprehensive overview of all variables within the dataset, simply set the agrument `variables="yes"`.
+To obtain a comprehensive overview of all variables within the dataset, simply set the argument `variables="yes"`.
 
 ```{r docu_opendf variables, comment=""}
 docu_opendf(df, variables="yes", style="print")
@@ -401,7 +406,7 @@ write_opendf(
 )
 ```
 
-By default, languages is set to`languages="all"`. You can also define a list of languages to be exported:
+By default, languages is set to `languages="all"`. You can also define a list of languages to be exported:
 ```{r write_opendf english german, comment = "", eval = FALSE}
 write_opendf(
   x=df, 

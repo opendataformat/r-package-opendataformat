@@ -406,7 +406,7 @@ write_opendf(
 )
 ```
 
-By default, languages is set to`languages="all"`. You can also define a list of languages to be exported:
+By default, languages is set to `languages="all"`. You can also define a list of languages to be exported:
 ```{r write_opendf english german, comment = "", eval = FALSE}
 write_opendf(
   x=df, 

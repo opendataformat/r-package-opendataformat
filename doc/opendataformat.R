@@ -5,7 +5,6 @@ knitr::opts_chunk$set(
 )
 
 ## ----setup, results = 'hide', messages=FALSE, warning = FALSE-----------------
-library(devtools)
 devtools::install_git("https://git.soep.de/opendata/r-package-opendataformat.git",  
                       quiet = TRUE)
 library(opendataformat)
@@ -30,6 +29,9 @@ df
 
 ## ----read_opendf language list, eval=FALSE------------------------------------
 #  df_en <- read_opendf(file = path, languages=c("en", "de"))
+
+## ----read_opendf all inputs, eval=FALSE---------------------------------------
+#  df<-read_opendf(file, languages = "all", nrows = Inf, skip = 0, variables = NULL)
 
 ## ----docu_opendf, eval = FALSE------------------------------------------------
 #  docu_opendf(df)
