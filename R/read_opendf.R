@@ -54,8 +54,9 @@ read_opendf <- function(file,
                         nrows = Inf,
                         skip = 0,
                         variables=NULL) {
-  #file="H:/Testdaten/testdata.zip"
-  #file<-"//hume/soep-data/MA/kwenzig/opendataformat/soep-core/pequiv.zip"
+  #Normalize path from from relative to absolute
+  file<-normalizePath(file, winslash = "/", mustWork = FALSE)
+  
   files<-as.character(utils::unzip(file, list = TRUE)$Name)
 
   #read xml from zipped folder
