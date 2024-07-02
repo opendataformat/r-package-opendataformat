@@ -56,6 +56,8 @@ read_opendf <- function(file,
                         variables=NULL) {
   #Normalize path from from relative to absolute
   file<-normalizePath(file, winslash = "/", mustWork = FALSE)
+  # replace \\\\ with // to avert errors in data.table::fread(cmd = paste0('unzip -p "',file, '" data.csv')
+  file<-gsub("\\\\\\\\", "//", file)
   
   files<-as.character(utils::unzip(file, list = TRUE)$Name)
 
@@ -181,7 +183,7 @@ read_opendf <- function(file,
   options(warn = -1)
   if (skip != 0){
     if (is.null(variables)){
-      cnames<-names(data.table::fread(cmd = paste0('unzip -p ',file, ' data.csv'), skip=0, nrows=0))
+      cnames<-names(data.table::fread(cmd = paste0('unzip -p "',file, '" data.csv'), skip=0, nrows=1))
       data<-data.table::fread(cmd = paste0('unzip -p "',file, '" data.csv'), skip=skip+1, nrows=nrows, col.names=cnames)
       
     } else {
