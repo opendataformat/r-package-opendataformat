@@ -20,7 +20,7 @@ test_that("write_opendf_export_data", {
   # make xml and data with export_datat = yes
   write_opendf(
     x = df,
-    file = paste0(tempdir(),"/MY_XML"),
+    file = paste0(tempdir(),"/MY_XML.zip"),
     export_data = TRUE
   )
   # -- test if file exists
@@ -31,7 +31,7 @@ test_that("write_opendf_export_data", {
   # make xml and data with export_datat = no
   write_opendf(
     x = df,
-    file = paste0(tempdir(),"/MY_XML"),
+    file = paste0(tempdir(),"/MY_XML.zip"),
     export_data = FALSE # changed
   )
   # -- test if file exists
@@ -48,7 +48,7 @@ test_that("write_opendf_languages", {
   # make xml and data with languages = default
   write_opendf(
     x = df,
-    file = paste0(tempdir(),"/MY_XML"),
+    file = paste0(tempdir(),"/MY_XML.zip"),
     languages = "en"
   )
   # -- test if file exists
@@ -80,7 +80,7 @@ test_that("write_opendf_languages", {
   # make xml and data with languages = notvalid
   expect_error(write_opendf(
     x = df,
-    file = paste0(tempdir(),"/MY_XML"),
+    file = paste0(tempdir(),"/MY_XML.zip"),
     languages = "notvalid"
   ) , "languages not valid")
   # -- test if file exists

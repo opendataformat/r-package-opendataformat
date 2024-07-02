@@ -2,7 +2,6 @@
 #'
 #' @description Import data from the Open Data Format to an R data frame.
 #'
-#' @import utils
 #' @import xml2
 #' @import data.table
 #' 
@@ -59,8 +58,6 @@ read_opendf <- function(file,
   # replace \\\\ with // to avert errors in data.table::fread(cmd = paste0('unzip -p "',file, '" data.csv')
   file<-gsub("\\\\\\\\", "//", file)
   
-  files<-as.character(utils::unzip(file, list = TRUE)$Name)
-
   #read xml from zipped folder
   metadata<-read_xml(x = unz(file, "metadata.xml"))
 
@@ -178,8 +175,6 @@ read_opendf <- function(file,
   
   
   # load the data csv "data.csv"
-  #data <- utils::read.csv(unz(file, "data.csv"), header = TRUE,
-  #                 sep = ",", skip=skip, nrows=nrows, check.names=check.names, colClasses=var_types)
   options(warn = -1)
   if (skip != 0){
     if (is.null(variables)){

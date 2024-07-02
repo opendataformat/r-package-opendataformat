@@ -3,7 +3,7 @@
 #' @description Export data from an R data frame to a ZIP file that stores
 #' the data as Open Data Format.
 #'
-#' @import utils
+#' @import zip
 #' @import xml2
 #' @import magrittr
 #' @import data.table
@@ -16,6 +16,9 @@
 #' @param languages
 #' Select the language in which the descriptions and labels of the data will be 
 #' exported
+#' 
+#' @param compression_level
+#' A number between 1 and 9. 9 compresses best, but it also takes the longest.
 #'
 #' * By default all available language variants are exported
 #' (\code{languages = "all"}).
@@ -73,12 +76,17 @@
 write_opendf <- function(x,
                          file,
                          languages = "all",
-                         export_data=TRUE, 
-                         verbose=T) {
+                         export_data = TRUE, 
+                         verbose = T,
+                         compression_level = 5) {
   # Normalize path from from relative to absolute
   file<-normalizePath(file, winslash = "/", mustWork = FALSE)
   # replace \\\\ with // to avert errors in data.table::fread(cmd = paste0('unzip -p "',file, '" data.csv')
-  file<-gsub("\\\\\\\\", "//", file)  
+  file<-gsub("\\\\\\\\", "//", file)
+  
+  if(!grepl(".zip", file)){
+    file<-paste0(file, ".zip")
+  }
   
   #Remove label attributes for haven
   if(!is.null(attr(x,"label"))){
@@ -229,11 +237,12 @@ write_opendf <- function(x,
   old_wd<-getwd()
   setwd(paste0(tempdir(), "/",folder_name))
   if (export_data==T) {
-    utils::zip(zipfile=file,c("data.csv", "metadata.xml"), flags="-q")
+    zip::zip(zipfile=file, files=c("data.csv", "metadata.xml"), compression_level = compression_level)
   } else {
-    utils::zip(zipfile=file,c("metadata.xml"), flags="-q")
+    zip::zip(zipfile=file, files=c("metadata.xml"), compression_level = compression_level)
   }
   setwd(old_wd)
+
   
   #check if write_opendf was successful
   if (file.exists(file) & verbose==T){

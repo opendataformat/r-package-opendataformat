@@ -4,7 +4,14 @@
 \alias{write_opendf}
 \title{Write R data frame to the Open Data Format.}
 \usage{
-write_opendf(x, file, languages = "all", export_data = TRUE, verbose = T)
+write_opendf(
+  x,
+  file,
+  languages = "all",
+  export_data = TRUE,
+  verbose = T,
+  compression_level = 5
+)
 }
 \arguments{
 \item{x}{R data frame (df) to be writtem.}
@@ -13,7 +20,18 @@ write_opendf(x, file, languages = "all", export_data = TRUE, verbose = T)
 in the working directory.}
 
 \item{languages}{Select the language in which the descriptions and labels of the data will be
-exported
+exported}
+
+\item{export_data}{Choose, if you want to export the file that holds the
+data (data.csv).Default is TRUE.
+\itemize{
+\item By default the data and metadata are exported (\code{export_data = "yes"}).
+\item To export only metadata and no data, select \code{export_data = "no"}
+}}
+
+\item{verbose}{Display more messages.}
+
+\item{compression_level}{A number between 1 and 9. 9 compresses best, but it also takes the longest.
 \itemize{
 \item By default all available language variants are exported
 (\code{languages = "all"}).
@@ -24,15 +42,6 @@ exported
 \item or you can select the language by language code, e.g.
 \code{languages = "en"}.
 }}
-
-\item{export_data}{Choose, if you want to export the file that holds the
-data (data.csv).Default is TRUE.
-\itemize{
-\item By default the data and metadata are exported (\code{export_data = "yes"}).
-\item To export only metadata and no data, select \code{export_data = "no"}
-}}
-
-\item{verbose}{Display more messages.}
 }
 \value{
 ZIP file and unzipped directory containing the data as CSV file and
