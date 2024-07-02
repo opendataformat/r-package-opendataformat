@@ -77,7 +77,8 @@ write_opendf <- function(x,
                          verbose=T) {
   # Normalize path from from relative to absolute
   file<-normalizePath(file, winslash = "/", mustWork = FALSE)
-  
+  # replace \\\\ with // to avert errors in data.table::fread(cmd = paste0('unzip -p "',file, '" data.csv')
+  file<-gsub("\\\\\\\\", "//", file)  
   
   #Remove label attributes for haven
   if(!is.null(attr(x,"label"))){
