@@ -129,12 +129,38 @@ write_opendf <- function(x,
   xml_attr(metadata, attr="version")<-"2.5"
   metadata %>% 
     {
+      #create mandatory study description metadata
+      xml_add_child(., "stdyDscr") %>%
+        {
+          xml_add_child(., "citation") %>% 
+            {
+              xml_add_child(.,"titlStmt") %>%
+                {
+                  xml_add_child(.,"titl", attr(x, "name"))
+                }
+            }
+        }
       #create dataset/file metadata
       xml_add_child(., "fileDscr") %>%
         {
           xml_add_child(., "fileTxt") %>% 
             {
               xml_add_child(.,"fileName", attr(x, "name"))
+              
+              #add dataset labels
+              xml_add_child(.,"fileCitation") %>%
+                xml_add_child(.,"titlStmt") %>%
+                {
+                  if(length(names(attributes(x))[grepl("label", names(attributes(x)))])>0){
+                    for (labl in names(attributes(x))[grepl("label", names(attributes(x)))]){
+                      lang<-strsplit(labl, "_")[[1]][2]
+                      if (languages=="all" | lang %in% languages){
+                        if (lang=="NA") xml_add_child(.,"titl", attr(x, labl)) else xml_add_child(.,"titl", attr(x, labl), "xml:lang"=lang)
+                      }
+                    }
+                  }
+                }
+              
               #add dataset descriptions
               if(length(names(attributes(x))[grepl("description", names(attributes(x)))])>0){
                 for (descr in names(attributes(x))[grepl("description", names(attributes(x)))]){
@@ -145,19 +171,6 @@ write_opendf <- function(x,
                 }
               }
               
-              #add dataset labels
-              xml_add_child(.,"fileCitation") %>%
-                xml_add_child(.,"titlStmt") %>%
-                  {
-                    if(length(names(attributes(x))[grepl("label", names(attributes(x)))])>0){
-                      for (labl in names(attributes(x))[grepl("label", names(attributes(x)))]){
-                        lang<-strsplit(labl, "_")[[1]][2]
-                        if (languages=="all" | lang %in% languages){
-                          if (lang=="NA") xml_add_child(.,"titl", attr(x, labl)) else xml_add_child(.,"titl", attr(x, labl), "xml:lang"=lang)
-                        }
-                      }
-                    }
-                  }
             }
           #create dataset url
           url<-attr(x, "url")
@@ -196,15 +209,6 @@ write_opendf <- function(x,
                   }
                 }
                 
-                #add url
-                url<-attr(x[,var], "url")
-                if (is.null(url)) url<-""
-                xml_add_child(., "notes") %>% xml_add_child("ExtLink", "URI"=url)
-                
-                #add variable type
-                type<-attr(x[,var], "type")
-                if (is.null(type)) type <-class(x[,var])
-                xml_add_child(.,"varFormat", "type"=type)
                 
                 #add value labels
                 if(length(names(attributes(x[,var]))[grepl("labels", names(attributes(x[,var])))])>0){
@@ -226,6 +230,17 @@ write_opendf <- function(x,
                       }
                   }
                 }
+                
+                #add variable type
+                type<-attr(x[,var], "type")
+                if (is.null(type)) type <-class(x[,var])
+                xml_add_child(.,"varFormat", "type"=type)
+                
+                #add url
+                url<-attr(x[,var], "url")
+                if (is.null(url)) url<-""
+                xml_add_child(., "notes") %>% xml_add_child("ExtLink", "URI"=url)
+                
               }
           }
         }

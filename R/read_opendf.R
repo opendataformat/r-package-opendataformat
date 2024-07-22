@@ -63,7 +63,7 @@ read_opendf <- function(file,
 
   
   #Extract dataset description
-  dataset_metadata<-xml_children(metadata)[1]
+  dataset_metadata<-xml_children(metadata)[grep("<fileDscr>", xml_children(metadata))]
   dataset_attr<-list()
   dataset_descrsub<-xml_children(xml_children(dataset_metadata)[xml_name(xml_children(dataset_metadata))=="fileTxt"])
   
@@ -90,7 +90,7 @@ read_opendf <- function(file,
   
   
   #Extract variable description
-  variable_metadata<-xml_children(xml_children(metadata)[2])
+  variable_metadata<-xml_children(xml_children(metadata)[grep("<dataDscr>", xml_children(metadata))])
   variable_attr<-list()
   #Loop over MEtadata for each variable to extract
   for (var in variable_metadata){
