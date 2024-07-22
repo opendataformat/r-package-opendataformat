@@ -152,9 +152,9 @@ write_opendf <- function(x,
                 xml_add_child(.,"titlStmt") %>%
                 {
                   if(length(names(attributes(x))[grepl("label", names(attributes(x)))])>0){
+                    first_lang=F
                     for (labl in names(attributes(x))[grepl("label", names(attributes(x)))]){
                       lang<-strsplit(labl, "_")[[1]][2]
-                      first_lang=F
                       if (languages=="all" | lang %in% languages){
                         if (first_lang==F) {
                           if (lang=="NA") xml_add_child(.,"titl", attr(x, labl)) else xml_add_child(.,"titl", attr(x, labl), "xml:lang"=lang)
