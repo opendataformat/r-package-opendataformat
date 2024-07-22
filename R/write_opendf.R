@@ -154,8 +154,14 @@ write_opendf <- function(x,
                   if(length(names(attributes(x))[grepl("label", names(attributes(x)))])>0){
                     for (labl in names(attributes(x))[grepl("label", names(attributes(x)))]){
                       lang<-strsplit(labl, "_")[[1]][2]
+                      first_lang=F
                       if (languages=="all" | lang %in% languages){
-                        if (lang=="NA") xml_add_child(.,"titl", attr(x, labl)) else xml_add_child(.,"titl", attr(x, labl), "xml:lang"=lang)
+                        if (first_lang==F) {
+                          if (lang=="NA") xml_add_child(.,"titl", attr(x, labl)) else xml_add_child(.,"titl", attr(x, labl), "xml:lang"=lang)
+                          first_lang=T
+                        } else {
+                          if (lang=="NA") xml_add_child(.,"parTitl", attr(x, labl)) else xml_add_child(.,"parTitl", attr(x, labl), "xml:lang"=lang)
+                        } 
                       }
                     }
                   }
