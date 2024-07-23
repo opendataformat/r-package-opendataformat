@@ -97,9 +97,9 @@ docu_opendf<-function(input,
                       variables="no") {
 
   
-  #if (("data.frame" %in% class(input) & !("opendf" %in% class(input)))| (!("lang" %in% names(attributes(input))) & !("languages" %in% names(attributes(input)))) ){
-  #  stop("Input is not a dataframe or variable in the opendf-format.")
-  #}
+  if (("data.frame" %in% class(input) & !("opendf" %in% class(input)))| (!("lang" %in% names(attributes(input))) & !("languages" %in% names(attributes(input)))) ){
+    stop("Input is not a dataframe or variable in the opendf-format.")
+  }
   
   #check whether input is dataset or variable
   if ("data.frame" %in% class(input)){

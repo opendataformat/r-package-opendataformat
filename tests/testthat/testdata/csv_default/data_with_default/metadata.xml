@@ -29,7 +29,7 @@
 		<var name="bap87">
 			<labl>Current Health</labl>
 			<labl xml:lang="en">Current Health</labl>
-			<labl xml:lang="de">Gesundheitszustand gegenwärtig </labl>
+			<labl xml:lang="de">Gesundheitszustand gegenwärtig</labl>
 			<txt>Question: How would you describe your current health?</txt>
 			<txt xml:lang="en">Question: How would you describe your current health?</txt>
 			<txt xml:lang="de">Frage: Wie würden Sie Ihren gegenwärtigen Gesundheitszustand beschreiben?</txt>
@@ -81,9 +81,9 @@
 			</notes>
 		</var>
 		<var name="bap9201">
-			<labl>hours of sleep, normal workday </labl>
-			<labl xml:lang="en">hours of sleep, normal workday </labl>
-			<labl xml:lang="de">Stunden Schlaf, normaler Werktag </labl>
+			<labl>hours of sleep, normal workday</labl>
+			<labl xml:lang="en">hours of sleep, normal workday</labl>
+			<labl xml:lang="de">Stunden Schlaf, normaler Werktag</labl>
 			<txt>Sleep hours per weekday</txt>
 			<txt xml:lang="en">Sleep hours per weekday</txt>
 			<txt xml:lang="de">Schlafstunden pro Wochentag</txt>
@@ -105,9 +105,9 @@
 			</notes>
 		</var>
 		<var name="bap9001">
-			<labl>Pressed For Time Last 4 Weeks </labl>
-			<labl xml:lang="en">Pressed For Time Last 4 Weeks </labl>
-			<labl xml:lang="de">Eile, Zeitdruck letzten 4 Wochen </labl>
+			<labl>Pressed For Time Last 4 Weeks</labl>
+			<labl xml:lang="en">Pressed For Time Last 4 Weeks</labl>
+			<labl xml:lang="de">Eile, Zeitdruck letzten 4 Wochen</labl>
 			<txt>Frequency of feeling time pressure in the past 4 weeks</txt>
 			<txt xml:lang="en">Frequency of feeling time pressure in the past 4 weeks</txt>
 			<txt xml:lang="de">Häufigkeit des Gefühls von Zeitdruck in den letzten 4 Wochen</txt>
@@ -159,8 +159,8 @@
 			</notes>
 		</var>
 		<var name="bap9002">
-			<labl>Run-down, Melancholy Last 4 Weeks </labl>
-			<labl xml:lang="en">Run-down, Melancholy Last 4 Weeks </labl>
+			<labl>Run-down, Melancholy Last 4 Weeks</labl>
+			<labl xml:lang="en">Run-down, Melancholy Last 4 Weeks</labl>
 			<labl xml:lang="de">Niedergeschlagen letzten 4 Wochen</labl>
 			<txt>Frequency of feeling a sad and depressed state</txt>
 			<txt xml:lang="en">Frequency of feeling a sad and depressed state</txt>
@@ -215,7 +215,7 @@
 		<var name="bap9003">
 			<labl>Well-balanced Last 4 Weeks</labl>
 			<labl xml:lang="en">Well-balanced Last 4 Weeks</labl>
-			<labl xml:lang="de">Ausgeglichen letzten 4 Wochen </labl>
+			<labl xml:lang="de">Ausgeglichen letzten 4 Wochen</labl>
 			<txt>Frequency of feeling balance</txt>
 			<txt xml:lang="en">Frequency of feeling balance</txt>
 			<txt xml:lang="de">Häufigkeit der Ausgeglichenheit</txt>

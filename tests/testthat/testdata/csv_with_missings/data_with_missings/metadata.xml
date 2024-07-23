@@ -21,7 +21,7 @@
 	<dataDscr>
 		<var name="bap87">
 			<labl xml:lang="en">Current Health</labl>
-			<labl xml:lang="de">Gesundheitszustand gegenwärtig </labl>
+			<labl xml:lang="de">Gesundheitszustand gegenwärtig</labl>
 			<txt xml:lang="de">Frage: Wie würden Sie Ihren gegenwärtigen Gesundheitszustand beschreiben?</txt>
 			<catgry>
 				<catValu>-2</catValu>
@@ -61,8 +61,8 @@
 			<varFormat type="numeric" />
 		</var>
 		<var name="bap9201">
-			<labl xml:lang="en">hours of sleep, normal workday </labl>
-			<labl xml:lang="de">Stunden Schlaf, normaler Werktag </labl>
+			<labl xml:lang="en">hours of sleep, normal workday</labl>
+			<labl xml:lang="de">Stunden Schlaf, normaler Werktag</labl>
 			<txt xml:lang="de">Schlafstunden pro Wochentag</txt>
 			<catgry>
 				<catValu>-2</catValu>
@@ -78,7 +78,7 @@
 		</var>
 		<var name="bap9001">
 			<labl xml:lang="en" />
-			<labl xml:lang="de">Eile, Zeitdruck letzten 4 Wochen </labl>
+			<labl xml:lang="de">Eile, Zeitdruck letzten 4 Wochen</labl>
 			<txt xml:lang="de">Häufigkeit des Gefühls von Zeitdruck in den letzten 4 Wochen</txt>
 			<catgry>
 				<catValu>-2</catValu>
@@ -118,7 +118,7 @@
 			<varFormat type="numeric" />
 		</var>
 		<var name="bap9002">
-			<labl xml:lang="en">Run-down, Melancholy Last 4 Weeks </labl>
+			<labl xml:lang="en">Run-down, Melancholy Last 4 Weeks</labl>
 			<labl xml:lang="de" />
 			<txt xml:lang="de">Häufigkeit der Niedergeschlagenheit</txt>
 			<catgry>
@@ -160,7 +160,7 @@
 		</var>
 		<var name="bap9003">
 			<labl xml:lang="en">Well-balanced Last 4 Weeks</labl>
-			<labl xml:lang="de">Ausgeglichen letzten 4 Wochen </labl>
+			<labl xml:lang="de">Ausgeglichen letzten 4 Wochen</labl>
 			<txt xml:lang="de" />
 			<catgry>
 				<catValu>-2</catValu>
