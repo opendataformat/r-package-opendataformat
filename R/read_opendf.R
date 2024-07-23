@@ -215,7 +215,6 @@ read_opendf <- function(file,
       }
     }
   }
-  attributes(data$pgnation)
   #Assign language and activa language attributes
   lang_attr<-names(attributes(data))[c(grep("label", names(attributes(data))),grep("description", names(attributes(data))))]
   langs<-unique(unlist(lapply(lang_attr, function(x) strsplit(x, "_")[[1]][[2]])))
