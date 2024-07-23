@@ -1,6 +1,6 @@
 #' read_opendf: all languages
 test_that("read_opendf_all", {
-  df <- read_opendf(
+  df <- opendataformat::read_opendf(
     file = "testdata/data.zip",
     languages = "all"
   )
