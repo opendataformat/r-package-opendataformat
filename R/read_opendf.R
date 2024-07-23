@@ -85,7 +85,11 @@ read_opendf <- function(file,
   }
   #Get dataset url
   url_node<-xml_children(xml_children(dataset_metadata)[xml_name(xml_children(dataset_metadata))=="notes"])
-  dataset_attr$url<-xml_attr(url_node, attr="URI")
+  if (length(xml_attr(url_node, attr="URI"))>0){
+    dataset_attr$url<-xml_attr(url_node, attr="URI")
+  } else {
+    dataset_attr$url<-""
+  }
   
   
   
