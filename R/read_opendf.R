@@ -3,6 +3,7 @@
 #' @description Import data from the Open Data Format to an R data frame.
 #'
 #' @import xml2
+#' @import zip
 #' @import data.table
 #' 
 #' 
@@ -161,44 +162,36 @@ read_opendf <- function(file,
     variable_attr[[var_attr$name]]<-var_attr
   }
   
-  #extract variable types
-  #var_types<-rep(NA, length(variable_attr))
-  #use var_types from xml
-  #var_types<-lapply(variable_attr, function(x) x$type)
-  #if (any(!(var_types %in% c("logical", "integer", "numeric", "complex", "character", "raw","factor", "Date","POSIXct")))){
-  #  var_types[!(var_types %in% c("logical", "integer", "numeric", "complex", "character", "raw","factor", "Date","POSIXct"))]<-NA
-  #}
-  #if (length(variables)>1 | (all(!is.null(variables)) & length(variables)==1)){
-  #  if (class(variables)=="numeric"){
-  #    var_types[!c(1:length(var_types))%in%variables]<-"NULL"
-  #  }
-  #  if (class(variables)=="character"){
-  #    var_types[!names(var_types)%in%variables]<-"NULL"
-  #  }
-  #}
-  
-  
+
   # load the data csv "data.csv"
+  # Unzip the file to a temporary location
+  zip::unzip(file, files = "data.csv", exdir = tempdir(), overwrite = TRUE)
   options(warn = -1)
   if (skip != 0){
     if (is.null(variables)){
-      cnames<-names(data.table::fread(cmd = paste0('unzip -p "',file, '" data.csv'), skip=0, nrows=1))
-      data<-data.table::fread(cmd = paste0('unzip -p "',file, '" data.csv'), skip=skip+1, nrows=nrows, col.names=cnames)
+      cnames<-names(data.table::fread(file.path(tempdir(), "data.csv"), skip=0, nrows=1))
+      data <- data.table::fread(file.path(tempdir(), "data.csv"), skip=skip+1, nrows=nrows, col.names=cnames)
+      #data<-data.table::fread(cmd = paste0('unzip -p "',file, '" data.csv'), skip=skip+1, nrows=nrows, col.names=cnames)
       
     } else {
-      cnames<-names(data.table::fread(cmd = paste0('unzip -p "',file, '" data.csv'), skip=0, nrows=0))
+      cnames<-names(data.table::fread(file.path(tempdir(), "data.csv"), skip=0, nrows=0))
       if (class(variables)!="numeric"){
         cindex<-which(cnames %in% variables)
       } else {
         cindex<-variables
       }
-      data<-data.table::fread(cmd = paste0('unzip -p "',file, '" data.csv'), select=cindex, header=F, skip=skip+1, nrows=nrows, col.names=cnames[cindex])
+      data <- data.table::fread(file.path(tempdir(), "data.csv"), select=cindex, header=F, skip=skip+1, nrows=nrows, col.names=cnames[cindex])
+      #data<-data.table::fread(cmd = paste0('unzip -p "',file, '" data.csv'), select=cindex, header=F, skip=skip+1, nrows=nrows, col.names=cnames[cindex])
     }
   } else {
     if (is.null(variables)){
-      data<-data.table::fread(cmd = paste0('unzip -p "',file, '" data.csv'), skip=skip, nrows=nrows)
+      
+      # Read the data using fread
+      data <- data.table::fread(file.path(tempdir(), "data.csv"), skip=skip, nrows=nrows)
+      #data<-data.table::fread(cmd = paste0('unzip -p "',file, '" data.csv'))
     } else {
-      data<-data.table::fread(cmd = paste0('unzip -p "',file, '" data.csv'), select=variables, skip=skip, nrows=nrows)
+      data <- data.table::fread(file.path(tempdir(), "data.csv"), select=variables, skip=skip, nrows=nrows)
+      #data<-data.table::fread(cmd = paste0('unzip -p "',file, '" data.csv'), select=variables, skip=skip, nrows=nrows)
     }
   }
   options(warn=0)
