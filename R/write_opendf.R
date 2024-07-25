@@ -16,10 +16,6 @@
 #' @param languages
 #' Select the language in which the descriptions and labels of the data will be 
 #' exported
-#' 
-#' @param compression_level
-#' A number between 1 and 9. 9 compresses best, but it also takes the longest.
-#'
 #' * By default all available language variants are exported
 #' (\code{languages = "all"}).
 #' * You can also choose to export only the default language
@@ -28,6 +24,10 @@
 #' (\code{languages = "current"}),
 #' * or you can select the language by language code, e.g.
 #' \code{languages = "en"}.
+#' 
+#' @param compression_level
+#' A number between 1 and 9. 9 compresses best, but it also takes the longest.
+#'
 #' 
 #'
 #' @param export_data
