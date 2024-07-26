@@ -1,6 +1,6 @@
 Package: opendataformat
 Title: Reading and Writing Open Data Format Files
-Version: 1.1.0
+Version: 1.1.1
 Author: Tom Hartl, Claudia Saalbach, Xiaoyao Han, Knut Wenzig
 Maintainer: Tom Hartl <thartl@diw.de>
 Authors@R: c(
@@ -21,14 +21,14 @@ Depends:
     cli,
     magrittr,
     xml2,
-    data.table,
-    utils
+    data.table
 Suggests: 
     testthat (>= 3.0.0),
     knitr,
     rmarkdown,
     devtools,
-    ISLR
+    ISLR,
+    dplyr
 VignetteBuilder: knitr
 VignetteEngine: knitr::rmarkdown
 VignetteIndexEntry: "opendataformat"
