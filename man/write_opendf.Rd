@@ -20,18 +20,7 @@ write_opendf(
 in the working directory.}
 
 \item{languages}{Select the language in which the descriptions and labels of the data will be
-exported}
-
-\item{export_data}{Choose, if you want to export the file that holds the
-data (data.csv).Default is TRUE.
-\itemize{
-\item By default the data and metadata are exported (\code{export_data = "yes"}).
-\item To export only metadata and no data, select \code{export_data = "no"}
-}}
-
-\item{verbose}{Display more messages.}
-
-\item{compression_level}{A number between 1 and 9. 9 compresses best, but it also takes the longest.
+exported
 \itemize{
 \item By default all available language variants are exported
 (\code{languages = "all"}).
@@ -42,6 +31,17 @@ data (data.csv).Default is TRUE.
 \item or you can select the language by language code, e.g.
 \code{languages = "en"}.
 }}
+
+\item{export_data}{Choose, if you want to export the file that holds the
+data (data.csv).Default is TRUE.
+\itemize{
+\item By default the data and metadata are exported (\code{export_data = "yes"}).
+\item To export only metadata and no data, select \code{export_data = "no"}
+}}
+
+\item{verbose}{Display more messages.}
+
+\item{compression_level}{A number between 1 and 9. 9 compresses best, but it also takes the longest.}
 }
 \value{
 ZIP file and unzipped directory containing the data as CSV file and
