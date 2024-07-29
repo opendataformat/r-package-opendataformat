@@ -62,14 +62,22 @@ read_opendf <- function(file,
   #read xml from zipped folder
   metadata<-read_xml(x = unz(file, "metadata.xml"))
 
+  #Extract study name
+  study_metadata<-xml_children(metadata)[grep("<stdyDscr>", xml_children(metadata))]
+  study_metadata<-xml_children(study_metadata)[grep("<citation>", xml_children(study_metadata))]
+  study_metadata<-xml_children(study_metadata)[grep("<titlStmt>", xml_children(study_metadata))]
+  study_metadata<-xml_children(study_metadata)[grep("<titl>", xml_children(study_metadata))]
+  if (length(xml_text(study_metadata))>0) study<-xml_text(study_metadata) else study=""
   
   #Extract dataset description
   dataset_metadata<-xml_children(metadata)[grep("<fileDscr>", xml_children(metadata))]
   dataset_attr<-list()
   dataset_descrsub<-xml_children(xml_children(dataset_metadata)[xml_name(xml_children(dataset_metadata))=="fileTxt"])
   
-  #get dataset name
-  dataset_attr$name<-xml_text(dataset_descrsub[xml_name(dataset_descrsub)=="fileName"])
+  #get dataset name and combine with study
+  filename <- xml_text(dataset_descrsub[xml_name(dataset_descrsub)=="fileName"])
+  if (study != filename & study !="") filename <- paste0(study, ": " , filename)
+  dataset_attr$name<-filename
   #get dataset descriptions
   dataset_descriptions<-dataset_descrsub[xml_name(dataset_descrsub)=="fileCont"]
   for (description in dataset_descriptions){
