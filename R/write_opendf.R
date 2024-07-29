@@ -121,19 +121,17 @@ write_opendf <- function(x,
   # disentangle study and filename
   name<-attr(x, "name")
   if (is.null(name) | length(name)==0) name<-""
-  if (grepl(": ", name)){
-    studyname<-unlist(strsplit(name, ": "))
-    if (length(studyname)==2){
-      study=studyname[1]
-      filename=studyname[2]
+  studyname<-unlist(strsplit(name, ": "))
+  if (length(studyname)==2){
+    study=studyname[1]
+    filename=studyname[2]
+  } else {
+    if (length(studyname)==1){
+      filename=name
+      study=""
     } else {
-      if (length(studyname)==1){
-        filename=name
-        study=name
-      } else {
-        filename = studyname[length(studyname)]
-        study = paste0(studyname[-length(studyname)], collapse=": ")
-      }
+      filename = studyname[length(studyname)]
+      study = paste0(studyname[-length(studyname)], collapse=": ")
     }
   }
   #create xml root node with codeBook attributes
