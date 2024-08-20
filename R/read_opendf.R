@@ -159,7 +159,12 @@ read_opendf <- function(file,
           }
         }
       }
-      values=as.numeric(varlabels[names(varlabels)=="values"][[1]])
+      #label values as numeric only if all values are numeric
+      if (all.equal(as.character(as.numeric(varlabels[names(varlabels)=="values"][[1]])), as.character(varlabels[names(varlabels)=="values"][[1]]))){
+        values <- as.numeric(varlabels[names(varlabels)=="values"][[1]])
+      } else {
+        values <- as.character(varlabels[names(varlabels)=="values"][[1]])
+      }
       for (i in 1:length(varlabels)){
         if (names(varlabels)[[i]]!="values"){
           names(values)<-varlabels[[i]]

@@ -233,7 +233,11 @@ write_opendf <- function(x,
                 #add value labels
                 if(length(names(attributes(x[,var]))[grepl("labels", names(attributes(x[,var])))])>0){
                   labels<-names(attributes(x[,var]))[grepl("labels", names(attributes(x[,var])))]
-                  values<-attr(x[,var], labels[1])
+                  values<-c()
+                  for (lab in labels){
+                    values<-c(values,attr(x[,var], lab))
+                  }
+                  values<-unique(values)
                   for (val in values){
                     xml_add_child(., "catgry") %>% 
                       {
