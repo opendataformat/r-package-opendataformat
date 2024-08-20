@@ -63,5 +63,5 @@ Note that for the function `opendf_labels()` you can specify only one language, 
 ## Getting help
 
 If you encounter a clear bug, please file a minimal reproducible example
-on [gitlab](https://git.soep.de/opendata/r-package/-/issues). 
+on https://github.com/thartl-diw/r-package-opendataformat/issues. 
 
