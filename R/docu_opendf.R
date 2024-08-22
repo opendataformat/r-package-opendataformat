@@ -31,20 +31,19 @@
 #' Set (\code{variables="yes"}) to display the list of variables.
 #' 
 #' 
-#' @param replace_missing If only one language is specified in languages and 
-#' replace_missings is set to TRUE. In case of a missing label or description, 
+#' @param replace_missing_language If only one language is specified in languages and 
+#' replace_missing_language is set to TRUE. In case of a missing label or description, 
 #' the default or english label/description is displayed additionally (if 
 #' one of these is available).
 #' 
 #' 
 #' @param style Selects where the output should be displayed (console ore 
-#' viewer).By default the metadata information is displayed in both the 
-#' console and the viewer.
-#' (\code{style = "both"})
-#' (\code{style = "all"})
-#' * You can choose to display the code only in the console
+#' viewer).By default the metadata information is displayed in the console.
 #' (\code{style = "console"})
 #' (\code{style = "print"})
+#' * You can choose to display the code in both the console and the viewer
+#' (\code{style = "both"})
+#' (\code{style = "all"})
 #' * You can choose to display the code only in the viewer
 #' (\code{style = "viewer"})
 #' (\code{style = "html"})
@@ -85,15 +84,15 @@
 #' # english label will be displayed additionally.
 #' \dontrun{
 #' attributes(df$bap87)["label_de"]<-""
-#' docu_opendf(df$bap87, languages="de", style = "console", replace_missing=T)
+#' docu_opendf(df$bap87, languages="de", style = "console", replace_missing_language=T)
 #' }
 #'
 #' @export
  
 docu_opendf<-function(input,
                       languages="current",
-                      style="both", 
-                      replace_missing=F,
+                      style="print", 
+                      replace_missing_language=F,
                       variables="no") {
 
   
@@ -147,7 +146,7 @@ docu_opendf<-function(input,
   }
   label_console<-label
   label_html<-label
-  if (length(languages)==1 & any(c(label[[l]]=="", is.null(label[[l]]))) & replace_missing==T){
+  if (length(languages)==1 & any(c(label[[l]]=="", is.null(label[[l]]))) & replace_missing_language==T){
     if (!is.null(attr(input, "label_default"))){
       if(attr(input, "label_default")!="" ){
         label_console[languages]<-paste0("\n[default] ", attr(input, "label_default"))
@@ -171,7 +170,7 @@ docu_opendf<-function(input,
   }
   description_console<-description
   description_html<-description
-  if (length(languages)==1 & any(c(description[[l]]=="", is.null(description[[l]]))) & replace_missing==T){
+  if (length(languages)==1 & any(c(description[[l]]=="", is.null(description[[l]]))) & replace_missing_language==T){
     if (!is.null(attr(input, "description_default"))){
       if(attr(input, "description_default")!="" ){
         description_console[languages]<-paste0("\n[default] ", attr(input, "description_default"))

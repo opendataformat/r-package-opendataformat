@@ -7,8 +7,8 @@
 docu_opendf(
   input,
   languages = "current",
-  style = "both",
-  replace_missing = F,
+  style = "print",
+  replace_missing_language = F,
   variables = "no"
 )
 }
@@ -31,21 +31,20 @@ the data will be displayed.
 }}
 
 \item{style}{Selects where the output should be displayed (console ore
-viewer).By default the metadata information is displayed in both the
-console and the viewer.
-(\code{style = "both"})
-(\code{style = "all"})
-\itemize{
-\item You can choose to display the code only in the console
+viewer).By default the metadata information is displayed in the console.
 (\code{style = "console"})
 (\code{style = "print"})
+\itemize{
+\item You can choose to display the code in both the console and the viewer
+(\code{style = "both"})
+(\code{style = "all"})
 \item You can choose to display the code only in the viewer
 (\code{style = "viewer"})
 (\code{style = "html"})
 }}
 
-\item{replace_missing}{If only one language is specified in languages and
-replace_missings is set to TRUE. In case of a missing label or description,
+\item{replace_missing_language}{If only one language is specified in languages and
+replace_missing_language is set to TRUE. In case of a missing label or description,
 the default or english label/description is displayed additionally (if
 one of these is available).}
 
@@ -94,7 +93,7 @@ docu_opendf(df$bap87, style = "viewer")
 # english label will be displayed additionally.
 \dontrun{
 attributes(df$bap87)["label_de"]<-""
-docu_opendf(df$bap87, languages="de", style = "console", replace_missing=T)
+docu_opendf(df$bap87, languages="de", style = "console", replace_missing_language=T)
 }
 
 }
