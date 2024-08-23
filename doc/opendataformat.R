@@ -5,8 +5,18 @@ knitr::opts_chunk$set(
 )
 
 ## ----setup, results = 'hide', messages=FALSE, warning = FALSE-----------------
-devtools::install_git("https://git.soep.de/opendata/r-package-opendataformat.git",  
-                      quiet = TRUE)
+# At this point you can download and install the the latest version of the opendataformat package from Zenodo:
+#download.file("[xenodo download Link]", 
+#              destfile = paste0(tempdir(), "/", "opendataformat.tar.gz"), method = "curl")
+#install.packages(paste0(tempdir(), "/", "opendataformat.tar.gz"), 
+#                 repos = NULL, type = "source")
+
+
+# Alternatively you can install the development version from Gitlab:
+# install.packages("devtools")
+#devtools::install_git("https://git.soep.de/opendata/r-package-opendataformat.git",  
+#                      quiet = TRUE)
+
 library(opendataformat)
 
 ## ----read_opendf--------------------------------------------------------------
@@ -61,11 +71,11 @@ for (i in names(df)) {
   )
 }
 
-## ----labels_opendf1, comment = ""---------------------------------------------
-labels_opendf(df)
+## ----getmetadata_opendf1, comment = ""----------------------------------------
+getmetadata_opendf(df, type="label")
 
-## ----labels_opendf2, comment = ""---------------------------------------------
-labels_opendf(df$bap87, valuelabels=T)
+## ----getmetadata_opendf2, comment = ""----------------------------------------
+getmetadata_opendf(df$bap87, type="valuelabels")
 
 ## ----docu_opendf setLanguage2, eval = FALSE-----------------------------------
 #  df<-setLanguage_opendf(df, language="de")
@@ -92,38 +102,34 @@ attributes(df$bap87)$label_de
 attributes(df$bap87)$description_de<-NULL
 attributes(df$bap87)$description_de
 
-## ----labels_opendf3, comment = ""---------------------------------------------
-labels_opendf(df)
+## ----getmetadata_opendf3, comment = ""----------------------------------------
+getmetadata_opendf(df, type="labels")
 
-## ----labels_opendf4, comment = ""---------------------------------------------
-labels_opendf(df$bap96)
+## ----getmetadata_opendf4, comment = ""----------------------------------------
+getmetadata_opendf(df$bap96, type="labels")
 
-## ----labels_opendf5, eval = FALSE, comment = ""-------------------------------
-#  labels_opendf(df, language="en")
+## ----getmetadata_opendf5, eval = FALSE, comment = ""--------------------------
+#  getmetadata_opendf(df, type="labels", language="en")
 
-## ----labels_opendf6, eval = FALSE, comment = ""-------------------------------
+## ----getmetadata_opendf6, eval = FALSE, comment = ""--------------------------
 #  df<-setLanguage_opendf(df, language="en")
-#  labels_opendf(df)
+#  getmetadata_opendf(df, type="labels")
 
-## ----labels_opendf valuelabels, comment = ""----------------------------------
-labels_opendf(df$bap9001, valuelabels=T)
+## ----getmetadata_opendf valuelabels, comment = ""-----------------------------
+getmetadata_opendf(df$bap9001, type="valuelabels")
 
 
-## ----labels_opendf valuelabels2, eval=FALSE, comment = ""---------------------
-#  labels_opendf(df$bap9001, retrieve="valuelabels")
-#  
+## ----getmetadata_opendf valuelabels names, comment = ""-----------------------
+names(getmetadata_opendf(df$bap9001, type="valuelabels"))
 
-## ----labels_opendf valuelabels names, comment = ""----------------------------
-names(labels_opendf(df$bap9001, valuelabels=T))
+## ----getmetadata_opendf descriptions, comment = ""----------------------------
+getmetadata_opendf(df, type="description")
 
-## ----labels_opendf descriptions, comment = ""---------------------------------
-labels_opendf(df, retrieve="description")
+## ----getmetadata_opendf url, eval = FALSE, comment = ""-----------------------
+#  getmetadata_opendf(df, type="url")
 
-## ----labels_opendf url, eval = FALSE, comment = ""----------------------------
-#  labels_opendf(df, retrieve="url")
-
-## ----labels_opendf type, eval = FALSE, comment = ""---------------------------
-#  labels_opendf(df, retrieve="type")
+## ----getmetadata_opendf type, eval = FALSE, comment = ""----------------------
+#  getmetadata_opendf(df, type="type")
 
 ## ----write_opendf, comment = "", eval = FALSE---------------------------------
 #  write_opendf(
@@ -176,10 +182,10 @@ table(
     )
   )
 
-## ----table factor labels_opendf, eval=F, comment = ""-------------------------
+## ----table factor getmetadata_opendf, eval=F, comment = ""--------------------
 #  table(
 #    factor(
-#      df$bap87, labels = names(labels_opendf(df$bap87, valuelabels=T))
+#      df$bap87, labels = names(getmetadata_opendf(df$bap87, valuelabels=T))
 #      )
 #    )
 
@@ -191,13 +197,20 @@ table(
     )
   )
 
-## ----table factor german labels_opendf, comment = ""--------------------------
+## ----table factor german getmetadata_opendf, comment = ""---------------------
 table(
   factor(
     df$bap87,
-      labels=names(labels_opendf(df$bap87, valuelabels=T, language="de"))
+      labels=names(getmetadata_opendf(df$bap87, type="valuelabels", language="de"))
     )
   )
+
+## ----merge with join, eval = FALSE--------------------------------------------
+#  library(dplyr)
+#  #similar to merge(df[,c(1:3,6)], df[,c(4:6)], by="name", all.x=T, all.y=F)
+#  merged_df<-left_join(df[,c(1:3,6)], df[,c(4:6)], by="name")
+#  #or
+#  merged_df<-left_join(df[,c(1:3,6)], df[,c(4:6)])
 
 ## ----copy data, comment = ""--------------------------------------------------
 bap87_rec <- df$bap87

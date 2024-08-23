@@ -362,14 +362,15 @@ Specific Language</a></li>
 <li><a href="#set-the-active-language-of-a-data-frame-setlanguage_opendf" id="toc-set-the-active-language-of-a-data-frame-setlanguage_opendf">Set
 the Active Language of a Data Frame:
 <code>setLanguage_opendf()</code></a></li>
-<li><a href="#access-metadata-labels_opendf-and-attributes" id="toc-access-metadata-labels_opendf-and-attributes">Access Metadata:
-<code>labels_opendf()</code> and <code>attributes()</code></a>
+<li><a href="#access-metadata-getmetadata_opendf-and-attributes" id="toc-access-metadata-getmetadata_opendf-and-attributes">Access
+Metadata: <code>getmetadata_opendf()</code> and
+<code>attributes()</code></a>
 <ul>
 <li><a href="#retrieve-the-attributes-with-attributes-and-attr" id="toc-retrieve-the-attributes-with-attributes-and-attr">Retrieve the
 Attributes with <code>attributes()</code> and
 <code>attr()</code></a></li>
-<li><a href="#retrieve-metadata-with-labels_opendf" id="toc-retrieve-metadata-with-labels_opendf">Retrieve Metadata with
-<code>labels_opendf()</code></a></li>
+<li><a href="#retrieve-metadata-with-getmetadata_opendf" id="toc-retrieve-metadata-with-getmetadata_opendf">Retrieve Metadata
+with <code>getmetadata_opendf()</code></a></li>
 </ul></li>
 <li><a href="#export-to-the-open-data-format-write_opendf" id="toc-export-to-the-open-data-format-write_opendf">Export to the Open
 Data Format: <code>write_opendf()</code></a></li>
@@ -379,9 +380,13 @@ Make Use of the Metadata</a>
 <ul>
 <li><a href="#frequency-table" id="toc-frequency-table">Frequency
 Table</a></li>
+<li><a href="#merge-odf-datasets" id="toc-merge-odf-datasets">Merge
+ODF-Datasets:</a>
+<ul>
 <li><a href="#recoding-a-variable" id="toc-recoding-a-variable">Recoding
 a Variable</a></li>
 <li><a href="#barplot" id="toc-barplot">Barplot</a></li>
+</ul></li>
 </ul></li>
 </ul>
 </div>
@@ -402,27 +407,45 @@ metadata has never been easier. Dive into the treasure trove of
 information stored in your R dataframes. Explore dataset labels,
 descriptions, and valuable details about variables such as labels and
 value labels with the <code>docu_opendf()</code> function and the
-<code>labels_opendf()</code> function.</p>
+<code>getmetadata_opendf()</code> function.</p>
 <p>This vignette will guide you through a series of examples that
 demonstrate the possibilities of these functions. Let’s get started!</p>
 <div id="installation" class="section level2">
 <h2>Installation</h2>
-<p>You can install and update the package from gitlab using the
-<code>install_git()</code>-function from the devtools-library.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_git</span>(<span class="st">&quot;https://git.soep.de/opendata/r-package-opendataformat.git&quot;</span>,  </span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>                      <span class="at">quiet =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co">#&gt; Installing 1 packages: rlang</span></span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(opendataformat)</span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co">#&gt; Lade nötiges Paket: crayon</span></span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co">#&gt; Lade nötiges Paket: cli</span></span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="co">#&gt; Attache Paket: &#39;cli&#39;</span></span>
-<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co">#&gt; Das folgende Objekt ist maskiert &#39;package:crayon&#39;:</span></span>
-<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="co">#&gt;     num_ansi_colors</span></span>
-<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="co">#&gt; Lade nötiges Paket: magrittr</span></span>
-<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="co">#&gt; Lade nötiges Paket: xml2</span></span>
-<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="co">#&gt; Lade nötiges Paket: data.table</span></span></code></pre></div>
+<p>You can download and install the package by downloading the latest
+version from Zenodo. Alternatively you can download the development
+version from gitlab using the <code>install_git()</code>-function from
+the devtools-library.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># At this point you can download and install the the latest version of the opendataformat package from Zenodo:</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="co">#download.file(&quot;[xenodo download Link]&quot;, </span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co">#              destfile = paste0(tempdir(), &quot;/&quot;, &quot;opendataformat.tar.gz&quot;), method = &quot;curl&quot;)</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co">#install.packages(paste0(tempdir(), &quot;/&quot;, &quot;opendataformat.tar.gz&quot;), </span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co">#                 repos = NULL, type = &quot;source&quot;)</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="co"># Alternatively you can install the development version from Gitlab:</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co"># install.packages(&quot;devtools&quot;)</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="co">#devtools::install_git(&quot;https://git.soep.de/opendata/r-package-opendataformat.git&quot;,  </span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="co">#                      quiet = TRUE)</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="fu">library</span>(opendataformat)</span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="co">#&gt; Lade nötiges Paket: crayon</span></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a><span class="co">#&gt; Lade nötiges Paket: cli</span></span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a><span class="co">#&gt; Attache Paket: &#39;cli&#39;</span></span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a><span class="co">#&gt; Das folgende Objekt ist maskiert &#39;package:crayon&#39;:</span></span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a><span class="co">#&gt;     num_ansi_colors</span></span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a><span class="co">#&gt; Lade nötiges Paket: magrittr</span></span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a><span class="co">#&gt; Lade nötiges Paket: xml2</span></span>
+<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a><span class="co">#&gt; Lade nötiges Paket: data.table</span></span>
+<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a><span class="co">#&gt; Lade nötiges Paket: zip</span></span>
+<span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a><span class="co">#&gt; Attache Paket: &#39;zip&#39;</span></span>
+<span id="cb1-27"><a href="#cb1-27" tabindex="-1"></a><span class="co">#&gt; Die folgenden Objekte sind maskiert von &#39;package:utils&#39;:</span></span>
+<span id="cb1-28"><a href="#cb1-28" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-29"><a href="#cb1-29" tabindex="-1"></a><span class="co">#&gt;     unzip, zip</span></span></code></pre></div>
+<p>12917713</p>
 </div>
 </div>
 <div id="functions-in-the-openmetadata-package" class="section level1">
@@ -617,9 +640,9 @@ metadata directly from the attributes and write your own code:</p>
 <span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a>bap9003<span class="sc">:</span> Ausgeglichen letzten <span class="dv">4</span> Wochen</span>
 <span id="cb16-11"><a href="#cb16-11" tabindex="-1"></a>bap96<span class="sc">:</span> Körpergröße</span>
 <span id="cb16-12"><a href="#cb16-12" tabindex="-1"></a>name<span class="sc">:</span> Vorname</span></code></pre></div>
-<p>You can also use the labels_opendf() function to retrieve labels and
-other metadata for the variables:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">labels_opendf</span>(df)</span>
+<p>You can also use the getmetadata_opendf() function to retrieve labels
+and other metadata for the variables:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">getmetadata_opendf</span>(df, <span class="at">type=</span><span class="st">&quot;label&quot;</span>)</span>
 <span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>                              bap87                             bap9201 </span>
 <span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>                   <span class="st">&quot;Current Health&quot;</span>    <span class="st">&quot;hours of sleep, normal workday&quot;</span> </span>
 <span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>                            bap9001                             bap9002 </span>
@@ -629,7 +652,7 @@ other metadata for the variables:</p>
 <span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a>                               name </span>
 <span id="cb17-9"><a href="#cb17-9" tabindex="-1"></a>                        <span class="st">&quot;Firstname&quot;</span> </span></code></pre></div>
 <p>or the value labels:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="fu">labels_opendf</span>(df<span class="sc">$</span>bap87, <span class="at">valuelabels=</span>T)</span>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="fu">getmetadata_opendf</span>(df<span class="sc">$</span>bap87, <span class="at">type=</span><span class="st">&quot;valuelabels&quot;</span>)</span>
 <span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>Does not apply      No Answer      Very good           Good   Satisfactory </span>
 <span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>            <span class="sc">-</span><span class="dv">2</span>             <span class="sc">-</span><span class="dv">1</span>              <span class="dv">1</span>              <span class="dv">2</span>              <span class="dv">3</span> </span>
 <span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a>          Poor            Bad </span>
@@ -652,8 +675,8 @@ display the <code>languages</code> attribute:</p>
 <span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a><span class="fu">attr</span>(df, <span class="st">&quot;languages&quot;</span>)</span>
 <span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a><span class="co">#&gt; [1] &quot;en&quot; &quot;de&quot;</span></span></code></pre></div>
 </div>
-<div id="access-metadata-labels_opendf-and-attributes" class="section level2">
-<h2>Access Metadata: <code>labels_opendf()</code> and
+<div id="access-metadata-getmetadata_opendf-and-attributes" class="section level2">
+<h2>Access Metadata: <code>getmetadata_opendf()</code> and
 <code>attributes()</code></h2>
 <p>Browsing through datasets’ metadata provides a valuable initial
 overview. However, when it comes time to dive into the analysis work,
@@ -662,8 +685,7 @@ process of accessing and utilizing it. Let’s explore how and where the
 metadata is stored, and how we can effectively access and leverage it
 for analysis purposes.</p>
 <p>A easy way to retrieve metadata is to use the
-<code>labels_opendf()</code> function to get labels and other
-metadata.</p>
+<code>getmetadata_opendf()</code> function to get metadata.</p>
 <div id="retrieve-the-attributes-with-attributes-and-attr" class="section level3">
 <h3>Retrieve the Attributes with <code>attributes()</code> and
 <code>attr()</code></h3>
@@ -769,12 +791,12 @@ attributes to suit your needs.</p>
 <span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a><span class="fu">attributes</span>(df<span class="sc">$</span>bap87)<span class="sc">$</span>description_de</span>
 <span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a><span class="cn">NULL</span></span></code></pre></div>
 </div>
-<div id="retrieve-metadata-with-labels_opendf" class="section level3">
-<h3>Retrieve Metadata with <code>labels_opendf()</code></h3>
-<p>You can also use the <code>labels_opendf()</code> function to
+<div id="retrieve-metadata-with-getmetadata_opendf" class="section level3">
+<h3>Retrieve Metadata with <code>getmetadata_opendf()</code></h3>
+<p>You can also use the <code>getmetadata_opendf()</code> function to
 retrieve labels and other metadata for the variables. By default, the
 function will return the variable labels for a dataset:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="fu">labels_opendf</span>(df)</span>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="fu">getmetadata_opendf</span>(df, <span class="at">type=</span><span class="st">&quot;labels&quot;</span>)</span>
 <span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a>                              bap87                             bap9201 </span>
 <span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a>                   <span class="st">&quot;Current Health&quot;</span>    <span class="st">&quot;hours of sleep, normal workday&quot;</span> </span>
 <span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a>                            bap9001                             bap9002 </span>
@@ -784,56 +806,53 @@ function will return the variable labels for a dataset:</p>
 <span id="cb26-8"><a href="#cb26-8" tabindex="-1"></a>                               name </span>
 <span id="cb26-9"><a href="#cb26-9" tabindex="-1"></a>                        <span class="st">&quot;Firstname&quot;</span> </span></code></pre></div>
 <p>or for a specific variable::</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="fu">labels_opendf</span>(df<span class="sc">$</span>bap96)</span>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="fu">getmetadata_opendf</span>(df<span class="sc">$</span>bap96, <span class="at">type=</span><span class="st">&quot;labels&quot;</span>)</span>
 <span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a>   bap96 </span>
 <span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a><span class="st">&quot;Height&quot;</span> </span></code></pre></div>
-<p>To retrieve labels in a specific language, use the language
+<p>To retrieve metadata in a specific language, use the language
 parameter:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="fu">labels_opendf</span>(df, <span class="at">language=</span><span class="st">&quot;en&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="fu">getmetadata_opendf</span>(df, <span class="at">type=</span><span class="st">&quot;labels&quot;</span>, <span class="at">language=</span><span class="st">&quot;en&quot;</span>)</span></code></pre></div>
 <p>Or set the active language of the dataset using the
 <code>setLanguage_opendf()</code> function:</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a>df<span class="ot">&lt;-</span><span class="fu">setLanguage_opendf</span>(df, <span class="at">language=</span><span class="st">&quot;en&quot;</span>)</span>
-<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a><span class="fu">labels_opendf</span>(df)</span></code></pre></div>
-<p>You can also use the <code>labels_opendf()</code> function to
+<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a><span class="fu">getmetadata_opendf</span>(df, <span class="at">type=</span><span class="st">&quot;labels&quot;</span>)</span></code></pre></div>
+<p>You can also use the <code>getmetadata_opendf()</code> function to
 retrieve value labels for a specific variable by setting the argument
-<code>valuelabels=TRUE</code>:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a><span class="fu">labels_opendf</span>(df<span class="sc">$</span>bap9001, <span class="at">valuelabels=</span>T)</span>
+<code>type=&quot;valuelabels&quot;</code>:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a><span class="fu">getmetadata_opendf</span>(df<span class="sc">$</span>bap9001, <span class="at">type=</span><span class="st">&quot;valuelabels&quot;</span>)</span>
 <span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a>Does not apply      No Answer         Always          Often      Sometimes </span>
 <span id="cb30-3"><a href="#cb30-3" tabindex="-1"></a>            <span class="sc">-</span><span class="dv">2</span>             <span class="sc">-</span><span class="dv">1</span>              <span class="dv">1</span>              <span class="dv">2</span>              <span class="dv">3</span> </span>
 <span id="cb30-4"><a href="#cb30-4" tabindex="-1"></a>  Almost Never          Never </span>
 <span id="cb30-5"><a href="#cb30-5" tabindex="-1"></a>             <span class="dv">4</span>              <span class="dv">5</span> </span></code></pre></div>
-<p>Alternatively, you can set the argument
-<code>retrieve=&quot;valuelabels&quot;</code>:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="fu">labels_opendf</span>(df<span class="sc">$</span>bap9001, <span class="at">retrieve=</span><span class="st">&quot;valuelabels&quot;</span>)</span></code></pre></div>
 <p>The value labels for each value are stored in the namespace:</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="fu">names</span>(<span class="fu">labels_opendf</span>(df<span class="sc">$</span>bap9001, <span class="at">valuelabels=</span>T))</span>
-<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">&quot;Does not apply&quot;</span> <span class="st">&quot;No Answer&quot;</span>      <span class="st">&quot;Always&quot;</span>         <span class="st">&quot;Often&quot;</span>         </span>
-<span id="cb32-3"><a href="#cb32-3" tabindex="-1"></a>[<span class="dv">5</span>] <span class="st">&quot;Sometimes&quot;</span>      <span class="st">&quot;Almost Never&quot;</span>   <span class="st">&quot;Never&quot;</span>         </span></code></pre></div>
-<p>You can use the <code>labels_opendf()</code> function to return
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="fu">names</span>(<span class="fu">getmetadata_opendf</span>(df<span class="sc">$</span>bap9001, <span class="at">type=</span><span class="st">&quot;valuelabels&quot;</span>))</span>
+<span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">&quot;Does not apply&quot;</span> <span class="st">&quot;No Answer&quot;</span>      <span class="st">&quot;Always&quot;</span>         <span class="st">&quot;Often&quot;</span>         </span>
+<span id="cb31-3"><a href="#cb31-3" tabindex="-1"></a>[<span class="dv">5</span>] <span class="st">&quot;Sometimes&quot;</span>      <span class="st">&quot;Almost Never&quot;</span>   <span class="st">&quot;Never&quot;</span>         </span></code></pre></div>
+<p>You can use the <code>getmetadata_opendf()</code> function to return
 descriptions, urls, variable types and metadata languages as well:</p>
 <p>To retrieve variable description(s), set the argument
-<code>retrieve=&quot;description&quot;</code>:</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a><span class="fu">labels_opendf</span>(df, <span class="at">retrieve=</span><span class="st">&quot;description&quot;</span>)</span>
-<span id="cb33-2"><a href="#cb33-2" tabindex="-1"></a>                                                   bap87 </span>
-<span id="cb33-3"><a href="#cb33-3" tabindex="-1"></a> <span class="st">&quot;Question: How would you describe your current health?&quot;</span> </span>
-<span id="cb33-4"><a href="#cb33-4" tabindex="-1"></a>                                                 bap9201 </span>
-<span id="cb33-5"><a href="#cb33-5" tabindex="-1"></a>                               <span class="st">&quot;Sleep hours per weekday&quot;</span> </span>
-<span id="cb33-6"><a href="#cb33-6" tabindex="-1"></a>                                                 bap9001 </span>
-<span id="cb33-7"><a href="#cb33-7" tabindex="-1"></a><span class="st">&quot;Frequency of feeling time pressure in the past 4 weeks&quot;</span> </span>
-<span id="cb33-8"><a href="#cb33-8" tabindex="-1"></a>                                                 bap9002 </span>
-<span id="cb33-9"><a href="#cb33-9" tabindex="-1"></a>        <span class="st">&quot;Frequency of feeling a sad and depressed state&quot;</span> </span>
-<span id="cb33-10"><a href="#cb33-10" tabindex="-1"></a>                                                 bap9003 </span>
-<span id="cb33-11"><a href="#cb33-11" tabindex="-1"></a>                          <span class="st">&quot;Frequency of feeling balance&quot;</span> </span>
-<span id="cb33-12"><a href="#cb33-12" tabindex="-1"></a>                                                   bap96 </span>
-<span id="cb33-13"><a href="#cb33-13" tabindex="-1"></a>                                             <span class="st">&quot;Body size&quot;</span> </span>
-<span id="cb33-14"><a href="#cb33-14" tabindex="-1"></a>                                                    name </span>
-<span id="cb33-15"><a href="#cb33-15" tabindex="-1"></a>                                             <span class="st">&quot;Firstname&quot;</span> </span></code></pre></div>
+<code>type=&quot;description&quot;</code>:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="fu">getmetadata_opendf</span>(df, <span class="at">type=</span><span class="st">&quot;description&quot;</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a>                                                   bap87 </span>
+<span id="cb32-3"><a href="#cb32-3" tabindex="-1"></a> <span class="st">&quot;Question: How would you describe your current health?&quot;</span> </span>
+<span id="cb32-4"><a href="#cb32-4" tabindex="-1"></a>                                                 bap9201 </span>
+<span id="cb32-5"><a href="#cb32-5" tabindex="-1"></a>                               <span class="st">&quot;Sleep hours per weekday&quot;</span> </span>
+<span id="cb32-6"><a href="#cb32-6" tabindex="-1"></a>                                                 bap9001 </span>
+<span id="cb32-7"><a href="#cb32-7" tabindex="-1"></a><span class="st">&quot;Frequency of feeling time pressure in the past 4 weeks&quot;</span> </span>
+<span id="cb32-8"><a href="#cb32-8" tabindex="-1"></a>                                                 bap9002 </span>
+<span id="cb32-9"><a href="#cb32-9" tabindex="-1"></a>        <span class="st">&quot;Frequency of feeling a sad and depressed state&quot;</span> </span>
+<span id="cb32-10"><a href="#cb32-10" tabindex="-1"></a>                                                 bap9003 </span>
+<span id="cb32-11"><a href="#cb32-11" tabindex="-1"></a>                          <span class="st">&quot;Frequency of feeling balance&quot;</span> </span>
+<span id="cb32-12"><a href="#cb32-12" tabindex="-1"></a>                                                   bap96 </span>
+<span id="cb32-13"><a href="#cb32-13" tabindex="-1"></a>                                             <span class="st">&quot;Body size&quot;</span> </span>
+<span id="cb32-14"><a href="#cb32-14" tabindex="-1"></a>                                                    name </span>
+<span id="cb32-15"><a href="#cb32-15" tabindex="-1"></a>                                             <span class="st">&quot;Firstname&quot;</span> </span></code></pre></div>
 <p>To retrieve variable url(s), set the argument
-<code>retrieve=&quot;url&quot;</code>:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a><span class="fu">labels_opendf</span>(df, <span class="at">retrieve=</span><span class="st">&quot;url&quot;</span>)</span></code></pre></div>
+<code>type=&quot;url&quot;</code>:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a><span class="fu">getmetadata_opendf</span>(df, <span class="at">type=</span><span class="st">&quot;url&quot;</span>)</span></code></pre></div>
 <p>To retrieve variable type(s), set the argument
-<code>retrieve=&quot;type&quot;</code>:</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a><span class="fu">labels_opendf</span>(df, <span class="at">retrieve=</span><span class="st">&quot;type&quot;</span>)</span></code></pre></div>
+<code>type=&quot;type&quot;</code>:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a><span class="fu">getmetadata_opendf</span>(df, <span class="at">type=</span><span class="st">&quot;type&quot;</span>)</span></code></pre></div>
 </div>
 </div>
 <div id="export-to-the-open-data-format-write_opendf" class="section level2">
@@ -843,63 +862,63 @@ descriptions, urls, variable types and metadata languages as well:</p>
 first four columns of our dataset as a new opendf-file. We use the
 <code>write_opendf()</code> function and indicate the r-dataframe and
 the file name (and location if it).</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a><span class="fu">write_opendf</span>(</span>
-<span id="cb36-2"><a href="#cb36-2" tabindex="-1"></a>  <span class="at">x =</span> df[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], </span>
-<span id="cb36-3"><a href="#cb36-3" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;../df_1_4.zip&quot;</span></span>
-<span id="cb36-4"><a href="#cb36-4" tabindex="-1"></a>)</span>
-<span id="cb36-5"><a href="#cb36-5" tabindex="-1"></a></span>
-<span id="cb36-6"><a href="#cb36-6" tabindex="-1"></a><span class="co">#or :</span></span>
-<span id="cb36-7"><a href="#cb36-7" tabindex="-1"></a>df_14<span class="ot">&lt;-</span>df[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]</span>
-<span id="cb36-8"><a href="#cb36-8" tabindex="-1"></a><span class="fu">write_opendf</span>(</span>
-<span id="cb36-9"><a href="#cb36-9" tabindex="-1"></a>  <span class="at">x =</span> df[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], </span>
-<span id="cb36-10"><a href="#cb36-10" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;df_1_4.zip&quot;</span></span>
-<span id="cb36-11"><a href="#cb36-11" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a><span class="fu">write_opendf</span>(</span>
+<span id="cb35-2"><a href="#cb35-2" tabindex="-1"></a>  <span class="at">x =</span> df[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], </span>
+<span id="cb35-3"><a href="#cb35-3" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;../df_1_4.zip&quot;</span></span>
+<span id="cb35-4"><a href="#cb35-4" tabindex="-1"></a>)</span>
+<span id="cb35-5"><a href="#cb35-5" tabindex="-1"></a></span>
+<span id="cb35-6"><a href="#cb35-6" tabindex="-1"></a><span class="co">#or :</span></span>
+<span id="cb35-7"><a href="#cb35-7" tabindex="-1"></a>df_14<span class="ot">&lt;-</span>df[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]</span>
+<span id="cb35-8"><a href="#cb35-8" tabindex="-1"></a><span class="fu">write_opendf</span>(</span>
+<span id="cb35-9"><a href="#cb35-9" tabindex="-1"></a>  <span class="at">x =</span> df[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], </span>
+<span id="cb35-10"><a href="#cb35-10" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;df_1_4.zip&quot;</span></span>
+<span id="cb35-11"><a href="#cb35-11" tabindex="-1"></a>)</span></code></pre></div>
 <p>The XML file metadata.xml and the CSV file data.csv are saved within
 the directory ‘data_rec’, as well as within the ZIP file ’data_rec.zip.
 The dataset looks the same as before, just with fewer variables:</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a><span class="fu">&lt;?xml</span><span class="ot"> version=</span><span class="st">&#39;1.0&#39;</span><span class="ot"> encoding=</span><span class="st">&#39;utf-8&#39;</span><span class="fu">?&gt;</span></span>
-<span id="cb37-2"><a href="#cb37-2" tabindex="-1"></a>&lt;<span class="kw">codeBook</span><span class="ot"> xmlns:xsi=</span><span class="st">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><span class="ot"> xsi:schemaLocation=</span><span class="st">&quot;ddi:codebook:2_5 http://www.ddialliance.org/Specification/DDI-Codebook/2.5/XMLSchema/codebook.xsd&quot;</span><span class="ot"> xmlns=</span><span class="st">&quot;ddi:codebook:2_5&quot;</span><span class="ot"> version=</span><span class="st">&quot;2.5&quot;</span>&gt;</span>
-<span id="cb37-3"><a href="#cb37-3" tabindex="-1"></a>    &lt;<span class="kw">fileDscr</span>&gt;</span>
-<span id="cb37-4"><a href="#cb37-4" tabindex="-1"></a>        &lt;<span class="kw">fileTxt</span>&gt;</span>
-<span id="cb37-5"><a href="#cb37-5" tabindex="-1"></a>            &lt;<span class="kw">fileName</span>&gt;bap&lt;/<span class="kw">fileName</span>&gt;</span>
-<span id="cb37-6"><a href="#cb37-6" tabindex="-1"></a>            &lt;<span class="kw">fileCont</span><span class="ot"> xml:lang=</span><span class="st">&quot;en&quot;</span>&gt;The data were collected as part of the SOEP-Core study using the questionnaire &quot;Living in Germany - Survey 2010 on the social situation - Personal questionnaire for all. This questionnaire is addressed to the individual persons in the household. A view of the survey instrument can be found here: https://www.diw.de/documents/dokumentenarchiv/17/diw_01.c.369781.de/soepfrabo_personen_2010.pdf&lt;/<span class="kw">fileCont</span>&gt;</span>
-<span id="cb37-7"><a href="#cb37-7" tabindex="-1"></a>            &lt;<span class="kw">fileCont</span><span class="ot"> xml:lang=</span><span class="st">&quot;de&quot;</span>&gt;Die Daten wurden im Rahmen der Studie SOEP-Core mittels des Fragebogens „Leben in Deutschland – Befragung 2010 zur sozialen Lage - Personenfragebogen für alle“ erhoben. Dieser Fragebogen richtet sich an die einzelnen Personen im Haushalt. Eine Ansicht des Erhebungsinstrumentes finden Sie hier: https://www.diw.de/documents/dokumentenarchiv/17/diw_01.c.369781.de/soepfrabo_personen_2010.pdf&lt;/<span class="kw">fileCont</span>&gt;</span>
-<span id="cb37-8"><a href="#cb37-8" tabindex="-1"></a>            &lt;<span class="kw">fileCitation</span>&gt;</span>
-<span id="cb37-9"><a href="#cb37-9" tabindex="-1"></a>                &lt;<span class="kw">titlStmt</span>&gt;</span>
-<span id="cb37-10"><a href="#cb37-10" tabindex="-1"></a>                    &lt;<span class="kw">titl</span><span class="ot"> xml:lang=</span><span class="st">&quot;en&quot;</span>&gt;Data from individual questionnaires 2010&lt;/<span class="kw">titl</span>&gt;</span>
-<span id="cb37-11"><a href="#cb37-11" tabindex="-1"></a>                    &lt;<span class="kw">titl</span><span class="ot"> xml:lang=</span><span class="st">&quot;de&quot;</span>&gt;Daten vom Personenfragebogen 2010&lt;/<span class="kw">titl</span>&gt;</span>
-<span id="cb37-12"><a href="#cb37-12" tabindex="-1"></a>                &lt;/<span class="kw">titlStmt</span>&gt;</span>
-<span id="cb37-13"><a href="#cb37-13" tabindex="-1"></a>            &lt;/<span class="kw">fileCitation</span>&gt;</span>
-<span id="cb37-14"><a href="#cb37-14" tabindex="-1"></a>        &lt;/<span class="kw">fileTxt</span>&gt;</span>
-<span id="cb37-15"><a href="#cb37-15" tabindex="-1"></a>        &lt;<span class="kw">notes</span>&gt;</span>
-<span id="cb37-16"><a href="#cb37-16" tabindex="-1"></a>            &lt;<span class="kw">ExtLink</span><span class="ot"> URI=</span><span class="st">&quot;https://paneldata.org/soep-core/data/bap&quot;</span> /&gt;</span>
-<span id="cb37-17"><a href="#cb37-17" tabindex="-1"></a>        &lt;/<span class="kw">notes</span>&gt;</span>
-<span id="cb37-18"><a href="#cb37-18" tabindex="-1"></a>    &lt;/<span class="kw">fileDscr</span>&gt;</span>
-<span id="cb37-19"><a href="#cb37-19" tabindex="-1"></a>    &lt;<span class="kw">dataDscr</span>&gt;</span>
-<span id="cb37-20"><a href="#cb37-20" tabindex="-1"></a>        &lt;<span class="kw">var</span><span class="ot"> name=</span><span class="st">&quot;bap87&quot;</span>&gt;</span>
-<span id="cb37-21"><a href="#cb37-21" tabindex="-1"></a>            &lt;<span class="kw">labl</span><span class="ot"> xml:lang=</span><span class="st">&quot;en&quot;</span>&gt;Current Health&lt;/<span class="kw">labl</span>&gt;</span>
-<span id="cb37-22"><a href="#cb37-22" tabindex="-1"></a>            &lt;<span class="kw">labl</span><span class="ot"> xml:lang=</span><span class="st">&quot;de&quot;</span>&gt;Gesundheitszustand gegenwärtig&lt;/<span class="kw">labl</span>&gt;</span>
-<span id="cb37-23"><a href="#cb37-23" tabindex="-1"></a>            &lt;<span class="kw">txt</span><span class="ot"> xml:lang=</span><span class="st">&quot;en&quot;</span>&gt;Question: How would you describe your current health?&lt;/<span class="kw">txt</span>&gt;</span>
-<span id="cb37-24"><a href="#cb37-24" tabindex="-1"></a>            &lt;<span class="kw">txt</span><span class="ot"> xml:lang=</span><span class="st">&quot;de&quot;</span>&gt;Frage: Wie würden Sie Ihren gegenwärtigen Gesundheitszustand beschreiben?&lt;/<span class="kw">txt</span>&gt;</span>
-<span id="cb37-25"><a href="#cb37-25" tabindex="-1"></a>            &lt;<span class="kw">notes</span>&gt;</span>
-<span id="cb37-26"><a href="#cb37-26" tabindex="-1"></a>                &lt;<span class="kw">ExtLink</span><span class="ot"> URI=</span><span class="st">&quot;https://paneldata.org/soep-core/data/bap/bap87&quot;</span> /&gt;</span>
-<span id="cb37-27"><a href="#cb37-27" tabindex="-1"></a>            &lt;/<span class="kw">notes</span>&gt;</span>
-<span id="cb37-28"><a href="#cb37-28" tabindex="-1"></a>            &lt;<span class="kw">varFormat</span><span class="ot"> type=</span><span class="st">&quot;numeric&quot;</span> /&gt;</span>
-<span id="cb37-29"><a href="#cb37-29" tabindex="-1"></a>            &lt;<span class="kw">catgry</span>&gt;</span>
-<span id="cb37-30"><a href="#cb37-30" tabindex="-1"></a>                &lt;<span class="kw">catValu</span>&gt;-2&lt;/<span class="kw">catValu</span>&gt;</span>
-<span id="cb37-31"><a href="#cb37-31" tabindex="-1"></a>                &lt;<span class="kw">labl</span><span class="ot"> xml:lang=</span><span class="st">&quot;en&quot;</span>&gt;Does not apply&lt;/<span class="kw">labl</span>&gt;</span>
-<span id="cb37-32"><a href="#cb37-32" tabindex="-1"></a>                &lt;<span class="kw">labl</span><span class="ot"> xml:lang=</span><span class="st">&quot;de&quot;</span>&gt;trifft nicht zu&lt;/<span class="kw">labl</span>&gt;</span>
-<span id="cb37-33"><a href="#cb37-33" tabindex="-1"></a>            &lt;/<span class="kw">catgry</span>&gt;</span>
-<span id="cb37-34"><a href="#cb37-34" tabindex="-1"></a>            &lt;<span class="kw">catgry</span>&gt;</span>
-<span id="cb37-35"><a href="#cb37-35" tabindex="-1"></a>                &lt;<span class="kw">catValu</span>&gt;-1&lt;/<span class="kw">catValu</span>&gt;</span>
-<span id="cb37-36"><a href="#cb37-36" tabindex="-1"></a>                &lt;<span class="kw">labl</span><span class="ot"> xml:lang=</span><span class="st">&quot;en&quot;</span>&gt;No Answer&lt;/<span class="kw">labl</span>&gt;</span>
-<span id="cb37-37"><a href="#cb37-37" tabindex="-1"></a>                &lt;<span class="kw">labl</span><span class="ot"> xml:lang=</span><span class="st">&quot;de&quot;</span>&gt;keine Angabe&lt;/<span class="kw">labl</span>&gt;</span>
-<span id="cb37-38"><a href="#cb37-38" tabindex="-1"></a>            &lt;/<span class="kw">catgry</span>&gt;</span>
-<span id="cb37-39"><a href="#cb37-39" tabindex="-1"></a>            &lt;<span class="kw">catgry</span>&gt;</span>
-<span id="cb37-40"><a href="#cb37-40" tabindex="-1"></a>                &lt;<span class="kw">catValu</span>&gt;1&lt;/<span class="kw">catValu</span>&gt;</span>
-<span id="cb37-41"><a href="#cb37-41" tabindex="-1"></a>                &lt;<span class="kw">labl</span><span class="ot"> xml:lang=</span><span class="st">&quot;en&quot;</span>&gt;Very good&lt;/<span class="kw">labl</span>&gt;</span>
-<span id="cb37-42"><a href="#cb37-42" tabindex="-1"></a>                &lt;<span class="kw">labl</span><span class="ot"> xml:lang=</span><span class="st">&quot;de&quot;</span>&gt;Sehr gut&lt;/<span class="kw">labl</span>&gt;</span>
-<span id="cb37-43"><a href="#cb37-43" tabindex="-1"></a>...</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a><span class="fu">&lt;?xml</span><span class="ot"> version=</span><span class="st">&#39;1.0&#39;</span><span class="ot"> encoding=</span><span class="st">&#39;utf-8&#39;</span><span class="fu">?&gt;</span></span>
+<span id="cb36-2"><a href="#cb36-2" tabindex="-1"></a>&lt;<span class="kw">codeBook</span><span class="ot"> xmlns:xsi=</span><span class="st">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><span class="ot"> xsi:schemaLocation=</span><span class="st">&quot;ddi:codebook:2_5 http://www.ddialliance.org/Specification/DDI-Codebook/2.5/XMLSchema/codebook.xsd&quot;</span><span class="ot"> xmlns=</span><span class="st">&quot;ddi:codebook:2_5&quot;</span><span class="ot"> version=</span><span class="st">&quot;2.5&quot;</span>&gt;</span>
+<span id="cb36-3"><a href="#cb36-3" tabindex="-1"></a>    &lt;<span class="kw">fileDscr</span>&gt;</span>
+<span id="cb36-4"><a href="#cb36-4" tabindex="-1"></a>        &lt;<span class="kw">fileTxt</span>&gt;</span>
+<span id="cb36-5"><a href="#cb36-5" tabindex="-1"></a>            &lt;<span class="kw">fileName</span>&gt;bap&lt;/<span class="kw">fileName</span>&gt;</span>
+<span id="cb36-6"><a href="#cb36-6" tabindex="-1"></a>            &lt;<span class="kw">fileCont</span><span class="ot"> xml:lang=</span><span class="st">&quot;en&quot;</span>&gt;The data were collected as part of the SOEP-Core study using the questionnaire &quot;Living in Germany - Survey 2010 on the social situation - Personal questionnaire for all. This questionnaire is addressed to the individual persons in the household. A view of the survey instrument can be found here: https://www.diw.de/documents/dokumentenarchiv/17/diw_01.c.369781.de/soepfrabo_personen_2010.pdf&lt;/<span class="kw">fileCont</span>&gt;</span>
+<span id="cb36-7"><a href="#cb36-7" tabindex="-1"></a>            &lt;<span class="kw">fileCont</span><span class="ot"> xml:lang=</span><span class="st">&quot;de&quot;</span>&gt;Die Daten wurden im Rahmen der Studie SOEP-Core mittels des Fragebogens „Leben in Deutschland – Befragung 2010 zur sozialen Lage - Personenfragebogen für alle“ erhoben. Dieser Fragebogen richtet sich an die einzelnen Personen im Haushalt. Eine Ansicht des Erhebungsinstrumentes finden Sie hier: https://www.diw.de/documents/dokumentenarchiv/17/diw_01.c.369781.de/soepfrabo_personen_2010.pdf&lt;/<span class="kw">fileCont</span>&gt;</span>
+<span id="cb36-8"><a href="#cb36-8" tabindex="-1"></a>            &lt;<span class="kw">fileCitation</span>&gt;</span>
+<span id="cb36-9"><a href="#cb36-9" tabindex="-1"></a>                &lt;<span class="kw">titlStmt</span>&gt;</span>
+<span id="cb36-10"><a href="#cb36-10" tabindex="-1"></a>                    &lt;<span class="kw">titl</span><span class="ot"> xml:lang=</span><span class="st">&quot;en&quot;</span>&gt;Data from individual questionnaires 2010&lt;/<span class="kw">titl</span>&gt;</span>
+<span id="cb36-11"><a href="#cb36-11" tabindex="-1"></a>                    &lt;<span class="kw">titl</span><span class="ot"> xml:lang=</span><span class="st">&quot;de&quot;</span>&gt;Daten vom Personenfragebogen 2010&lt;/<span class="kw">titl</span>&gt;</span>
+<span id="cb36-12"><a href="#cb36-12" tabindex="-1"></a>                &lt;/<span class="kw">titlStmt</span>&gt;</span>
+<span id="cb36-13"><a href="#cb36-13" tabindex="-1"></a>            &lt;/<span class="kw">fileCitation</span>&gt;</span>
+<span id="cb36-14"><a href="#cb36-14" tabindex="-1"></a>        &lt;/<span class="kw">fileTxt</span>&gt;</span>
+<span id="cb36-15"><a href="#cb36-15" tabindex="-1"></a>        &lt;<span class="kw">notes</span>&gt;</span>
+<span id="cb36-16"><a href="#cb36-16" tabindex="-1"></a>            &lt;<span class="kw">ExtLink</span><span class="ot"> URI=</span><span class="st">&quot;https://paneldata.org/soep-core/data/bap&quot;</span> /&gt;</span>
+<span id="cb36-17"><a href="#cb36-17" tabindex="-1"></a>        &lt;/<span class="kw">notes</span>&gt;</span>
+<span id="cb36-18"><a href="#cb36-18" tabindex="-1"></a>    &lt;/<span class="kw">fileDscr</span>&gt;</span>
+<span id="cb36-19"><a href="#cb36-19" tabindex="-1"></a>    &lt;<span class="kw">dataDscr</span>&gt;</span>
+<span id="cb36-20"><a href="#cb36-20" tabindex="-1"></a>        &lt;<span class="kw">var</span><span class="ot"> name=</span><span class="st">&quot;bap87&quot;</span>&gt;</span>
+<span id="cb36-21"><a href="#cb36-21" tabindex="-1"></a>            &lt;<span class="kw">labl</span><span class="ot"> xml:lang=</span><span class="st">&quot;en&quot;</span>&gt;Current Health&lt;/<span class="kw">labl</span>&gt;</span>
+<span id="cb36-22"><a href="#cb36-22" tabindex="-1"></a>            &lt;<span class="kw">labl</span><span class="ot"> xml:lang=</span><span class="st">&quot;de&quot;</span>&gt;Gesundheitszustand gegenwärtig&lt;/<span class="kw">labl</span>&gt;</span>
+<span id="cb36-23"><a href="#cb36-23" tabindex="-1"></a>            &lt;<span class="kw">txt</span><span class="ot"> xml:lang=</span><span class="st">&quot;en&quot;</span>&gt;Question: How would you describe your current health?&lt;/<span class="kw">txt</span>&gt;</span>
+<span id="cb36-24"><a href="#cb36-24" tabindex="-1"></a>            &lt;<span class="kw">txt</span><span class="ot"> xml:lang=</span><span class="st">&quot;de&quot;</span>&gt;Frage: Wie würden Sie Ihren gegenwärtigen Gesundheitszustand beschreiben?&lt;/<span class="kw">txt</span>&gt;</span>
+<span id="cb36-25"><a href="#cb36-25" tabindex="-1"></a>            &lt;<span class="kw">notes</span>&gt;</span>
+<span id="cb36-26"><a href="#cb36-26" tabindex="-1"></a>                &lt;<span class="kw">ExtLink</span><span class="ot"> URI=</span><span class="st">&quot;https://paneldata.org/soep-core/data/bap/bap87&quot;</span> /&gt;</span>
+<span id="cb36-27"><a href="#cb36-27" tabindex="-1"></a>            &lt;/<span class="kw">notes</span>&gt;</span>
+<span id="cb36-28"><a href="#cb36-28" tabindex="-1"></a>            &lt;<span class="kw">varFormat</span><span class="ot"> type=</span><span class="st">&quot;numeric&quot;</span> /&gt;</span>
+<span id="cb36-29"><a href="#cb36-29" tabindex="-1"></a>            &lt;<span class="kw">catgry</span>&gt;</span>
+<span id="cb36-30"><a href="#cb36-30" tabindex="-1"></a>                &lt;<span class="kw">catValu</span>&gt;-2&lt;/<span class="kw">catValu</span>&gt;</span>
+<span id="cb36-31"><a href="#cb36-31" tabindex="-1"></a>                &lt;<span class="kw">labl</span><span class="ot"> xml:lang=</span><span class="st">&quot;en&quot;</span>&gt;Does not apply&lt;/<span class="kw">labl</span>&gt;</span>
+<span id="cb36-32"><a href="#cb36-32" tabindex="-1"></a>                &lt;<span class="kw">labl</span><span class="ot"> xml:lang=</span><span class="st">&quot;de&quot;</span>&gt;trifft nicht zu&lt;/<span class="kw">labl</span>&gt;</span>
+<span id="cb36-33"><a href="#cb36-33" tabindex="-1"></a>            &lt;/<span class="kw">catgry</span>&gt;</span>
+<span id="cb36-34"><a href="#cb36-34" tabindex="-1"></a>            &lt;<span class="kw">catgry</span>&gt;</span>
+<span id="cb36-35"><a href="#cb36-35" tabindex="-1"></a>                &lt;<span class="kw">catValu</span>&gt;-1&lt;/<span class="kw">catValu</span>&gt;</span>
+<span id="cb36-36"><a href="#cb36-36" tabindex="-1"></a>                &lt;<span class="kw">labl</span><span class="ot"> xml:lang=</span><span class="st">&quot;en&quot;</span>&gt;No Answer&lt;/<span class="kw">labl</span>&gt;</span>
+<span id="cb36-37"><a href="#cb36-37" tabindex="-1"></a>                &lt;<span class="kw">labl</span><span class="ot"> xml:lang=</span><span class="st">&quot;de&quot;</span>&gt;keine Angabe&lt;/<span class="kw">labl</span>&gt;</span>
+<span id="cb36-38"><a href="#cb36-38" tabindex="-1"></a>            &lt;/<span class="kw">catgry</span>&gt;</span>
+<span id="cb36-39"><a href="#cb36-39" tabindex="-1"></a>            &lt;<span class="kw">catgry</span>&gt;</span>
+<span id="cb36-40"><a href="#cb36-40" tabindex="-1"></a>                &lt;<span class="kw">catValu</span>&gt;1&lt;/<span class="kw">catValu</span>&gt;</span>
+<span id="cb36-41"><a href="#cb36-41" tabindex="-1"></a>                &lt;<span class="kw">labl</span><span class="ot"> xml:lang=</span><span class="st">&quot;en&quot;</span>&gt;Very good&lt;/<span class="kw">labl</span>&gt;</span>
+<span id="cb36-42"><a href="#cb36-42" tabindex="-1"></a>                &lt;<span class="kw">labl</span><span class="ot"> xml:lang=</span><span class="st">&quot;de&quot;</span>&gt;Sehr gut&lt;/<span class="kw">labl</span>&gt;</span>
+<span id="cb36-43"><a href="#cb36-43" tabindex="-1"></a>...</span></code></pre></div>
 <p>The data.csv file now includes just four columns:</p>
 <pre class="csv"><code>&quot;bap87&quot;,&quot;bap9201&quot;,&quot;bap9001&quot;,&quot;bap9002&quot;
 4,-2,1,-1
@@ -918,27 +937,27 @@ zip file will solely contain the metadata XML file, excluding the data
 CSV file. This allows you to specifically capture and preserve the
 metadata without including the actual data, providing a solution for
 documentation or archiving needs.</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a><span class="fu">write_opendf</span>(</span>
-<span id="cb39-2"><a href="#cb39-2" tabindex="-1"></a>  <span class="at">x=</span>df, </span>
-<span id="cb39-3"><a href="#cb39-3" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;../df_metadata.zip&quot;</span>,</span>
-<span id="cb39-4"><a href="#cb39-4" tabindex="-1"></a>  <span class="at">export_data =</span> <span class="cn">FALSE</span></span>
-<span id="cb39-5"><a href="#cb39-5" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a><span class="fu">write_opendf</span>(</span>
+<span id="cb38-2"><a href="#cb38-2" tabindex="-1"></a>  <span class="at">x=</span>df, </span>
+<span id="cb38-3"><a href="#cb38-3" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;../df_metadata.zip&quot;</span>,</span>
+<span id="cb38-4"><a href="#cb38-4" tabindex="-1"></a>  <span class="at">export_data =</span> <span class="cn">FALSE</span></span>
+<span id="cb38-5"><a href="#cb38-5" tabindex="-1"></a>)</span></code></pre></div>
 <p>If you wish to export the dataset with the metadata only in one or
 some languages, set the languages argument to
 <code>languages=c(&quot;en&quot;)</code>. Default:
 <code>languages=&quot;all&quot;</code></p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a><span class="fu">write_opendf</span>(</span>
-<span id="cb40-2"><a href="#cb40-2" tabindex="-1"></a>  <span class="at">x=</span>df, </span>
-<span id="cb40-3"><a href="#cb40-3" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;../df_en.zip&quot;</span>,</span>
-<span id="cb40-4"><a href="#cb40-4" tabindex="-1"></a>  <span class="at">languages =</span> <span class="st">&quot;en&quot;</span></span>
-<span id="cb40-5"><a href="#cb40-5" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a><span class="fu">write_opendf</span>(</span>
+<span id="cb39-2"><a href="#cb39-2" tabindex="-1"></a>  <span class="at">x=</span>df, </span>
+<span id="cb39-3"><a href="#cb39-3" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;../df_en.zip&quot;</span>,</span>
+<span id="cb39-4"><a href="#cb39-4" tabindex="-1"></a>  <span class="at">languages =</span> <span class="st">&quot;en&quot;</span></span>
+<span id="cb39-5"><a href="#cb39-5" tabindex="-1"></a>)</span></code></pre></div>
 <p>By default, languages is set to <code>languages=&quot;all&quot;</code>. You can
 also define a list of languages to be exported:</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a><span class="fu">write_opendf</span>(</span>
-<span id="cb41-2"><a href="#cb41-2" tabindex="-1"></a>  <span class="at">x=</span>df, </span>
-<span id="cb41-3"><a href="#cb41-3" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;../df_en_de.zip&quot;</span>,</span>
-<span id="cb41-4"><a href="#cb41-4" tabindex="-1"></a>  <span class="at">languages =</span> <span class="fu">c</span>(<span class="st">&quot;en&quot;</span>,<span class="st">&quot;de&quot;</span>)</span>
-<span id="cb41-5"><a href="#cb41-5" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a><span class="fu">write_opendf</span>(</span>
+<span id="cb40-2"><a href="#cb40-2" tabindex="-1"></a>  <span class="at">x=</span>df, </span>
+<span id="cb40-3"><a href="#cb40-3" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;../df_en_de.zip&quot;</span>,</span>
+<span id="cb40-4"><a href="#cb40-4" tabindex="-1"></a>  <span class="at">languages =</span> <span class="fu">c</span>(<span class="st">&quot;en&quot;</span>,<span class="st">&quot;de&quot;</span>)</span>
+<span id="cb40-5"><a href="#cb40-5" tabindex="-1"></a>)</span></code></pre></div>
 </div>
 </div>
 <div id="lets-analyse-and-make-use-of-the-metadata" class="section level1">
@@ -947,52 +966,64 @@ also define a list of languages to be exported:</p>
 data and make more informative plots.</p>
 <div id="frequency-table" class="section level3">
 <h3>Frequency Table</h3>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" tabindex="-1"></a><span class="fu">table</span>(df<span class="sc">$</span>bap87, <span class="at">useNA =</span> <span class="st">&quot;ifany&quot;</span>)</span>
-<span id="cb42-2"><a href="#cb42-2" tabindex="-1"></a></span>
-<span id="cb42-3"><a href="#cb42-3" tabindex="-1"></a>  <span class="sc">-</span><span class="dv">2</span>   <span class="sc">-</span><span class="dv">1</span>    <span class="dv">1</span>    <span class="dv">2</span>    <span class="dv">3</span>    <span class="dv">4</span>    <span class="dv">5</span> <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> </span>
-<span id="cb42-4"><a href="#cb42-4" tabindex="-1"></a>   <span class="dv">3</span>    <span class="dv">2</span>    <span class="dv">2</span>    <span class="dv">2</span>    <span class="dv">5</span>    <span class="dv">2</span>    <span class="dv">3</span>    <span class="dv">1</span> </span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a><span class="fu">table</span>(df<span class="sc">$</span>bap87, <span class="at">useNA =</span> <span class="st">&quot;ifany&quot;</span>)</span>
+<span id="cb41-2"><a href="#cb41-2" tabindex="-1"></a></span>
+<span id="cb41-3"><a href="#cb41-3" tabindex="-1"></a>  <span class="sc">-</span><span class="dv">2</span>   <span class="sc">-</span><span class="dv">1</span>    <span class="dv">1</span>    <span class="dv">2</span>    <span class="dv">3</span>    <span class="dv">4</span>    <span class="dv">5</span> <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span> </span>
+<span id="cb41-4"><a href="#cb41-4" tabindex="-1"></a>   <span class="dv">3</span>    <span class="dv">2</span>    <span class="dv">2</span>    <span class="dv">2</span>    <span class="dv">5</span>    <span class="dv">2</span>    <span class="dv">3</span>    <span class="dv">1</span> </span></code></pre></div>
 <p>As expected, the frequency table displays the occurrence count of
 each variable value. Now, let’s enhance the convenience of the frequency
 table by utilizing the value labels associated with the variables. To
 access the value labels, as explained in the preceding section, you can
 utilize the base R function <code>attributes()</code>. Let’s proceed to
 examine them now:</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" tabindex="-1"></a><span class="fu">attributes</span>(df<span class="sc">$</span>bap87)<span class="sc">$</span>labels_en</span>
-<span id="cb43-2"><a href="#cb43-2" tabindex="-1"></a>Does not apply      No Answer      Very good           Good   Satisfactory </span>
-<span id="cb43-3"><a href="#cb43-3" tabindex="-1"></a>            <span class="sc">-</span><span class="dv">2</span>             <span class="sc">-</span><span class="dv">1</span>              <span class="dv">1</span>              <span class="dv">2</span>              <span class="dv">3</span> </span>
-<span id="cb43-4"><a href="#cb43-4" tabindex="-1"></a>          Poor            Bad </span>
-<span id="cb43-5"><a href="#cb43-5" tabindex="-1"></a>             <span class="dv">4</span>              <span class="dv">5</span> </span></code></pre></div>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" tabindex="-1"></a><span class="fu">attributes</span>(df<span class="sc">$</span>bap87)<span class="sc">$</span>labels_de</span>
-<span id="cb44-2"><a href="#cb44-2" tabindex="-1"></a>  trifft nicht zu      keine Angabe          Sehr gut               Gut </span>
-<span id="cb44-3"><a href="#cb44-3" tabindex="-1"></a>               <span class="sc">-</span><span class="dv">2</span>                <span class="sc">-</span><span class="dv">1</span>                 <span class="dv">1</span>                 <span class="dv">2</span> </span>
-<span id="cb44-4"><a href="#cb44-4" tabindex="-1"></a>Zufriedenstellend       Weniger gut          Schlecht </span>
-<span id="cb44-5"><a href="#cb44-5" tabindex="-1"></a>                <span class="dv">3</span>                 <span class="dv">4</span>                 <span class="dv">5</span> </span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" tabindex="-1"></a><span class="fu">attributes</span>(df<span class="sc">$</span>bap87)<span class="sc">$</span>labels_en</span>
+<span id="cb42-2"><a href="#cb42-2" tabindex="-1"></a>Does not apply      No Answer      Very good           Good   Satisfactory </span>
+<span id="cb42-3"><a href="#cb42-3" tabindex="-1"></a>            <span class="sc">-</span><span class="dv">2</span>             <span class="sc">-</span><span class="dv">1</span>              <span class="dv">1</span>              <span class="dv">2</span>              <span class="dv">3</span> </span>
+<span id="cb42-4"><a href="#cb42-4" tabindex="-1"></a>          Poor            Bad </span>
+<span id="cb42-5"><a href="#cb42-5" tabindex="-1"></a>             <span class="dv">4</span>              <span class="dv">5</span> </span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" tabindex="-1"></a><span class="fu">attributes</span>(df<span class="sc">$</span>bap87)<span class="sc">$</span>labels_de</span>
+<span id="cb43-2"><a href="#cb43-2" tabindex="-1"></a>  trifft nicht zu      keine Angabe          Sehr gut               Gut </span>
+<span id="cb43-3"><a href="#cb43-3" tabindex="-1"></a>               <span class="sc">-</span><span class="dv">2</span>                <span class="sc">-</span><span class="dv">1</span>                 <span class="dv">1</span>                 <span class="dv">2</span> </span>
+<span id="cb43-4"><a href="#cb43-4" tabindex="-1"></a>Zufriedenstellend       Weniger gut          Schlecht </span>
+<span id="cb43-5"><a href="#cb43-5" tabindex="-1"></a>                <span class="dv">3</span>                 <span class="dv">4</span>                 <span class="dv">5</span> </span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" tabindex="-1"></a><span class="fu">table</span>(</span>
+<span id="cb44-2"><a href="#cb44-2" tabindex="-1"></a>  <span class="fu">factor</span>(</span>
+<span id="cb44-3"><a href="#cb44-3" tabindex="-1"></a>    df<span class="sc">$</span>bap87, <span class="at">labels =</span> <span class="fu">names</span>(<span class="fu">attributes</span>(df<span class="sc">$</span>bap87)<span class="sc">$</span>labels_en</span>
+<span id="cb44-4"><a href="#cb44-4" tabindex="-1"></a>                             )</span>
+<span id="cb44-5"><a href="#cb44-5" tabindex="-1"></a>    )</span>
+<span id="cb44-6"><a href="#cb44-6" tabindex="-1"></a>  )</span>
+<span id="cb44-7"><a href="#cb44-7" tabindex="-1"></a></span>
+<span id="cb44-8"><a href="#cb44-8" tabindex="-1"></a>Does not apply      No Answer      Very good           Good   Satisfactory </span>
+<span id="cb44-9"><a href="#cb44-9" tabindex="-1"></a>             <span class="dv">3</span>              <span class="dv">2</span>              <span class="dv">2</span>              <span class="dv">2</span>              <span class="dv">5</span> </span>
+<span id="cb44-10"><a href="#cb44-10" tabindex="-1"></a>          Poor            Bad </span>
+<span id="cb44-11"><a href="#cb44-11" tabindex="-1"></a>             <span class="dv">2</span>              <span class="dv">3</span> </span></code></pre></div>
+<p>Alternatively you can use the getmetadata_opendf()-function to get
+the value labels:</p>
 <div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" tabindex="-1"></a><span class="fu">table</span>(</span>
 <span id="cb45-2"><a href="#cb45-2" tabindex="-1"></a>  <span class="fu">factor</span>(</span>
-<span id="cb45-3"><a href="#cb45-3" tabindex="-1"></a>    df<span class="sc">$</span>bap87, <span class="at">labels =</span> <span class="fu">names</span>(<span class="fu">attributes</span>(df<span class="sc">$</span>bap87)<span class="sc">$</span>labels_en</span>
-<span id="cb45-4"><a href="#cb45-4" tabindex="-1"></a>                             )</span>
-<span id="cb45-5"><a href="#cb45-5" tabindex="-1"></a>    )</span>
-<span id="cb45-6"><a href="#cb45-6" tabindex="-1"></a>  )</span>
-<span id="cb45-7"><a href="#cb45-7" tabindex="-1"></a></span>
-<span id="cb45-8"><a href="#cb45-8" tabindex="-1"></a>Does not apply      No Answer      Very good           Good   Satisfactory </span>
-<span id="cb45-9"><a href="#cb45-9" tabindex="-1"></a>             <span class="dv">3</span>              <span class="dv">2</span>              <span class="dv">2</span>              <span class="dv">2</span>              <span class="dv">5</span> </span>
-<span id="cb45-10"><a href="#cb45-10" tabindex="-1"></a>          Poor            Bad </span>
-<span id="cb45-11"><a href="#cb45-11" tabindex="-1"></a>             <span class="dv">2</span>              <span class="dv">3</span> </span></code></pre></div>
-<p>Alternatively you can use the labels_opendf()-function to get the
-value labels:</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" tabindex="-1"></a><span class="fu">table</span>(</span>
-<span id="cb46-2"><a href="#cb46-2" tabindex="-1"></a>  <span class="fu">factor</span>(</span>
-<span id="cb46-3"><a href="#cb46-3" tabindex="-1"></a>    df<span class="sc">$</span>bap87, <span class="at">labels =</span> <span class="fu">names</span>(<span class="fu">labels_opendf</span>(df<span class="sc">$</span>bap87, <span class="at">valuelabels=</span>T))</span>
-<span id="cb46-4"><a href="#cb46-4" tabindex="-1"></a>    )</span>
-<span id="cb46-5"><a href="#cb46-5" tabindex="-1"></a>  )</span></code></pre></div>
+<span id="cb45-3"><a href="#cb45-3" tabindex="-1"></a>    df<span class="sc">$</span>bap87, <span class="at">labels =</span> <span class="fu">names</span>(<span class="fu">getmetadata_opendf</span>(df<span class="sc">$</span>bap87, <span class="at">valuelabels=</span>T))</span>
+<span id="cb45-4"><a href="#cb45-4" tabindex="-1"></a>    )</span>
+<span id="cb45-5"><a href="#cb45-5" tabindex="-1"></a>  )</span></code></pre></div>
 <p>To display the data in a language other than the default one, let’s
 try German by appending the respective language code to the attribute
 name. For example, you can use $labels_de to access the German language
 labels and present the information accordingly.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" tabindex="-1"></a><span class="fu">table</span>(</span>
+<span id="cb46-2"><a href="#cb46-2" tabindex="-1"></a>  <span class="fu">factor</span>(</span>
+<span id="cb46-3"><a href="#cb46-3" tabindex="-1"></a>    df<span class="sc">$</span>bap87,</span>
+<span id="cb46-4"><a href="#cb46-4" tabindex="-1"></a>      <span class="at">labels=</span><span class="fu">names</span>(<span class="fu">attributes</span>(df<span class="sc">$</span>bap87)<span class="sc">$</span>labels_de)</span>
+<span id="cb46-5"><a href="#cb46-5" tabindex="-1"></a>    )</span>
+<span id="cb46-6"><a href="#cb46-6" tabindex="-1"></a>  )</span>
+<span id="cb46-7"><a href="#cb46-7" tabindex="-1"></a></span>
+<span id="cb46-8"><a href="#cb46-8" tabindex="-1"></a>  trifft nicht zu      keine Angabe          Sehr gut               Gut </span>
+<span id="cb46-9"><a href="#cb46-9" tabindex="-1"></a>                <span class="dv">3</span>                 <span class="dv">2</span>                 <span class="dv">2</span>                 <span class="dv">2</span> </span>
+<span id="cb46-10"><a href="#cb46-10" tabindex="-1"></a>Zufriedenstellend       Weniger gut          Schlecht </span>
+<span id="cb46-11"><a href="#cb46-11" tabindex="-1"></a>                <span class="dv">5</span>                 <span class="dv">2</span>                 <span class="dv">3</span> </span></code></pre></div>
+<p>Or using getmetadata_opendf()-function:</p>
 <div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" tabindex="-1"></a><span class="fu">table</span>(</span>
 <span id="cb47-2"><a href="#cb47-2" tabindex="-1"></a>  <span class="fu">factor</span>(</span>
 <span id="cb47-3"><a href="#cb47-3" tabindex="-1"></a>    df<span class="sc">$</span>bap87,</span>
-<span id="cb47-4"><a href="#cb47-4" tabindex="-1"></a>      <span class="at">labels=</span><span class="fu">names</span>(<span class="fu">attributes</span>(df<span class="sc">$</span>bap87)<span class="sc">$</span>labels_de)</span>
+<span id="cb47-4"><a href="#cb47-4" tabindex="-1"></a>      <span class="at">labels=</span><span class="fu">names</span>(<span class="fu">getmetadata_opendf</span>(df<span class="sc">$</span>bap87, <span class="at">type=</span><span class="st">&quot;valuelabels&quot;</span>, <span class="at">language=</span><span class="st">&quot;de&quot;</span>))</span>
 <span id="cb47-5"><a href="#cb47-5" tabindex="-1"></a>    )</span>
 <span id="cb47-6"><a href="#cb47-6" tabindex="-1"></a>  )</span>
 <span id="cb47-7"><a href="#cb47-7" tabindex="-1"></a></span>
@@ -1000,19 +1031,18 @@ labels and present the information accordingly.</p>
 <span id="cb47-9"><a href="#cb47-9" tabindex="-1"></a>                <span class="dv">3</span>                 <span class="dv">2</span>                 <span class="dv">2</span>                 <span class="dv">2</span> </span>
 <span id="cb47-10"><a href="#cb47-10" tabindex="-1"></a>Zufriedenstellend       Weniger gut          Schlecht </span>
 <span id="cb47-11"><a href="#cb47-11" tabindex="-1"></a>                <span class="dv">5</span>                 <span class="dv">2</span>                 <span class="dv">3</span> </span></code></pre></div>
-<p>Or using labels_opendf()-function:</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" tabindex="-1"></a><span class="fu">table</span>(</span>
-<span id="cb48-2"><a href="#cb48-2" tabindex="-1"></a>  <span class="fu">factor</span>(</span>
-<span id="cb48-3"><a href="#cb48-3" tabindex="-1"></a>    df<span class="sc">$</span>bap87,</span>
-<span id="cb48-4"><a href="#cb48-4" tabindex="-1"></a>      <span class="at">labels=</span><span class="fu">names</span>(<span class="fu">labels_opendf</span>(df<span class="sc">$</span>bap87, <span class="at">valuelabels=</span>T, <span class="at">language=</span><span class="st">&quot;de&quot;</span>))</span>
-<span id="cb48-5"><a href="#cb48-5" tabindex="-1"></a>    )</span>
-<span id="cb48-6"><a href="#cb48-6" tabindex="-1"></a>  )</span>
-<span id="cb48-7"><a href="#cb48-7" tabindex="-1"></a></span>
-<span id="cb48-8"><a href="#cb48-8" tabindex="-1"></a>  trifft nicht zu      keine Angabe          Sehr gut               Gut </span>
-<span id="cb48-9"><a href="#cb48-9" tabindex="-1"></a>                <span class="dv">3</span>                 <span class="dv">2</span>                 <span class="dv">2</span>                 <span class="dv">2</span> </span>
-<span id="cb48-10"><a href="#cb48-10" tabindex="-1"></a>Zufriedenstellend       Weniger gut          Schlecht </span>
-<span id="cb48-11"><a href="#cb48-11" tabindex="-1"></a>                <span class="dv">5</span>                 <span class="dv">2</span>                 <span class="dv">3</span> </span></code></pre></div>
 </div>
+<div id="merge-odf-datasets" class="section level2">
+<h2>Merge ODF-Datasets:</h2>
+<p>To merge ODF-datasets you should use the left_join(), right_join(),
+full_join(), and inner_join() from the dplyr-package instead of the the
+merge()-function to keep the attributes with the metadata of the merged
+datasets.</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb48-2"><a href="#cb48-2" tabindex="-1"></a><span class="co">#similar to merge(df[,c(1:3,6)], df[,c(4:6)], by=&quot;name&quot;, all.x=T, all.y=F)</span></span>
+<span id="cb48-3"><a href="#cb48-3" tabindex="-1"></a>merged_df<span class="ot">&lt;-</span><span class="fu">left_join</span>(df[,<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,<span class="dv">6</span>)], df[,<span class="fu">c</span>(<span class="dv">4</span><span class="sc">:</span><span class="dv">6</span>)], <span class="at">by=</span><span class="st">&quot;name&quot;</span>) </span>
+<span id="cb48-4"><a href="#cb48-4" tabindex="-1"></a><span class="co">#or </span></span>
+<span id="cb48-5"><a href="#cb48-5" tabindex="-1"></a>merged_df<span class="ot">&lt;-</span><span class="fu">left_join</span>(df[,<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,<span class="dv">6</span>)], df[,<span class="fu">c</span>(<span class="dv">4</span><span class="sc">:</span><span class="dv">6</span>)])</span></code></pre></div>
 <div id="recoding-a-variable" class="section level3">
 <h3>Recoding a Variable</h3>
 <p>We want to display the table with only valid answers. Therefore, we
@@ -1151,6 +1181,7 @@ German description:</p>
 <span id="cb58-13"><a href="#cb58-13" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /></p>
 <!-- devtools::build_rmd("vignettes/opendataformat.Rmd") -->
+</div>
 </div>
 </div>
 

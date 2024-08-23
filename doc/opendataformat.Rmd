@@ -28,20 +28,33 @@ Tired of struggling to convert open data formats into R dataframes? Look no furt
 
 With just a few lines of code, you can convert a data package specified as opendataformat into an R dataframe (`read_opendf()`) or convert an R dataframe into a data package specified in the opendataformat (`write_opendf()`).
 
-But wait, there's more! Our package goes beyond parsing. Accessing metadata has never been easier. Dive into the treasure trove of information stored in your R dataframes. Explore dataset labels, descriptions, and valuable details about variables such as labels and value labels with the `docu_opendf()` function and the `labels_opendf()` function.
+But wait, there's more! Our package goes beyond parsing. Accessing metadata has never been easier. Dive into the treasure trove of information stored in your R dataframes. Explore dataset labels, descriptions, and valuable details about variables such as labels and value labels with the `docu_opendf()` function and the `getmetadata_opendf()` function.
 
 This vignette will guide you through a series of examples that demonstrate the possibilities of these functions. Let's get started!
 
 ## Installation 
 
-You can install and update the package from gitlab using the `install_git()`-function from the devtools-library.
+You can download and install the package by downloading the latest version from 
+Zenodo.
+Alternatively you can download the development version from gitlab using the 
+`install_git()`-function from the devtools-library.
 
 ```{r setup, results = 'hide', messages=FALSE, warning = FALSE}
-devtools::install_git("https://git.soep.de/opendata/r-package-opendataformat.git",  
-                      quiet = TRUE)
+# At this point you can download and install the the latest version of the opendataformat package from Zenodo:
+#download.file("[xenodo download Link]", 
+#              destfile = paste0(tempdir(), "/", "opendataformat.tar.gz"), method = "curl")
+#install.packages(paste0(tempdir(), "/", "opendataformat.tar.gz"), 
+#                 repos = NULL, type = "source")
+
+
+# Alternatively you can install the development version from Gitlab:
+# install.packages("devtools")
+#devtools::install_git("https://git.soep.de/opendata/r-package-opendataformat.git",  
+#                      quiet = TRUE)
+
 library(opendataformat)
 ```
-
+12917713
 
 # Functions in the openmetadata Package
 
@@ -157,17 +170,17 @@ for (i in names(df)) {
 }
 ```
 
-You can also use the labels_opendf() function to retrieve labels and other metadata for the variables:
+You can also use the getmetadata_opendf() function to retrieve labels and other metadata for the variables:
 
-```{r labels_opendf1, comment = ""}
-labels_opendf(df)
+```{r getmetadata_opendf1, comment = ""}
+getmetadata_opendf(df, type="label")
 ```
 
 
 or the value labels:
 
-```{r labels_opendf2, comment = ""}
-labels_opendf(df$bap87, valuelabels=T)
+```{r getmetadata_opendf2, comment = ""}
+getmetadata_opendf(df$bap87, type="valuelabels")
 ```
 
 
@@ -188,11 +201,11 @@ attr(df, "languages")
 ```
 
 
-## Access Metadata: `labels_opendf()` and `attributes()`
+## Access Metadata: `getmetadata_opendf()` and `attributes()`
 
 Browsing through datasets' metadata provides a valuable initial overview. However, when it comes time to dive into the analysis work, questions arise regarding the storage location of the metadata and the process of accessing and utilizing it. Let's explore how and where the metadata is stored, and how we can effectively access and leverage it for analysis purposes.
 
-A easy way to retrieve metadata is to use the `labels_opendf()` function to get labels and other metadata. 
+A easy way to retrieve metadata is to use the `getmetadata_opendf()` function to get metadata. 
 
 
 ### Retrieve the Attributes with `attributes()` and `attr()`
@@ -230,76 +243,66 @@ attributes(df$bap87)$description_de
 ```
 
 
-### Retrieve Metadata with `labels_opendf()`
+### Retrieve Metadata with `getmetadata_opendf()`
 
-You can also use the `labels_opendf()` function to retrieve labels and other metadata for the variables.
+You can also use the `getmetadata_opendf()` function to retrieve labels and other metadata for the variables.
 By default, the function will return the variable labels for a dataset:
 
-```{r labels_opendf3, comment = ""}
-labels_opendf(df)
+```{r getmetadata_opendf3, comment = ""}
+getmetadata_opendf(df, type="labels")
 ```
 
 or for a specific variable::
 
-```{r labels_opendf4, comment = ""}
-labels_opendf(df$bap96)
+```{r getmetadata_opendf4, comment = ""}
+getmetadata_opendf(df$bap96, type="labels")
 ```
 
-To retrieve labels in a specific language, use the language parameter:
+To retrieve metadata in a specific language, use the language parameter:
 
-```{r labels_opendf5, eval = FALSE, comment = ""}
-labels_opendf(df, language="en")
+```{r getmetadata_opendf5, eval = FALSE, comment = ""}
+getmetadata_opendf(df, type="labels", language="en")
 ```
 
 Or set the active language of the dataset using the `setLanguage_opendf()` function:
-```{r labels_opendf6, eval = FALSE, comment = ""}
+```{r getmetadata_opendf6, eval = FALSE, comment = ""}
 df<-setLanguage_opendf(df, language="en")
-labels_opendf(df)
+getmetadata_opendf(df, type="labels")
 ```
 
 
-You can also use the `labels_opendf()` function to retrieve value labels for a specific variable by setting the argument `valuelabels=TRUE`:
+You can also use the `getmetadata_opendf()` function to retrieve value labels for a specific variable by setting the argument `type="valuelabels"`:
 
-```{r labels_opendf valuelabels, comment = ""}
-labels_opendf(df$bap9001, valuelabels=T)
-
-```
-
-Alternatively, you can set the argument `retrieve="valuelabels"`:
-```{r labels_opendf valuelabels2, eval=FALSE, comment = ""}
-labels_opendf(df$bap9001, retrieve="valuelabels")
+```{r getmetadata_opendf valuelabels, comment = ""}
+getmetadata_opendf(df$bap9001, type="valuelabels")
 
 ```
-
 The value labels for each value are stored in the namespace:
 
-```{r labels_opendf valuelabels names, comment = ""}
-names(labels_opendf(df$bap9001, valuelabels=T))
+```{r getmetadata_opendf valuelabels names, comment = ""}
+names(getmetadata_opendf(df$bap9001, type="valuelabels"))
 ```
 
 
-You can use the `labels_opendf()` function to return descriptions, urls, variable types and metadata languages as well:
+You can use the `getmetadata_opendf()` function to return descriptions, urls, variable types and metadata languages as well:
 
-To retrieve variable description(s), set the argument `retrieve="description"`:
+To retrieve variable description(s), set the argument `type="description"`:
 
-```{r labels_opendf descriptions, comment = ""}
-labels_opendf(df, retrieve="description")
+```{r getmetadata_opendf descriptions, comment = ""}
+getmetadata_opendf(df, type="description")
 ```
 
-To retrieve variable url(s), set the argument `retrieve="url"`:
+To retrieve variable url(s), set the argument `type="url"`:
 
-```{r labels_opendf url, eval = FALSE, comment = ""}
-labels_opendf(df, retrieve="url")
+```{r getmetadata_opendf url, eval = FALSE, comment = ""}
+getmetadata_opendf(df, type="url")
 ```
 
-To retrieve variable type(s), set the argument `retrieve="type"`:
+To retrieve variable type(s), set the argument `type="type"`:
 
-```{r labels_opendf type, eval = FALSE, comment = ""}
-labels_opendf(df, retrieve="type")
+```{r getmetadata_opendf type, eval = FALSE, comment = ""}
+getmetadata_opendf(df, type="type")
 ```
-
-
-
 
 ## Export to the Open Data Format: `write_opendf()`
 
@@ -445,12 +448,12 @@ table(
   )
 ```
 
-Alternatively you can use the labels_opendf()-function to get the value labels:
+Alternatively you can use the getmetadata_opendf()-function to get the value labels:
 
-```{r table factor labels_opendf, eval=F, comment = ""}
+```{r table factor getmetadata_opendf, eval=F, comment = ""}
 table(
   factor(
-    df$bap87, labels = names(labels_opendf(df$bap87, valuelabels=T))
+    df$bap87, labels = names(getmetadata_opendf(df$bap87, valuelabels=T))
     )
   )
 ```
@@ -466,17 +469,30 @@ table(
   )
 ```
 
-Or using labels_opendf()-function:
+Or using getmetadata_opendf()-function:
 
-```{r table factor german labels_opendf, comment = ""}
+```{r table factor german getmetadata_opendf, comment = ""}
 table(
   factor(
     df$bap87,
-      labels=names(labels_opendf(df$bap87, valuelabels=T, language="de"))
+      labels=names(getmetadata_opendf(df$bap87, type="valuelabels", language="de"))
     )
   )
 ```
 
+## Merge ODF-Datasets:
+
+To merge ODF-datasets you should use the left_join(), right_join(), full_join(), 
+and inner_join() from the dplyr-package instead of the the merge()-function to
+keep the attributes with the metadata of the merged datasets.
+
+```{r merge with join, eval = FALSE}
+library(dplyr)
+#similar to merge(df[,c(1:3,6)], df[,c(4:6)], by="name", all.x=T, all.y=F)
+merged_df<-left_join(df[,c(1:3,6)], df[,c(4:6)], by="name") 
+#or 
+merged_df<-left_join(df[,c(1:3,6)], df[,c(4:6)])
+```
 
 ### Recoding a Variable
 
