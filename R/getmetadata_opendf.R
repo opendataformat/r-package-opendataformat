@@ -30,21 +30,21 @@
 #' # get example data from the opendataformat package
 #' df <- get(data("data_opendf"))
 #' # view the variable labels for all variables in English
-#' labels_opendf(input = df, language = "en", valuelabels = FALSE)
+#' getmetadata_opendf(input = df, type="label", language = "en")
 #'
 #' # view the value labels for variable bap87 in English
-#' labels_opendf(input = df$bap87, language = "en", valuelabels = FALSE)
+#' getmetadata_opendf(input = df$bap87, type = "valuelabel", language = "en")
 #'
 #' # view the description for variable bap87 in English
-#' labels_opendf(input = df$bap87, language = "en", retrieve = "description")
+#' getmetadata_opendf(input = df$bap87, type = "description", language = "en")
 #'
 #' @export
 
-labels_opendf<-function(input,
-                        language="current",
-                        valuelabels=F,
-                        retrieve="labels") {
-  if (language=="current"){
+getmetadata_opendf<-function(input,
+                             type,
+                             language="active"
+                             ) {
+  if (language=="active" | language=="current"){
     lang<-attr(input, "lang")
   } else {
     lang<-language
@@ -55,52 +55,50 @@ labels_opendf<-function(input,
   }
   
   #check spelling of retrieve-parameter
-  if (retrieve=="label"){
-    retrieve <- "labels"
+  if (type=="label" |type=="labels" | type=="Labels"| type=="Label"){
+    type <- paste0("label_", lang)
   }
-  if (retrieve=="description" | retrieve=="descriptions"){
-    retrieve <- paste0("description_", lang)
+  if (type=="description" | type=="descriptions" | type=="Description" | type=="Descriptions"){
+    type <- paste0("description_", lang)
   }
-  if (retrieve == "urls"){
-    retrieve <- "url"
+  if (type == "urls" | type == "URL"){
+    type <- "url"
   }
-  if (retrieve == "types"){
-    retrieve <- "type"
+  if (type == "types"){
+    type <- "type"
   }
-  if (retrieve=="valuelabels" | retrieve=="valuelabel" | retrieve=="value labels" | retrieve=="value label"){
-    valuelabels <- T
-    retrieve <- "labels"
+  if (type=="valuelabels" | type=="valuelabel" | type=="value labels" | type=="value label"|type=="Valuelabels" | type=="Valuelabel" | type=="Value labels" | type=="Value Label"){
+    type <- "valuelabels"
   }
   
-  #check if retrieve is valid
-  if (!(retrieve %in% c("labels", "type", paste0("description_", lang ), "url", "languages"))){
-    stop(paste0("Function input retrieve ", output, " is not valid"))
+  #check if type is valid
+  if (!(type %in% c(paste0("label_", lang), "type", paste0("description_", lang), "url", "languages", "valuelabels"))){
+    stop(paste0("Function input type ", type, " is not valid"))
   }
   
   output<-c()
   output_names<-c()
   if ("data.frame" %in% class(input)){
-    output_names<-colnames(input)
-    for (var in colnames(input)){
-      if (retrieve=="labels"){
-        output<-c(output,attr(input[,var], paste0("label_", lang)))
-      } else {
-        output<-c(output,attr(input[,var], retrieve))
-      }
-      
-    }
-    names(output)<-output_names
-  } else {
-    if (valuelabels==F | valuelabels=="no"){
-      output_names<-attr(input, "name")
-      if (retrieve=="labels"){
-        output<-attr(input, paste0("label_", lang))
-      } else {
-        output<-attr(input, retrieve)
+    if (type!="valuelabels"){
+      output_names<-colnames(input)
+      for (var in colnames(input)){
+        output<-c(output,attr(input[,var], type))
       }
       names(output)<-output_names
     } else {
-      if ( valuelabels==T | valuelabels=="yes" ) output<-attr(input, paste0("labels_", lang)) else stop("Function input valuelabels not valid")
+      output<-list()
+      for (var in colnames(input)){
+        output[[var]]<-attr(input[,var], paste0("labels_", lang))
+      }
+    }
+    
+  } else {
+    if (type!="valuelabels"){
+      output_names<-attr(input, "name")
+      output<-attr(input, type)
+      names(output)<-output_names
+    } else {
+      output<-attr(input, paste0("labels_", lang))
     }
   }
   return(output)

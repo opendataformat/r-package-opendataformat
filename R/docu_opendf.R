@@ -394,6 +394,21 @@ docu_opendf<-function(input,
     htmlFile <- file.path(tempDir, "docu.html")
     viewer <- getOption("viewer")
     writeLines(html_output, htmlFile)
-    viewer(htmlFile)
+    if (!is.null(viewer)){
+      viewer(htmlFile)
+    } else {
+      if (style %in% c("html", "viewer")){
+        for (i in 1:length(printing_output)){
+          if (printing_output[i] != "valuelabels") {cat(printing_output[i])} else print(valuelabels_tab, row.names = FALSE)
+        }
+        if (input_type=="Variable"){
+          if (nrow(valuelabels_tab>0)) print(valuelabels_tab, row.names = FALSE) else print("No value labels")
+        }
+        if (input_type=="Dataset" & variables=="yes"){
+          print(varlist)
+        }
+      }
+    }
+    
   }
 }

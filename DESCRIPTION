@@ -21,14 +21,16 @@ Depends:
     cli,
     magrittr,
     xml2,
-    data.table
+    data.table,
+    zip
 Suggests: 
     testthat (>= 3.0.0),
     knitr,
     rmarkdown,
     devtools,
     ISLR,
-    dplyr
+    dplyr,
+    haven
 VignetteBuilder: knitr
 VignetteEngine: knitr::rmarkdown
 VignetteIndexEntry: "opendataformat"
