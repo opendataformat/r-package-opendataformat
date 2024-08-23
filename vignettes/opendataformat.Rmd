@@ -453,7 +453,7 @@ Alternatively you can use the getmetadata_opendf()-function to get the value lab
 ```{r table factor getmetadata_opendf, eval=F, comment = ""}
 table(
   factor(
-    df$bap87, labels = names(getmetadata_opendf(df$bap87, valuelabels=T))
+    df$bap87, labels = names(getmetadata_opendf(df$bap87, type = valuelabels))
     )
   )
 ```

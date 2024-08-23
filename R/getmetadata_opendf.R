@@ -6,6 +6,10 @@
 #'
 #' @param input R data frame (df) or variable from an R data frame (df$var).
 #'
+#' @param type The metadata type you want to retrieve.Possible options are 
+#' "label", "description", "url", "type", "valuelabels",
+#' or "languages".
+#'
 #' @param language Select the language in which the labels of the variables 
 #' will be displayed. If no language is selected, the current/active language 
 #' of the data frame will be used.
@@ -13,16 +17,6 @@
 #'   \item By default the language that is set to current is displayed (\code{language = "current"}).
 #'   \item You can select the language by language code, e.g. \code{language = "en"}.
 #' }
-#'
-#' @param valuelabels You can choose to display the value labels instead of 
-#' the variable label, if the input is a variable by setting \code{valuelabels=TRUE} 
-#' or \code{valuelabels="yes"}. If the input is a dataset, this argument is 
-#' ignored.
-#'
-#' @param retrieve You can choose to display another attribute/metadata instead 
-#' of the variable label(s). Possible options are "description", "url", "type" 
-#' or "languages".If \code{valuelabels=TRUE} or \code{valuelabels="yes"} and 
-#' the input is a variable, this argument is ignored.
 #'
 #' @return Documentation.
 #'
