@@ -38,7 +38,8 @@
 #' 
 #' 
 #' @param style Selects where the output should be displayed (console ore 
-#' viewer).By default the metadata information is displayed in the console.
+#' viewer).By default the metadata information is displayed in the viewer if the 
+#' viewer is available.
 #' (\code{style = "console"})
 #' (\code{style = "print"})
 #' * You can choose to display the code in both the console and the viewer
@@ -91,7 +92,7 @@
  
 docu_opendf<-function(input,
                       languages="current",
-                      style="print", 
+                      style="viewer", 
                       replace_missing_language=F,
                       variables="no") {
 
