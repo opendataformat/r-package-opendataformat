@@ -5,8 +5,6 @@
 #' and variables via the R-Studio Viewer or the web browser.
 #'
 #' @importFrom cli style_hyperlink
-#' @importFrom crayon underline
-#' @importFrom crayon bold
 #' 
 #' @param input R data frame (df) or variable from an R data frame (df$var).
 #'
@@ -25,17 +23,6 @@
 #' \code{languages = "en"}.
 #' 
 #' 
-#' @param variables Indicate whether a list with all the variables should be 
-#' displayed with the dataset metadata. 
-#' If the input is a variable/column, the variables-argument will be ignored.
-#' Set (\code{variables="yes"}) to display the list of variables.
-#' 
-#' 
-#' @param replace_missing_language If only one language is specified in languages and 
-#' replace_missing_language is set to TRUE. In case of a missing label or description, 
-#' the default or english label/description is displayed additionally (if 
-#' one of these is available).
-#' 
 #' 
 #' @param style Selects where the output should be displayed (console ore 
 #' viewer).By default the metadata information is displayed in the viewer if the 
@@ -48,6 +35,18 @@
 #' * You can choose to display the code only in the viewer
 #' (\code{style = "viewer"})
 #' (\code{style = "html"})
+#' 
+#' 
+#' @param replace_missing_language If only one language is specified in languages and 
+#' replace_missing_language is set to TRUE. In case of a missing label or description, 
+#' the default or english label/description is displayed additionally (if 
+#' one of these is available).
+#' 
+#' 
+#' @param variables Indicate whether a list with all the variables should be 
+#' displayed with the dataset metadata. 
+#' If the input is a variable/column, the variables-argument will be ignored.
+#' Set (\code{variables="yes"}) to display the list of variables.
 #' 
 #' @return Documentation.
 #'
@@ -106,7 +105,6 @@ docu_opendf<-function(input,
     input_type<-"Dataset"
   } else {
     input_type="Variable"
-    if (class(input)=="NULL") stop(paste0("Object '", deparse(substitute(input)), "' not found."))
   }
   
   #assign languages and currentlanguage
@@ -250,7 +248,7 @@ docu_opendf<-function(input,
   #######  format output ######
   #name and url
   printing_output<-c(
-    crayon::underline(crayon::bold(paste0(input_type, ":"))),
+    paste0("\033[4m\033[1m",input_type, ":\033[0m\033[0m"),
     paste0("  ", name, "\n")
   )
   html_output<-paste0(
@@ -265,7 +263,7 @@ docu_opendf<-function(input,
   #label
   printing_output<-c(
     paste0(printing_output),
-    crayon::bold("Label:\n")
+    "\033[1mLabel:\033[0m\n"
     )
   html_output<-paste0(
     html_output,
@@ -289,7 +287,7 @@ docu_opendf<-function(input,
   #label
   printing_output<-c(
     paste0(printing_output),
-    crayon::bold("Description:\n")
+    "\033[1mDescription:\033[0m\n"
   )
   html_output<-paste0(
     html_output,
@@ -314,12 +312,12 @@ docu_opendf<-function(input,
     #Type
     printing_output<-c(
       paste0(printing_output),
-      crayon::bold("type:\n"),
+      "\033[1mType:\033[0m\n",
       paste0("    ", type, "\n")
     )
     html_output<-paste0(
       html_output,
-      "<p><b>type:","</b><br>", type, "</p>"
+      "<p><b>Type:","</b><br>", type, "</p>"
     )
   }
   
@@ -327,7 +325,7 @@ docu_opendf<-function(input,
   if (input_type=="Dataset"){
     printing_output<-c(
       paste0(printing_output),
-      crayon::bold("languages:\n"),
+      "\033[1mlanguages:\033[0m\n",
       paste0("    ", paste0(input_languages,collapse = " "), " (active: ", input_lang, ")", "\n")
     )
     html_output<-paste0(
@@ -339,14 +337,14 @@ docu_opendf<-function(input,
   #url
   printing_output<-c(
     paste0(printing_output),
-    crayon::bold("url:\n"),
+    "\033[1mURL:\033[0m\n",
     paste0("    ", interactive_url, "\n")
   )
   
   if (input_type=="Variable"){
     printing_output<-c(
       paste0(printing_output),
-      crayon::bold("Value Labels:\n")
+      "\033[1mValue Labels:\033[0m\n"
     )
     html_output<-paste0(
       html_output,
@@ -357,14 +355,14 @@ docu_opendf<-function(input,
   
   html_output<-paste0(
     html_output,
-    "<p><b>url:","</b><br>", paste0("<a href='",url,"'>",url,"</a></p>")
+    "<p><b>URL:","</b><br>", paste0("<a href='",url,"'>",url,"</a></p>")
   )
   
   #add variables information to dataset information
   if (input_type=="Dataset" & variables=="yes"){
     printing_output<-c(
       paste0(printing_output),
-      crayon::bold("Variables:\n")#,
+      "\033[1mVariables:\033[0m\n"#,
       #"valuelabels"
     )
     html_output<-paste0(

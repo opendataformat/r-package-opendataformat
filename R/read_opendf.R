@@ -188,10 +188,10 @@ read_opendf <- function(file,
       
     } else {
       cnames<-names(data.table::fread(file.path(tempdir(), "data.csv"), skip=0, nrows=0))
-      if (class(variables)!="numeric"){
-        cindex<-which(cnames %in% variables)
-      } else {
+      if (class(variables)%in%c("numeric", "integer")){
         cindex<-variables
+      } else {
+        cindex<-which(cnames %in% variables)
       }
       data <- data.table::fread(file.path(tempdir(), "data.csv"), select=cindex, header=F, skip=skip+1, nrows=nrows, col.names=cnames[cindex])
       #data<-data.table::fread(cmd = paste0('unzip -p "',file, '" data.csv'), select=cindex, header=F, skip=skip+1, nrows=nrows, col.names=cnames[cindex])
