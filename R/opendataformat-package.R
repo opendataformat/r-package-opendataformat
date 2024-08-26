@@ -8,7 +8,7 @@
 #'
 #' @description
 #' The package is designed to support the use of the open data format.
-#' For this purpose, three functions have been developed:
+#' For this purpose, three main functions have been developed:
 #'
 #' ## read_opendf()
 #' Import data from the Open Data Format to an R data frame.
@@ -27,7 +27,9 @@
 #'
 #' @author
 #'
-#' Claudia Saalbach (\email{csaalbach@diw.de}), Xiaoyao Han (\email{xhan@diw.de}),
+#' Tom Hartl (\email{thartl@diw.de}), 
+#' Claudia Saalbach (\email{csaalbach@diw.de}), 
+#' Xiaoyao Han (\email{xhan@diw.de}),
 #' Knut Wenzig (\email{kwenzig@diw.de})
 #'
 #' Other Contributors: KonsortSWD/NFDI, DIW Berlin

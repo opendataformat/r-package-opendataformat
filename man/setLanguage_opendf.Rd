@@ -21,10 +21,10 @@ docu_opendf function.
 }
 \examples{
 # get example data from the opendataformat package
-df <- get(data("data_opendf"))
+df  <-  get(data("data_opendf"))
 
 # Switch dataset df to language "en" 
-df <- setLanguage_opendf(df, language = "en")
+df  <-  setLanguage_opendf(df, language = "en")
 
 # Display dataset information for dataset df in language "en"
 docu_opendf(df)

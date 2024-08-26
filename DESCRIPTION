@@ -4,10 +4,7 @@ Version: 1.1.2
 Author: Tom Hartl, Claudia Saalbach, Xiaoyao Han, Knut Wenzig
 Maintainer: Tom Hartl <thartl@diw.de>
 Authors@R: c(
-    person("Tom", "Hartl", , "thartl@diw.de", role = c("aut", "cre")),
-    person("Claudia", "Saalbach", , "csaalbach@diw.de", role = c("aut", "cre")),
-    person("Knut", "Wenzig", , "kwenzig@diw.de", role = c("aut", "cre")),
-    person("Xiaoyao", "Han", , "xhan@diw.de", role = c("aut", "cre"))
+    person("Tom", "Hartl", , "thartl@diw.de", role = c("aut", "cre"))
   )
 Description: Reading and writing of data files in the open data format, 
     displaying metadata in different languages.

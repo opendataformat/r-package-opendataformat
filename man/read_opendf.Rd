@@ -32,17 +32,17 @@ Import data from the Open Data Format to an R data frame.
 }
 \examples{
 # get path to example data from the opendataformat package (data.zip)
-path <- system.file("extdata", "data.zip", package="opendataformat")
+path  <-  system.file("extdata", "data.zip", package = "opendataformat")
 path
 
 # read example data specified as Open Data Format from ZIP file
-df <- read_opendf(file = path)
+df  <-  read_opendf(file = path)
 df
 attributes(df)
 attributes(df$bap87)
 
 # read example data with language selection
-df <- read_opendf(file = path, languages = "de")
+df  <-  read_opendf(file = path, languages = "de")
 attributes(df$bap87)
 
 }

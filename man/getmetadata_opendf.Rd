@@ -32,7 +32,7 @@ and variables via the R-Studio Viewer or the web browser.
 # get example data from the opendataformat package
 df <- get(data("data_opendf"))
 # view the variable labels for all variables in English
-getmetadata_opendf(input = df, type="label", language = "en")
+getmetadata_opendf(input = df, type = "label", language = "en")
 
 # view the value labels for variable bap87 in English
 getmetadata_opendf(input = df$bap87, type = "valuelabel", language = "en")

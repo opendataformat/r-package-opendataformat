@@ -84,7 +84,7 @@
 #' # english label will be displayed additionally.
 #' \dontrun{
 #' attributes(df$bap87)["label_de"]<-""
-#' docu_opendf(df$bap87, languages="de", style = "console", replace_missing_language=T)
+#' docu_opendf(df$bap87, languages = "de", style = "console", replace_missing_language=T)
 #' }
 #'
 #' @export
@@ -112,10 +112,12 @@ docu_opendf<-function(input,
   input_lang<-unlist(attr(input, "lang"))
   
   #Check if languages argument is valid
-  if (!(languages %in% c(input_languages, "current", "default", "all"))) stop("Your language selection is not valid.")
+  if (!(languages %in% c(input_languages, "current", "default", "all"))) 
+    stop("Your language selection is not valid.")
   
   
-  #if languages is set to default, but no default language exists, the current language is used
+  #if languages is set to default, but no default language exists, the current 
+  # language is used
   if(languages=="default"){
     if(!("default"%in%input_languages)){
       languages=attr(input, "lang")
@@ -123,135 +125,162 @@ docu_opendf<-function(input,
   }
   #if languages is set to current, the current language is used
   if(languages=="current"){
-    languages=attr(input, "lang")
+    languages <- attr(input, "lang")
   }
   #transform "de" to "_de"
-  if (languages!="all") languages=paste0("_", languages)
-  #if languages is set to all, all languages of the dataset ate assigned to languages
-  if (languages=="all"){
-    languages<-input_languages
-    languages=paste0("_", languages)
+  if (languages!="all") languages <- paste0("_", languages)
+  #if languages is set to all, all languages of the dataset ate assigned to 
+  # languages
+  if (languages == "all"){
+    languages <- input_languages
+    languages <- paste0("_", languages)
   }
   #get dataset/variable name
-  name=attr(input, "name")
+  name <- attr(input, "name")
   #get label and description for every language
-  label=list()
-  label_console=list()
-  label_html=list()
-  description=list()
+  label <- list()
+  label_console <- list()
+  label_html <- list()
+  description <- list()
   for (l in languages){
-    label[l]=attr(input, paste0("label",l))
-    description[l]=attr(input, paste0("description",l))
+    label[l] <- attr(input, paste0("label",l))
+    description[l] <- attr(input, paste0("description",l))
   }
-  label_console<-label
-  label_html<-label
-  if (length(languages)==1 & any(c(label[[l]]=="", is.null(label[[l]]))) & replace_missing_language==T){
+  label_console <- label
+  label_html <- label
+  if (length(languages) == 1 & any(c(label[[l]] == "", is.null(label[[l]]))) & 
+      replace_missing_language == TRUE){
     if (!is.null(attr(input, "label_default"))){
-      if(attr(input, "label_default")!="" ){
-        label_console[languages]<-paste0("\n[default] ", attr(input, "label_default"))
-        label_html[languages]<-paste0("<br>[default] ", attr(input, "label_default"))
+      if(attr(input, "label_default") != "" ){
+        label_console[languages] <- paste0("\n[default] ", 
+                                           attr(input, "label_default"))
+        label_html[languages] <- paste0("<br>[default] ", 
+                                        attr(input, "label_default"))
       } else {
         if (!is.null(attr(input, "label_en"))){
-          if(attr(input, "label_en")!="" ){
-            label_console[languages]<-paste0("\n[en] ", attr(input, "label_en"))
-            label_html[languages]<-paste0("<br>[en] ", attr(input, "label_en"))
+          if(attr(input, "label_en") != "" ){
+            label_console[languages] <- paste0("\n[en] ", 
+                                               attr(input, "label_en"))
+            label_html[languages] <- paste0("<br>[en] ", 
+                                            attr(input, "label_en"))
           }
         }
       }
     } else {
       if (!is.null(attr(input, "label_en"))){
-        if(attr(input, "label_en")!="" ){
-          label_console[languages]<-paste0("\n[en] ", attr(input, "label_en"))
-          label_html[languages]<-paste0("<br>[en] ", attr(input, "label_en"))
+        if(attr(input, "label_en") != "" ){
+          label_console[languages] <- paste0("\n[en] ", attr(input, "label_en"))
+          label_html[languages] <- paste0("<br>[en] ", attr(input, "label_en"))
         }
       }
     }
   }
-  description_console<-description
-  description_html<-description
-  if (length(languages)==1 & any(c(description[[l]]=="", is.null(description[[l]]))) & replace_missing_language==T){
+  description_console <- description
+  description_html <- description
+  if (length(languages) == 1 & any(c(description[[l]] == "", 
+                                     is.null(description[[l]]))) 
+      & replace_missing_language == TRUE){
     if (!is.null(attr(input, "description_default"))){
-      if(attr(input, "description_default")!="" ){
-        description_console[languages]<-paste0("\n[default] ", attr(input, "description_default"))
-        description_html[languages]<-paste0("<br>[default] ", attr(input, "description_default"))
+      if(attr(input, "description_default") != "" ){
+        description_console[languages] <- paste0("\n[default] ", 
+                                                 attr(input, "description_default"))
+        description_html[languages] <- paste0("<br>[default] ", 
+                                              attr(input, "description_default"))
       } else {
         if (!is.null(attr(input, "description_en"))){
-          if(attr(input, "description_en")!="" ){
-            description_console[languages]<-paste0("\n[en] ", attr(input, "description_en"))
-            description_html[languages]<-paste0("<br>[en] ", attr(input, "description_en"))
+          if(attr(input, "description_en") != "" ){
+            description_console[languages] <- paste0("\n[en] ", 
+                                                     attr(input, "description_en"))
+            description_html[languages] <- paste0("<br>[en] ", 
+                                                  attr(input, "description_en"))
           }
         }
       }
     } else {
       if (!is.null(attr(input, "description_en"))){
-        if(attr(input, "description_en")!="" ){
-          description_console[languages]<-paste0("\n[en] ", attr(input, "description_en"))
-          description_html[languages]<-paste0("<br>[en] ", attr(input, "description_en"))
+        if(attr(input, "description_en") != "" ){
+          description_console[languages] <- paste0("\n[en] ", 
+                                                   attr(input, "description_en"))
+          description_html[languages] <- paste0("<br>[en] ", 
+                                                attr(input, "description_en"))
         }
       }
     }
   }
   #get url
-  url=attr(input, "url")
-  if (url!="" & exists("style_hyperlink")){
-    interactive_url<- cli::style_hyperlink(
-      text = url,
-      url = url
+  url <- attr(input, "url")
+  if (url != "" & exists("style_hyperlink")){
+    interactive_url <- cli::style_hyperlink(
+      text <- url,
+      url <- url
     )
   } else {
-    interactive_url<-url
+    interactive_url <- url
   }
   
   #get value labels for each language
-  if(input_type=="Variable"){
-    valuelabels_tab<-data.frame()
-    type=attr(input, "type")
+  if(input_type == "Variable"){
+    valuelabels_tab <- data.frame()
+    type <- attr(input, "type")
     for (l in languages){
-      labels=attr(input, paste0("labels",l))
-      labels_names=names(attr(input, paste0("labels",l)))
-      if(length(valuelabels_tab)==0) {
-        valuelabels_tab<-data.frame(Value=labels, Label=labels_names)
-        if (nrow(valuelabels_tab)>0) colnames(valuelabels_tab)[2]<-sub("_","", l)
+      labels <- attr(input, paste0("labels",l))
+      labels_names <- names(attr(input, paste0("labels",l)))
+      if(length(valuelabels_tab) == 0) {
+        valuelabels_tab <- data.frame(Value = labels, Label = labels_names)
+        if (nrow(valuelabels_tab)>0) {
+          colnames(valuelabels_tab)[2] <- sub("_","", l)
+        }
       } else {
-        valuelabels_tab_new<-data.frame(Value=labels, Label=labels_names)
-        colnames(valuelabels_tab_new)[2]<-sub("_","", l)
-        valuelabels_tab<-merge(valuelabels_tab, valuelabels_tab_new , by="Value", all=T)
+        valuelabels_tab_new <- data.frame(Value = labels, Label = labels_names)
+        colnames(valuelabels_tab_new)[2] <- sub("_","", l)
+        valuelabels_tab <- merge(valuelabels_tab, valuelabels_tab_new , 
+                                 by = "Value", all = TRUE)
       }
     }
-    valuelabels_html=paste0("<tr>", paste0("<th>",names(valuelabels_tab), "</th>", collapse=""),"</tr>")
+    valuelabels_html <- paste0("<tr>", paste0("<th>",names(valuelabels_tab), 
+                                              "</th>", collapse = ""),"</tr>")
     for (i in 1:nrow(valuelabels_tab)){
-      valuelabels_html<-paste0(valuelabels_html, "<tr>", paste0("<td>&#160;&#160;&#160;&#160;",valuelabels_tab[i,], "</td>", collapse=""),"</tr>")
+      valuelabels_html <- paste0(valuelabels_html, "<tr>", 
+                                 paste0("<td>&#160;&#160;&#160;&#160;",
+                                        valuelabels_tab[i,], 
+                                        "</td>", collapse = ""),"</tr>")
     }
   }
   
-  if (input_type=="Dataset" & variables=="yes"){
-    labels_vars<-list()
-    varlist_html<-paste0("<tr><th>Variables&#160;&#160;&#160;&#160;</th>", paste0("<th align=left>label", languages,"</th>", collapse=""), "</tr>")
-    var_list=c()
+  if (input_type == "Dataset" & variables == "yes"){
+    labels_vars <- list()
+    varlist_html <- paste0("<tr><th>Variables&#160;&#160;&#160;&#160;</th>", 
+                           paste0("<th align=left>label", languages,"</th>", 
+                                  collapse = ""), "</tr>")
+    var_list <- c()
     
     for (var in names(input)){
-      var_list<-c(var_list,var)
-      labls_var<-c()
+      var_list <- c(var_list,var)
+      labls_var <- c()
       for (lang in languages){
-        labls_var<-c(labls_var,attr(input[,var], paste0("label", lang)))
-        labels_vars[[paste0("label", lang)]]<-as.character(c(unlist(labels_vars[paste0("label", lang)]), attr(input[,var], paste0("label", lang))))
+        labls_var <- c(labls_var,attr(input[,var], paste0("label", lang)))
+        labels_vars[[paste0("label", lang)]] <- 
+          as.character(c(unlist(labels_vars[paste0("label", lang)]), 
+                         attr(input[,var], paste0("label", lang))))
       }
-      row_html<-paste0("<tr><td>", var, "</td>",paste0("<td>", labls_var,"</td>", collapse=""), "</tr>" )
-      varlist_html<-paste0(varlist_html,row_html)
+      row_html <- paste0("<tr><td>", var, "</td>",paste0("<td>", labls_var,"</td>", 
+                                                         collapse = ""), "</tr>" )
+      varlist_html <- paste0(varlist_html,row_html)
     }
-    varlist<-data.frame("Variable"=var_list)
+    varlist <- data.frame("Variable" = var_list)
     for (lang in languages){
-      varlist[,paste0("Label ",gsub("_","", lang))]<-labels_vars[[paste0("label",lang)]]
+      varlist[,paste0("Label ",gsub("_","", lang))] <- 
+        labels_vars[[paste0("label",lang)]]
     }
   }
   
   #######  format output ######
   #name and url
-  printing_output<-c(
+  printing_output <- c(
     paste0("\033[4m\033[1m",input_type, ":\033[0m\033[0m"),
     paste0("  ", name, "\n")
   )
-  html_output<-paste0(
+  html_output <- paste0(
     "<html><head><meta charset='utf-8'><style>body {
     word-break: break-word;
     overflow-wrap: break-word;
@@ -261,111 +290,113 @@ docu_opendf<-function(input,
     )
 
   #label
-  printing_output<-c(
+  printing_output <- c(
     paste0(printing_output),
     "\033[1mLabel:\033[0m\n"
     )
-  html_output<-paste0(
+  html_output <- paste0(
     html_output,
     "<p><b>Label:</b>"
     )
   for (l in languages){
-    printing_output<-c(
+    printing_output <- c(
       paste0(printing_output),
       "[",gsub("_","",l), "]", label_console[[l]], "\n"
     )
-    html_output<-paste0(
+    html_output <- paste0(
       html_output,
       "<br>[", gsub("_","",l), "] ",label_html[[l]]
     )
   }
-  html_output<-paste0(
+  html_output <- paste0(
     html_output, "</p>"
     )
   
   #Description
   #label
-  printing_output<-c(
+  printing_output <- c(
     paste0(printing_output),
     "\033[1mDescription:\033[0m\n"
   )
-  html_output<-paste0(
+  html_output <- paste0(
     html_output,
     "<p><b>Description:</b>"
   )
   for (l in languages){
-    printing_output<-c(
+    printing_output <- c(
       paste0(printing_output),
       "[",gsub("_","",l), "]", description_console[[l]], "\n"
     )
-    html_output<-paste0(
+    html_output <- paste0(
       html_output,
       "<br>[", gsub("_","",l), "] ",description_html[[l]]
     )
   }
-  html_output<-paste0(
+  html_output <- paste0(
     html_output, "</p>"
   )
   
   #Value Labels
-  if (input_type=="Variable"){
+  if (input_type == "Variable"){
     #Type
-    printing_output<-c(
+    printing_output <- c(
       paste0(printing_output),
       "\033[1mType:\033[0m\n",
       paste0("    ", type, "\n")
     )
-    html_output<-paste0(
+    html_output <- paste0(
       html_output,
       "<p><b>Type:","</b><br>", type, "</p>"
     )
   }
   
   #languages
-  if (input_type=="Dataset"){
-    printing_output<-c(
+  if (input_type == "Dataset"){
+    printing_output <- c(
       paste0(printing_output),
       "\033[1mlanguages:\033[0m\n",
-      paste0("    ", paste0(input_languages,collapse = " "), " (active: ", input_lang, ")", "\n")
+      paste0("    ", paste0(input_languages,collapse = " "), " (active: ", 
+             input_lang, ")", "\n")
     )
-    html_output<-paste0(
+    html_output <- paste0(
       html_output,
-      "<p><b>languages:","</b><br>", paste0(paste0(input_languages,collapse = " "), " (active: ", input_lang, ")", "</p>")
+      "<p><b>languages:","</b><br>", paste0(paste0(input_languages,collapse = " "), 
+                                            " (active: ", input_lang, ")", "</p>")
     )
   }
   
   #url
-  printing_output<-c(
+  printing_output <- c(
     paste0(printing_output),
     "\033[1mURL:\033[0m\n",
     paste0("    ", interactive_url, "\n")
   )
   
-  if (input_type=="Variable"){
-    printing_output<-c(
+  if (input_type == "Variable"){
+    printing_output <- c(
       paste0(printing_output),
       "\033[1mValue Labels:\033[0m\n"
     )
-    html_output<-paste0(
+    html_output <- paste0(
       html_output,
       "<p><b>Value Labels: </b><br>",
       "<table>", valuelabels_html,"</table></p>"
     )
   }
   
-  html_output<-paste0(
+  html_output <- paste0(
     html_output,
     "<p><b>URL:","</b><br>", paste0("<a href='",url,"'>",url,"</a></p>")
   )
   
   #add variables information to dataset information
-  if (input_type=="Dataset" & variables=="yes"){
-    printing_output<-c(
+  if (input_type == "Dataset" & variables == "yes"){
+    printing_output <- c(
       paste0(printing_output),
       "\033[1mVariables:\033[0m\n"#,
       #"valuelabels"
     )
-    html_output<-paste0(
+    html_output <- paste0(
       html_output,
       "<p><b>Variables: </b><br>",
       "<table>", varlist_html,"</table></p>"
@@ -373,14 +404,16 @@ docu_opendf<-function(input,
     
   }
   
-  html_output<-paste0(html_output,"</html></body>")
+  html_output <- paste0(html_output,"</html></body>")
   #print meta data in console
   if (style %in% c("both", "all", "print", "console")){
     for (i in 1:length(printing_output)){
-      if (printing_output[i] != "valuelabels") {cat(printing_output[i])} else print(valuelabels_tab, row.names = FALSE)
+      if (printing_output[i] != "valuelabels") {cat(printing_output[i])} 
+      else print(valuelabels_tab, row.names = FALSE)
     }
     if (input_type=="Variable"){
-      if (nrow(valuelabels_tab>0)) print(valuelabels_tab, row.names = FALSE) else print("No value labels")
+      if (nrow(valuelabels_tab>0)) print(valuelabels_tab, row.names = FALSE) 
+      else print("No value labels")
     }
     if (input_type=="Dataset" & variables=="yes"){
       print(varlist)
@@ -398,10 +431,12 @@ docu_opendf<-function(input,
     } else {
       if (style %in% c("html", "viewer")){
         for (i in 1:length(printing_output)){
-          if (printing_output[i] != "valuelabels") {cat(printing_output[i])} else print(valuelabels_tab, row.names = FALSE)
+          if (printing_output[i] != "valuelabels") {cat(printing_output[i])} 
+          else print(valuelabels_tab, row.names = FALSE)
         }
         if (input_type=="Variable"){
-          if (nrow(valuelabels_tab>0)) print(valuelabels_tab, row.names = FALSE) else print("No value labels")
+          if (nrow(valuelabels_tab>0)) print(valuelabels_tab, row.names = FALSE) 
+          else print("No value labels")
         }
         if (input_type=="Dataset" & variables=="yes"){
           print(varlist)

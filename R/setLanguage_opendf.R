@@ -14,25 +14,26 @@
 #'
 #' @examples
 #' # get example data from the opendataformat package
-#' df <- get(data("data_opendf"))
+#' df  <-  get(data("data_opendf"))
 #'
 #' # Switch dataset df to language "en" 
-#' df <- setLanguage_opendf(df, language = "en")
+#' df  <-  setLanguage_opendf(df, language = "en")
 #' 
 #' # Display dataset information for dataset df in language "en"
 #' docu_opendf(df)
 #'
 #' @export
 
-setLanguage_opendf<-function(dataframe, language){
-  df_languages<- attr(dataframe, "languages")
+setLanguage_opendf <- function(dataframe, language){
+  df_languages <-  attr(dataframe, "languages")
   #check if language is available for the dataframe
   if (language %in% df_languages){
-    attr(dataframe, "lang")<-language
-    attributes(dataframe)[["label"]]<-attr(dataframe, paste0("label_", language))
+    attr(dataframe, "lang") <- language
+    attributes(dataframe)[["label"]] <- attr(dataframe, paste0("label_", language))
     for (var in names(dataframe)){
-      attr(dataframe[[var]], "lang")<-language
-      attr(dataframe[[var]], "label")<-attributes(dataframe[[var]])[[paste0("label_", language)]]
+      attr(dataframe[[var]], "lang") <- language
+      attr(dataframe[[var]], "label") <- 
+        attributes(dataframe[[var]])[[paste0("label_", language)]]
     }
   } else {
     stop(paste0("Language '", language, "' not available for the dataset."))

@@ -53,7 +53,7 @@ the data as Open Data Format.
 }
 \examples{
 # get example data from the opendataformat package
-df <- get(data("data_opendf"))
+df  <-  get(data("data_opendf"))
 df
 
 # write R data frame with attributes to the file my_data.zip specified

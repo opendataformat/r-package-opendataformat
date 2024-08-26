@@ -94,7 +94,7 @@ docu_opendf(df$bap87, style = "viewer")
 # english label will be displayed additionally.
 \dontrun{
 attributes(df$bap87)["label_de"]<-""
-docu_opendf(df$bap87, languages="de", style = "console", replace_missing_language=T)
+docu_opendf(df$bap87, languages = "de", style = "console", replace_missing_language=T)
 }
 
 }
