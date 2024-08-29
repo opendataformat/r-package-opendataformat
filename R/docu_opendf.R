@@ -12,29 +12,29 @@
 #' @param languages Select the language in which the descriptions and labels of 
 #' the data will be displayed.
 #' * By default the language that is set to current is displayed
-#' (\code{languages = "current"}).
+#' (\code{languages  =  "current"}).
 #' * The default-option chooses either the default language(if labels and 
 #' * descriptions without a language tag exist)Otherwise the current language 
 #' * is displayed.
-#' (\code{languages = "default"}).
+#' (\code{languages  =  "default"}).
 #' * You can choose to view all available language variants by selecting
-#' (\code{languages = "all"}),
+#' (\code{languages  =  "all"}),
 #' * or you can select the language by language code, e.g.
-#' \code{languages = "en"}.
+#' \code{languages  =  "en"}.
 #' 
 #' 
 #' 
 #' @param style Selects where the output should be displayed (console ore 
 #' viewer).By default the metadata information is displayed in the viewer if the 
 #' viewer is available.
-#' (\code{style = "console"})
-#' (\code{style = "print"})
+#' (\code{style  =  "console"})
+#' (\code{style  =  "print"})
 #' * You can choose to display the code in both the console and the viewer
-#' (\code{style = "both"})
-#' (\code{style = "all"})
+#' (\code{style  =  "both"})
+#' (\code{style  =  "all"})
 #' * You can choose to display the code only in the viewer
-#' (\code{style = "viewer"})
-#' (\code{style = "html"})
+#' (\code{style  =  "viewer"})
+#' (\code{style  =  "html"})
 #' 
 #' 
 #' @param replace_missing_language If only one language is specified in languages and 
@@ -46,7 +46,7 @@
 #' @param variables Indicate whether a list with all the variables should be 
 #' displayed with the dataset metadata. 
 #' If the input is a variable/column, the variables-argument will be ignored.
-#' Set (\code{variables="yes"}) to display the list of variables.
+#' Set (\code{variables = "yes"}) to display the list of variables.
 #' 
 #' @return Documentation.
 #'
@@ -62,38 +62,38 @@
 #'
 #' # view information from a selected variable in language "en"
 #' \dontrun{
-#' docu_opendf(df$bap87, languages = "en")
+#' docu_opendf(df$bap87, languages  =  "en")
 #' }
 #'
 #' # view dataset information for all available languages
 #' \dontrun{
-#' docu_opendf(df, languages = "all")
+#' docu_opendf(df, languages  =  "all")
 #' }
 #' 
 #' # print information to the R console
 #' \dontrun{
-#' docu_opendf(df$bap87, style = "print")
+#' docu_opendf(df$bap87, style  =  "print")
 #' }
 #' 
 #' # print information to the R viewer
 #' \dontrun{
-#' docu_opendf(df$bap87, style = "viewer")
+#' docu_opendf(df$bap87, style  =  "viewer")
 #' }
 #' 
 #' # Since the label for language de is missing, in this case the 
 #' # english label will be displayed additionally.
 #' \dontrun{
-#' attributes(df$bap87)["label_de"]<-""
-#' docu_opendf(df$bap87, languages = "de", style = "console", replace_missing_language=T)
+#' attributes(df$bap87)["label_de"] <- ""
+#' docu_opendf(df$bap87, languages  =  "de", style  =  "console", replace_missing_language = T)
 #' }
 #'
 #' @export
  
-docu_opendf<-function(input,
-                      languages="current",
-                      style="viewer", 
-                      replace_missing_language=F,
-                      variables="no") {
+docu_opendf <- function(input,
+                      languages = "current",
+                      style = "viewer", 
+                      replace_missing_language = F,
+                      variables = "no") {
 
   
   if (("data.frame" %in% class(input) & !("opendf" %in% class(input)))| (!("lang" %in% names(attributes(input))) & !("languages" %in% names(attributes(input)))) ){
@@ -102,14 +102,14 @@ docu_opendf<-function(input,
   
   #check whether input is dataset or variable
   if ("data.frame" %in% class(input)){
-    input_type<-"Dataset"
+    input_type <- "Dataset"
   } else {
-    input_type="Variable"
+    input_type = "Variable"
   }
   
   #assign languages and currentlanguage
-  input_languages<-attr(input, "languages")
-  input_lang<-unlist(attr(input, "lang"))
+  input_languages <- attr(input, "languages")
+  input_lang <- unlist(attr(input, "lang"))
   
   #Check if languages argument is valid
   if (!(languages %in% c(input_languages, "current", "default", "all"))) 
@@ -118,25 +118,29 @@ docu_opendf<-function(input,
   
   #if languages is set to default, but no default language exists, the current 
   # language is used
-  if(languages=="default"){
+  if(languages == "default"){
     if(!("default"%in%input_languages)){
-      languages=attr(input, "lang")
+      languages = attr(input, "lang")
     }
   }
   #if languages is set to current, the current language is used
-  if(languages=="current"){
+  if(languages == "current"){
     languages <- attr(input, "lang")
   }
   #transform "de" to "_de"
-  if (languages!="all") languages <- paste0("_", languages)
+  if (languages != "all") languages <- paste0("_", languages)
   #if languages is set to all, all languages of the dataset ate assigned to 
   # languages
   if (languages == "all"){
     languages <- input_languages
     languages <- paste0("_", languages)
   }
-  #get dataset/variable name
+  #get dataset/variable name (and study name for dataset)
   name <- attr(input, "name")
+  if(input_type == "Dataset"){
+    study <- attr(input, "study")
+    name <- paste0(study, ": ", name)
+  }
   #get label and description for every language
   label <- list()
   label_console <- list()
@@ -226,32 +230,32 @@ docu_opendf<-function(input,
       labels <- attr(input, paste0("labels",l))
       labels_names <- names(attr(input, paste0("labels",l)))
       if(length(valuelabels_tab) == 0) {
-        valuelabels_tab <- data.frame(Value = labels, Label = labels_names)
+        valuelabels_tab <- data.frame(Value  =  labels, Label  =  labels_names)
         if (nrow(valuelabels_tab)>0) {
           colnames(valuelabels_tab)[2] <- sub("_","", l)
         }
       } else {
-        valuelabels_tab_new <- data.frame(Value = labels, Label = labels_names)
+        valuelabels_tab_new <- data.frame(Value  =  labels, Label  =  labels_names)
         colnames(valuelabels_tab_new)[2] <- sub("_","", l)
         valuelabels_tab <- merge(valuelabels_tab, valuelabels_tab_new , 
-                                 by = "Value", all = TRUE)
+                                 by  =  "Value", all  =  TRUE)
       }
     }
     valuelabels_html <- paste0("<tr>", paste0("<th>",names(valuelabels_tab), 
-                                              "</th>", collapse = ""),"</tr>")
+                                              "</th>", collapse  =  ""),"</tr>")
     for (i in 1:nrow(valuelabels_tab)){
       valuelabels_html <- paste0(valuelabels_html, "<tr>", 
                                  paste0("<td>&#160;&#160;&#160;&#160;",
                                         valuelabels_tab[i,], 
-                                        "</td>", collapse = ""),"</tr>")
+                                        "</td>", collapse  =  ""),"</tr>")
     }
   }
   
   if (input_type == "Dataset" & variables == "yes"){
     labels_vars <- list()
     varlist_html <- paste0("<tr><th>Variables&#160;&#160;&#160;&#160;</th>", 
-                           paste0("<th align=left>label", languages,"</th>", 
-                                  collapse = ""), "</tr>")
+                           paste0("<th align = left>label", languages,"</th>", 
+                                  collapse  =  ""), "</tr>")
     var_list <- c()
     
     for (var in names(input)){
@@ -264,10 +268,10 @@ docu_opendf<-function(input,
                          attr(input[,var], paste0("label", lang))))
       }
       row_html <- paste0("<tr><td>", var, "</td>",paste0("<td>", labls_var,"</td>", 
-                                                         collapse = ""), "</tr>" )
+                                                         collapse  =  ""), "</tr>" )
       varlist_html <- paste0(varlist_html,row_html)
     }
-    varlist <- data.frame("Variable" = var_list)
+    varlist <- data.frame("Variable"  =  var_list)
     for (lang in languages){
       varlist[,paste0("Label ",gsub("_","", lang))] <- 
         labels_vars[[paste0("label",lang)]]
@@ -281,7 +285,7 @@ docu_opendf<-function(input,
     paste0("  ", name, "\n")
   )
   html_output <- paste0(
-    "<html><head><meta charset='utf-8'><style>body {
+    "<html><head><meta charset = 'utf-8'><style>body {
     word-break: break-word;
     overflow-wrap: break-word;
     }
@@ -355,12 +359,12 @@ docu_opendf<-function(input,
     printing_output <- c(
       paste0(printing_output),
       "\033[1mlanguages:\033[0m\n",
-      paste0("    ", paste0(input_languages,collapse = " "), " (active: ", 
+      paste0("    ", paste0(input_languages,collapse  =  " "), " (active: ", 
              input_lang, ")", "\n")
     )
     html_output <- paste0(
       html_output,
-      "<p><b>languages:","</b><br>", paste0(paste0(input_languages,collapse = " "), 
+      "<p><b>languages:","</b><br>", paste0(paste0(input_languages,collapse  =  " "), 
                                             " (active: ", input_lang, ")", "</p>")
     )
   }
@@ -386,7 +390,7 @@ docu_opendf<-function(input,
   
   html_output <- paste0(
     html_output,
-    "<p><b>URL:","</b><br>", paste0("<a href='",url,"'>",url,"</a></p>")
+    "<p><b>URL:","</b><br>", paste0("<a href = '",url,"'>",url,"</a></p>")
   )
   
   #add variables information to dataset information
@@ -409,13 +413,13 @@ docu_opendf<-function(input,
   if (style %in% c("both", "all", "print", "console")){
     for (i in 1:length(printing_output)){
       if (printing_output[i] != "valuelabels") {cat(printing_output[i])} 
-      else print(valuelabels_tab, row.names = FALSE)
+      else print(valuelabels_tab, row.names  =  FALSE)
     }
-    if (input_type=="Variable"){
-      if (nrow(valuelabels_tab>0)) print(valuelabels_tab, row.names = FALSE) 
+    if (input_type == "Variable"){
+      if (nrow(valuelabels_tab>0)) print(valuelabels_tab, row.names  =  FALSE) 
       else print("No value labels")
     }
-    if (input_type=="Dataset" & variables=="yes"){
+    if (input_type == "Dataset" & variables == "yes"){
       print(varlist)
     }
   }
@@ -432,13 +436,13 @@ docu_opendf<-function(input,
       if (style %in% c("html", "viewer")){
         for (i in 1:length(printing_output)){
           if (printing_output[i] != "valuelabels") {cat(printing_output[i])} 
-          else print(valuelabels_tab, row.names = FALSE)
+          else print(valuelabels_tab, row.names  =  FALSE)
         }
-        if (input_type=="Variable"){
-          if (nrow(valuelabels_tab>0)) print(valuelabels_tab, row.names = FALSE) 
+        if (input_type == "Variable"){
+          if (nrow(valuelabels_tab>0)) print(valuelabels_tab, row.names  =  FALSE) 
           else print("No value labels")
         }
-        if (input_type=="Dataset" & variables=="yes"){
+        if (input_type == "Dataset" & variables == "yes"){
           print(varlist)
         }
       }

@@ -59,139 +59,6 @@ read_opendf  <-  function(file,
   # replace \\\\ with // to avert errors in data.table::fread(cmd = paste0('unzip -p "',file, '" data.csv')
   file <- gsub("\\\\\\\\", "//", file)
   
-  #read xml from zipped folder
-  metadata <- read_xml(x = unz(file, "metadata.xml"))
-
-  #Extract study name
-  study_metadata <- xml_children(metadata)[grep("<stdyDscr>", xml_children(metadata))]
-  study_metadata <- xml_children(study_metadata)[grep("<citation>", xml_children(study_metadata))]
-  study_metadata <- xml_children(study_metadata)[grep("<titlStmt>", xml_children(study_metadata))]
-  study_metadata <- xml_children(study_metadata)[grep("<titl>", xml_children(study_metadata))]
-  if (length(xml_text(study_metadata))>0) study <- xml_text(study_metadata) else study  <-  ""
-  
-  #Extract dataset description
-  dataset_metadata <- xml_children(metadata)[grep("<fileDscr>", xml_children(metadata))]
-  dataset_attr <- list()
-  dataset_descrsub <- xml_children(xml_children(dataset_metadata)[xml_name(xml_children(dataset_metadata)) == "fileTxt"])
-  
-  #get dataset name and combine with study
-  filename  <-  xml_text(dataset_descrsub[xml_name(dataset_descrsub) == "fileName"])
-  if (study  !=  filename & study  != "") filename  <-  paste0(study, ": " , filename)
-  dataset_attr$name <- filename
-  #get dataset descriptions
-  dataset_descriptions <- dataset_descrsub[xml_name(dataset_descrsub) == "fileCont"]
-  for (description in dataset_descriptions){
-    if (languages  ==  "all" | xml_attr(description, attr = "lang") %in% languages){
-      if (length(xml_text(description))>0) 
-        dataset_attr[paste0("description_", xml_attr(description, attr = "lang"))] <- 
-          xml_text(description) 
-      else dataset_attr[paste0("description_", 
-                               xml_attr(description, attr = "lang"))] <- ""
-    }
-  }
-  #get dataset labels
-  dataset_labels <- xml_children(xml_children(dataset_descrsub[xml_name(dataset_descrsub) == "fileCitation"]))
-  for (label in dataset_labels){
-    if (languages  ==  "all" | xml_attr(label, attr = "lang") %in% languages){
-      if (length(xml_text(label))>0) 
-        dataset_attr[paste0("label_", xml_attr(label, attr = "lang"))] <- xml_text(label) 
-      else dataset_attr[paste0("label_", xml_attr(label, attr = "lang"))] <- ""
-    }
-  }
-  #Get dataset url
-  url_node <- xml_children(xml_children(dataset_metadata)[xml_name(xml_children(dataset_metadata)) == "notes"])
-  if (length(xml_attr(url_node, attr = "URI"))>0){
-    dataset_attr$url <- xml_attr(url_node, attr = "URI")
-  } else {
-    dataset_attr$url <- ""
-  }
-  
-  
-  
-  #Extract variable description
-  variable_metadata <- xml_children(xml_children(metadata)[grep("<dataDscr>", 
-                                                                xml_children(metadata))])
-  variable_attr <- list()
-  #Loop over MEtadata for each variable to extract
-  for (var in variable_metadata){
-    var_attr <- list()
-    
-    #Get variable name
-    var_attr$name <- xml_attr(var, attr = "name")
-    
-    #Get variable labels
-    label_nodes <- xml_children(var)[xml_name(xml_children(var)) == "labl"]
-    for (label in label_nodes){
-      if (languages  ==  "all" | xml_attr(label, attr = "lang") %in% languages){
-        if (length(xml_text(label))>0) 
-          var_attr[paste0("label_", xml_attr(label, attr = "lang"))] <- xml_text(label) 
-        else var_attr[paste0("label_", xml_attr(label, attr = "lang"))] <- ""
-      }
-    }
-    
-    #Get variable descriptions
-    descr_nodes <- xml_children(var)[xml_name(xml_children(var)) == "txt"]
-    for (descr in descr_nodes){
-      if (languages  ==  "all" | xml_attr(descr, attr = "lang") %in% languages){
-        if (length(xml_text(descr))>0) 
-          var_attr[paste0("description_", xml_attr(descr, attr = "lang"))] <- xml_text(descr) 
-        else var_attr[paste0("description_", xml_attr(descr, attr = "lang"))] <- ""
-      }
-    }
-    
-    #Get variable type
-    type_node <- xml_children(var)[xml_name(xml_children(var)) == "varFormat"]
-    type <- xml_attr(type_node, attr = "type")
-    if (length(type>0))var_attr$type <- type else var_attr$type <- ""
-    
-    
-    #Get variable url
-    url_node <- xml_children(xml_children(var)[xml_name(xml_children(var)) == "notes"])
-    url <- xml_attr(url_node, attr = "URI")
-    if (length(url)>0) var_attr$url <- url else var_attr$url <- ""
-    
-    
-    #Get variable value labels
-    varlabel_nodes <- xml_children(var)[xml_name(xml_children(var)) == "catgry"]
-    if(length(varlabel_nodes)>0){
-      varlabels <- list()
-      for (varlabel in varlabel_nodes){
-        if (length(varlabels) == 0){
-          varlabels$values <- xml_text(xml_children(varlabel)[xml_name(xml_children(varlabel)) == "catValu"])
-          labels <- xml_children(varlabel)[xml_name(xml_children(varlabel)) == "labl"]
-          for (label in labels){
-            if (languages  ==  "all" | xml_attr(label, attr = "lang") %in% languages) 
-              varlabels[paste0("labels_", xml_attr(label, attr = "lang"))] <- xml_text(label)
-          }
-        } else {
-          varlabels$values <- c(varlabels$values, 
-                                xml_text(xml_children(varlabel)[xml_name(xml_children(varlabel)) == "catValu"]))
-          labels <- xml_children(varlabel)[xml_name(xml_children(varlabel)) == "labl"]
-          for (label in labels){
-            if (languages  ==  "all" | xml_attr(label, attr = "lang") %in% languages) 
-              varlabels[[paste0("labels_", xml_attr(label, attr = "lang"))]] <- 
-                c(varlabels[paste0("labels_", xml_attr(label, attr = "lang"))][[1]], xml_text(label))
-          }
-        }
-      }
-      #label values as numeric only if all values are numeric
-      if (all.equal(as.character(as.numeric(varlabels[names(varlabels) == "values"][[1]])), 
-                    as.character(varlabels[names(varlabels) == "values"][[1]]))){
-        values  <-  as.numeric(varlabels[names(varlabels) == "values"][[1]])
-      } else {
-        values  <-  as.character(varlabels[names(varlabels) == "values"][[1]])
-      }
-      for (i in 1:length(varlabels)){
-        if (names(varlabels)[[i]] != "values"){
-          names(values) <- varlabels[[i]]
-          var_attr[[names(varlabels)[i]]] <- values
-        }
-      }
-    }
-    variable_attr[[var_attr$name]] <- var_attr
-  }
-  
-
   # load the data csv "data.csv"
   # Unzip the file to a temporary location
   zip::unzip(file, files = "data.csv", exdir = tempdir(), overwrite = TRUE)
@@ -229,21 +96,135 @@ read_opendf  <-  function(file,
   data <- as.data.frame(data)
   attr(data, "spec") <- NULL
   
-  #Assign metadata to attributes
-  #for dataset
-  for (i in 1:length(dataset_attr)){
-    attr(data, names(dataset_attr)[i]) <- dataset_attr[[i]]
+  
+  #read xml from zipped folder
+  metadata <- read_xml(x = unz(file, "metadata.xml"))
+
+  #Extract study name
+  study_metadata <- xml_children(metadata)[grep("<stdyDscr>", xml_children(metadata))]
+  study_metadata <- xml_children(study_metadata)[grep("<citation>", xml_children(study_metadata))]
+  study_metadata <- xml_children(study_metadata)[grep("<titlStmt>", xml_children(study_metadata))]
+  study_metadata <- xml_children(study_metadata)[grep("<titl>", xml_children(study_metadata))]
+  if (length(xml_text(study_metadata))>0) study <- xml_text(study_metadata) else study  <-  ""
+  
+  attr(data, "study") <- study
+  
+  #Extract dataset description
+  dataset_metadata <- xml_children(metadata)[grep("<fileDscr>", xml_children(metadata))]
+  #dataset_attr <- list()
+  dataset_descrsub <- xml_children(xml_children(dataset_metadata)[xml_name(xml_children(dataset_metadata)) == "fileTxt"])
+  
+  #get dataset name study
+  filename  <-  xml_text(dataset_descrsub[xml_name(dataset_descrsub) == "fileName"])
+  attr(data, "name") <- filename
+  #get dataset descriptions
+  dataset_descriptions <- dataset_descrsub[xml_name(dataset_descrsub) == "fileCont"]
+  for (description in dataset_descriptions){
+    if (languages == "all" | xml_attr(description, attr = "lang") %in% languages){
+      if (length(xml_text(description))>0) 
+        attr(data, paste0("description_", xml_attr(description, attr = "lang"))) <- xml_text(description) 
+      else attr(data, paste0("description_", xml_attr(description, attr = "lang"))) <- ""
+    }
   }
-  #for variables
-  for (var in 1:length(names(variable_attr))){
-    variablename <- names(variable_attr)[var]
-    if (variablename %in% names(data)){
-      for (i in 1:length(variable_attr[[var]])){
-        attr(data[, variablename], as.character(names(variable_attr[[var]])[i])) <- 
-          variable_attr[[var]][[i]]
+  #get dataset labels
+  dataset_labels <- xml_children(xml_children(dataset_descrsub[xml_name(dataset_descrsub) == "fileCitation"]))
+  for (label in dataset_labels){
+    if (languages == "all" | xml_attr(label, attr = "lang") %in% languages){
+      if (length(xml_text(label))>0) 
+        attr(data, paste0("label_", xml_attr(label, attr = "lang"))) <- xml_text(label) 
+      else attr(data, paste0("label_", xml_attr(label, attr = "lang")))  <- ""
+    }
+  }
+  #Get dataset url
+  url_node <- xml_children(xml_children(dataset_metadata)[xml_name(xml_children(dataset_metadata)) == "notes"])
+  if (length(xml_attr(url_node, attr = "URI"))>0){
+    attr(data, "url") <- xml_attr(url_node, attr = "URI")
+  } else {
+    attr(data, "url") <- ""
+  }
+  
+  
+  
+  #Extract variable description
+  variable_metadata <- xml_children(xml_children(metadata)[grep("<dataDscr>", 
+                                                                xml_children(metadata))])
+  #Loop over MEtadata for each variable to extract
+  for (var in variable_metadata){
+    varname <- xml_attr(var, attr = "name")
+    if (varname %in% colnames(data)){
+      #Get variable name
+      attr(data[,varname], "name") <- xml_attr(var, attr = "name")
+      
+      #Get variable labels
+      for (label in xml_children(var)[xml_name(xml_children(var)) == "labl"]){
+        if (languages == "all" | xml_attr(label, attr = "lang") %in% languages){
+          if (length(xml_text(label))>0) 
+            attr(data[,varname], paste0("label_", xml_attr(label, attr = "lang"))) <- xml_text(label) 
+          else attr(data[,varname], paste0("label_", xml_attr(label, attr = "lang"))) <- ""
+        }
+      }
+      
+      #Get variable descriptions
+      for (descr in xml_children(var)[xml_name(xml_children(var)) == "txt"]){
+        if (languages == "all" | xml_attr(descr, attr = "lang") %in% languages){
+          if (length(xml_text(descr))>0) 
+            attr(data[,varname], paste0("description_", xml_attr(descr, attr = "lang"))) <- xml_text(descr) 
+          else attr(data[,varname], paste0("description_", xml_attr(descr, attr = "lang"))) <- ""
+        }
+      }
+      
+      
+      
+      
+      #Get variable type
+      type <- xml_attr(xml_children(var)[xml_name(xml_children(var)) == "varFormat"], attr = "type")
+      if (length(type>0)) attr(data[,varname], "type") <- type else attr(data[,varname], "type") <- ""
+      
+      
+      #Get variable url
+      url <- xml_attr(xml_children(xml_children(var)[xml_name(xml_children(var)) == "notes"]), attr = "URI")
+      if (length(url)>0) attr(data[,varname], "url") <- url else attr(data[,varname], "url") <- ""
+      
+      #Get variable value labels
+      varlabel_nodes <- xml_children(var)[xml_name(xml_children(var)) == "catgry"]
+      if(length(varlabel_nodes)>0){
+        varlabels <- list()
+        for (varlabel in varlabel_nodes){
+          if (length(varlabels) == 0){
+            varlabels$values <- xml_text(xml_children(varlabel)[xml_name(xml_children(varlabel)) == "catValu"])
+            labels <- xml_children(varlabel)[xml_name(xml_children(varlabel)) == "labl"]
+            for (label in labels){
+              if (languages == "all" | xml_attr(label, attr = "lang") %in% languages) 
+                varlabels[paste0("labels_", xml_attr(label, attr = "lang"))] <- xml_text(label)
+            }
+          } else {
+            varlabels$values <- c(varlabels$values, 
+                                  xml_text(xml_children(varlabel)[xml_name(xml_children(varlabel)) == "catValu"]))
+            labels <- xml_children(varlabel)[xml_name(xml_children(varlabel)) == "labl"]
+            for (label in labels){
+              if (languages == "all" | xml_attr(label, attr = "lang") %in% languages) 
+                varlabels[[paste0("labels_", xml_attr(label, attr = "lang"))]] <- 
+                  c(varlabels[paste0("labels_", xml_attr(label, attr = "lang"))][[1]], xml_text(label))
+            }
+          }
+        }
+        #label values as numeric only if all values are numeric
+        if (all.equal(as.character(as.numeric(varlabels[names(varlabels) == "values"][[1]])), 
+                      as.character(varlabels[names(varlabels) == "values"][[1]]))){
+          values  <-  as.numeric(varlabels[names(varlabels) == "values"][[1]])
+        } else {
+          values  <-  as.character(varlabels[names(varlabels) == "values"][[1]])
+        }
+        for (i in 1:length(varlabels)){
+          if (names(varlabels)[[i]] != "values"){
+            names(values) <- varlabels[[i]]
+            attr(data[,varname], names(varlabels)[i]) <- values
+          }
+        }
       }
     }
   }
+  
   #Assign language and activa language attributes
   lang_attr <- names(attributes(data))[c(grep("label", names(attributes(data))), 
                                          grep("description", names(attributes(data))))]
@@ -256,14 +237,14 @@ read_opendf  <-  function(file,
     attr(data[, var], "lang") <-  lang
   }
   
-   #add label in active language for haven
+  # add label in active language for haven
   attr(data, "label") <- attr(data, paste0("label_", lang))
   for (var in names(data)){
     attr(data[, var], "label") <- attr(data[, var], paste0("label_", lang))
   }
   
   #add opendf class
-  attr(data, "class") <- c(attr(data, "class"), "opendf")
+  attr(data, "class") <- c("opendf", attr(data, "class"))
   
   return(data)
 }
