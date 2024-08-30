@@ -250,7 +250,7 @@ test_that("read_opendf_specific_rows2", {
   # - dataset attributes
   expect_equal(names(attributes(df)),c(
     "names",
-    "row.names",
+    "row.names", 
     "study",
     "name",
     "description_en",
@@ -310,11 +310,11 @@ test_that("read_opendf_specific_rows2", {
 })
 
 
-#' read_opendf: variables=c(1,2,4,5)
+#' read_opendf: select =c(1,2,4,5)
 test_that("read_opendf_specific_variables", {
   df <- read_opendf(
     file = "testdata/data.zip",
-    variables=c(1,2,4,5)
+    select = c(1,2,4,5)
   )
   # - dataset attributes
   expect_equal(names(attributes(df)),c(
@@ -379,11 +379,11 @@ test_that("read_opendf_specific_variables", {
 })
 
 
-#' read_opendf: variables=c("bap87","bap96","bap9002","bap9003")
+#' read_opendf: select = c("bap87","bap96","bap9002","bap9003")
 test_that("read_opendf_specific_variables", {
   df <- read_opendf(
     file = "testdata/data.zip",
-    variables=c("bap87","bap96","bap9002",
+    select = c("bap87","bap96","bap9002",
                 "bap9003")
   )
   # - dataset attributes
@@ -470,7 +470,7 @@ test_that("read_opendf_specific_rows_and_cols", {
     file = "testdata/data.zip",
     nrows=13, 
     skip=3,
-    variables=c(1,2,4,5)
+    select = c(1,2,4,5)
   )
   # - dataset attributes
   expect_equal(names(attributes(df)),c(
@@ -555,7 +555,7 @@ test_that("read_opendf_specific_rows_and_cols2", {
     file = "testdata/data.zip",
     nrows=13, 
     skip=3,
-    variables=c("bap87","bap9201","bap9002",
+    select = c("bap87","bap9201","bap9002",
                 "bap9003")
   )
   # - dataset attributes
@@ -641,7 +641,7 @@ test_that("read_opendf_specific_language_rows_and_cols", {
     file = "testdata/data.zip",
     nrows=13, 
     skip=3,
-    variables=c("bap87","bap9201","bap9002",
+    select = c("bap87","bap9201","bap9002",
                 "bap9003"),
     languages="de"
   )

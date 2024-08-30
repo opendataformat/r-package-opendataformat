@@ -21,12 +21,10 @@
 #' @param skip
 #' Select the number of rows to be skipped (without the column names).
 #' 
-#' @param variables
-#' Columns to include in the results. You can use the same mini-language as 
-#' dplyr::select() to refer to the columns by name. Use c() to use more than 
-#' one selection expression. 
-#' Although this usage is less common, col_select also accepts a numeric column 
-#' index. See ?tidyselect::language for full details on the selection language.
+#' @param select
+#' 	A vector of column names or numbers to keep, drop the rest. In all forms of 
+#' 	select, order that the columns are specified determines the order of the 
+#' 	columns in the result.
 #'
 #'
 #' @return R dataframe with attributes including dataset and variable 
@@ -53,7 +51,7 @@ read_opendf  <-  function(file,
                         languages = "all",
                         nrows = Inf,
                         skip = 0,
-                        variables = NULL) {
+                        select = NULL) {
   #Normalize path from from relative to absolute
   file <- normalizePath(file, winslash = "/", mustWork = FALSE)
   # replace \\\\ with // to avert errors in data.table::fread(cmd = paste0('unzip -p "',file, '" data.csv')
@@ -64,7 +62,7 @@ read_opendf  <-  function(file,
   zip::unzip(file, files = "data.csv", exdir = tempdir(), overwrite = TRUE)
   options(warn = -1)
   if (skip  !=  0){
-    if (is.null(variables)){
+    if (is.null(select)){
       cnames <- names(data.table::fread(file.path(tempdir(), "data.csv"), 
                                         skip = 0, nrows = 1))
       data  <-  data.table::fread(file.path(tempdir(), "data.csv"), 
@@ -72,25 +70,18 @@ read_opendf  <-  function(file,
     } else {
       cnames <- names(data.table::fread(file.path(tempdir(), "data.csv"), 
                                         skip = 0, nrows = 0))
-      if (class(variables)%in%c("numeric", "integer")){
-        cindex <- variables
+      if (class(select)%in%c("numeric", "integer")){
+        cindex <- select
       } else {
-        cindex <- which(cnames %in% variables)
+        cindex <- which(cnames %in% select)
       }
       data  <-  data.table::fread(file.path(tempdir(), "data.csv"), 
                                   select = cindex, header = FALSE, skip = skip+1, 
                                   nrows = nrows, col.names = cnames[cindex])
     }
   } else {
-    if (is.null(variables)){
-      
-      # Read the data using fread
-      data  <-  data.table::fread(file.path(tempdir(), "data.csv"), skip = skip, 
-                                  nrows = nrows)
-    } else {
-      data  <-  data.table::fread(file.path(tempdir(), "data.csv"), 
-                                  select = variables, skip = skip, nrows = nrows)
-    }
+    data  <-  data.table::fread(file.path(tempdir(), "data.csv"),
+                                select = select, skip = skip, nrows = nrows)
   }
   options(warn = 0)
   data <- as.data.frame(data)

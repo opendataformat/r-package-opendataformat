@@ -74,10 +74,10 @@
 #' path  <-  system.file("extdata", "data.zip", package = "opendataformat")
 
 #' # read four columns of example data specified as Open Data Format from ZIP file
-#' df  <-  read_opendf(file = path, variables = 1:4)
+#' df  <-  read_opendf(file = path, select = 1:4)
 #' 
 #' # read other columns of example data specified as Open Data Format from ZIP file
-#' df2  <-  read_opendf(file = path, variables = 4:7)
+#' df2  <-  read_opendf(file = path, select = 4:7)
 #' 
 #' # generate a variable for joining both datasets:
 #' df$id<-1:20
@@ -123,7 +123,18 @@ merge.opendf<-function(x, y,
                                    incomparables = incomparables)
     }
   }
-  attr(data_out, "name") <- paste0("merge of ", gsub("merge of ", "", attr(x, "name")), " and ", gsub("merge of ", "", attr(y, "name")))
+  xname <- gsub("dataset merged from other datasets ", "", attributes(x)["name"])
+  xname <- gsub("dataset merged from other datasets", "", xname)
+  if (xname == "NULL") xname<-NULL
+  yname <- gsub("dataset merged from other datasets ", "", attributes(y)["name"])
+  yname <- gsub("dataset merged from other datasets", "", yname)
+  if (yname == "NULL") yname<-NULL
+  xyname <- paste(xname, yname)
+  if (length(xyname)>0){
+    attr(data_out, "name") <- paste0("dataset merged from other datasets", " ", xyname)
+  } else {
+    attr(data_out, "name") <- "dataset merged from other datasets"
+  }
   attr(data_out, "languages") <- unique(c(attr(x, "languages"),attr(y, "languages")))
   attr(data_out, "lang") <- unique(c(attr(x, "lang"),attr(y, "lang")))[1]
   for (var in colnames(data_out)){

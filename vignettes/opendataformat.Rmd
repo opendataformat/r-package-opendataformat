@@ -102,10 +102,10 @@ You can also give a list of languages::
 df_en <- read_opendf(file = path, languages=c("en", "de"))
 ```
 
-You can set further arguments for the `read_opendf()` function. With the `nrows` argument you define how many rows to read excluding the header. With the `skip` parameter you set how many rows to skip (excluding the header).With the `variables` input you determine which columns/variables to load with a vector of indices or variable/column names.
+You can set further arguments for the `read_opendf()` function. With the `nrows` argument you define how many rows to read excluding the header. With the `skip` parameter you set how many rows to skip (excluding the header).With the `select` input you determine which columns/variables to load with a vector of indices or variable/column names.
 
 ```{r read_opendf all inputs, eval=FALSE}
-df<-read_opendf(file, languages = "all", nrows = Inf, skip = 0, variables = NULL)
+df<-read_opendf(file, languages = "all", nrows = Inf, skip = 0, select = NULL)
 ```
 
 

@@ -4,7 +4,7 @@
 \alias{read_opendf}
 \title{Read data specified as Open Data Format.}
 \usage{
-read_opendf(file, languages = "all", nrows = Inf, skip = 0, variables = NULL)
+read_opendf(file, languages = "all", nrows = Inf, skip = 0, select = NULL)
 }
 \arguments{
 \item{file}{the name of the file which the data are to be read from.
@@ -17,11 +17,9 @@ values are ignored.}
 
 \item{skip}{Select the number of rows to be skipped (without the column names).}
 
-\item{variables}{Columns to include in the results. You can use the same mini-language as
-dplyr::select() to refer to the columns by name. Use c() to use more than
-one selection expression.
-Although this usage is less common, col_select also accepts a numeric column
-index. See ?tidyselect::language for full details on the selection language.}
+\item{select}{A vector of column names or numbers to keep, drop the rest. In all forms of
+select, order that the columns are specified determines the order of the
+columns in the result.}
 }
 \value{
 R dataframe with attributes including dataset and variable

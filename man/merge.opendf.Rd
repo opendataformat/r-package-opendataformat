@@ -84,10 +84,10 @@ merge.
 # get path to example data from the opendataformat package (data.zip)
 path  <-  system.file("extdata", "data.zip", package = "opendataformat")
 # read four columns of example data specified as Open Data Format from ZIP file
-df  <-  read_opendf(file = path, variables = 1:4)
+df  <-  read_opendf(file = path, select = 1:4)
 
 # read other columns of example data specified as Open Data Format from ZIP file
-df2  <-  read_opendf(file = path, variables = 4:7)
+df2  <-  read_opendf(file = path, select = 4:7)
 
 # generate a variable for joining both datasets:
 df$id<-1:20
