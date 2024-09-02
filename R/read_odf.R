@@ -37,17 +37,17 @@
 #' path
 #'
 #' # read example data specified as Open Data Format from ZIP file
-#' df  <-  read_opendf(file = path)
+#' df  <-  read_odf(file = path)
 #' df
 #' attributes(df)
 #' attributes(df$bap87)
 #'
 #' # read example data with language selection
-#' df  <-  read_opendf(file = path, languages = "de")
+#' df  <-  read_odf(file = path, languages = "de")
 #' attributes(df$bap87)
 #'
 #' @export
-read_opendf  <-  function(file,
+read_odf  <-  function(file,
                         languages = "all",
                         nrows = Inf,
                         skip = 0,
@@ -234,8 +234,8 @@ read_opendf  <-  function(file,
     attr(data[, var], "label") <- attr(data[, var], paste0("label_", lang))
   }
   
-  #add opendf class
-  attr(data, "class") <- c("opendf", attr(data, "class"))
+  #add odf class
+  attr(data, "class") <- c("odf", attr(data, "class"))
   
   return(data)
 }

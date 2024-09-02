@@ -349,31 +349,31 @@ opendataformat package</a>
 <li><a href="#functions-in-the-openmetadata-package" id="toc-functions-in-the-openmetadata-package">Functions in the
 openmetadata Package</a>
 <ul>
-<li><a href="#read-the-open-data-format-read_opendf" id="toc-read-the-open-data-format-read_opendf">Read the Open Data
-Format: <code>read_opendf()</code></a></li>
-<li><a href="#explore-dataset-information-docu_opendf" id="toc-explore-dataset-information-docu_opendf">Explore Dataset
-Information: <code>docu_opendf()</code></a>
+<li><a href="#read-the-open-data-format-read_odf" id="toc-read-the-open-data-format-read_odf">Read the Open Data
+Format: <code>read_odf()</code></a></li>
+<li><a href="#explore-dataset-information-docu_odf" id="toc-explore-dataset-information-docu_odf">Explore Dataset
+Information: <code>docu_odf()</code></a>
 <ul>
 <li><a href="#display-medatata" id="toc-display-medatata">Display
 Medatata</a></li>
 <li><a href="#display-metadata-in-a-specific-language" id="toc-display-metadata-in-a-specific-language">Display Metadata in a
 Specific Language</a></li>
 </ul></li>
-<li><a href="#set-the-active-language-of-a-data-frame-setlanguage_opendf" id="toc-set-the-active-language-of-a-data-frame-setlanguage_opendf">Set
+<li><a href="#set-the-active-language-of-a-data-frame-setlanguage_odf" id="toc-set-the-active-language-of-a-data-frame-setlanguage_odf">Set
 the Active Language of a Data Frame:
-<code>setLanguage_opendf()</code></a></li>
-<li><a href="#access-metadata-getmetadata_opendf-and-attributes" id="toc-access-metadata-getmetadata_opendf-and-attributes">Access
-Metadata: <code>getmetadata_opendf()</code> and
+<code>setLanguage_odf()</code></a></li>
+<li><a href="#access-metadata-getmetadata_odf-and-attributes" id="toc-access-metadata-getmetadata_odf-and-attributes">Access
+Metadata: <code>getmetadata_odf()</code> and
 <code>attributes()</code></a>
 <ul>
 <li><a href="#retrieve-the-attributes-with-attributes-and-attr" id="toc-retrieve-the-attributes-with-attributes-and-attr">Retrieve the
 Attributes with <code>attributes()</code> and
 <code>attr()</code></a></li>
-<li><a href="#retrieve-metadata-with-getmetadata_opendf" id="toc-retrieve-metadata-with-getmetadata_opendf">Retrieve Metadata
-with <code>getmetadata_opendf()</code></a></li>
+<li><a href="#retrieve-metadata-with-getmetadata_odf" id="toc-retrieve-metadata-with-getmetadata_odf">Retrieve Metadata
+with <code>getmetadata_odf()</code></a></li>
 </ul></li>
-<li><a href="#export-to-the-open-data-format-write_opendf" id="toc-export-to-the-open-data-format-write_opendf">Export to the Open
-Data Format: <code>write_opendf()</code></a></li>
+<li><a href="#export-to-the-open-data-format-write_odf" id="toc-export-to-the-open-data-format-write_odf">Export to the Open
+Data Format: <code>write_odf()</code></a></li>
 </ul></li>
 <li><a href="#lets-analyse-and-make-use-of-the-metadata" id="toc-lets-analyse-and-make-use-of-the-metadata">Let’s Analyse and
 Make Use of the Metadata</a>
@@ -399,15 +399,15 @@ a Variable</a></li>
 Look no further and welcome the opendataformat package.</p>
 <p>With just a few lines of code, you can convert a data package
 specified as opendataformat into an R dataframe
-(<code>read_opendf()</code>) or convert an R dataframe into a data
+(<code>read_odf()</code>) or convert an R dataframe into a data
 package specified in the opendataformat
-(<code>write_opendf()</code>).</p>
+(<code>write_odf()</code>).</p>
 <p>But wait, there’s more! Our package goes beyond parsing. Accessing
 metadata has never been easier. Dive into the treasure trove of
 information stored in your R dataframes. Explore dataset labels,
 descriptions, and valuable details about variables such as labels and
-value labels with the <code>docu_opendf()</code> function and the
-<code>getmetadata_opendf()</code> function.</p>
+value labels with the <code>docu_odf()</code> function and the
+<code>getmetadata_odf()</code> function.</p>
 <p>This vignette will guide you through a series of examples that
 demonstrate the possibilities of these functions. Let’s get started!</p>
 <div id="installation" class="section level2">
@@ -450,8 +450,8 @@ the devtools-library.</p>
 </div>
 <div id="functions-in-the-openmetadata-package" class="section level1">
 <h1>Functions in the openmetadata Package</h1>
-<div id="read-the-open-data-format-read_opendf" class="section level2">
-<h2>Read the Open Data Format: <code>read_opendf()</code></h2>
+<div id="read-the-open-data-format-read_odf" class="section level2">
+<h2>Read the Open Data Format: <code>read_odf()</code></h2>
 <p>The opendataformat package provides example data that is specified as
 ‘Open Data Format’. Data in the open data format is a ZIP file
 containing a csv-file and a xml-file. The example data contains the
@@ -461,14 +461,14 @@ the dataset and its variables. If you are interested in what these files
 look like, you can find an example in the Open Data Format git
 repository: <a href="https://git.soep.de/opendata/specification/-/tree/main/external/example">https://git.soep.de/opendata/specification/-/tree/main/external/example</a>
 To load the data, we need to specify the path to the zip-file. Here the
-example data is loaded using <code>read_opendf()</code> Alternatively,
+example data is loaded using <code>read_odf()</code> Alternatively,
 you can set <code>file</code> to a zip-file in the working
 directory.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>path <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;data.zip&quot;</span>, <span class="at">package=</span><span class="st">&quot;opendataformat&quot;</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_opendf</span>(<span class="at">file =</span> path)</span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co">#df &lt;- read_opendf(file = &quot;../my_data.zip&quot;)</span></span></code></pre></div>
-<p>The output of the <code>read_opendf()</code> function is an
-R-data.frame object, that has the additional class <code>opendf</code>.
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_odf</span>(<span class="at">file =</span> path)</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co">#df &lt;- read_odf(file = &quot;../my_data.zip&quot;)</span></span></code></pre></div>
+<p>The output of the <code>read_odf()</code> function is an
+R-data.frame object, that has the additional class <code>odf</code>.
 It has additional metadata stored in the attributes of the dataframe and
 the variables/columns. These include the languages of the metadata,
 labels, descriptions, urls, variable types, and value labels.</p>
@@ -494,7 +494,7 @@ labels, descriptions, urls, variable types, and value labels.</p>
 <span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a><span class="dv">18</span>     <span class="dv">3</span>      <span class="cn">NA</span>       <span class="dv">5</span>       <span class="dv">3</span>      <span class="sc">-</span><span class="dv">2</span>  <span class="fl">1.98</span>     David</span>
 <span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a><span class="dv">19</span>    <span class="sc">-</span><span class="dv">2</span>       <span class="dv">8</span>       <span class="dv">1</span>       <span class="dv">4</span>       <span class="dv">5</span>  <span class="fl">1.61</span>        <span class="sc">-</span><span class="dv">2</span></span>
 <span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a><span class="dv">20</span>     <span class="dv">2</span>       <span class="dv">8</span>       <span class="dv">3</span>       <span class="dv">1</span>       <span class="dv">2</span>  <span class="fl">1.83</span>     Anton</span></code></pre></div>
-<p>If you load the haven package, you see the variable labels in the <a href="#set-the-active-language-of-a-data-frame-setlanguage_opendf">active
+<p>If you load the haven package, you see the variable labels in the <a href="#set-the-active-language-of-a-data-frame-setlanguage_odf">active
 language</a> .</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co">#library(haven)</span></span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="co">#View(df)</span></span></code></pre></div>
@@ -502,21 +502,21 @@ language</a> .</p>
 languages. You can use the <code>languages</code>-argument. To load the
 example data only with english labels and descriptions, set
 <code>languages=&quot;en&quot;</code>:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>df_en <span class="ot">&lt;-</span> <span class="fu">read_opendf</span>(<span class="at">file =</span> path, <span class="at">languages=</span><span class="st">&quot;en&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>df_en <span class="ot">&lt;-</span> <span class="fu">read_odf</span>(<span class="at">file =</span> path, <span class="at">languages=</span><span class="st">&quot;en&quot;</span>)</span></code></pre></div>
 <p>By default <code>languages=&quot;all&quot;</code>:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>df_en <span class="ot">&lt;-</span> <span class="fu">read_opendf</span>(<span class="at">file =</span> path, <span class="at">languages=</span><span class="st">&quot;all&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>df_en <span class="ot">&lt;-</span> <span class="fu">read_odf</span>(<span class="at">file =</span> path, <span class="at">languages=</span><span class="st">&quot;all&quot;</span>)</span></code></pre></div>
 <p>You can also give a list of languages::</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>df_en <span class="ot">&lt;-</span> <span class="fu">read_opendf</span>(<span class="at">file =</span> path, <span class="at">languages=</span><span class="fu">c</span>(<span class="st">&quot;en&quot;</span>, <span class="st">&quot;de&quot;</span>))</span></code></pre></div>
-<p>You can set further arguments for the <code>read_opendf()</code>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>df_en <span class="ot">&lt;-</span> <span class="fu">read_odf</span>(<span class="at">file =</span> path, <span class="at">languages=</span><span class="fu">c</span>(<span class="st">&quot;en&quot;</span>, <span class="st">&quot;de&quot;</span>))</span></code></pre></div>
+<p>You can set further arguments for the <code>read_odf()</code>
 function. With the <code>nrows</code> argument you define how many rows
 to read excluding the header. With the <code>skip</code> parameter you
 set how many rows to skip (excluding the header).With the
 <code>variables</code> input you determine which columns/variables to
 load with a vector of indices or variable/column names.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>df<span class="ot">&lt;-</span><span class="fu">read_opendf</span>(file, <span class="at">languages =</span> <span class="st">&quot;all&quot;</span>, <span class="at">nrows =</span> <span class="cn">Inf</span>, <span class="at">skip =</span> <span class="dv">0</span>, <span class="at">variables =</span> <span class="cn">NULL</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>df<span class="ot">&lt;-</span><span class="fu">read_odf</span>(file, <span class="at">languages =</span> <span class="st">&quot;all&quot;</span>, <span class="at">nrows =</span> <span class="cn">Inf</span>, <span class="at">skip =</span> <span class="dv">0</span>, <span class="at">variables =</span> <span class="cn">NULL</span>)</span></code></pre></div>
 </div>
-<div id="explore-dataset-information-docu_opendf" class="section level2">
-<h2>Explore Dataset Information: <code>docu_opendf()</code></h2>
+<div id="explore-dataset-information-docu_odf" class="section level2">
+<h2>Explore Dataset Information: <code>docu_odf()</code></h2>
 <div id="display-medatata" class="section level3">
 <h3>Display Medatata</h3>
 <p>You can explore dataset information using two methods. Firstly, you
@@ -524,11 +524,11 @@ can browse metadata at the record level, providing an overview of the
 dataset. Alternatively, you have the option to examine specific variable
 details, allowing you to gain insights into selected data
 attributes.</p>
-<p>By default, when using the <code>docu_opendf()</code> function,
+<p>By default, when using the <code>docu_odf()</code> function,
 dataset-level information is presented through the console and an HTML
 page. If you’re utilizing RStudio, this html-page will be displayed
 within the RStudio viewer.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">docu_opendf</span>(df)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">docu_odf</span>(df)</span></code></pre></div>
 <p>To display the metadata only in the console, utilize the
 <code>style</code> argument with the value set to <code>print</code> (or
 <code>console</code>). This ensures that the information is conveniently
@@ -536,7 +536,7 @@ displayed on the R console, serving our specific demonstration purposes.
 To display metadata information only in the viewer, set
 <code>style=&quot;viewer&quot;</code> or <code>style=&quot;html&quot;</code>. By default
 <code>style=&quot;both&quot;</code>.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">docu_opendf</span>(df, <span class="at">style =</span> <span class="st">&quot;print&quot;</span>)</span>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">docu_odf</span>(df, <span class="at">style =</span> <span class="st">&quot;print&quot;</span>)</span>
 <span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="co">#&gt; Dataset:  bap</span></span>
 <span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="co">#&gt; Label:</span></span>
 <span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="co">#&gt; [en]Data from individual questionnaires 2010</span></span>
@@ -548,7 +548,7 @@ To display metadata information only in the viewer, set
 <span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="co">#&gt;     https://paneldata.org/soep-core/data/bap</span></span></code></pre></div>
 <p>To obtain a comprehensive overview of all variables within the
 dataset, simply set the argument <code>variables=&quot;yes&quot;</code>.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">docu_opendf</span>(df, <span class="at">variables=</span><span class="st">&quot;yes&quot;</span>, <span class="at">style=</span><span class="st">&quot;print&quot;</span>)</span>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">docu_odf</span>(df, <span class="at">variables=</span><span class="st">&quot;yes&quot;</span>, <span class="at">style=</span><span class="st">&quot;print&quot;</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>Dataset<span class="sc">:</span>  bap</span>
 <span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>Label<span class="sc">:</span></span>
 <span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>[en]Data from individual questionnaires <span class="dv">2010</span></span>
@@ -569,7 +569,7 @@ dataset, simply set the argument <code>variables=&quot;yes&quot;</code>.</p>
 <span id="cb11-19"><a href="#cb11-19" tabindex="-1"></a><span class="st">7     name                         Firstname</span></span></code></pre></div>
 <p>If you are interested in just one specific variable, you can do
 this:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">docu_opendf</span>(df<span class="sc">$</span>bap9001, <span class="at">style =</span> <span class="st">&quot;print&quot;</span>)</span>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">docu_odf</span>(df<span class="sc">$</span>bap9001, <span class="at">style =</span> <span class="st">&quot;print&quot;</span>)</span>
 <span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="co">#&gt; Variable:  bap9001</span></span>
 <span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="co">#&gt; Label:</span></span>
 <span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a><span class="co">#&gt; [en]Pressed For Time Last 4 Weeks</span></span>
@@ -597,14 +597,14 @@ languages supported by your dataset, you can simply set the
 <code>languages</code> argument to <code>all</code>. This setting
 enables you to identify the range of languages available for accessing
 the relevant metadata within your dataset.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">docu_opendf</span>(df<span class="sc">$</span>bap9001, <span class="at">style =</span> <span class="st">&quot;print&quot;</span>, <span class="at">variables=</span><span class="st">&quot;yes&quot;</span>, <span class="at">languages =</span> <span class="st">&quot;all&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">docu_odf</span>(df<span class="sc">$</span>bap9001, <span class="at">style =</span> <span class="st">&quot;print&quot;</span>, <span class="at">variables=</span><span class="st">&quot;yes&quot;</span>, <span class="at">languages =</span> <span class="st">&quot;all&quot;</span>)</span></code></pre></div>
 <p>If you have a specific language of interest, you can easily display
 it by utilizing the corresponding language code. Simply specify the
 desired language code to retrieve the metadata in the language of your
 choice. This enables you to access the specific language variant of
 variable labels, value labels. In this example, we display the German
 version:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">docu_opendf</span>(df<span class="sc">$</span>bap9001, <span class="at">style =</span> <span class="st">&quot;print&quot;</span>, <span class="at">languages =</span> <span class="st">&quot;de&quot;</span>)</span>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">docu_odf</span>(df<span class="sc">$</span>bap9001, <span class="at">style =</span> <span class="st">&quot;print&quot;</span>, <span class="at">languages =</span> <span class="st">&quot;de&quot;</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="co">#&gt; Variable:  bap9001</span></span>
 <span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="co">#&gt; Label:</span></span>
 <span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="co">#&gt; [de]Eile, Zeitdruck letzten 4 Wochen</span></span>
@@ -625,7 +625,7 @@ version:</p>
 <span id="cb14-19"><a href="#cb14-19" tabindex="-1"></a><span class="co">#&gt;      5             Nie</span></span></code></pre></div>
 <p>You can apply this function to the entire dataset, allowing you to
 access the desired information across all variables.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">docu_opendf</span>(df, <span class="at">style =</span> <span class="st">&quot;print&quot;</span>, <span class="at">variables=</span><span class="st">&quot;yes&quot;</span>, <span class="at">languages =</span> <span class="st">&quot;de&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">docu_odf</span>(df, <span class="at">style =</span> <span class="st">&quot;print&quot;</span>, <span class="at">variables=</span><span class="st">&quot;yes&quot;</span>, <span class="at">languages =</span> <span class="st">&quot;de&quot;</span>)</span></code></pre></div>
 <p>If you prefer another display style, you can use the datasets’
 metadata directly from the attributes and write your own code:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">names</span>(df)) {</span>
@@ -640,9 +640,9 @@ metadata directly from the attributes and write your own code:</p>
 <span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a>bap9003<span class="sc">:</span> Ausgeglichen letzten <span class="dv">4</span> Wochen</span>
 <span id="cb16-11"><a href="#cb16-11" tabindex="-1"></a>bap96<span class="sc">:</span> Körpergröße</span>
 <span id="cb16-12"><a href="#cb16-12" tabindex="-1"></a>name<span class="sc">:</span> Vorname</span></code></pre></div>
-<p>You can also use the getmetadata_opendf() function to retrieve labels
+<p>You can also use the getmetadata_odf() function to retrieve labels
 and other metadata for the variables:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">getmetadata_opendf</span>(df, <span class="at">type=</span><span class="st">&quot;label&quot;</span>)</span>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">getmetadata_odf</span>(df, <span class="at">type=</span><span class="st">&quot;label&quot;</span>)</span>
 <span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>                              bap87                             bap9201 </span>
 <span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>                   <span class="st">&quot;Current Health&quot;</span>    <span class="st">&quot;hours of sleep, normal workday&quot;</span> </span>
 <span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>                            bap9001                             bap9002 </span>
@@ -652,22 +652,22 @@ and other metadata for the variables:</p>
 <span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a>                               name </span>
 <span id="cb17-9"><a href="#cb17-9" tabindex="-1"></a>                        <span class="st">&quot;Firstname&quot;</span> </span></code></pre></div>
 <p>or the value labels:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="fu">getmetadata_opendf</span>(df<span class="sc">$</span>bap87, <span class="at">type=</span><span class="st">&quot;valuelabels&quot;</span>)</span>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="fu">getmetadata_odf</span>(df<span class="sc">$</span>bap87, <span class="at">type=</span><span class="st">&quot;valuelabels&quot;</span>)</span>
 <span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>Does not apply      No Answer      Very good           Good   Satisfactory </span>
 <span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>            <span class="sc">-</span><span class="dv">2</span>             <span class="sc">-</span><span class="dv">1</span>              <span class="dv">1</span>              <span class="dv">2</span>              <span class="dv">3</span> </span>
 <span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a>          Poor            Bad </span>
 <span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a>             <span class="dv">4</span>              <span class="dv">5</span> </span></code></pre></div>
 </div>
 </div>
-<div id="set-the-active-language-of-a-data-frame-setlanguage_opendf" class="section level2">
+<div id="set-the-active-language-of-a-data-frame-setlanguage_odf" class="section level2">
 <h2>Set the Active Language of a Data Frame:
-<code>setLanguage_opendf()</code></h2>
+<code>setLanguage_odf()</code></h2>
 <p>Alternatively, you can set the current (active) language for a
 dataset-object. (This function tries to copy the label language function
 from Stata.)</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>df<span class="ot">&lt;-</span><span class="fu">setLanguage_opendf</span>(df, <span class="at">language=</span><span class="st">&quot;de&quot;</span>)</span>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>df<span class="ot">&lt;-</span><span class="fu">setLanguage_odf</span>(df, <span class="at">language=</span><span class="st">&quot;de&quot;</span>)</span>
 <span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a></span>
-<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a><span class="fu">docu_opendf</span>(df<span class="sc">$</span>bap9001, <span class="at">style =</span> <span class="st">&quot;print&quot;</span>)</span></code></pre></div>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a><span class="fu">docu_odf</span>(df<span class="sc">$</span>bap9001, <span class="at">style =</span> <span class="st">&quot;print&quot;</span>)</span></code></pre></div>
 <p>To display which languages are available for the dataset metadata,
 display the <code>languages</code> attribute:</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="fu">attributes</span>(df)<span class="sc">$</span>languages</span>
@@ -675,8 +675,8 @@ display the <code>languages</code> attribute:</p>
 <span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a><span class="fu">attr</span>(df, <span class="st">&quot;languages&quot;</span>)</span>
 <span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a><span class="co">#&gt; [1] &quot;en&quot; &quot;de&quot;</span></span></code></pre></div>
 </div>
-<div id="access-metadata-getmetadata_opendf-and-attributes" class="section level2">
-<h2>Access Metadata: <code>getmetadata_opendf()</code> and
+<div id="access-metadata-getmetadata_odf-and-attributes" class="section level2">
+<h2>Access Metadata: <code>getmetadata_odf()</code> and
 <code>attributes()</code></h2>
 <p>Browsing through datasets’ metadata provides a valuable initial
 overview. However, when it comes time to dive into the analysis work,
@@ -685,7 +685,7 @@ process of accessing and utilizing it. Let’s explore how and where the
 metadata is stored, and how we can effectively access and leverage it
 for analysis purposes.</p>
 <p>A easy way to retrieve metadata is to use the
-<code>getmetadata_opendf()</code> function to get metadata.</p>
+<code>getmetadata_odf()</code> function to get metadata.</p>
 <div id="retrieve-the-attributes-with-attributes-and-attr" class="section level3">
 <h3>Retrieve the Attributes with <code>attributes()</code> and
 <code>attr()</code></h3>
@@ -731,7 +731,7 @@ console.</p>
 <span id="cb21-33"><a href="#cb21-33" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">&quot;Data from individual questionnaires 2010&quot;</span></span>
 <span id="cb21-34"><a href="#cb21-34" tabindex="-1"></a></span>
 <span id="cb21-35"><a href="#cb21-35" tabindex="-1"></a><span class="sc">$</span>class</span>
-<span id="cb21-36"><a href="#cb21-36" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">&quot;data.frame&quot;</span> <span class="st">&quot;opendf&quot;</span>    </span></code></pre></div>
+<span id="cb21-36"><a href="#cb21-36" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">&quot;data.frame&quot;</span> <span class="st">&quot;odf&quot;</span>    </span></code></pre></div>
 <p>If you provide a specific variable to the function, only the
 corresponding metadata for that variable will be printed.</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="fu">attributes</span>(df<span class="sc">$</span>bap87)</span>
@@ -791,12 +791,12 @@ attributes to suit your needs.</p>
 <span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a><span class="fu">attributes</span>(df<span class="sc">$</span>bap87)<span class="sc">$</span>description_de</span>
 <span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a><span class="cn">NULL</span></span></code></pre></div>
 </div>
-<div id="retrieve-metadata-with-getmetadata_opendf" class="section level3">
-<h3>Retrieve Metadata with <code>getmetadata_opendf()</code></h3>
-<p>You can also use the <code>getmetadata_opendf()</code> function to
+<div id="retrieve-metadata-with-getmetadata_odf" class="section level3">
+<h3>Retrieve Metadata with <code>getmetadata_odf()</code></h3>
+<p>You can also use the <code>getmetadata_odf()</code> function to
 retrieve labels and other metadata for the variables. By default, the
 function will return the variable labels for a dataset:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="fu">getmetadata_opendf</span>(df, <span class="at">type=</span><span class="st">&quot;labels&quot;</span>)</span>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="fu">getmetadata_odf</span>(df, <span class="at">type=</span><span class="st">&quot;labels&quot;</span>)</span>
 <span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a>                              bap87                             bap9201 </span>
 <span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a>                   <span class="st">&quot;Current Health&quot;</span>    <span class="st">&quot;hours of sleep, normal workday&quot;</span> </span>
 <span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a>                            bap9001                             bap9002 </span>
@@ -806,33 +806,33 @@ function will return the variable labels for a dataset:</p>
 <span id="cb26-8"><a href="#cb26-8" tabindex="-1"></a>                               name </span>
 <span id="cb26-9"><a href="#cb26-9" tabindex="-1"></a>                        <span class="st">&quot;Firstname&quot;</span> </span></code></pre></div>
 <p>or for a specific variable::</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="fu">getmetadata_opendf</span>(df<span class="sc">$</span>bap96, <span class="at">type=</span><span class="st">&quot;labels&quot;</span>)</span>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="fu">getmetadata_odf</span>(df<span class="sc">$</span>bap96, <span class="at">type=</span><span class="st">&quot;labels&quot;</span>)</span>
 <span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a>   bap96 </span>
 <span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a><span class="st">&quot;Height&quot;</span> </span></code></pre></div>
 <p>To retrieve metadata in a specific language, use the language
 parameter:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="fu">getmetadata_opendf</span>(df, <span class="at">type=</span><span class="st">&quot;labels&quot;</span>, <span class="at">language=</span><span class="st">&quot;en&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="fu">getmetadata_odf</span>(df, <span class="at">type=</span><span class="st">&quot;labels&quot;</span>, <span class="at">language=</span><span class="st">&quot;en&quot;</span>)</span></code></pre></div>
 <p>Or set the active language of the dataset using the
-<code>setLanguage_opendf()</code> function:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a>df<span class="ot">&lt;-</span><span class="fu">setLanguage_opendf</span>(df, <span class="at">language=</span><span class="st">&quot;en&quot;</span>)</span>
-<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a><span class="fu">getmetadata_opendf</span>(df, <span class="at">type=</span><span class="st">&quot;labels&quot;</span>)</span></code></pre></div>
-<p>You can also use the <code>getmetadata_opendf()</code> function to
+<code>setLanguage_odf()</code> function:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a>df<span class="ot">&lt;-</span><span class="fu">setLanguage_odf</span>(df, <span class="at">language=</span><span class="st">&quot;en&quot;</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a><span class="fu">getmetadata_odf</span>(df, <span class="at">type=</span><span class="st">&quot;labels&quot;</span>)</span></code></pre></div>
+<p>You can also use the <code>getmetadata_odf()</code> function to
 retrieve value labels for a specific variable by setting the argument
 <code>type=&quot;valuelabels&quot;</code>:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a><span class="fu">getmetadata_opendf</span>(df<span class="sc">$</span>bap9001, <span class="at">type=</span><span class="st">&quot;valuelabels&quot;</span>)</span>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a><span class="fu">getmetadata_odf</span>(df<span class="sc">$</span>bap9001, <span class="at">type=</span><span class="st">&quot;valuelabels&quot;</span>)</span>
 <span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a>Does not apply      No Answer         Always          Often      Sometimes </span>
 <span id="cb30-3"><a href="#cb30-3" tabindex="-1"></a>            <span class="sc">-</span><span class="dv">2</span>             <span class="sc">-</span><span class="dv">1</span>              <span class="dv">1</span>              <span class="dv">2</span>              <span class="dv">3</span> </span>
 <span id="cb30-4"><a href="#cb30-4" tabindex="-1"></a>  Almost Never          Never </span>
 <span id="cb30-5"><a href="#cb30-5" tabindex="-1"></a>             <span class="dv">4</span>              <span class="dv">5</span> </span></code></pre></div>
 <p>The value labels for each value are stored in the namespace:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="fu">names</span>(<span class="fu">getmetadata_opendf</span>(df<span class="sc">$</span>bap9001, <span class="at">type=</span><span class="st">&quot;valuelabels&quot;</span>))</span>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="fu">names</span>(<span class="fu">getmetadata_odf</span>(df<span class="sc">$</span>bap9001, <span class="at">type=</span><span class="st">&quot;valuelabels&quot;</span>))</span>
 <span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">&quot;Does not apply&quot;</span> <span class="st">&quot;No Answer&quot;</span>      <span class="st">&quot;Always&quot;</span>         <span class="st">&quot;Often&quot;</span>         </span>
 <span id="cb31-3"><a href="#cb31-3" tabindex="-1"></a>[<span class="dv">5</span>] <span class="st">&quot;Sometimes&quot;</span>      <span class="st">&quot;Almost Never&quot;</span>   <span class="st">&quot;Never&quot;</span>         </span></code></pre></div>
-<p>You can use the <code>getmetadata_opendf()</code> function to return
+<p>You can use the <code>getmetadata_odf()</code> function to return
 descriptions, urls, variable types and metadata languages as well:</p>
 <p>To retrieve variable description(s), set the argument
 <code>type=&quot;description&quot;</code>:</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="fu">getmetadata_opendf</span>(df, <span class="at">type=</span><span class="st">&quot;description&quot;</span>)</span>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="fu">getmetadata_odf</span>(df, <span class="at">type=</span><span class="st">&quot;description&quot;</span>)</span>
 <span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a>                                                   bap87 </span>
 <span id="cb32-3"><a href="#cb32-3" tabindex="-1"></a> <span class="st">&quot;Question: How would you describe your current health?&quot;</span> </span>
 <span id="cb32-4"><a href="#cb32-4" tabindex="-1"></a>                                                 bap9201 </span>
@@ -849,27 +849,27 @@ descriptions, urls, variable types and metadata languages as well:</p>
 <span id="cb32-15"><a href="#cb32-15" tabindex="-1"></a>                                             <span class="st">&quot;Firstname&quot;</span> </span></code></pre></div>
 <p>To retrieve variable url(s), set the argument
 <code>type=&quot;url&quot;</code>:</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a><span class="fu">getmetadata_opendf</span>(df, <span class="at">type=</span><span class="st">&quot;url&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a><span class="fu">getmetadata_odf</span>(df, <span class="at">type=</span><span class="st">&quot;url&quot;</span>)</span></code></pre></div>
 <p>To retrieve variable type(s), set the argument
 <code>type=&quot;type&quot;</code>:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a><span class="fu">getmetadata_opendf</span>(df, <span class="at">type=</span><span class="st">&quot;type&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a><span class="fu">getmetadata_odf</span>(df, <span class="at">type=</span><span class="st">&quot;type&quot;</span>)</span></code></pre></div>
 </div>
 </div>
-<div id="export-to-the-open-data-format-write_opendf" class="section level2">
-<h2>Export to the Open Data Format: <code>write_opendf()</code></h2>
-<p>To save a dataset as opendf-file, we can use the
-<code>write_opendf()</code> function. Let’s assume we want to save the
-first four columns of our dataset as a new opendf-file. We use the
-<code>write_opendf()</code> function and indicate the r-dataframe and
+<div id="export-to-the-open-data-format-write_odf" class="section level2">
+<h2>Export to the Open Data Format: <code>write_odf()</code></h2>
+<p>To save a dataset as odf-file, we can use the
+<code>write_odf()</code> function. Let’s assume we want to save the
+first four columns of our dataset as a new odf-file. We use the
+<code>write_odf()</code> function and indicate the r-dataframe and
 the file name (and location if it).</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a><span class="fu">write_opendf</span>(</span>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a><span class="fu">write_odf</span>(</span>
 <span id="cb35-2"><a href="#cb35-2" tabindex="-1"></a>  <span class="at">x =</span> df[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], </span>
 <span id="cb35-3"><a href="#cb35-3" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;../df_1_4.zip&quot;</span></span>
 <span id="cb35-4"><a href="#cb35-4" tabindex="-1"></a>)</span>
 <span id="cb35-5"><a href="#cb35-5" tabindex="-1"></a></span>
 <span id="cb35-6"><a href="#cb35-6" tabindex="-1"></a><span class="co">#or :</span></span>
 <span id="cb35-7"><a href="#cb35-7" tabindex="-1"></a>df_14<span class="ot">&lt;-</span>df[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]</span>
-<span id="cb35-8"><a href="#cb35-8" tabindex="-1"></a><span class="fu">write_opendf</span>(</span>
+<span id="cb35-8"><a href="#cb35-8" tabindex="-1"></a><span class="fu">write_odf</span>(</span>
 <span id="cb35-9"><a href="#cb35-9" tabindex="-1"></a>  <span class="at">x =</span> df[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], </span>
 <span id="cb35-10"><a href="#cb35-10" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;df_1_4.zip&quot;</span></span>
 <span id="cb35-11"><a href="#cb35-11" tabindex="-1"></a>)</span></code></pre></div>
@@ -937,7 +937,7 @@ zip file will solely contain the metadata XML file, excluding the data
 CSV file. This allows you to specifically capture and preserve the
 metadata without including the actual data, providing a solution for
 documentation or archiving needs.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a><span class="fu">write_opendf</span>(</span>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a><span class="fu">write_odf</span>(</span>
 <span id="cb38-2"><a href="#cb38-2" tabindex="-1"></a>  <span class="at">x=</span>df, </span>
 <span id="cb38-3"><a href="#cb38-3" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;../df_metadata.zip&quot;</span>,</span>
 <span id="cb38-4"><a href="#cb38-4" tabindex="-1"></a>  <span class="at">export_data =</span> <span class="cn">FALSE</span></span>
@@ -946,14 +946,14 @@ documentation or archiving needs.</p>
 some languages, set the languages argument to
 <code>languages=c(&quot;en&quot;)</code>. Default:
 <code>languages=&quot;all&quot;</code></p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a><span class="fu">write_opendf</span>(</span>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a><span class="fu">write_odf</span>(</span>
 <span id="cb39-2"><a href="#cb39-2" tabindex="-1"></a>  <span class="at">x=</span>df, </span>
 <span id="cb39-3"><a href="#cb39-3" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;../df_en.zip&quot;</span>,</span>
 <span id="cb39-4"><a href="#cb39-4" tabindex="-1"></a>  <span class="at">languages =</span> <span class="st">&quot;en&quot;</span></span>
 <span id="cb39-5"><a href="#cb39-5" tabindex="-1"></a>)</span></code></pre></div>
 <p>By default, languages is set to <code>languages=&quot;all&quot;</code>. You can
 also define a list of languages to be exported:</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a><span class="fu">write_opendf</span>(</span>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a><span class="fu">write_odf</span>(</span>
 <span id="cb40-2"><a href="#cb40-2" tabindex="-1"></a>  <span class="at">x=</span>df, </span>
 <span id="cb40-3"><a href="#cb40-3" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;../df_en_de.zip&quot;</span>,</span>
 <span id="cb40-4"><a href="#cb40-4" tabindex="-1"></a>  <span class="at">languages =</span> <span class="fu">c</span>(<span class="st">&quot;en&quot;</span>,<span class="st">&quot;de&quot;</span>)</span>
@@ -997,11 +997,11 @@ examine them now:</p>
 <span id="cb44-9"><a href="#cb44-9" tabindex="-1"></a>             <span class="dv">3</span>              <span class="dv">2</span>              <span class="dv">2</span>              <span class="dv">2</span>              <span class="dv">5</span> </span>
 <span id="cb44-10"><a href="#cb44-10" tabindex="-1"></a>          Poor            Bad </span>
 <span id="cb44-11"><a href="#cb44-11" tabindex="-1"></a>             <span class="dv">2</span>              <span class="dv">3</span> </span></code></pre></div>
-<p>Alternatively you can use the getmetadata_opendf()-function to get
+<p>Alternatively you can use the getmetadata_odf()-function to get
 the value labels:</p>
 <div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" tabindex="-1"></a><span class="fu">table</span>(</span>
 <span id="cb45-2"><a href="#cb45-2" tabindex="-1"></a>  <span class="fu">factor</span>(</span>
-<span id="cb45-3"><a href="#cb45-3" tabindex="-1"></a>    df<span class="sc">$</span>bap87, <span class="at">labels =</span> <span class="fu">names</span>(<span class="fu">getmetadata_opendf</span>(df<span class="sc">$</span>bap87, <span class="at">valuelabels=</span>T))</span>
+<span id="cb45-3"><a href="#cb45-3" tabindex="-1"></a>    df<span class="sc">$</span>bap87, <span class="at">labels =</span> <span class="fu">names</span>(<span class="fu">getmetadata_odf</span>(df<span class="sc">$</span>bap87, <span class="at">valuelabels=</span>T))</span>
 <span id="cb45-4"><a href="#cb45-4" tabindex="-1"></a>    )</span>
 <span id="cb45-5"><a href="#cb45-5" tabindex="-1"></a>  )</span></code></pre></div>
 <p>To display the data in a language other than the default one, let’s
@@ -1019,11 +1019,11 @@ labels and present the information accordingly.</p>
 <span id="cb46-9"><a href="#cb46-9" tabindex="-1"></a>                <span class="dv">3</span>                 <span class="dv">2</span>                 <span class="dv">2</span>                 <span class="dv">2</span> </span>
 <span id="cb46-10"><a href="#cb46-10" tabindex="-1"></a>Zufriedenstellend       Weniger gut          Schlecht </span>
 <span id="cb46-11"><a href="#cb46-11" tabindex="-1"></a>                <span class="dv">5</span>                 <span class="dv">2</span>                 <span class="dv">3</span> </span></code></pre></div>
-<p>Or using getmetadata_opendf()-function:</p>
+<p>Or using getmetadata_odf()-function:</p>
 <div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" tabindex="-1"></a><span class="fu">table</span>(</span>
 <span id="cb47-2"><a href="#cb47-2" tabindex="-1"></a>  <span class="fu">factor</span>(</span>
 <span id="cb47-3"><a href="#cb47-3" tabindex="-1"></a>    df<span class="sc">$</span>bap87,</span>
-<span id="cb47-4"><a href="#cb47-4" tabindex="-1"></a>      <span class="at">labels=</span><span class="fu">names</span>(<span class="fu">getmetadata_opendf</span>(df<span class="sc">$</span>bap87, <span class="at">type=</span><span class="st">&quot;valuelabels&quot;</span>, <span class="at">language=</span><span class="st">&quot;de&quot;</span>))</span>
+<span id="cb47-4"><a href="#cb47-4" tabindex="-1"></a>      <span class="at">labels=</span><span class="fu">names</span>(<span class="fu">getmetadata_odf</span>(df<span class="sc">$</span>bap87, <span class="at">type=</span><span class="st">&quot;valuelabels&quot;</span>, <span class="at">language=</span><span class="st">&quot;de&quot;</span>))</span>
 <span id="cb47-5"><a href="#cb47-5" tabindex="-1"></a>    )</span>
 <span id="cb47-6"><a href="#cb47-6" tabindex="-1"></a>  )</span>
 <span id="cb47-7"><a href="#cb47-7" tabindex="-1"></a></span>

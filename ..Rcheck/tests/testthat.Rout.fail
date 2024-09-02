@@ -52,11 +52,11 @@ Loading required package: data.table
 [ FAIL 1 | WARN 0 | SKIP 0 | PASS 375 ]
 
 ══ Failed tests ════════════════════════════════════════════════════════════════
-── Error ('test-docu_opendf.R:10:3'): docu_opendf ──────────────────────────────
+── Error ('test-docu_odf.R:10:3'): docu_odf ──────────────────────────────
 Error in `viewer(htmlFile)`: could not find function "viewer"
 Backtrace:
     ▆
- 1. └─opendataformat::docu_opendf(input = df, languages = "all", style = "html") at test-docu_opendf.R:10:3
+ 1. └─opendataformat::docu_odf(input = df, languages = "all", style = "html") at test-docu_odf.R:10:3
 
 [ FAIL 1 | WARN 0 | SKIP 0 | PASS 375 ]
 Error: Test failures

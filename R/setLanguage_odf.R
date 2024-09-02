@@ -2,10 +2,10 @@
 #'
 #' @description
 #' Changes the active language of a dataframe with metadata for the 
-#' docu_opendf function.
+#' docu_odf function.
 #'
 #' @param dataframe R data frame (df) enriched with metadata in the 
-#' opendf-format.
+#' odf-format.
 #'
 #' @param language
 #' Select the language to which you want to switch the metadata.
@@ -14,17 +14,17 @@
 #'
 #' @examples
 #' # get example data from the opendataformat package
-#' df  <-  get(data("data_opendf"))
+#' df  <-  get(data("data_odf"))
 #'
 #' # Switch dataset df to language "en" 
-#' df  <-  setLanguage_opendf(df, language = "en")
+#' df  <-  setLanguage_odf(df, language = "en")
 #' 
 #' # Display dataset information for dataset df in language "en"
-#' docu_opendf(df)
+#' docu_odf(df)
 #'
 #' @export
 
-setLanguage_opendf <- function(dataframe, language){
+setLanguage_odf <- function(dataframe, language){
   df_languages <-  attr(dataframe, "languages")
   #check if language is available for the dataframe
   if (language %in% df_languages){

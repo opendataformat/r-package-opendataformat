@@ -50,76 +50,76 @@ Loading required package: data.table
 > base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
 > base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
 > cleanEx()
-> nameEx("docu_opendf")
-> ### * docu_opendf
+> nameEx("docu_odf")
+> ### * docu_odf
 > 
 > flush(stderr()); flush(stdout())
 > 
 > base::assign(".ptime", proc.time(), pos = "CheckExEnv")
-> ### Name: docu_opendf
+> ### Name: docu_odf
 > ### Title: Get documentation from R data frame.
-> ### Aliases: docu_opendf
+> ### Aliases: docu_odf
 > 
 > ### ** Examples
 > 
 > # get example data from the opendataformat package
-> df <- get(data("data_opendf"))
+> df <- get(data("data_odf"))
 > 
 > # view documentation about the dataset in the language that is currently set
 > ## Not run: 
-> ##D docu_opendf(df)
+> ##D docu_odf(df)
 > ## End(Not run)
 > 
 > # view information from a selected variable in language "en"
 > ## Not run: 
-> ##D docu_opendf(df$bap87, languages = "en")
+> ##D docu_odf(df$bap87, languages = "en")
 > ## End(Not run)
 > 
 > # view dataset information for all available languages
 > ## Not run: 
-> ##D docu_opendf(df, languages = "all")
+> ##D docu_odf(df, languages = "all")
 > ## End(Not run)
 > 
 > # print information to the R console
 > ## Not run: 
-> ##D docu_opendf(df$bap87, style = "print")
+> ##D docu_odf(df$bap87, style = "print")
 > ## End(Not run)
 > 
 > # print information to the R viewer
 > ## Not run: 
-> ##D docu_opendf(df$bap87, style = "viewer")
+> ##D docu_odf(df$bap87, style = "viewer")
 > ## End(Not run)
 > 
 > # Since the label for language de is missing, in this case the 
 > # english label will be displayed additionally.
 > ## Not run: 
 > ##D attributes(df$bap87)["label_de"]<-""
-> ##D docu_opendf(df$bap87, languages="de", style = "console", replace_missing=T)
+> ##D docu_odf(df$bap87, languages="de", style = "console", replace_missing=T)
 > ## End(Not run)
 > 
 > 
 > 
 > 
 > base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("docu_opendf", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> base::cat("docu_odf", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
-> nameEx("labels_opendf")
-> ### * labels_opendf
+> nameEx("labels_odf")
+> ### * labels_odf
 > 
 > flush(stderr()); flush(stdout())
 > 
 > base::assign(".ptime", proc.time(), pos = "CheckExEnv")
-> ### Name: labels_opendf
+> ### Name: labels_odf
 > ### Title: Get variable labels or other metadata from a data frame in
 > ###   opendataformat.
-> ### Aliases: labels_opendf
+> ### Aliases: labels_odf
 > 
 > ### ** Examples
 > 
 > # get example data from the opendataformat package
-> df <- get(data("data_opendf"))
+> df <- get(data("data_odf"))
 > # view the variable labels for all variables in English
-> labels_opendf(input = df, language = "en", valuelabels = FALSE)
+> labels_odf(input = df, language = "en", valuelabels = FALSE)
                               bap87                             bap9201 
                    "Current Health"    "hours of sleep, normal workday" 
                             bap9001                             bap9002 
@@ -130,12 +130,12 @@ Loading required package: data.table
                         "Firstname" 
 > 
 > # view the value labels for variable bap87 in English
-> labels_opendf(input = df$bap87, language = "en", valuelabels = FALSE)
+> labels_odf(input = df$bap87, language = "en", valuelabels = FALSE)
            bap87 
 "Current Health" 
 > 
 > # view the description for variable bap87 in English
-> labels_opendf(input = df$bap87, language = "en", retrieve = "description")
+> labels_odf(input = df$bap87, language = "en", retrieve = "description")
                                                   bap87 
 "Question: How would you describe your current health?" 
 > 
@@ -143,17 +143,17 @@ Loading required package: data.table
 > 
 > 
 > base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("labels_opendf", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> base::cat("labels_odf", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
-> nameEx("read_opendf")
-> ### * read_opendf
+> nameEx("read_odf")
+> ### * read_odf
 > 
 > flush(stderr()); flush(stdout())
 > 
 > base::assign(".ptime", proc.time(), pos = "CheckExEnv")
-> ### Name: read_opendf
+> ### Name: read_odf
 > ### Title: Read data specified as Open Data Format.
-> ### Aliases: read_opendf
+> ### Aliases: read_odf
 > 
 > ### ** Examples
 > 
@@ -163,7 +163,7 @@ Loading required package: data.table
 [1] "C:/Users/thartl/OneDrive - DIW Berlin/Open Data Format Project/R/R-Packages/r-package-opendataformat/..Rcheck/opendataformat/extdata/data.zip"
 > 
 > # read example data specified as Open Data Format from ZIP file
-> df <- read_opendf(file = path)
+> df <- read_odf(file = path)
 > df
    bap87 bap9201 bap9001 bap9002 bap9003 bap96      name
 1      4      -2       1      -1       2 -2.00     Jakob
@@ -221,7 +221,7 @@ $label
 [1] "Data from individual questionnaires 2010"
 
 $class
-[1] "data.frame" "opendf"    
+[1] "data.frame" "odf"    
 
 > attributes(df$bap87)
 $name
@@ -268,7 +268,7 @@ $label
 
 > 
 > # read example data with language selection
-> df <- read_opendf(file = path, languages = "de")
+> df <- read_odf(file = path, languages = "de")
 > attributes(df$bap87)
 $name
 [1] "bap87"
@@ -305,28 +305,28 @@ $label
 > 
 > 
 > base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-> base::cat("read_opendf", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> base::cat("read_odf", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
-> nameEx("setLanguage_opendf")
-> ### * setLanguage_opendf
+> nameEx("setLanguage_odf")
+> ### * setLanguage_odf
 > 
 > flush(stderr()); flush(stdout())
 > 
 > base::assign(".ptime", proc.time(), pos = "CheckExEnv")
-> ### Name: setLanguage_opendf
+> ### Name: setLanguage_odf
 > ### Title: Change language of dataframe metadata
-> ### Aliases: setLanguage_opendf
+> ### Aliases: setLanguage_odf
 > 
 > ### ** Examples
 > 
 > # get example data from the opendataformat package
-> df <- get(data("data_opendf"))
+> df <- get(data("data_odf"))
 > 
 > # Switch dataset df to language "en" 
-> df <- setLanguage_opendf(df, language = "en")
+> df <- setLanguage_odf(df, language = "en")
 > 
 > # Display dataset information for dataset df in language "en"
-> docu_opendf(df)
+> docu_odf(df)
 Dataset:  bap
 Label:
 [en]Data from individual questionnaires 2010
@@ -337,5 +337,5 @@ languages:
 url:
     https://paneldata.org/soep-core/data/bap
 Error in viewer(htmlFile) : could not find function "viewer"
-Calls: docu_opendf
+Calls: docu_odf
 Execution halted

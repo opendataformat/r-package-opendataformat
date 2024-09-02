@@ -52,52 +52,52 @@
 #'
 #' @examples
 #' # get example data from the opendataformat package
-#' df <- get(data("data_opendf"))
+#' df <- get(data("data_odf"))
 #'
 
 #' # view documentation about the dataset in the language that is currently set
 #' \dontrun{
-#' docu_opendf(df)
+#' docu_odf(df)
 #' }
 #'
 #' # view information from a selected variable in language "en"
 #' \dontrun{
-#' docu_opendf(df$bap87, languages  =  "en")
+#' docu_odf(df$bap87, languages  =  "en")
 #' }
 #'
 #' # view dataset information for all available languages
 #' \dontrun{
-#' docu_opendf(df, languages  =  "all")
+#' docu_odf(df, languages  =  "all")
 #' }
 #' 
 #' # print information to the R console
 #' \dontrun{
-#' docu_opendf(df$bap87, style  =  "print")
+#' docu_odf(df$bap87, style  =  "print")
 #' }
 #' 
 #' # print information to the R viewer
 #' \dontrun{
-#' docu_opendf(df$bap87, style  =  "viewer")
+#' docu_odf(df$bap87, style  =  "viewer")
 #' }
 #' 
 #' # Since the label for language de is missing, in this case the 
 #' # english label will be displayed additionally.
 #' \dontrun{
 #' attributes(df$bap87)["label_de"] <- ""
-#' docu_opendf(df$bap87, languages  =  "de", style  =  "console", replace_missing_language = T)
+#' docu_odf(df$bap87, languages  =  "de", style  =  "console", replace_missing_language = T)
 #' }
 #'
 #' @export
  
-docu_opendf <- function(input,
+docu_odf <- function(input,
                       languages = "current",
                       style = "viewer", 
                       replace_missing_language = F,
                       variables = "no") {
 
   
-  if (("data.frame" %in% class(input) & !("opendf" %in% class(input)))| (!("lang" %in% names(attributes(input))) & !("languages" %in% names(attributes(input)))) ){
-    stop("Input is not a dataframe or variable in the opendf-format.")
+  if (("data.frame" %in% class(input) & !("odf" %in% class(input)))| (!("lang" %in% names(attributes(input))) & !("languages" %in% names(attributes(input)))) ){
+    stop("Input is not a dataframe or variable in the odf-format.")
   }
   
   #check whether input is dataset or variable

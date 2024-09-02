@@ -22,19 +22,19 @@
 #'
 #' @examples
 #' # get example data from the opendataformat package
-#' df <- get(data("data_opendf"))
+#' df <- get(data("data_odf"))
 #' # view the variable labels for all variables in English
-#' getmetadata_opendf(input = df, type = "label", language = "en")
+#' getmetadata_odf(input = df, type = "label", language = "en")
 #'
 #' # view the value labels for variable bap87 in English
-#' getmetadata_opendf(input = df$bap87, type = "valuelabel", language = "en")
+#' getmetadata_odf(input = df$bap87, type = "valuelabel", language = "en")
 #'
 #' # view the description for variable bap87 in English
-#' getmetadata_opendf(input = df$bap87, type = "description", language = "en")
+#' getmetadata_odf(input = df$bap87, type = "description", language = "en")
 #'
 #' @export
 
-getmetadata_opendf <- function(input,
+getmetadata_odf <- function(input,
                              type,
                              language = "active"
                              ) {

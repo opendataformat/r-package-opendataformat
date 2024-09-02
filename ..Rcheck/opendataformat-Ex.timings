@@ -1,4 +1,4 @@
 name	user	system	elapsed
-docu_opendf	0.02	0.00	0.02	
-labels_opendf	0	0	0	
-read_opendf	0.05	0.00	0.27	
+docu_odf	0.02	0.00	0.02	
+labels_odf	0	0	0	
+read_odf	0.05	0.00	0.27	

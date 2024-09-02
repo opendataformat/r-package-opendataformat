@@ -10,13 +10,13 @@
 #' The package is designed to support the use of the open data format.
 #' For this purpose, three main functions have been developed:
 #'
-#' ## read_opendf()
+#' ## read_odf()
 #' Import data from the Open Data Format to an R data frame.
 #'
-#' ## write_opendf()
+#' ## write_odf()
 #' Export data from an R data frame to the open data format.
 #'
-#' ## docu_opendf()
+#' ## docu_odf()
 #' Get access to information about the dataset
 #' and variables via the R-Studio Viewer or the web browser.
 #'

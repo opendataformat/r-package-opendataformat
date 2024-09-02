@@ -1,4 +1,4 @@
-#' data_opendf
+#' data_odf
 #'
 #' example data with attributes specified for the Open Data Format.
 #'
@@ -15,4 +15,4 @@
 #'
 #' @source \url{https://git.soep.de/opendata/specification}
 #'
-"data_opendf"
+"data_odf"

@@ -291,13 +291,13 @@ These should not be in a package tarball.
 * checking replacement functions ... OK
 * checking foreign function calls ... OK
 * checking R code for possible problems ... NOTE
-write_opendf: no visible binding for global variable '.'
+write_odf: no visible binding for global variable '.'
 Undefined global functions or variables:
   .
 
 Found if() conditions comparing class() to string:
-File 'r-package-opendataformat/R/docu_opendf.R': if (class(input) == "NULL") ...
-File 'r-package-opendataformat/R/read_opendf.R': if (class(variables) != "numeric") ...
+File 'r-package-opendataformat/R/docu_odf.R': if (class(input) == "NULL") ...
+File 'r-package-opendataformat/R/read_odf.R': if (class(variables) != "numeric") ...
 Use inherits() (or maybe is()) instead.
 * checking Rd files ... OK
 * checking Rd metadata ... OK
@@ -320,20 +320,20 @@ Running examples in 'opendataformat-Ex.R' failed
 The error most likely occurred in:
 
 > base::assign(".ptime", proc.time(), pos = "CheckExEnv")
-> ### Name: setLanguage_opendf
+> ### Name: setLanguage_odf
 > ### Title: Change language of dataframe metadata
-> ### Aliases: setLanguage_opendf
+> ### Aliases: setLanguage_odf
 > 
 > ### ** Examples
 > 
 > # get example data from the opendataformat package
-> df <- get(data("data_opendf"))
+> df <- get(data("data_odf"))
 > 
 > # Switch dataset df to language "en" 
-> df <- setLanguage_opendf(df, language = "en")
+> df <- setLanguage_odf(df, language = "en")
 > 
 > # Display dataset information for dataset df in language "en"
-> docu_opendf(df)
+> docu_odf(df)
 Dataset:  bap
 Label:
 [en]Data from individual questionnaires 2010
@@ -344,7 +344,7 @@ languages:
 url:
     https://paneldata.org/soep-core/data/bap
 Error in viewer(htmlFile) : could not find function "viewer"
-Calls: docu_opendf
+Calls: docu_odf
 Execution halted
 * checking for unstated dependencies in 'tests' ... OK
 * checking tests ... ERROR
@@ -357,11 +357,11 @@ Last 13 lines of output:
   [ FAIL 1 | WARN 0 | SKIP 0 | PASS 375 ]
   
   ══ Failed tests ════════════════════════════════════════════════════════════════
-  ── Error ('test-docu_opendf.R:10:3'): docu_opendf ──────────────────────────────
+  ── Error ('test-docu_odf.R:10:3'): docu_odf ──────────────────────────────
   Error in `viewer(htmlFile)`: could not find function "viewer"
   Backtrace:
       ▆
-   1. └─opendataformat::docu_opendf(input = df, languages = "all", style = "html") at test-docu_opendf.R:10:3
+   1. └─opendataformat::docu_odf(input = df, languages = "all", style = "html") at test-docu_odf.R:10:3
   
   [ FAIL 1 | WARN 0 | SKIP 0 | PASS 375 ]
   Error: Test failures

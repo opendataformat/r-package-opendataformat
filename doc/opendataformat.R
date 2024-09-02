@@ -19,10 +19,10 @@ knitr::opts_chunk$set(
 
 library(opendataformat)
 
-## ----read_opendf--------------------------------------------------------------
+## ----read_odf--------------------------------------------------------------
 path <- system.file("extdata", "data.zip", package="opendataformat")
-df <- read_opendf(file = path)
-#df <- read_opendf(file = "../my_data.zip")
+df <- read_odf(file = path)
+#df <- read_odf(file = "../my_data.zip")
 
 ## ----view df, comment = ""----------------------------------------------------
 df
@@ -31,38 +31,38 @@ df
 #library(haven)
 #View(df)
 
-## ----read_opendf language, eval=FALSE-----------------------------------------
-#  df_en <- read_opendf(file = path, languages="en")
+## ----read_odf language, eval=FALSE-----------------------------------------
+#  df_en <- read_odf(file = path, languages="en")
 
-## ----read_opendf language all, eval=FALSE-------------------------------------
-#  df_en <- read_opendf(file = path, languages="all")
+## ----read_odf language all, eval=FALSE-------------------------------------
+#  df_en <- read_odf(file = path, languages="all")
 
-## ----read_opendf language list, eval=FALSE------------------------------------
-#  df_en <- read_opendf(file = path, languages=c("en", "de"))
+## ----read_odf language list, eval=FALSE------------------------------------
+#  df_en <- read_odf(file = path, languages=c("en", "de"))
 
-## ----read_opendf all inputs, eval=FALSE---------------------------------------
-#  df<-read_opendf(file, languages = "all", nrows = Inf, skip = 0, variables = NULL)
+## ----read_odf all inputs, eval=FALSE---------------------------------------
+#  df<-read_odf(file, languages = "all", nrows = Inf, skip = 0, variables = NULL)
 
-## ----docu_opendf, eval = FALSE------------------------------------------------
-#  docu_opendf(df)
+## ----docu_odf, eval = FALSE------------------------------------------------
+#  docu_odf(df)
 
-## ----docu_opendf print--------------------------------------------------------
-docu_opendf(df, style = "print")
+## ----docu_odf print--------------------------------------------------------
+docu_odf(df, style = "print")
 
-## ----docu_opendf variables, comment=""----------------------------------------
-docu_opendf(df, variables="yes", style="print")
+## ----docu_odf variables, comment=""----------------------------------------
+docu_odf(df, variables="yes", style="print")
 
-## ----docu_opendf selected variable default------------------------------------
-docu_opendf(df$bap9001, style = "print")
+## ----docu_odf selected variable default------------------------------------
+docu_odf(df$bap9001, style = "print")
 
-## ----docu_opendf languages all, eval = FALSE----------------------------------
-#  docu_opendf(df$bap9001, style = "print", variables="yes", languages = "all")
+## ----docu_odf languages all, eval = FALSE----------------------------------
+#  docu_odf(df$bap9001, style = "print", variables="yes", languages = "all")
 
-## ----docu_opendf languages code print-----------------------------------------
-docu_opendf(df$bap9001, style = "print", languages = "de")
+## ----docu_odf languages code print-----------------------------------------
+docu_odf(df$bap9001, style = "print", languages = "de")
 
-## ----docu_opendf languages code all data, eval = FALSE------------------------
-#  docu_opendf(df, style = "print", variables="yes", languages = "de")
+## ----docu_odf languages code all data, eval = FALSE------------------------
+#  docu_odf(df, style = "print", variables="yes", languages = "de")
 
 ## ----docu own style, eval = TRUE, comment = ""--------------------------------
 for (i in names(df)) {
@@ -71,16 +71,16 @@ for (i in names(df)) {
   )
 }
 
-## ----getmetadata_opendf1, comment = ""----------------------------------------
-getmetadata_opendf(df, type="label")
+## ----getmetadata_odf1, comment = ""----------------------------------------
+getmetadata_odf(df, type="label")
 
-## ----getmetadata_opendf2, comment = ""----------------------------------------
-getmetadata_opendf(df$bap87, type="valuelabels")
+## ----getmetadata_odf2, comment = ""----------------------------------------
+getmetadata_odf(df$bap87, type="valuelabels")
 
-## ----docu_opendf setLanguage2, eval = FALSE-----------------------------------
-#  df<-setLanguage_opendf(df, language="de")
+## ----docu_odf setLanguage2, eval = FALSE-----------------------------------
+#  df<-setLanguage_odf(df, language="de")
 #  
-#  docu_opendf(df$bap9001, style = "print")
+#  docu_odf(df$bap9001, style = "print")
 
 ## ----display languages--------------------------------------------------------
 attributes(df)$languages
@@ -102,64 +102,64 @@ attributes(df$bap87)$label_de
 attributes(df$bap87)$description_de<-NULL
 attributes(df$bap87)$description_de
 
-## ----getmetadata_opendf3, comment = ""----------------------------------------
-getmetadata_opendf(df, type="labels")
+## ----getmetadata_odf3, comment = ""----------------------------------------
+getmetadata_odf(df, type="labels")
 
-## ----getmetadata_opendf4, comment = ""----------------------------------------
-getmetadata_opendf(df$bap96, type="labels")
+## ----getmetadata_odf4, comment = ""----------------------------------------
+getmetadata_odf(df$bap96, type="labels")
 
-## ----getmetadata_opendf5, eval = FALSE, comment = ""--------------------------
-#  getmetadata_opendf(df, type="labels", language="en")
+## ----getmetadata_odf5, eval = FALSE, comment = ""--------------------------
+#  getmetadata_odf(df, type="labels", language="en")
 
-## ----getmetadata_opendf6, eval = FALSE, comment = ""--------------------------
-#  df<-setLanguage_opendf(df, language="en")
-#  getmetadata_opendf(df, type="labels")
+## ----getmetadata_odf6, eval = FALSE, comment = ""--------------------------
+#  df<-setLanguage_odf(df, language="en")
+#  getmetadata_odf(df, type="labels")
 
-## ----getmetadata_opendf valuelabels, comment = ""-----------------------------
-getmetadata_opendf(df$bap9001, type="valuelabels")
+## ----getmetadata_odf valuelabels, comment = ""-----------------------------
+getmetadata_odf(df$bap9001, type="valuelabels")
 
 
-## ----getmetadata_opendf valuelabels names, comment = ""-----------------------
-names(getmetadata_opendf(df$bap9001, type="valuelabels"))
+## ----getmetadata_odf valuelabels names, comment = ""-----------------------
+names(getmetadata_odf(df$bap9001, type="valuelabels"))
 
-## ----getmetadata_opendf descriptions, comment = ""----------------------------
-getmetadata_opendf(df, type="description")
+## ----getmetadata_odf descriptions, comment = ""----------------------------
+getmetadata_odf(df, type="description")
 
-## ----getmetadata_opendf url, eval = FALSE, comment = ""-----------------------
-#  getmetadata_opendf(df, type="url")
+## ----getmetadata_odf url, eval = FALSE, comment = ""-----------------------
+#  getmetadata_odf(df, type="url")
 
-## ----getmetadata_opendf type, eval = FALSE, comment = ""----------------------
-#  getmetadata_opendf(df, type="type")
+## ----getmetadata_odf type, eval = FALSE, comment = ""----------------------
+#  getmetadata_odf(df, type="type")
 
-## ----write_opendf, comment = "", eval = FALSE---------------------------------
-#  write_opendf(
+## ----write_odf, comment = "", eval = FALSE---------------------------------
+#  write_odf(
 #    x = df[,1:4],
 #    file = "../df_1_4.zip"
 #  )
 #  
 #  #or :
 #  df_14<-df[,1:4]
-#  write_opendf(
+#  write_odf(
 #    x = df[,1:4],
 #    file = "df_1_4.zip"
 #  )
 
-## ----write_opendf metadata, comment = "", eval = FALSE------------------------
-#  write_opendf(
+## ----write_odf metadata, comment = "", eval = FALSE------------------------
+#  write_odf(
 #    x=df,
 #    file = "../df_metadata.zip",
 #    export_data = FALSE
 #  )
 
-## ----write_opendf english, comment = "", eval = FALSE-------------------------
-#  write_opendf(
+## ----write_odf english, comment = "", eval = FALSE-------------------------
+#  write_odf(
 #    x=df,
 #    file = "../df_en.zip",
 #    languages = "en"
 #  )
 
-## ----write_opendf english german, comment = "", eval = FALSE------------------
-#  write_opendf(
+## ----write_odf english german, comment = "", eval = FALSE------------------
+#  write_odf(
 #    x=df,
 #    file = "../df_en_de.zip",
 #    languages = c("en","de")
@@ -182,10 +182,10 @@ table(
     )
   )
 
-## ----table factor getmetadata_opendf, eval=F, comment = ""--------------------
+## ----table factor getmetadata_odf, eval=F, comment = ""--------------------
 #  table(
 #    factor(
-#      df$bap87, labels = names(getmetadata_opendf(df$bap87, valuelabels=T))
+#      df$bap87, labels = names(getmetadata_odf(df$bap87, valuelabels=T))
 #      )
 #    )
 
@@ -197,11 +197,11 @@ table(
     )
   )
 
-## ----table factor german getmetadata_opendf, comment = ""---------------------
+## ----table factor german getmetadata_odf, comment = ""---------------------
 table(
   factor(
     df$bap87,
-      labels=names(getmetadata_opendf(df$bap87, type="valuelabels", language="de"))
+      labels=names(getmetadata_odf(df$bap87, type="valuelabels", language="de"))
     )
   )
 

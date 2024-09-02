@@ -1,12 +1,12 @@
-#' @title Merge method for opendf data.frames.
+#' @title Merge method for odf data.frames.
 #'
-#' @description Merge two opendf data.frames in R while keeping attributes with metadata.
+#' @description Merge two odf data.frames in R while keeping attributes with metadata.
 #'
 #' @import data.table
 #' 
 #' 
 #' @param x,y
-#' opendf data.frames, or objects to be coerced to one
+#' odf data.frames, or objects to be coerced to one
 #' 
 #' @param by
 #' A vector of shared column names in x and y to merge on. This defaults to the 
@@ -53,17 +53,17 @@
 #'
 #' @details
 #' \code{\link{merge}} is a generic function in base R. It dispatches to either the 
-#' merge.data.frame method, merge.opendf or merge.data.table method depending on 
-#' the class of its first argument. merge.opendf uses the merge.data.table to 
+#' merge.data.frame method, merge.odf or merge.data.table method depending on 
+#' the class of its first argument. merge.odf uses the merge.data.table to 
 #' join data.frame and adds the attributes containing metadata from the two 
-#' original opendf data.frames.
+#' original odf data.frames.
 #' Note that, unlike SQL join, NA is matched against NA (and NaN against NaN) 
 #' while merging. 
 #' For a more data.table-centric way of merging two data.tables, see 
 #' \code{\link{data.table}}. See FAQ 1.11 for a detailed comparison of 
 #' merge.
 #' 
-#' @return A new opendf data.frame build from the two input data.frames with the 
+#' @return A new odf data.frame build from the two input data.frames with the 
 #' variable attributes from the original data.frames. Sorted by the columns set 
 #' (or inferred for) the by argument if argument sort is set to TRUE. 
 #' For variables/columns occurring in both x and y, attributes are taken from x.
@@ -74,10 +74,10 @@
 #' path  <-  system.file("extdata", "data.zip", package = "opendataformat")
 
 #' # read four columns of example data specified as Open Data Format from ZIP file
-#' df  <-  read_opendf(file = path, select = 1:4)
+#' df  <-  read_odf(file = path, select = 1:4)
 #' 
 #' # read other columns of example data specified as Open Data Format from ZIP file
-#' df2  <-  read_opendf(file = path, select = 4:7)
+#' df2  <-  read_odf(file = path, select = 4:7)
 #' 
 #' # generate a variable for joining both datasets:
 #' df$id<-1:20
@@ -92,7 +92,7 @@
 #' @export
 #' 
 #' 
-merge.opendf<-function(x, y, 
+merge.odf<-function(x, y, 
                        by = NULL,
                        by.x = NULL, 
                        by.y = NULL, 
@@ -155,6 +155,6 @@ merge.opendf<-function(x, y,
   }
   attributes(data_out)
   attributes(data_out$pgpsbil)
-  data_out <- setLanguage_opendf(data_out, attr(data_out, "lang"))
+  data_out <- setLanguage_odf(data_out, attr(data_out, "lang"))
   return(data_out)
 }

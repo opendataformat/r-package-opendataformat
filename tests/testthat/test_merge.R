@@ -2,15 +2,15 @@
 
 
 #test merging with default arguments
-test_that("merge.opendf", {
+test_that("merge.odf", {
   #' - get data
-  df1 <- read_opendf("testdata/data.zip", select=c(1:4))
-  df2 <- read_opendf("testdata/data.zip", select=c(4:7))
-  df3 <- read_opendf("testdata/data.zip", select=c(1:2))
-  df4 <- read_opendf("testdata/data.zip", select=c(3:5))
-  df5 <- read_opendf("testdata/data.zip", select=c(6:7))
-  df6 <- read_opendf("testdata/data.zip")
-  df7 <- read_opendf("testdata/data.zip")
+  df1 <- read_odf("testdata/data.zip", select=c(1:4))
+  df2 <- read_odf("testdata/data.zip", select=c(4:7))
+  df3 <- read_odf("testdata/data.zip", select=c(1:2))
+  df4 <- read_odf("testdata/data.zip", select=c(3:5))
+  df5 <- read_odf("testdata/data.zip", select=c(6:7))
+  df6 <- read_odf("testdata/data.zip")
+  df7 <- read_odf("testdata/data.zip")
   
   
   
@@ -170,14 +170,14 @@ test_that("merge.opendf", {
 
 
 #test merging with by argument
-test_that("merge.opendf", {
+test_that("merge.odf", {
 
 }
 
 )
 
 #test merging with by argument
-test_that("merge.opendf", {
+test_that("merge.odf", {
   #' - get data
 
 })
@@ -187,7 +187,7 @@ test_that("merge.opendf", {
 
 
 #test merging with all arguments
-test_that("merge.opendf", {
+test_that("merge.odf", {
   #' - get data
 })
 

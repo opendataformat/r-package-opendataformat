@@ -10,7 +10,7 @@
 #'
 #' @param x R data frame (df) to be writtem.
 #'
-#' @param file Path to ZIP file or name of zip file to save the opendf-dataset 
+#' @param file Path to ZIP file or name of zip file to save the odf-dataset 
 #' in the working directory.
 #'
 #' @param languages
@@ -44,36 +44,36 @@
 #'
 #' @examples
 #' # get example data from the opendataformat package
-#' df  <-  get(data("data_opendf"))
+#' df  <-  get(data("data_odf"))
 #' df
 #'
 #' # write R data frame with attributes to the file my_data.zip specified
 #' # as Open Data Format.
 #' \dontrun{
-#' write_opendf(x = df, file = "my_data.zip")
+#' write_odf(x = df, file = "my_data.zip")
 #' }
 #'
 #' # write variable from R data frame with attributes to the file my_data.zip 
 #' # specified as Open Data Format.
 #' \dontrun{
-#' write_opendf(x = df$bap87,  file = "my_data.zip")
+#' write_odf(x = df$bap87,  file = "my_data.zip")
 #' }
 #'
 #' # write R data frame with attributes to the file my_data.zip
 #' # with selected language.
 #' \dontrun{
-#' write_opendf(x = df,  file = "my_data.zip", languages = "en")
+#' write_odf(x = df,  file = "my_data.zip", languages = "en")
 #' }
 #'
 #' # write R data frame with attributes to the file my_data.zip but only
 #' # metadata, no data.
 #' \dontrun{
-#' write_opendf(x = df,  file = "my_data.zip", export_data = "no")
+#' write_odf(x = df,  file = "my_data.zip", export_data = "no")
 #' }
 #'
 #'
 #' @export
-write_opendf  <-  function(x,
+write_odf  <-  function(x,
                          file,
                          languages = "all",
                          export_data = TRUE, 
@@ -101,7 +101,7 @@ write_opendf  <-  function(x,
   
   #if no default labels and descriptions (labels and descriptions without 
   # language tag) are available, 
-  # return an warning and run write_opendf for the active language
+  # return an warning and run write_odf for the active language
   if (languages != "all" & !all(languages %in% attr(x, "languages"))) 
     stop("languages not valid")
   unlink(paste0(tempdir(), "/*"), recursive = T)
@@ -287,7 +287,7 @@ write_opendf  <-  function(x,
   setwd(old_wd)
 
   
-  #check if write_opendf was successful
+  #check if write_odf was successful
   if (file.exists(file) & verbose == TRUE){
     print(
       paste0(

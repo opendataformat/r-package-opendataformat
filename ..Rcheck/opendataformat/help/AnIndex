@@ -1,8 +1,8 @@
 opendataformat-package	opendataformat-package
-data_opendf	data_opendf
-docu_opendf	docu_opendf
-labels_opendf	labels_opendf
+data_odf	data_odf
+docu_odf	docu_odf
+labels_odf	labels_odf
 opendataformat	opendataformat-package
-read_opendf	read_opendf
-setLanguage_opendf	setLanguage_opendf
-write_opendf	write_opendf
+read_odf	read_odf
+setLanguage_odf	setLanguage_odf
+write_odf	write_odf

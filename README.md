@@ -39,25 +39,25 @@ library("opendataformat")
 
 The opendataformat package consists of five main functions:
 
-- `read_opendf()` to read an Open Data Format file in R. This function takes an input parameter, which is the path to the Open Data Format ZIP file, and points to an R object for further processing.
+- `read_odf()` to read an Open Data Format file in R. This function takes an input parameter, which is the path to the Open Data Format ZIP file, and points to an R object for further processing.
 
-- `docu_opendf()` to explore the dataset information. You can set the whole dataset `df` or an selected variable `df$var` as input and you will get an HTML page, displayed either in the RStudio viewer or the Web Browser, with metadata on the respective data level. 
+- `docu_odf()` to explore the dataset information. You can set the whole dataset `df` or an selected variable `df$var` as input and you will get an HTML page, displayed either in the RStudio viewer or the Web Browser, with metadata on the respective data level. 
 
-- `setLanguage_opendf()` changes the "active" language of a dataset. The metadata for this language is by default displayed with `docu_opendf()`.
+- `setLanguage_odf()` changes the "active" language of a dataset. The metadata for this language is by default displayed with `docu_odf()`.
 
-- `write_opendf()` to write the R Dataframe to an Open Data Format ZIP file. By specifying the dataframe input and providing the output directory path the function will generate a ZIP file containing the dataset as "data.csv" and "metadata.xml".
+- `write_odf()` to write the R Dataframe to an Open Data Format ZIP file. By specifying the dataframe input and providing the output directory path the function will generate a ZIP file containing the dataset as "data.csv" and "metadata.xml".
 
-- `opendf_labels()` to retrieve labels and other metadata from an opendf-data.frame-object.
+- `odf_labels()` to retrieve labels and other metadata from an odf-data.frame-object.
 
 ### Multilingual Datasets
 
-When working with a multilingual dataset, the `opendataformatr` package provides the option to specify the language you want to work with for the main functions: `read_opendf()`, `docu_opendf()`, `write_opendf()`, and `opendf_labels()`.
+When working with a multilingual dataset, the `opendataformatr` package provides the option to specify the language you want to work with for the main functions: `read_odf()`, `docu_odf()`, `write_odf()`, and `odf_labels()`.
  
 You can achieve this by using the `languages` argument and setting it to either 
 `all` to include all languages, `current` (or `default`) to use the currently activated language, or by specifying the language code such as `de` for German or `en` for English. 
 This allows you to easily select the desired language for your dataset operations.
 The language codes are defined by the [ISO 639-1](https://de.wikipedia.org/wiki/Liste_der_ISO-639-1-Codes).
-Note that for the function `opendf_labels()` you can specify only one language, therefore the `language` argument only takes single languages as input.
+Note that for the function `odf_labels()` you can specify only one language, therefore the `language` argument only takes single languages as input.
 
 
 ## Getting help
