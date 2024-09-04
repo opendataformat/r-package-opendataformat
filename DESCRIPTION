@@ -1,6 +1,6 @@
 Package: opendataformat
 Title: Reading and Writing Open Data Format Files
-Version: 1.2.0
+Version: 1.2.1
 Author: Tom Hartl, Claudia Saalbach, Xiaoyao Han, Knut Wenzig
 Maintainer: Tom Hartl <thartl@diw.de>
 Authors@R: c(
