@@ -93,7 +93,7 @@ docu_odf <- function(input,
                       languages = "current",
                       style = "viewer", 
                       replace_missing_language = F,
-                      variables = "no") {
+                      variables = "yes") {
 
   
   if (("data.frame" %in% class(input) & !("odf" %in% class(input)))| (!("lang" %in% names(attributes(input))) & !("languages" %in% names(attributes(input)))) ){
@@ -251,7 +251,7 @@ docu_odf <- function(input,
     }
   }
   
-  if (input_type == "Dataset" & variables == "yes"){
+  if (input_type == "Dataset" & variables %in% c("yes", "Yes", "T", T)){
     labels_vars <- list()
     varlist_html <- paste0("<tr><th>Variables&#160;&#160;&#160;&#160;</th>", 
                            paste0("<th align = left>label", languages,"</th>", 
