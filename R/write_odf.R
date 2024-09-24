@@ -115,8 +115,8 @@ write_odf  <-  function(x,
     root_dir <- getwd()
     file <- paste0(getwd(), "/", file)
     }
-  if (dir.exists(root_dir) == FALSE & dir.exists(paste0("/", root_dir)) == FALSE 
-      & dir.exists(paste0("//", root_dir)) == FALSE){
+  if (dir.exists(root_dir) == FALSE && dir.exists(paste0("/", root_dir)) == FALSE 
+      && dir.exists(paste0("//", root_dir)) == FALSE){
     stop("File path not found")
   }
   
@@ -288,7 +288,7 @@ write_odf  <-  function(x,
 
   
   #check if write_odf was successful
-  if (file.exists(file) & verbose == TRUE){
+  if (file.exists(file) && verbose == TRUE){
     print(
       paste0(
         "Dataset successfully written to '", file, "'"

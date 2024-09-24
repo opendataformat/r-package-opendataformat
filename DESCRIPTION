@@ -2,35 +2,23 @@ Package: opendataformat
 Title: Reading and Writing Open Data Format Files
 Version: 1.2.2
 Author: Tom Hartl, Claudia Saalbach, Xiaoyao Han, Knut Wenzig
+Authors@R: c(person("Tom", "Zinn", role = c("aut","cre"),
+    email = "thartl@diw.de"),
+    person("Claudia","Saalbach", role = "ctb",
+    email = "csaalbach@diw.de"),
+    person("Xiaoyao","Han", role = "ctb",
+    email = "xhan@diw.de"),
+    person("Knut","Wenzig", role = "ctb",
+    email = "kwenzig@diw.de"))
 Maintainer: Tom Hartl <thartl@diw.de>
-Authors@R: c(
-    person("Tom", "Hartl", , "thartl@diw.de", role = c("aut", "cre"))
-  )
-Description: Reading and writing of data files in the open data format, 
-    displaying metadata in different languages.
-URL: https://git.soep.de/opendata/r-package-opendataformat
-BugReports: https://git.soep.de/opendata/r-package-opendataformat/-/issues
+Description: This package allows reading and writing of data files in the open data format, and displaying metadata in different languages.
+URL: https://github.com/opendataformat/r-package-opendataformat
+BugReports: https://github.com/opendataformat/r-package-opendataformat/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
-Depends: 
-    R (>= 2.10),
-    cli,
-    magrittr,
-    xml2,
-    data.table,
-    zip
-Suggests: 
-    testthat (>= 3.0.0),
-    knitr,
-    rmarkdown,
-    devtools,
-    ISLR,
-    dplyr,
-    haven
+Depends: R (>= 3.6), cli, magrittr, xml2, data.table, zip
+Suggests: testthat (>= 3.0.0), knitr, rmarkdown, devtools, ISLR, dplyr, haven
 VignetteBuilder: knitr
-VignetteEngine: knitr::rmarkdown
-VignetteIndexEntry: "opendataformat"
-Config/testthat/edition: 3

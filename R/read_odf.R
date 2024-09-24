@@ -111,7 +111,7 @@ read_odf  <-  function(file,
   #get dataset descriptions
   dataset_descriptions <- dataset_descrsub[xml_name(dataset_descrsub) == "fileCont"]
   for (description in dataset_descriptions){
-    if (languages == "all" | xml_attr(description, attr = "lang") %in% languages){
+    if (languages == "all" || xml_attr(description, attr = "lang") %in% languages){
       if (length(xml_text(description))>0) 
         attr(data, paste0("description_", xml_attr(description, attr = "lang"))) <- xml_text(description) 
       else attr(data, paste0("description_", xml_attr(description, attr = "lang"))) <- ""
@@ -206,7 +206,7 @@ read_odf  <-  function(file,
         } else {
           values  <-  as.character(varlabels[names(varlabels) == "values"][[1]])
         }
-        for (i in 1:length(varlabels)){
+        for (i in seq(1,length(varlabels))){
           if (names(varlabels)[[i]] != "values"){
             names(values) <- varlabels[[i]]
             attr(data[,varname], names(varlabels)[i]) <- values

@@ -8,13 +8,12 @@
 #' 
 #' @param input R data frame (df) or variable from an R data frame (df$var).
 #'
-#'
-#' @param languages Select the language in which the descriptions and labels of 
+#' @param languages Select the language in which the descriptions and labels of
 #' the data will be displayed.
 #' * By default the language that is set to current is displayed
 #' (\code{languages  =  "current"}).
-#' * The default-option chooses either the default language(if labels and 
-#' * descriptions without a language tag exist)Otherwise the current language 
+#' * The default-option chooses either the default language(if labels and
+#' * descriptions without a language tag exist)Otherwise the current language
 #' * is displayed.
 #' (\code{languages  =  "default"}).
 #' * You can choose to view all available language variants by selecting
@@ -22,10 +21,8 @@
 #' * or you can select the language by language code, e.g.
 #' \code{languages  =  "en"}.
 #' 
-#' 
-#' 
 #' @param style Selects where the output should be displayed (console ore 
-#' viewer).By default the metadata information is displayed in the viewer if the 
+#' viewer).By default the metadata information is displayed in the viewer if the
 #' viewer is available.
 #' (\code{style  =  "console"})
 #' (\code{style  =  "print"})
@@ -36,15 +33,13 @@
 #' (\code{style  =  "viewer"})
 #' (\code{style  =  "html"})
 #' 
-#' 
 #' @param replace_missing_language If only one language is specified in languages and 
-#' replace_missing_language is set to TRUE. In case of a missing label or description, 
-#' the default or english label/description is displayed additionally (if 
+#' replace_missing_language is set to TRUE. In case of a missing label or description,
+#' the default or english label/description is displayed additionally (if
 #' one of these is available).
 #' 
-#' 
-#' @param variables Indicate whether a list with all the variables should be 
-#' displayed with the dataset metadata. 
+#' @param variables Indicate whether a list with all the variables should be
+#' displayed with the dataset metadata.
 #' If the input is a variable/column, the variables-argument will be ignored.
 #' Set (\code{variables = "yes"}) to display the list of variables.
 #' 
@@ -54,7 +49,6 @@
 #' # get example data from the opendataformat package
 #' df <- get(data("data_odf"))
 #'
-
 #' # view documentation about the dataset in the language that is currently set
 #' \dontrun{
 #' docu_odf(df)
@@ -95,8 +89,7 @@ docu_odf <- function(input,
                       replace_missing_language = F,
                       variables = "yes") {
 
-  
-  if (("data.frame" %in% class(input) & !("odf" %in% class(input)))| (!("lang" %in% names(attributes(input))) & !("languages" %in% names(attributes(input)))) ){
+  if (("data.frame" %in% class(input) && !("odf" %in% class(input))) || (!("lang" %in% names(attributes(input))) && !("languages" %in% names(attributes(input)))) ){
     stop("Input is not a dataframe or variable in the odf-format.")
   }
   
@@ -152,7 +145,7 @@ docu_odf <- function(input,
   }
   label_console <- label
   label_html <- label
-  if (length(languages) == 1 & any(c(label[[l]] == "", is.null(label[[l]]))) & 
+  if (length(languages) == 1 && any(c(label[[l]] == "", is.null(label[[l]]))) && 
       replace_missing_language == TRUE){
     if (!is.null(attr(input, "label_default"))){
       if(attr(input, "label_default") != "" ){
@@ -181,9 +174,9 @@ docu_odf <- function(input,
   }
   description_console <- description
   description_html <- description
-  if (length(languages) == 1 & any(c(description[[l]] == "", 
+  if (length(languages) == 1 && any(c(description[[l]] == "", 
                                      is.null(description[[l]]))) 
-      & replace_missing_language == TRUE){
+      && replace_missing_language == TRUE){
     if (!is.null(attr(input, "description_default"))){
       if(attr(input, "description_default") != "" ){
         description_console[languages] <- paste0("\n[default] ", 
@@ -213,10 +206,10 @@ docu_odf <- function(input,
   }
   #get url
   url <- attr(input, "url")
-  if (url != "" & exists("style_hyperlink")){
+  if (url != "" && exists("style_hyperlink")){
     interactive_url <- cli::style_hyperlink(
-      text <- url,
-      url <- url
+      text = url,
+      url = url
     )
   } else {
     interactive_url <- url
@@ -243,7 +236,7 @@ docu_odf <- function(input,
     }
     valuelabels_html <- paste0("<tr>", paste0("<th>",names(valuelabels_tab), 
                                               "</th>", collapse  =  ""),"</tr>")
-    for (i in 1:nrow(valuelabels_tab)){
+    for (i in seq(1,nrow(valuelabels_tab))){
       valuelabels_html <- paste0(valuelabels_html, "<tr>", 
                                  paste0("<td>&#160;&#160;&#160;&#160;",
                                         valuelabels_tab[i,], 
@@ -251,7 +244,7 @@ docu_odf <- function(input,
     }
   }
   
-  if (input_type == "Dataset" & variables %in% c("yes", "Yes", "T", T)){
+  if (input_type == "Dataset" && variables %in% c("yes", "Yes", "T", T)){
     labels_vars <- list()
     varlist_html <- paste0("<tr><th>Variables&#160;&#160;&#160;&#160;</th>", 
                            paste0("<th align = left>label", languages,"</th>", 
@@ -394,7 +387,7 @@ docu_odf <- function(input,
   )
   
   #add variables information to dataset information
-  if (input_type == "Dataset" & variables == "yes"){
+  if (input_type == "Dataset" && variables == "yes"){
     printing_output <- c(
       paste0(printing_output),
       "\033[1mVariables:\033[0m\n"#,
@@ -411,7 +404,7 @@ docu_odf <- function(input,
   html_output <- paste0(html_output,"</html></body>")
   #print meta data in console
   if (style %in% c("both", "all", "print", "console")){
-    for (i in 1:length(printing_output)){
+    for (i in seq(1, length(printing_output))){
       if (printing_output[i] != "valuelabels") {cat(printing_output[i])} 
       else print(valuelabels_tab, row.names  =  FALSE)
     }
@@ -426,15 +419,14 @@ docu_odf <- function(input,
   #print meta data in viewer
   if (style %in% c("both", "all", "html", "viewer")){
     #create html tempfile and write html output
-    tempDir <- tempdir()
-    htmlFile <- file.path(tempDir, "docu.html")
+    htmlFile <- file.path(tempdir(), "docu.html")
     viewer <- getOption("viewer")
     writeLines(html_output, htmlFile)
     if (!is.null(viewer)){
       viewer(htmlFile)
     } else {
       if (style %in% c("html", "viewer")){
-        for (i in 1:length(printing_output)){
+        for (i in seq(1,length(printing_output))){
           if (printing_output[i] != "valuelabels") {cat(printing_output[i])} 
           else print(valuelabels_tab, row.names  =  FALSE)
         }
@@ -442,7 +434,7 @@ docu_odf <- function(input,
           if (nrow(valuelabels_tab>0)) print(valuelabels_tab, row.names  =  FALSE) 
           else print("No value labels")
         }
-        if (input_type == "Dataset" & variables == "yes"){
+        if (input_type == "Dataset" && variables == "yes"){
           print(varlist)
         }
       }

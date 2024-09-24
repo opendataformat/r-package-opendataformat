@@ -106,7 +106,7 @@ merge.odf<-function(x, y,
                        incomparables = NULL, 
                        ...){
   
-  if (is.null(by.x) & is.null(by.y)){
+  if (is.null(by.x) && is.null(by.y)){
     data_out <- merge.data.table(x = x, y = y, by = by,all = all, all.x = all.x, 
                                  all.y = all.y, allow.cartesian = allow.cartesian, 
                                  incomparables = incomparables)

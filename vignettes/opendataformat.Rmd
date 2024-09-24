@@ -509,7 +509,7 @@ attributes(bap87_rec)
 Now we can set the negative values to NA: 
 
 ```{r NA, comment = ""}
-for (row in 1:length(bap87_rec)) {
+for (row in seq(1,length(bap87_rec))){
   if (!is.na(bap87_rec[row]) && bap87_rec[row] <= -1) {
     bap87_rec[row] <- NA
   }

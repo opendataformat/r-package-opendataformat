@@ -38,7 +38,7 @@ getmetadata_odf <- function(input,
                              type,
                              language = "active"
                              ) {
-  if (language == "active" | language == "current"){
+  if (language == "active" || language == "current"){
     lang <- attr(input, "lang")
   } else {
     lang <- language
@@ -49,22 +49,22 @@ getmetadata_odf <- function(input,
   }
   
   #check spelling of retrieve-parameter
-  if (type == "label" |type == "labels" | type == "Labels"| type == "Label"){
+  if (type == "label" || type == "labels" ||  type == "Labels" || type == "Label"){
     type <- paste0("label_", lang)
   }
-  if (type == "description" | type == "descriptions" | type == "Description" | 
+  if (type == "description" || type == "descriptions" || type == "Description" || 
       type == "Descriptions"){
     type <- paste0("description_", lang)
   }
-  if (type  ==  "urls" | type  ==  "URL"){
+  if (type  ==  "urls" || type  ==  "URL"){
     type <- "url"
   }
   if (type  ==  "types"){
     type <- "type"
   }
-  if (type == "valuelabels" | type == "valuelabel" | type == "value labels" | 
-      type == "value label"|type == "Valuelabels" | type == "Valuelabel" | 
-      type == "Value labels" | type == "Value Label"){
+  if (type == "valuelabels" || type == "valuelabel" || type == "value labels" || 
+      type == "value label" || type == "Valuelabels" || type == "Valuelabel" || 
+      type == "Value labels" || type == "Value Label"){
     type <- "valuelabels"
   }
   

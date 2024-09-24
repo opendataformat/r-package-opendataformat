@@ -11,45 +11,45 @@ test_that("docu_odf", {
     input = df,
     languages = "all",
     style = "html")
-  expect_true(file.exists(paste0(tempdir(),"/docu.html")))
-  unlink(paste0(tempdir(),"/*"))
+  expect_true(file.exists(paste0(tempdir(), "/docu.html")))
+  unlink(paste0(tempdir(), "/*"))
   #' ----- variables = "yes"
   docu_odf(
     input = df,
     languages = "all",
     style = "html")
-  expect_true(file.exists(paste0(tempdir(),"/docu.html")))
-  unlink(paste0(tempdir(),"/*"))
+  expect_true(file.exists(paste0(tempdir(), "/docu.html")))
+  unlink(paste0(tempdir(), "/*"))
   #' ---- languages = "default"
   #' ----- variables = "no"
   docu_odf(
     input = df,
     languages = "default",
     style = "html")
-  expect_true(file.exists(paste0(tempdir(),"/docu.html")))
-  unlink(paste0(tempdir(),"/*"))
+  expect_true(file.exists(paste0(tempdir(), "/docu.html")))
+  unlink(paste0(tempdir(), "/*"))
   #' ----- variables = "yes"
   docu_odf(
     input = df,
     languages = "default",
     style = "html")
-  expect_true(file.exists(paste0(tempdir(),"/docu.html")))
-  unlink(paste0(tempdir(),"/*"))
+  expect_true(file.exists(paste0(tempdir(), "/docu.html")))
+  unlink(paste0(tempdir(), "/*"))
   #' ---- languages = "de"
   #' ----- variables = "no"
   docu_odf(
     input = df,
     languages = "de",
     style = "html")
-  expect_true(file.exists(paste0(tempdir(),"/docu.html")))
-  unlink(paste0(tempdir(),"/*"))
+  expect_true(file.exists(paste0(tempdir(), "/docu.html")))
+  unlink(paste0(tempdir(), "/*"))
   #' ----- variables = "yes"
   docu_odf(
     input = df,
     languages = "de",
     style = "html")
-  expect_true(file.exists(paste0(tempdir(),"/docu.html")))
-  unlink(paste0(tempdir(),"/*"))
+  expect_true(file.exists(paste0(tempdir(), "/docu.html")))
+  unlink(paste0(tempdir(), "/*"))
   #' ------ error message: empty language selection
   expect_error(
     docu_odf(
@@ -57,7 +57,7 @@ test_that("docu_odf", {
       style = "html"),
     "Input is not a dataframe or variable in the odf-format."
     )
-  unlink(paste0(tempdir(),"/*"))
+  unlink(paste0(tempdir(), "/*"))
   #' ------ error message: invalid language selection
   expect_error(
     docu_odf(
@@ -66,7 +66,7 @@ test_that("docu_odf", {
       style = "html"),
     "Your language selection is not valid."
   )
-  unlink(paste0(tempdir(),"/*"))
+  unlink(paste0(tempdir(), "/*"))
   #' --- input = df$bap87
   #' ---- languages = "all"
   #' ----- variables = "no"
@@ -74,45 +74,45 @@ test_that("docu_odf", {
     input = df$bap87,
     languages = "all",
     style = "html")
-  expect_true(file.exists(paste0(tempdir(),"/docu.html")))
-  unlink(paste0(tempdir(),"/*"))
+  expect_true(file.exists(paste0(tempdir(), "/docu.html")))
+  unlink(paste0(tempdir(), "/*"))
   #' ----- variables = "yes"
   docu_odf(
     input = df$bap87,
     languages = "all",
     style = "html")
-  expect_true(file.exists(paste0(tempdir(),"/docu.html")))
-  unlink(paste0(tempdir(),"/*"))
+  expect_true(file.exists(paste0(tempdir(), "/docu.html")))
+  unlink(paste0(tempdir(), "/*"))
   #' ---- languages = "default"
   #' ----- variables = "no"
   docu_odf(
     input = df$bap87,
     languages = "default",
     style = "html")
-  expect_true(file.exists(paste0(tempdir(),"/docu.html")))
-  unlink(paste0(tempdir(),"/*"))
+  expect_true(file.exists(paste0(tempdir(), "/docu.html")))
+  unlink(paste0(tempdir(), "/*"))
   #' ----- variables = "yes"
   docu_odf(
     input = df$bap87,
     languages = "default",
     style = "html")
-  expect_true(file.exists(paste0(tempdir(),"/docu.html")))
-  unlink(paste0(tempdir(),"/*"))
+  expect_true(file.exists(paste0(tempdir(), "/docu.html")))
+  unlink(paste0(tempdir(), "/*"))
   #' ---- languages = "de"
   #' ----- variables = "no"
   docu_odf(
     input = df$bap87,
     languages = "de",
     style = "html")
-  expect_true(file.exists(paste0(tempdir(),"/docu.html")))
-  unlink(paste0(tempdir(),"/*"))
+  expect_true(file.exists(paste0(tempdir(), "/docu.html")))
+  unlink(paste0(tempdir(), "/*"))
   #' ----- variables = "yes"
   docu_odf(
     input = df$bap87,
     languages = "de",
     style = "html")
-  expect_true(file.exists(paste0(tempdir(),"/docu.html")))
-  unlink(paste0(tempdir(),"/*"))
+  expect_true(file.exists(paste0(tempdir(), "/docu.html")))
+  unlink(paste0(tempdir(), "/*"))
   #' ------ error message: empty language selection
   expect_error(
     docu_odf(
@@ -121,7 +121,7 @@ test_that("docu_odf", {
       style = "html"),
     "Your language selection is not valid."
   )
-  unlink(paste0(tempdir(),"/*"))
+  unlink(paste0(tempdir(), "/*"))
   #' ------ error message: invalid language selection
   expect_error(
     docu_odf(
@@ -130,7 +130,7 @@ test_that("docu_odf", {
       style = "html"),
     "Your language selection is not valid."
   )
-  unlink(paste0(tempdir(),"/*"))
+  unlink(paste0(tempdir(), "/*"))
 })
 
 # testthat::test_file("tests/testthat/test-docu_odf.R")
