@@ -9,7 +9,7 @@ docu_odf(
   languages = "current",
   style = "viewer",
   replace_missing_language = F,
-  variables = "no"
+  variables = "yes"
 )
 }
 \arguments{
