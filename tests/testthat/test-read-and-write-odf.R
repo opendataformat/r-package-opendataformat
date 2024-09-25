@@ -9,14 +9,14 @@ test_that("read_write_odf_default_setting", {
   # make xml and data
   write_odf(
     x = df,
-    file = paste0(tempdir(),"/MY_XML.zip")
+    file = paste0(tempdir(), "/MY_XML.zip")
   )
-  
-  df_copy<-read_odf(paste0(tempdir(),"/MY_XML.zip"))
-  # -- test if objects are equal
-  expect_true(all.equal(df,df_copy))
 
-  unlink(paste0(tempdir(),"/*"), recursive = TRUE)
+  df_copy <- read_odf(paste0(tempdir(), "/MY_XML.zip"))
+  # -- test if objects are equal
+  expect_true(all.equal(df, df_copy))
+
+  unlink(paste0(tempdir(), "/*"), recursive = TRUE)
 })
 
 #' write_odf and read_odf: with languages="en"
@@ -29,14 +29,14 @@ test_that("read_write_odf_language_de", {
   # make xml and data
   write_odf(
     x = df,
-    file = paste0(tempdir(),"/MY_XML.zip")
+    file = paste0(tempdir(), "/MY_XML.zip")
   )
-  
-  df_copy<-read_odf(file=paste0(tempdir(),"/MY_XML.zip"))
-  # -- test if objects are equal
-  expect_true(all.equal(df,df_copy))
 
-  unlink(paste0(tempdir(),"/*"), recursive = TRUE)
+  df_copy <- read_odf(file = paste0(tempdir(), "/MY_XML.zip"))
+  # -- test if objects are equal
+  expect_true(all.equal(df, df_copy))
+
+  unlink(paste0(tempdir(), "/*"), recursive = TRUE)
 })
 
 
@@ -50,14 +50,14 @@ test_that("read_write_odf_with_default_language", {
   # make xml and data
   write_odf(
     x = df,
-    file = paste0(tempdir(),"/MY_XML.zip")
+    file = paste0(tempdir(), "/MY_XML.zip")
   )
-  
-  df_copy<-read_odf(file=paste0(tempdir(),"/MY_XML.zip"))
+
+  df_copy <- read_odf(file = paste0(tempdir(), "/MY_XML.zip"))
   # -- test if objects are equal
-  expect_true(all.equal(df,df_copy))
-  
-  unlink(paste0(tempdir(),"/*"), recursive = TRUE)
+  expect_true(all.equal(df, df_copy))
+
+  unlink(paste0(tempdir(), "/*"), recursive = TRUE)
 })
 
 #' write_odf and read_odf: with auto
@@ -68,20 +68,19 @@ test_that("read_write_odf_with_default_language", {
   # make xml and data
   write_odf(
     x = Auto,
-    file = paste0(tempdir(),"/MY_XML.zip")
+    file = paste0(tempdir(), "/MY_XML.zip")
   )
-  
-  Auto_copy<-read_odf(file=paste0(tempdir(),"/MY_XML.zip"))
+
+  auto_copy <- read_odf(file = paste0(tempdir(), "/MY_XML.zip"))
   # -- test if objects are equal
   write_odf(
-    x = Auto_copy,
-    file = paste0(tempdir(),"/MY_XML2.zip")
+    x = auto_copy,
+    file = paste0(tempdir(), "/MY_XML2.zip")
   )
-  
-  Auto_copy2<-read_odf(file=paste0(tempdir(),"/MY_XML2.zip"))
-  
-  expect_true(all.equal(Auto_copy,Auto_copy2))
-  
-  unlink(paste0(tempdir(),"/*"), recursive = TRUE)
-})
 
+  auto_copy2 <- read_odf(file = paste0(tempdir(), "/MY_XML2.zip"))
+
+  expect_true(all.equal(auto_copy, auto_copy2))
+
+  unlink(paste0(tempdir(), "/*"), recursive = TRUE)
+})

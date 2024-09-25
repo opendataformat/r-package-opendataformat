@@ -9,7 +9,7 @@ write_odf(
   file,
   languages = "all",
   export_data = TRUE,
-  verbose = T,
+  verbose = TRUE,
   compression_level = 5
 )
 }
@@ -62,7 +62,7 @@ df
 write_odf(x = df, file = "my_data.zip")
 }
 
-# write variable from R data frame with attributes to the file my_data.zip 
+# write variable from R data frame with attributes to the file my_data.zip
 # specified as Open Data Format.
 \dontrun{
 write_odf(x = df$bap87,  file = "my_data.zip")

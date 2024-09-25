@@ -66,14 +66,15 @@ variable attributes from the original data.frames. Sorted by the columns set
 For variables/columns occurring in both x and y, attributes are taken from x.
 }
 \description{
-Merge two odf data.frames in R while keeping attributes with metadata.
+Merge two odf data.frames in R while keeping
+attributes with metadata.
 }
 \details{
-\code{\link{merge}} is a generic function in base R. It dispatches to either the
-merge.data.frame method, merge.odf or merge.data.table method depending on
-the class of its first argument. merge.odf uses the merge.data.table to
-join data.frame and adds the attributes containing metadata from the two
-original odf data.frames.
+\code{\link{merge}} is a generic function in base R. It dispatches
+to either the merge.data.frame method, merge.odf or merge.data.table method
+depending on the class of its first argument. merge.odf uses the
+merge.data.table to join data.frame and adds the attributes containing
+metadata from the two original odf data.frames.
 Note that, unlike SQL join, NA is matched against NA (and NaN against NaN)
 while merging.
 For a more data.table-centric way of merging two data.tables, see
@@ -83,10 +84,11 @@ merge.
 \examples{
 # get path to example data from the opendataformat package (data.zip)
 path  <-  system.file("extdata", "data.zip", package = "opendataformat")
-# read four columns of example data specified as Open Data Format from ZIP file
+
+# read four columns of example data specified as ODF from ZIP file
 df  <-  read_odf(file = path, select = 1:4)
 
-# read other columns of example data specified as Open Data Format from ZIP file
+# read other columns of example data specified as ODF from ZIP file
 df2  <-  read_odf(file = path, select = 4:7)
 
 # generate a variable for joining both datasets:

@@ -23,7 +23,7 @@ docu_odf function.
 # get example data from the opendataformat package
 df  <-  get(data("data_odf"))
 
-# Switch dataset df to language "en" 
+# Switch dataset df to language "en"
 df  <-  setLanguage_odf(df, language = "en")
 
 # Display dataset information for dataset df in language "en"

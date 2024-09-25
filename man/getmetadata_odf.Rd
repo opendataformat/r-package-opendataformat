@@ -2,7 +2,8 @@
 % Please edit documentation in R/getmetadata_odf.R
 \name{getmetadata_odf}
 \alias{getmetadata_odf}
-\title{Get variable labels or other metadata from a data frame in opendataformat.}
+\title{Get variable labels or other metadata from a data frame in
+opendataformat.}
 \usage{
 getmetadata_odf(input, type, language = "active")
 }
@@ -17,8 +18,9 @@ or "languages".}
 will be displayed. If no language is selected, the current/active language
 of the data frame will be used.
 \itemize{
-\item By default the language that is set to current is displayed (\code{language = "current"}).
-\item You can select the language by language code, e.g. \code{language = "en"}.
+\item By default the language that is set to current is displayed
+(\code{language = "current"}). \item You can select the language
+by language code, e.g. \code{language = "en"}.
 }}
 }
 \value{

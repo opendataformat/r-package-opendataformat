@@ -8,7 +8,8 @@ read_odf(file, languages = "all", nrows = Inf, skip = 0, select = NULL)
 }
 \arguments{
 \item{file}{the name of the file which the data are to be read from.
-By default all available language variants are imported (\code{languages = "all"}).}
+By default all available language variants are imported
+(\code{languages = "all"}).}
 
 \item{languages}{integer: the maximum number of rows to read in. Negative and other invalid
 values are ignored.}

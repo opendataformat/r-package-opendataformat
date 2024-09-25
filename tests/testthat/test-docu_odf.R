@@ -56,7 +56,7 @@ test_that("docu_odf", {
       input = df$test,
       style = "html"),
     "Input is not a dataframe or variable in the odf-format."
-    )
+  )
   unlink(paste0(tempdir(), "/*"))
   #' ------ error message: invalid language selection
   expect_error(
@@ -132,6 +132,3 @@ test_that("docu_odf", {
   )
   unlink(paste0(tempdir(), "/*"))
 })
-
-# testthat::test_file("tests/testthat/test-docu_odf.R")
-# covr::package_coverage()

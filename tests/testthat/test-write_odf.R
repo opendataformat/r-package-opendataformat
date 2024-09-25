@@ -1,4 +1,5 @@
-#' write_odf: default setting: languages = "all", variable_metadata = "yes", export_data = "yes"
+#' write_odf: default setting: languages = "all",
+#' variable_metadata = "yes", export_data = "yes"
 test_that("write_odf_default_setting", {
   # - get data
   df <- get(load("testdata/data_odf.RData"))
@@ -56,8 +57,8 @@ test_that("write_odf_languages", {
   expect_true(file.exists(paste0(tempdir(), "/MY_XML/metadata.xml")))
   expect_true(file.exists(paste0(tempdir(), "/MY_XML.zip")))
   df <- read_odf(paste0(tempdir(), "/MY_XML.zip"),
-                   languages = "all",
-                   nrows = 0)
+                 languages = "all",
+                 nrows = 0)
   expect_equal(attr(df, "languages"), "en")
   unlink(paste0(tempdir(), "/*"), recursive = TRUE)
   df <- get(load("testdata/data_odf.RData"))
@@ -72,8 +73,8 @@ test_that("write_odf_languages", {
   expect_true(file.exists(paste0(tempdir(), "/MY_XML/metadata.xml")))
   expect_true(file.exists(paste0(tempdir(), "/MY_XML.zip")))
   df <- read_odf(paste0(tempdir(), "/MY_XML.zip"),
-               languages = "all",
-               nrows = 0)
+                 languages = "all",
+                 nrows = 0)
   expect_equal(attr(df, "languages"), "de")
   unlink(paste0(tempdir(), "/*"), recursive = TRUE)
   df <- get(load("testdata/data_odf.RData"))
