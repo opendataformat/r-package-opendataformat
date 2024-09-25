@@ -18,14 +18,15 @@ Learn more about the Open Data Format in R in `vignette("opendataformat")`.
 
 ``` r
 
-# At this point you can download and install the the latest version of the opendataformat package from Zenodo:
-download.file("https://zenodo.org/records/12917713/files/opendataformat_1.1.1.tar.gz?download=1", destfile = paste0(tempdir(), "/", "opendataformat_1.1.1.tar.gz"), method = "curl")
-install.packages(paste0(tempdir(), "/", "opendataformat_1.1.1.tar.gz"), repos = NULL, type = "source")
+# opendataformat package from Zenodo:
+install.packages(
+  "https://zenodo.org/records/13683314/files/opendataformat_1.2.1.tar.gz",
+  repos = NULL, method = "libcurl")
 
 
 # Alternatively you can install the development version from Gitlab:
-# install.packages("devtools")
-devtools::install_git("https://git.soep.de/opendata/r-package-opendataformat.git")
+devtools::install_git(
+  "https://github.com/opendataformat/r-package-opendataformat.git")
 
 
 
