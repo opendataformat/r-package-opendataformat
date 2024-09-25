@@ -186,11 +186,11 @@ getmetadata_odf(df$bap87, type = "valuelabels")
 ```
 
 
-## Set the Active Language of a Data Frame: `setLanguage_odf()`
+## Set the Active Language of a Data Frame: `setlanguage_odf()`
 Alternatively, you can set the current (active) language for a dataset-object. (This function tries to copy the label language function from Stata.)
 
 ```{r docu_odf setLanguage2, eval = FALSE}
-df <- setLanguage_odf(df, language = "de")
+df <- setlanguage_odf(df, language = "de")
 
 docu_odf(df$bap9001, style = "print")
 ```
@@ -266,9 +266,9 @@ To retrieve metadata in a specific language, use the language parameter:
 getmetadata_odf(df, type = "labels", language = "en")
 ```
 
-Or set the active language of the dataset using the `setLanguage_odf()` function:
+Or set the active language of the dataset using the `setlanguage_odf()` function:
 ```{r getmetadata_odf6, eval = FALSE, comment = ""}
-df <- setLanguage_odf(df, language = "en")
+df <- setlanguage_odf(df, language = "en")
 getmetadata_odf(df, type = "labels")
 ```
 

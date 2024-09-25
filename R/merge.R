@@ -177,6 +177,6 @@ merge.odf <- function(x, y,
   }
   attributes(data_out)
   attributes(data_out$pgpsbil)
-  data_out <- setLanguage_odf(data_out, attr(data_out, "lang"))
+  data_out <- setlanguage_odf(data_out, attr(data_out, "lang"))
   return(data_out)
 }

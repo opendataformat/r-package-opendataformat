@@ -134,15 +134,15 @@ attributes(df$bap87)
 base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
 base::cat("read_odf", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 cleanEx()
-nameEx("setLanguage_odf")
-### * setLanguage_odf
+nameEx("setlanguage_odf")
+### * setlanguage_odf
 
 flush(stderr()); flush(stdout())
 
 base::assign(".ptime", proc.time(), pos = "CheckExEnv")
-### Name: setLanguage_odf
+### Name: setlanguage_odf
 ### Title: Change language of dataframe metadata
-### Aliases: setLanguage_odf
+### Aliases: setlanguage_odf
 
 ### ** Examples
 
@@ -150,7 +150,7 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 df <- get(data("data_odf"))
 
 # Switch dataset df to language "en" 
-df <- setLanguage_odf(df, language = "en")
+df <- setlanguage_odf(df, language = "en")
 
 # Display dataset information for dataset df in language "en"
 docu_odf(df)
@@ -159,7 +159,7 @@ docu_odf(df)
 
 
 base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-base::cat("setLanguage_odf", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+base::cat("setlanguage_odf", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 cleanEx()
 nameEx("write_odf")
 ### * write_odf

@@ -361,7 +361,7 @@ Specific Language</a></li>
 </ul></li>
 <li><a href="#set-the-active-language-of-a-data-frame-setlanguage_odf" id="toc-set-the-active-language-of-a-data-frame-setlanguage_odf">Set
 the Active Language of a Data Frame:
-<code>setLanguage_odf()</code></a></li>
+<code>setlanguage_odf()</code></a></li>
 <li><a href="#access-metadata-getmetadata_odf-and-attributes" id="toc-access-metadata-getmetadata_odf-and-attributes">Access
 Metadata: <code>getmetadata_odf()</code> and
 <code>attributes()</code></a>
@@ -661,11 +661,11 @@ and other metadata for the variables:</p>
 </div>
 <div id="set-the-active-language-of-a-data-frame-setlanguage_odf" class="section level2">
 <h2>Set the Active Language of a Data Frame:
-<code>setLanguage_odf()</code></h2>
+<code>setlanguage_odf()</code></h2>
 <p>Alternatively, you can set the current (active) language for a
 dataset-object. (This function tries to copy the label language function
 from Stata.)</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>df<span class="ot">&lt;-</span><span class="fu">setLanguage_odf</span>(df, <span class="at">language=</span><span class="st">&quot;de&quot;</span>)</span>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>df<span class="ot">&lt;-</span><span class="fu">setlanguage_odf</span>(df, <span class="at">language=</span><span class="st">&quot;de&quot;</span>)</span>
 <span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a></span>
 <span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a><span class="fu">docu_odf</span>(df<span class="sc">$</span>bap9001, <span class="at">style =</span> <span class="st">&quot;print&quot;</span>)</span></code></pre></div>
 <p>To display which languages are available for the dataset metadata,
@@ -813,8 +813,8 @@ function will return the variable labels for a dataset:</p>
 parameter:</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="fu">getmetadata_odf</span>(df, <span class="at">type=</span><span class="st">&quot;labels&quot;</span>, <span class="at">language=</span><span class="st">&quot;en&quot;</span>)</span></code></pre></div>
 <p>Or set the active language of the dataset using the
-<code>setLanguage_odf()</code> function:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a>df<span class="ot">&lt;-</span><span class="fu">setLanguage_odf</span>(df, <span class="at">language=</span><span class="st">&quot;en&quot;</span>)</span>
+<code>setlanguage_odf()</code> function:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a>df<span class="ot">&lt;-</span><span class="fu">setlanguage_odf</span>(df, <span class="at">language=</span><span class="st">&quot;en&quot;</span>)</span>
 <span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a><span class="fu">getmetadata_odf</span>(df, <span class="at">type=</span><span class="st">&quot;labels&quot;</span>)</span></code></pre></div>
 <p>You can also use the <code>getmetadata_odf()</code> function to
 retrieve value labels for a specific variable by setting the argument

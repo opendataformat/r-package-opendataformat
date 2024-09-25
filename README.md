@@ -44,7 +44,7 @@ The opendataformat package consists of five main functions:
 
 - `docu_odf()` to explore the dataset information. You can set the whole dataset `df` or an selected variable `df$var` as input and you will get an HTML page, displayed either in the RStudio viewer or the Web Browser, with metadata on the respective data level. 
 
-- `setLanguage_odf()` changes the "active" language of a dataset. The metadata for this language is by default displayed with `docu_odf()`.
+- `setlanguage_odf()` changes the "active" language of a dataset. The metadata for this language is by default displayed with `docu_odf()`.
 
 - `write_odf()` to write the R Dataframe to an Open Data Format ZIP file. By specifying the dataframe input and providing the output directory path the function will generate a ZIP file containing the dataset as "data.csv" and "metadata.xml".
 

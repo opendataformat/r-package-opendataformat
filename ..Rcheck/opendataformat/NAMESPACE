@@ -3,7 +3,7 @@
 export(docu_odf)
 export(labels_odf)
 export(read_odf)
-export(setLanguage_odf)
+export(setlanguage_odf)
 export(write_odf)
 import(data.table)
 import(magrittr)

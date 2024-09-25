@@ -78,7 +78,7 @@ getmetadata_odf(df, type="label")
 getmetadata_odf(df$bap87, type="valuelabels")
 
 ## ----docu_odf setLanguage2, eval = FALSE-----------------------------------
-#  df<-setLanguage_odf(df, language="de")
+#  df<-setlanguage_odf(df, language="de")
 #  
 #  docu_odf(df$bap9001, style = "print")
 
@@ -112,7 +112,7 @@ getmetadata_odf(df$bap96, type="labels")
 #  getmetadata_odf(df, type="labels", language="en")
 
 ## ----getmetadata_odf6, eval = FALSE, comment = ""--------------------------
-#  df<-setLanguage_odf(df, language="en")
+#  df<-setlanguage_odf(df, language="en")
 #  getmetadata_odf(df, type="labels")
 
 ## ----getmetadata_odf valuelabels, comment = ""-----------------------------

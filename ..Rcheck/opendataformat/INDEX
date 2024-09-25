@@ -5,5 +5,5 @@ labels_odf           Get variable labels or other metadata from a
 opendataformat-package
                         Open Data Format
 read_odf             Read data specified as Open Data Format.
-setLanguage_odf      Change language of dataframe metadata
+setlanguage_odf      Change language of dataframe metadata
 write_odf            Write R data frame to the Open Data Format.

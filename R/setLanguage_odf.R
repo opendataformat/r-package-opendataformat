@@ -17,14 +17,14 @@
 #' df  <-  get(data("data_odf"))
 #'
 #' # Switch dataset df to language "en"
-#' df  <-  setLanguage_odf(df, language = "en")
+#' df  <-  setlanguage_odf(df, language = "en")
 #'
 #' # Display dataset information for dataset df in language "en"
 #' docu_odf(df)
 #'
 #' @export
 
-setLanguage_odf <- function(dataframe, language) {
+setlanguage_odf <- function(dataframe, language) {
   df_languages <-  attr(dataframe, "languages")
   #check if language is available for the dataframe
   if (language %in% df_languages) {
