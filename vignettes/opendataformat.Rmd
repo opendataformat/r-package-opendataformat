@@ -5,8 +5,8 @@ output:
     toc: true
 vignette: >
   %\VignetteIndexEntry{opendataformat}
-  %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 
@@ -449,7 +449,7 @@ Alternatively you can use the getmetadata_odf()-function to get the value labels
 
 ```{r table factor getmetadata_odf, eval=F, comment = ""}
 table(factor(df$bap87,
-             labels = names(getmetadata_odf(df$bap87, type = valuelabels))))
+             labels = names(getmetadata_odf(df$bap87, type = "valuelabels"))))
 ```
 
 To display the data in a language other than the default one, let's try German by appending the respective language code to the attribute name. For example, you can use $labels_de to access the German language labels and present the information accordingly.

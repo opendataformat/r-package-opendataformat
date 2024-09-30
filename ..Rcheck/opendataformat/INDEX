@@ -1,9 +1,0 @@
-data_odf             data_odf
-docu_odf             Get documentation from R data frame.
-labels_odf           Get variable labels or other metadata from a
-                        data frame in opendataformat.
-opendataformat-package
-                        Open Data Format
-read_odf             Read data specified as Open Data Format.
-setlanguage_odf      Change language of dataframe metadata
-write_odf            Write R data frame to the Open Data Format.
