@@ -43,7 +43,7 @@
 #' in y when they have the same column name as any by.x.
 #'
 #' @param allow.cartesian
-#' See allow.cartesian in \code{\link{data.table}}.
+#' See allow.cartesian in \code{\link[data.table]{data.table}}.
 #'
 #' @param incomparables
 #' values which cannot be matched and therefore are excluded from by columns.
@@ -60,7 +60,7 @@
 #' Note that, unlike SQL join, NA is matched against NA (and NaN against NaN)
 #' while merging.
 #' For a more data.table-centric way of merging two data.tables, see
-#' \code{\link{data.table}}. See FAQ 1.11 for a detailed comparison of
+#' \code{\link[data.table]{data.table}}. See FAQ 1.11 for a detailed comparison of
 #' merge.
 #'
 #' @return A new odf data.frame build from the two input data.frames with the
@@ -105,7 +105,7 @@ merge.odf <- function(x, y,
                       ...) {
 
   if (is.null(by.x) && is.null(by.y)) {
-    data_out <- merge.data.table(x = as.data.table(x), y =  as.data.table(y),
+    data_out <- data.table::merge.data.table(x = as.data.table(x), y =  as.data.table(y),
                                  by = by,
                                  all.x = all.x, all.y = all.y,
                                  sort = sort,
@@ -115,7 +115,7 @@ merge.odf <- function(x, y,
                                  incomparables = incomparables)
   } else {
     if (is.null(by)) {
-      data_out <- merge.data.table(x = as.data.table(x), y = as.data.table(y),
+      data_out <- data.table::merge.data.table(x = as.data.table(x), y = as.data.table(y),
                                    by.x = by.x, by.y = by.y,
                                    all.x = all.x, all.y = all.y,
                                    sort = sort,
@@ -124,7 +124,7 @@ merge.odf <- function(x, y,
                                    allow.cartesian = allow.cartesian,
                                    incomparables = incomparables)
     } else {
-      data_out <- merge.data.table(x = as.data.table(x), y = as.data.table(y),
+      data_out <- data.table::merge.data.table(x = as.data.table(x), y = as.data.table(y),
                                    by = by, by.x = by.x,
                                    by.y = by.y, all.x = all.x,
                                    all.y = all.y,

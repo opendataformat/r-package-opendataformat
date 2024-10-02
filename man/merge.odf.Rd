@@ -53,7 +53,7 @@ merge.data.frame method does.}
 \item{no.dups}{logical indicating that suffixes are also appended to non-by.y column names
 in y when they have the same column name as any by.x.}
 
-\item{allow.cartesian}{See allow.cartesian in \code{\link{data.table}}.}
+\item{allow.cartesian}{See allow.cartesian in \code{\link[data.table]{data.table}}.}
 
 \item{incomparables}{values which cannot be matched and therefore are excluded from by columns.}
 
@@ -78,7 +78,7 @@ metadata from the two original odf data.frames.
 Note that, unlike SQL join, NA is matched against NA (and NaN against NaN)
 while merging.
 For a more data.table-centric way of merging two data.tables, see
-\code{\link{data.table}}. See FAQ 1.11 for a detailed comparison of
+\code{\link[data.table]{data.table}}. See FAQ 1.11 for a detailed comparison of
 merge.
 }
 \examples{

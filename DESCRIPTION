@@ -13,7 +13,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Depends: R (>= 3.6), cli, magrittr, xml2, data.table, zip
 Suggests: testthat (>= 3.0.0), knitr, rmarkdown, devtools, ISLR, dplyr, haven
 VignetteBuilder: knitr
