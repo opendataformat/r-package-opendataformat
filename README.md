@@ -24,7 +24,7 @@ install.packages(
   repos = NULL, method = "libcurl")
 
 
-# Alternatively you can install the development version from Gitlab:
+# Alternatively you can install the development version from GitHub:
 devtools::install_git(
   "https://github.com/opendataformat/r-package-opendataformat.git")
 
