@@ -39,7 +39,6 @@
 #'
 #' # read example data specified as Open Data Format from ZIP file
 #' df  <-  read_odf(file = path)
-#' df
 #' attributes(df)
 #' attributes(df$bap87)
 #'
@@ -61,7 +60,6 @@ read_odf  <-  function(file,
   # load the data csv "data.csv"
   # Unzip the file to a temporary location
   zip::unzip(file, files = "data.csv", exdir = tempdir(), overwrite = TRUE)
-  options(warn = -1)
   if (skip  !=  0) {
     if (is.null(select)) {
       cnames <- names(data.table::fread(file.path(tempdir(), "data.csv"),
@@ -86,7 +84,6 @@ read_odf  <-  function(file,
     data  <-  data.table::fread(file.path(tempdir(), "data.csv"),
                                 select = select, skip = skip, nrows = nrows)
   }
-  options(warn = 0)
   data <- as.data.frame(data)
   attr(data, "spec") <- NULL
 

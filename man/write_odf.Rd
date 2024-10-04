@@ -54,31 +54,18 @@ the data as Open Data Format.
 \examples{
 # get example data from the opendataformat package
 df  <-  get(data("data_odf"))
-df
 
 # write R data frame with attributes to the file my_data.zip specified
 # as Open Data Format.
-\dontrun{
-write_odf(x = df, file = "my_data.zip")
-}
-
-# write variable from R data frame with attributes to the file my_data.zip
-# specified as Open Data Format.
-\dontrun{
-write_odf(x = df$bap87,  file = "my_data.zip")
-}
+write_odf(x = df, paste0(tempdir(), "/my_data.zip"))
 
 # write R data frame with attributes to the file my_data.zip
 # with selected language.
-\dontrun{
-write_odf(x = df,  file = "my_data.zip", languages = "en")
-}
+write_odf(x = df,  paste0(tempdir(), "/my_data.zip"), languages = "en")
 
 # write R data frame with attributes to the file my_data.zip but only
 # metadata, no data.
-\dontrun{
-write_odf(x = df,  file = "my_data.zip", export_data = "no")
-}
+write_odf(x = df,  file = paste0(tempdir(), "/my_data.zip"), export_data = "no")
 
 
 }

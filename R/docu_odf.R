@@ -50,37 +50,24 @@
 #' df <- get(data("data_odf"))
 #'
 #' # view documentation about the dataset in the language that is currently set
-#' \dontrun{
 #' docu_odf(df)
-#' }
 #'
 #' # view information from a selected variable in language "en"
-#' \dontrun{
 #' docu_odf(df$bap87, languages = "en")
-#' }
 #'
 #' # view dataset information for all available languages
-#' \dontrun{
 #' docu_odf(df, languages = "all")
-#' }
 #'
 #' # print information to the R console
-#' \dontrun{
 #' docu_odf(df$bap87, style = "print")
-#' }
 #'
 #' # print information to the R viewer
-#' \dontrun{
 #' docu_odf(df$bap87, style = "viewer")
-#' }
 #'
 #' # Since the label for language de is missing, in this case the
 #' # english label will be displayed additionally.
-#' \dontrun{
 #' attributes(df$bap87)["label_de"] <- ""
-#' docu_odf(df$bap87, languages = "de", style = "console",
-#'          replace_missing_language = T)
-#' }
+#' docu_odf(df$bap87, languages = "de", replace_missing_language = TRUE)
 #'
 #' @export
 

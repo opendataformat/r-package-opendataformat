@@ -36,7 +36,6 @@ path
 
 # read example data specified as Open Data Format from ZIP file
 df  <-  read_odf(file = path)
-df
 attributes(df)
 attributes(df$bap87)
 

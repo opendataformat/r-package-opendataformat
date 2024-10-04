@@ -31,9 +31,7 @@ data examples are available here:
 }
 \author{
 Tom Hartl (\email{thartl@diw.de}),
-Claudia Saalbach (\email{csaalbach@diw.de}),
-Xiaoyao Han (\email{xhan@diw.de}),
-Knut Wenzig (\email{kwenzig@diw.de})
+Claudia Saalbach (\email{csaalbach@diw.de})
 
 Other Contributors: KonsortSWD/NFDI, DIW Berlin
 }
