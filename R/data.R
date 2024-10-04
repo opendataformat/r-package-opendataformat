@@ -13,6 +13,6 @@
 #'   \item{name}{Firstname.}
 #' }
 #'
-#' @source \url{https://git.soep.de/opendata/specification}
+#' @source \url{https://github.com/opendataformat/Specification/tree/main/Example}
 #'
 "data_odf"
