@@ -36,7 +36,7 @@ This vignette will guide you through a series of examples that demonstrate the p
 
 You can download and install the package by downloading the latest version from 
 Zenodo.
-Alternatively you can download the development version from gitlab using the 
+Alternatively you can download the development version from GitHub using the 
 `install_git()`-function from the devtools-library.
 
 ```{r setup, eval=FALSE}
@@ -48,7 +48,7 @@ install.packages(
   repos = NULL, method = "libcurl")
 
 
-# Alternatively you can install the development version from Gitlab:
+# Alternatively you can install the development version from GitHub:
 devtools::install_git(
   "https://github.com/opendataformat/r-package-opendataformat.git")
 

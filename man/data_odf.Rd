@@ -17,7 +17,7 @@ A data frame with 20 rows and 7 variables:
 }
 }
 \source{
-\url{https://git.soep.de/opendata/specification}
+\url{https://github.com/opendataformat/Specification/tree/main/Example}
 }
 \usage{
 data_odf
