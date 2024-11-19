@@ -73,7 +73,7 @@ path <- system.file("extdata", "data.zip", package = "opendataformat")
 df <- read_odf(file = path)
 ```
 
-The output of the `read_odf()` function is an R-data.frame object, that has the additional class `odf`. It has additional metadata stored in the attributes of the dataframe and the variables/columns. These include the languages of the metadata, labels, descriptions, urls, variable types, and value labels.
+The output of the `read_odf()` function is an R-tibble object, that has the additional class `odf`. It has additional metadata stored in the attributes of the tibble and the variables/columns. These include the languages of the metadata, labels, descriptions, urls, variable types, and value labels.
 
 ```{r view df, comment = ""}
 df
@@ -212,7 +212,7 @@ A easy way to retrieve metadata is to use the `getmetadata_odf()` function to ge
 
 ### Retrieve the Attributes with `attributes()` and `attr()`
 
-Another way is to retrieve metadata directly from the attributes. The metadata imported from the Open Data Format file into an R dataframe is stored as R attributes. By using the base R functions `attributes()` and `attr()`, you can easily access this metadata. When providing the entire dataset to the function, R will display all the metadata describing the dataset as a whole in your console. 
+Another way is to retrieve metadata directly from the attributes. The metadata imported from the Open Data Format file into an R tibble (dataframe) is stored as R attributes. By using the base R functions `attributes()` and `attr()`, you can easily access this metadata. When providing the entire dataset to the function, R will display all the metadata describing the dataset as a whole in your console. 
 
 ```{r dataset attributes, comment = ""}
 attributes(df)
@@ -389,7 +389,7 @@ The data.csv file now includes just four columns:
 
 ```
 
-If you wish to export only the metadata for documentation or archiving purposes, you can achieve this by setting the argument `export_data="no"`. By doing so, the resulting directory or zip file will solely contain the metadata XML file, excluding the data CSV file. This allows you to specifically capture and preserve the metadata without including the actual data, providing a solution for documentation or archiving needs.
+If you wish to export only the metadata for documentation or archiving purposes, you can achieve this by setting the argument `export_data=FALSE`. By doing so, the resulting directory or zip file will solely contain the metadata XML file, excluding the data CSV file. This allows you to specifically capture and preserve the metadata without including the actual data, providing a solution for documentation or archiving needs.
 
 
 ```{r write_odf metadata, comment = "", eval = FALSE}

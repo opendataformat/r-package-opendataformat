@@ -25,9 +25,14 @@
 #' @export
 
 setlanguage_odf <- function(dataframe, language) {
+  
+  if (!("data.frame" %in% class(dataframe))){
+    stop("x must be a tibble or data.frame")
+  }
   df_languages <-  attr(dataframe, "languages")
+  col_languages <- unique(unlist(lapply(dataframe, function(x) attr(x, "languages"))))
   #check if language is available for the dataframe
-  if (language %in% df_languages) {
+  if (language %in% c(df_languages, col_languages)) {
     attr(dataframe, "lang") <- language
     attributes(dataframe)[["label"]] <- attr(dataframe,
                                              paste0("label_", language))

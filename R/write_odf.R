@@ -3,10 +3,10 @@
 #' @description Export data from an R data frame to a ZIP file that stores
 #' the data as Open Data Format.
 #'
-#' @import zip
 #' @import xml2
 #' @import magrittr
 #' @import data.table
+#' @importFrom zip zip
 #'
 #' @param x R data frame (df) to be writtem.
 #'
@@ -34,8 +34,8 @@
 #' Choose, if you want to export the file that holds the
 #' data (data.csv).Default is TRUE.
 #'
-#' * By default the data and metadata are exported (\code{export_data = "yes"}).
-#' * To export only metadata and no data, select \code{export_data = "no"}
+#' * By default the data and metadata are exported (\code{export_data = TRUE}).
+#' * To export only metadata and no data, select \code{export_data = FALSE}
 #'
 #' @param verbose Display more messages.
 #'
@@ -56,7 +56,7 @@
 #'
 #' # write R data frame with attributes to the file my_data.zip but only
 #' # metadata, no data.
-#' write_odf(x = df,  file = paste0(tempdir(), "/my_data.zip"), export_data = "no")
+#' write_odf(x = df,  file = paste0(tempdir(), "/my_data.zip"), export_data = FALSE)
 #'
 #'
 #' @export
@@ -66,11 +66,65 @@ write_odf  <-  function(x,
                         export_data = TRUE,
                         verbose = TRUE,
                         compression_level = 5) {
+  if (!("data.frame" %in% class(x))){
+    stop("x must be a tibble or data.frame")
+  }
+  if (!inherits(file, "character")){
+    stop("file be a filename or filepath")
+  }
+  if (!inherits(languages,"character")){
+    stop("languages must be type character")
+  }
+  #Get all metadata languages in the dataset
+  get_langs <- function(strings) {
+    output <- c()
+    for (string in strings){
+      # Check if the string starts with "label_" or "description_"
+      if (grepl("^label_|^labels_|^description_", string)) {
+        # Split the string at "_", and take the second element
+        split_string <- strsplit(string, "_")[[1]]
+        output<- c(output, (split_string[2]))  # Extract the second element
+      }
+    }
+    return(unique(output))
+  }
+  
+  langs_in_data <- get_langs(names(attributes(x)))
+  for  (var in names(x)){
+    langs_in_data <- unique(c(langs_in_data, get_langs(names(attributes(x[[var]])))))
+  }
+  #Check if each language is available
+  langs_not_in_data <- c()
+  for (l in languages){
+    if (!(l %in% c(langs_in_data, "all", "default","active", "current"))){
+      langs_not_in_data <- c(langs_not_in_data,l)
+    }
+  }
+  #Throw an error if any language input is not available
+  if (length(langs_not_in_data)>0){
+    stop(paste0("language(s) ", paste0(langs_not_in_data, collapse = ", "), " not available."))
+  }
+
+  if (!inherits(export_data, "logical")){
+    stop("export_data must be TRUE or FALSE")
+  }
+  if (!inherits(verbose,"logical")){
+    stop("verbose must be TRUE or FALSE")
+  }
+  if (!(compression_level %in%  1:9)){
+    stop("compression_level must be an integer between 1 and 9")
+  }
+  
+  
   # Normalize path from from relative to absolute
   file <- normalizePath(file, winslash = "/", mustWork = FALSE)
   # replace \\\\ with // to avert errors in data.table(...)
   file <- gsub("\\\\\\\\", "//", file)
-
+  
+  #check if file path exists
+  if (!file.exists(paste0(unlist(strsplit(file, "/"))[1:(length(unlist(strsplit(file, "/")))-1)], collapse = "/"))) {
+    stop("Error: Invalid file path. Output directory does not exist.")
+  }
   if (!grepl(".zip", file)) {
     file <- paste0(file, ".zip")
   }
@@ -80,14 +134,12 @@ write_odf  <-  function(x,
     attr(x, "label") <- NULL
   }
   for (var in names(x)){
-    if (!is.null(attr(x[, var], "label"))) {
-      attr(x[, var], "label") <- NULL
+    if (!is.null(attr(x[[var]], "label"))) {
+      attr(x[[var]], "label") <- NULL
     }
   }
 
-  # Return an error, if the language argument is not valid
-  if (languages[1] != "all" && !all(languages %in% attr(x, "languages")))
-    stop("languages not valid")
+
   unlink(paste0(tempdir(), "/*"), recursive = TRUE)
   folder_url <- gsub(".zip", "", file)
   folder_url <- gsub("\\\\", "/", folder_url)
@@ -187,15 +239,15 @@ write_odf  <-  function(x,
     varNode <- xml_add_child(dataDscr, "var", "name" = var)
     
     # Add variable labels
-    if (length(names(attributes(x[, var]))[grepl("label", names(attributes(x[, var])))]) > 0) {
-      for (labl in names(attributes(x[, var]))[grepl("label", names(attributes(x[, var])))]) {
+    if (length(names(attributes(x[[var]]))[grepl("label", names(attributes(x[[var]])))]) > 0) {
+      for (labl in names(attributes(x[[var]]))[grepl("label", names(attributes(x[[var]])))]) {
         if (!grepl("labels", labl)) {
           lang <- strsplit(labl, "_")[[1]][2]
           if (languages[1] == "all" || lang %in% languages) {
             if (lang == "NA") {
-              xml_add_child(varNode, "labl", attr(x[, var], labl))
+              xml_add_child(varNode, "labl", attr(x[[var]], labl))
             } else {
-              xml_add_child(varNode, "labl", attr(x[, var], labl), "xml:lang" = lang)
+              xml_add_child(varNode, "labl", attr(x[[var]], labl), "xml:lang" = lang)
             }
           }
         }
@@ -203,15 +255,15 @@ write_odf  <-  function(x,
     }
     
     # Add variable descriptions
-    if (length(names(attributes(x[, var]))[grepl("description", names(attributes(x[, var])))]) > 0) {
-      for (descr in names(attributes(x[, var]))[grepl("description", names(attributes(x[, var])))]) {
+    if (length(names(attributes(x[[var]]))[grepl("description", names(attributes(x[[var]])))]) > 0) {
+      for (descr in names(attributes(x[[var]]))[grepl("description", names(attributes(x[[var]])))]) {
         if (!grepl("labels", descr)) {
           lang <- strsplit(descr, "_")[[1]][2]
           if (languages[1] == "all" || lang %in% languages) {
             if (lang == "NA") {
-              xml_add_child(varNode, "txt", attr(x[, var], descr))
+              xml_add_child(varNode, "txt", attr(x[[var]], descr))
             } else {
-              xml_add_child(varNode, "txt", attr(x[, var], descr), "xml:lang" = lang)
+              xml_add_child(varNode, "txt", attr(x[[var]], descr), "xml:lang" = lang)
             }
           }
         }
@@ -219,9 +271,9 @@ write_odf  <-  function(x,
     }
     
     # Add value labels
-    if (length(names(attributes(x[, var]))[grepl("labels", names(attributes(x[, var])))]) > 0) {
-      labels <- names(attributes(x[, var]))[grepl("labels", names(attributes(x[, var])))]
-      values <- unique(unlist(lapply(labels, function(lab) attr(x[, var], lab))))
+    if (length(names(attributes(x[[var]]))[grepl("labels", names(attributes(x[[var]])))]) > 0) {
+      labels <- names(attributes(x[[var]]))[grepl("labels", names(attributes(x[[var]])))]
+      values <- unique(unlist(lapply(labels, function(lab) attr(x[[var]], lab))))
       
       for (val in values) {
         catgryNode <- xml_add_child(varNode, "catgry")
@@ -230,7 +282,7 @@ write_odf  <-  function(x,
         for (labl in labels) {
           lang <- strsplit(labl, "_")[[1]][2]
           if (languages[1] == "all" || lang %in% languages) {
-            labl_new <- names(attr(x[, var], labl))[attr(x[, var], labl) == val]
+            labl_new <- names(attr(x[[var]], labl))[attr(x[[var]], labl) == val]
             if (!is.na(labl_new)) {
               if (lang == "NA") {
                 xml_add_child(catgryNode, "labl", labl_new)
@@ -244,12 +296,12 @@ write_odf  <-  function(x,
     }
     
     # Add variable type
-    type <- attr(x[, var], "type")
-    if (is.null(type)) type <- class(x[, var])
+    type <- attr(x[[var]], "type")
+    if (is.null(type)) type <- class(x[[var]])
     xml_add_child(varNode, "varFormat", "type" = type)
     
     # Add URL
-    url <- attr(x[, var], "url")
+    url <- attr(x[[var]], "url")
     if (is.null(url)) url <- ""
     notesVar <- xml_add_child(varNode, "notes")
     xml_add_child(notesVar, "ExtLink", "URI" = url)

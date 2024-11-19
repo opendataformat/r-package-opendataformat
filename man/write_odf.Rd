@@ -35,8 +35,8 @@ exported
 \item{export_data}{Choose, if you want to export the file that holds the
 data (data.csv).Default is TRUE.
 \itemize{
-\item By default the data and metadata are exported (\code{export_data = "yes"}).
-\item To export only metadata and no data, select \code{export_data = "no"}
+\item By default the data and metadata are exported (\code{export_data = TRUE}).
+\item To export only metadata and no data, select \code{export_data = FALSE}
 }}
 
 \item{verbose}{Display more messages.}
@@ -65,7 +65,7 @@ write_odf(x = df,  paste0(tempdir(), "/my_data.zip"), languages = "en")
 
 # write R data frame with attributes to the file my_data.zip but only
 # metadata, no data.
-write_odf(x = df,  file = paste0(tempdir(), "/my_data.zip"), export_data = "no")
+write_odf(x = df,  file = paste0(tempdir(), "/my_data.zip"), export_data = FALSE)
 
 
 }

@@ -76,6 +76,19 @@ docu_odf <- function(input,
                      style = "viewer",
                      replace_missing_language = FALSE,
                      variables = "yes") {
+  style = tolower(style)
+  if (!(style %in% c("both", "all", "console", "viewer","html", "print"))){
+    stop("style has to be one of following inputs: both, all, console, viewer, html and print")
+  }
+  if (!inherits(languages, "character")){
+    stop("languages must be type character")
+  }
+  if (!inherits(replace_missing_language, "logical")){
+    stop("replace_missing_language must be TRUE or FALSE")
+  }
+  if (!(variables %in% c("yes", "Yes", "T", "TRUE", TRUE))){
+    stop("variables has to be one of following inputs: 'yes', 'Yes', 'T', 'TRUE', and TRUE")
+  }
 
   if (("data.frame" %in% class(input) && !("odf" %in% class(input))) ||
       (!("lang" %in% names(attributes(input))) &&
@@ -240,7 +253,7 @@ docu_odf <- function(input,
     }
   }
 
-  if (input_type == "Dataset" && variables %in% c("yes", "Yes", "T", TRUE)) {
+  if (input_type == "Dataset" && variables %in% c("yes", "Yes", "T", "TRUE", TRUE)) {
     labels_vars <- list()
     varlist_html <- paste0("<tr><th>Variables&#160;&#160;&#160;&#160;</th>",
                            paste0("<th align = left>label", languages, "</th>",
@@ -385,7 +398,7 @@ docu_odf <- function(input,
   )
 
   #add variables information to dataset information
-  if (input_type == "Dataset" && variables == "yes") {
+  if (input_type == "Dataset" && variables %in% c("yes", "Yes", "T", "TRUE", TRUE)) {
     printing_output <- c(
       paste0(printing_output),
       "\033[1mVariables:\033[0m\n"

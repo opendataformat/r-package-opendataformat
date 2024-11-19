@@ -84,13 +84,13 @@ getmetadata_odf <- function(input,
     if (type != "valuelabels") {
       output_names <- colnames(input)
       for (var in colnames(input)) {
-        output <- c(output, attr(input[, var], type))
+        output <- c(output, attr(input[[var]], type))
       }
       names(output) <- output_names
     } else {
       output <- list()
       for (var in colnames(input)) {
-        output[[var]] <- attr(input[, var], paste0("labels_", lang))
+        output[[var]] <- attr(input[[var]], paste0("labels_", lang))
       }
     }
 

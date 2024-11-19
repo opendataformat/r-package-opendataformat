@@ -1,5 +1,5 @@
 #' write_odf: default setting: languages = "all",
-#' variable_metadata = "yes", export_data = "yes"
+#' variable_metadata = "yes", export_data = TRUE
 test_that("write_odf_default_setting", {
   # - get data
   df <- get(load("testdata/data_odf.RData"))
@@ -83,7 +83,7 @@ test_that("write_odf_languages", {
     x = df,
     file = paste0(tempdir(), "/MY_XML.zip"),
     languages = "notvalid"
-  ) , "languages not valid")
+  ) , paste0("language(s) notvalid not available."), fixed = TRUE)
   # -- test if file exists
   expect_false(file.exists(paste0(tempdir(), "/MY_XML/data.csv")))
   expect_false(file.exists(paste0(tempdir(), "/MY_XML/metadata.xml")))

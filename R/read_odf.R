@@ -3,8 +3,9 @@
 #' @description Import data from the Open Data Format to an R data frame.
 #'
 #' @import xml2
-#' @import zip
 #' @import data.table
+#' @import tibble
+#' @importFrom zip zip_list unzip
 #'
 #'
 #' @param file
@@ -52,11 +53,31 @@ read_odf  <-  function(file,
                        nrows = Inf,
                        skip = 0,
                        select = NULL) {
+  is_integer <- function(x) {
+    x == round(x)
+  }
+  
+  if (!is_integer(nrows) | nrows < 0){
+    stop("nrows must be a positive integer")
+  }
+  if (!is_integer(skip) | skip < 0){
+    stop("skip must be a positive integer")
+  }
+
   #Normalize path from from relative to absolute
   file <- normalizePath(file, winslash = "/", mustWork = FALSE)
   # replace \\\\ with // to avert errors in data.table::fread(...)
   file <- gsub("\\\\\\\\", "//", file)
-
+  
+  if (!file.exists(file)) {
+    stop("Error: The specified zip file does not exist.")
+  }
+  # Step 2: List contents of the zip file
+  zip_filelist <- zip::zip_list(file)$filename
+  if (!("data.csv" %in% zip_filelist) | !("metadata.xml" %in% zip_filelist)){
+    stop("Error: Expected data.csv and metadata.xml in specified zip.")
+  }
+  
   # load the data csv "data.csv"
   # Unzip the file to a temporary location
   zip::unzip(file, files = "data.csv", exdir = tempdir(), overwrite = TRUE)
@@ -84,13 +105,13 @@ read_odf  <-  function(file,
     data  <-  data.table::fread(file.path(tempdir(), "data.csv"),
                                 select = select, skip = skip, nrows = nrows)
   }
-  data <- as.data.frame(data)
-  attr(data, "spec") <- NULL
-
-
+  data <- as_tibble(data)
+  #attr(data, "spec") <- NULL
+  
+  
   #read xml from zipped folder
-  metadata <- read_xml(x = unz(file, "metadata.xml"))
-
+  metadata <- read_xml(x = unz(file, "metadata.xml"), encoding = "UTF-8")
+  
   #Extract study name
   study_metadata <- xml_children(metadata)[grep("<stdyDscr>",
                                                 xml_children(metadata))]
@@ -103,18 +124,21 @@ read_odf  <-  function(file,
   study_metadata <- xml_children(study_metadata)[grep("<titl>",
                                                       xml_children(
                                                         study_metadata))]
-  if (length(xml_text(study_metadata)) > 0) study <- xml_text(study_metadata)
-  else study <- ""
-
+  if (length(xml_text(study_metadata)) > 0) {
+    study <- xml_text(study_metadata)
+  }  else {
+    study <- ""
+  }
+  
   attr(data, "study") <- study
-
+  
   #Extract dataset description
   dataset_metadata <- xml_children(metadata)[grep("<fileDscr>",
                                                   xml_children(metadata))]
   dataset_descrsub <- xml_children(
     xml_children(dataset_metadata)[
       xml_name(xml_children(dataset_metadata)) == "fileTxt"])
-
+  
   #get dataset name study
   filename  <-  xml_text(dataset_descrsub[
     xml_name(dataset_descrsub) == "fileName"])
@@ -153,9 +177,9 @@ read_odf  <-  function(file,
   } else {
     attr(data, "url") <- ""
   }
-
-
-
+  
+  
+  
   #Extract variable description
   variable_metadata <- xml_children(
     xml_children(metadata)[grep("<dataDscr>", xml_children(metadata))])
@@ -164,44 +188,47 @@ read_odf  <-  function(file,
     varname <- xml_attr(var, attr = "name")
     if (varname %in% colnames(data)) {
       #Get variable name
-      attr(data[, varname], "name") <- xml_attr(var, attr = "name")
+      attr(data[[varname]], "name") <- xml_attr(var, attr = "name")
       #Get variable labels
       for (label in xml_children(var)[xml_name(xml_children(var)) == "labl"]) {
         if (languages[1] == "all" || xml_attr(
           label, attr = "lang") %in% languages) {
           if (length(xml_text(label)) > 0)
-            attr(data[, varname], paste0(
+            attr(data[[varname]], paste0(
               "label_", xml_attr(label, attr = "lang"))) <- xml_text(label)
-          else attr(data[, varname], paste0(
+          else attr(data[[varname]], paste0(
             "label_", xml_attr(label, attr = "lang"))) <- ""
         }
       }
-
+      
       #Get variable descriptions
       for (descr in xml_children(var)[xml_name(xml_children(var)) == "txt"]) {
         if (languages[1] == "all" ||
             xml_attr(descr, attr = "lang") %in% languages) {
           if (length(xml_text(descr)) > 0)
-            attr(data[, varname], paste0(
+            attr(data[[varname]], paste0(
               "description_", xml_attr(descr, attr = "lang"))) <-
               xml_text(descr)
-          else attr(data[, varname], paste0(
+          else attr(data[[varname]], paste0(
             "description_", xml_attr(descr, attr = "lang"))) <- ""
         }
       }
-
+      
       #Get variable type
       type <- xml_attr(xml_children(var)[
         xml_name(xml_children(var)) == "varFormat"], attr = "type")
-      if (length(type > 0)) attr(data[, varname], "type") <- type
-      else attr(data[, varname], "type") <- ""
-
+      if (length(type > 0)) {
+        attr(data[[varname]], "type") <- type
+      } else {
+        attr(data[[varname]], "type") <- ""
+      }
+      
       #Get variable url
       url <- xml_attr(xml_children(xml_children(var)[
         xml_name(xml_children(var)) == "notes"]), attr = "URI")
-      if (length(url) > 0) attr(data[, varname], "url") <-
-        url else attr(data[, varname], "url") <- ""
-
+      if (length(url) > 0) attr(data[[varname]], "url") <-
+        url else attr(data[[varname]], "url") <- ""
+      
       #Get variable value labels
       varlabel_nodes <- xml_children(var)[
         xml_name(xml_children(var)) == "catgry"]
@@ -210,7 +237,7 @@ read_odf  <-  function(file,
         for (varlabel in varlabel_nodes) {
           if (length(varlabels) == 0) {
             varlabels$values <- xml_text(xml_children(varlabel)[
-                xml_name(xml_children(varlabel)) == "catValu"])
+              xml_name(xml_children(varlabel)) == "catValu"])
             labels <- xml_children(varlabel)[
               xml_name(xml_children(varlabel)) == "labl"]
             for (label in labels){
@@ -238,25 +265,26 @@ read_odf  <-  function(file,
           }
         }
         #label values as numeric only if all values are numeric
-        if (all.equal(as.character(as.numeric(
-          varlabels[names(varlabels) == "values"][[1]])),
-                      as.character(
-                        varlabels[names(varlabels) == "values"][[1]]))) {
+        if (is.numeric(varlabels[names(varlabels) == "values"][[1]])){
           values <- as.numeric(varlabels[names(varlabels) == "values"][[1]])
         } else {
           values <- as.character(varlabels[names(varlabels) == "values"][[1]])
         }
+        if (all(as.character(as.numeric(values)) == values)){
+          values <- as.numeric(values)
+        }
+        
         for (i in seq(1, length(varlabels))) {
           if (names(varlabels)[[i]] != "values") {
             names(values) <- varlabels[[i]]
-            attr(data[, varname], names(varlabels)[i]) <- values
+            attr(data[[varname]], names(varlabels)[i]) <- values
           }
         }
       }
     }
   }
-
-  #Assign language and activa language attributes
+  
+  #Assign language and active language attributes
   lang_attr <- names(attributes(data))[c(grep("label", names(attributes(data))),
                                          grep("description",
                                               names(attributes(data))))]
@@ -266,18 +294,18 @@ read_odf  <-  function(file,
   if ("en" %in% langs) lang <- "en" else lang <- langs[1]
   attr(data, "lang") <- lang
   for (var in names(data)) {
-    attr(data[, var], "languages") <- langs
-    attr(data[, var], "lang") <- lang
+    attr(data[[var]], "languages") <- langs
+    attr(data[[var]], "lang") <- lang
   }
-
+  
   # add label in active language for haven
   attr(data, "label") <- attr(data, paste0("label_", lang))
   for (var in names(data)) {
-    attr(data[, var], "label") <- attr(data[, var], paste0("label_", lang))
+    attr(data[[var]], "label") <- attr(data[[var]], paste0("label_", lang))
   }
-
+  
   #add odf class
   attr(data, "class") <- c("odf", attr(data, "class"))
-
+  
   return(data)
 }
