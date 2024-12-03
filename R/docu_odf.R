@@ -264,10 +264,21 @@ docu_odf <- function(input,
       var_list <- c(var_list, var)
       labls_var <- c()
       for (lang in languages) {
-        labls_var <- c(labls_var, attr(input[[var]], paste0("label", lang)))
-        labels_vars[[paste0("label", lang)]] <-
+        if( !is.null(attr(input[[var]], paste0("label", lang)))){
+          labls_var <- c(labls_var, attr(input[[var]], paste0("label", lang)))
+        } else {
+          labls_var <- c(labls_var, "")
+        }
+        if (!is.null(attr(input[[var]], paste0("label", lang)))){
+          labels_vars[[paste0("label", lang)]] <-
           as.character(c(unlist(labels_vars[paste0("label", lang)]),
                          attr(input[[var]], paste0("label", lang))))
+        } else {
+          labels_vars[[paste0("label", lang)]] <-
+            as.character(c(unlist(labels_vars[paste0("label", lang)]),
+                           ""))
+        }
+        
       }
       row_html <- paste0("<tr><td>", var, "</td>",
                          paste0("<td>", labls_var, "</td>",
