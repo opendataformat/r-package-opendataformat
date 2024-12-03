@@ -264,10 +264,10 @@ docu_odf <- function(input,
       var_list <- c(var_list, var)
       labls_var <- c()
       for (lang in languages) {
-        labls_var <- c(labls_var, attr(input[, var], paste0("label", lang)))
+        labls_var <- c(labls_var, attr(input[[var]], paste0("label", lang)))
         labels_vars[[paste0("label", lang)]] <-
           as.character(c(unlist(labels_vars[paste0("label", lang)]),
-                         attr(input[, var], paste0("label", lang))))
+                         attr(input[[var]], paste0("label", lang))))
       }
       row_html <- paste0("<tr><td>", var, "</td>",
                          paste0("<td>", labls_var, "</td>",
@@ -295,6 +295,20 @@ docu_odf <- function(input,
 </style></head><body>",
     "<h3>", input_type, ": ",  name, "</h3>"
   )
+  
+  if (input_type == "Dataset") {
+    printing_output <- c(
+      printing_output,
+      "\033[1mstudy:\033[0m\n",
+      paste0("  ", study, "\n")
+    )
+    
+    html_output <- paste0(
+      html_output,
+      "<p><b>Study:</b>",
+      "<br>", study, "</p>"
+    )
+  }
 
   #label
   printing_output <- c(

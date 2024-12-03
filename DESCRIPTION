@@ -1,6 +1,6 @@
 Package: opendataformat
 Title: Reading and Writing Open Data Format Files
-Version: 2.0.0
+Version: 2.1.0
 Authors@R: c(person("Tom", "Hartl", role = c("aut","cre"),
     email = "thartl@diw.de", comment = c(ORCID = "0009-0006-4226-9835")),
     person("Claudia","Saalbach", role = "ctb", 
