@@ -404,7 +404,11 @@ docu_odf <- function(input,
     "\033[1mURL:\033[0m\n",
     paste0("    ", interactive_url, "\n")
   )
-
+  html_output <- paste0(
+    html_output,
+    "<p><b>URL:", "</b><br>", paste0("<a href = '", url, "'>", url, "</a></p>")
+  )
+  
   if (input_type == "Variable") {
     printing_output <- c(
       paste0(printing_output),
@@ -417,10 +421,7 @@ docu_odf <- function(input,
     )
   }
 
-  html_output <- paste0(
-    html_output,
-    "<p><b>URL:", "</b><br>", paste0("<a href = '", url, "'>", url, "</a></p>")
-  )
+
 
   #add variables information to dataset information
   if (input_type == "Dataset" && variables %in% c("yes", "Yes", "T", "TRUE", TRUE)) {
