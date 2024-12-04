@@ -136,8 +136,8 @@ merge.odf <- function(x, y,
     }
   }
 
-  data_out <- as.data.frame(data_out)
-  class(data_out) <- c("odf", "data.frame")
+  data_out <- as_tibble(data_out)
+  class(data_out) <- c("odf", class(data_out))
 
   xname <- gsub("dataset merged from other datasets ", "",
                 attributes(x)["name"])
@@ -159,24 +159,22 @@ merge.odf <- function(x, y,
   attr(data_out, "lang") <- unique(c(attr(x, "lang"), attr(y, "lang")))[1]
   for (var in colnames(data_out)) {
     if (var %in% colnames(x)) {
-      attributes(data_out[var]) <- attributes(x[var])
+      attributes(data_out[[var]]) <- attributes(x[[var]])
     } else {
       if (var %in% colnames(y)) {
-        attributes(data_out[var]) <- attributes(y[var])
+        attributes(data_out[[var]]) <- attributes(y[[var]])
       } else {
         if (var %in% paste0(colnames(x), suffixes[1])) {
-          attributes(data_out[var]) <- attributes(y[gsub(suffixes[1],
-                                                         "", var)])
+          attributes(data_out[[var]]) <- attributes(y[[gsub(suffixes[1],
+                                                         "", var)]])
         }
         if (var %in% paste0(colnames(y), suffixes[2])) {
-          attributes(data_out[var]) <- attributes(y[gsub(suffixes[2],
-                                                         "", var)])
+          attributes(data_out[[var]]) <- attributes(y[[gsub(suffixes[2],
+                                                         "", var)]])
         }
       }
     }
   }
-  attributes(data_out)
-  attributes(data_out$pgpsbil)
   data_out <- setlanguage_odf(data_out, attr(data_out, "lang"))
   return(data_out)
 }
