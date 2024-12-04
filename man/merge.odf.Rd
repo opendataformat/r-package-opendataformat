@@ -2,7 +2,7 @@
 % Please edit documentation in R/merge.R
 \name{merge.odf}
 \alias{merge.odf}
-\title{Merge method for odf data.frames.}
+\title{Merge method for odf tibbles.}
 \usage{
 \method{merge}{odf}(
   x,
@@ -66,7 +66,7 @@ variable attributes from the original data.frames. Sorted by the columns set
 For variables/columns occurring in both x and y, attributes are taken from x.
 }
 \description{
-Merge two odf data.frames in R while keeping
+Merge two odf tibbles in R while keeping
 attributes with metadata.
 }
 \details{

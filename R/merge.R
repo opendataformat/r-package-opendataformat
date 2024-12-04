@@ -1,6 +1,6 @@
-#' @title Merge method for odf data.frames.
+#' @title Merge method for odf tibbles.
 #'
-#' @description Merge two odf data.frames in R while keeping
+#' @description Merge two odf tibbles in R while keeping
 #' attributes with metadata.
 #'
 #' @import data.table
