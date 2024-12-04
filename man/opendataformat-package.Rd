@@ -38,7 +38,7 @@ Retrieve specific metadata like variable labels, or value labels.
 \seealso{
 More information about the Open Data Format specification and
 data examples are available here:
-\url{https://git.soep.de/opendata/}
+\url{https://opendataformat.github.io/}
 }
 \author{
 Tom Hartl (\email{thartl@diw.de}),

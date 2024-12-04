@@ -30,7 +30,7 @@
 #' @seealso
 #' More information about the Open Data Format specification and
 #' data examples are available here:
-#' [https://git.soep.de/opendata/](https://git.soep.de/opendata/)
+#' [https://opendataformat.github.io/](https://opendataformat.github.io/)
 #'
 #' @author
 #'

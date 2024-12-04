@@ -307,19 +307,6 @@ docu_odf <- function(input,
     "<h3>", input_type, ": ",  name, "</h3>"
   )
   
-  if (input_type == "Dataset") {
-    printing_output <- c(
-      printing_output,
-      "\033[1mstudy:\033[0m\n",
-      paste0("  ", study, "\n")
-    )
-    
-    html_output <- paste0(
-      html_output,
-      "<p><b>Study:</b>",
-      "<br>", study, "</p>"
-    )
-  }
 
   #label
   printing_output <- c(
