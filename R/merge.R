@@ -6,7 +6,7 @@
 #' @import data.table
 #'
 #' @param x,y
-#' odf data.frames, or objects to be coerced to one
+#' odf tibbles, or objects to be coerced to one
 #'
 #' @param by
 #' A vector of shared column names in x and y to merge on. This defaults to the
@@ -53,8 +53,8 @@
 #'
 #' @details
 #' \code{\link{merge}} is a generic function in base R. It dispatches
-#' to either the merge.data.frame method, merge.odf or merge.data.table method
-#' depending on the class of its first argument. merge.odf uses the
+#' to either the merge.data.frame method, merge.odf_tbl or merge.data.table method
+#' depending on the class of its first argument. merge.odf_tbl uses the
 #' merge.data.table to join data.frame and adds the attributes containing
 #' metadata from the two original odf data.frames.
 #' Note that, unlike SQL join, NA is matched against NA (and NaN against NaN)
@@ -63,7 +63,7 @@
 #' \code{\link[data.table]{data.table}}. See FAQ 1.11 for a detailed comparison of
 #' merge.
 #'
-#' @return A new odf data.frame build from the two input data.frames with the
+#' @return A new odf tibble build from the two input data.frames with the
 #' variable attributes from the original data.frames. Sorted by the columns set
 #' (or inferred for) the by argument if argument sort is set to TRUE.
 #' For variables/columns occurring in both x and y, attributes are taken from x.
@@ -90,19 +90,20 @@
 #' merged_df2<-merge(df, df2)
 #'
 #' @export
-merge.odf <- function(x, y,
-                      by = NULL,
-                      by.x = NULL,
-                      by.y = NULL,
-                      all = FALSE,
-                      all.x = all,
-                      all.y = all,
-                      sort = TRUE,
-                      suffixes = c(".x", ".y"),
-                      no.dups = TRUE,
-                      allow.cartesian = getOption("datatable.allow.cartesian"),
-                      incomparables = NULL,
-                      ...) {
+merge.odf_tbl <- function(x, y,
+                          by = NULL,
+                          by.x = NULL,
+                          by.y = NULL,
+                          all = FALSE,
+                          all.x = all,
+                          all.y = all,
+                          sort = TRUE,
+                          suffixes = c(".x", ".y"),
+                          no.dups = TRUE,
+                          allow.cartesian = getOption(
+                            "datatable.allow.cartesian"),
+                          incomparables = NULL,
+                          ...) {
 
   if (is.null(by.x) && is.null(by.y)) {
     data_out <- data.table::merge.data.table(x = as.data.table(x), y =  as.data.table(y),
@@ -137,7 +138,7 @@ merge.odf <- function(x, y,
   }
 
   data_out <- as_tibble(data_out)
-  class(data_out) <- c("odf", class(data_out))
+  class(data_out) <- c("odf_tbl", class(data_out))
 
   xname <- gsub("dataset merged from other datasets ", "",
                 attributes(x)["name"])

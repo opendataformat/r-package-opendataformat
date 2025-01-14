@@ -320,7 +320,7 @@ read_odf  <-  function(file,
   }
   
   #add odf class
-  attr(data, "class") <- c("odf", attr(data, "class"))
+  attr(data, "class") <- c("odf_tbl", attr(data, "class"))
   
   return(data)
 }

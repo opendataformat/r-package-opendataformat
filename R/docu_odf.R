@@ -90,7 +90,7 @@ docu_odf <- function(input,
     stop("variables has to be one of following inputs: 'yes', 'Yes', 'T', 'TRUE', and TRUE")
   }
 
-  if (("data.frame" %in% class(input) && !("odf" %in% class(input))) ||
+  if (("data.frame" %in% class(input) && !("odf_tbl" %in% class(input))) ||
       (!("lang" %in% names(attributes(input))) &&
        !("languages" %in% names(attributes(input))))) {
     stop("Input is not a dataframe or variable in the odf-format.")
