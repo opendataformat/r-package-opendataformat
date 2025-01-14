@@ -4,7 +4,14 @@
 \alias{read_odf}
 \title{Read data specified as Open Data Format.}
 \usage{
-read_odf(file, languages = "all", nrows = Inf, skip = 0, select = NULL)
+read_odf(
+  file,
+  languages = "all",
+  nrows = Inf,
+  skip = 0,
+  select = NULL,
+  na.strings = getOption("datatable.na.strings", "NA")
+)
 }
 \arguments{
 \item{file}{the name of the file which the data are to be read from.
@@ -21,6 +28,14 @@ values are ignored.}
 \item{select}{A vector of column names or numbers to keep, drop the rest. In all forms of
 select, order that the columns are specified determines the order of the
 columns in the result.}
+
+\item{na.strings}{A character vector of strings which are to be interpreted as NA values. By
+default, ",," for columns of all types, including type character is read as
+NA for consistency. ,"", is unambiguous and read as an empty string. To
+read ,NA, as NA, set na.strings="NA". To read ,, as blank string "", set
+na.strings=NULL. When they occur in the file, the strings in na.strings
+should not appear quoted since that is how the string literal ,"NA", is
+distinguished from NA, for example, when na.strings="NA".}
 }
 \value{
 R dataframe with attributes including dataset and variable

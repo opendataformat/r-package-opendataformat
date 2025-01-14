@@ -27,6 +27,16 @@
 #' 	A vector of column names or numbers to keep, drop the rest. In all forms of
 #' 	select, order that the columns are specified determines the order of the
 #' 	columns in the result.
+#' 	
+#' @param na.strings
+#' 	A character vector of strings which are to be interpreted as NA values. By
+#' 	default, ",," for columns of all types, including type character is read as
+#' 	NA for consistency. ,"", is unambiguous and read as an empty string. To
+#' 	read ,NA, as NA, set na.strings="NA". To read ,, as blank string "", set
+#' 	na.strings=NULL. When they occur in the file, the strings in na.strings
+#' 	should not appear quoted since that is how the string literal ,"NA", is
+#' 	distinguished from NA, for example, when na.strings="NA".
+#' 	
 #'
 #'
 #' @return R dataframe with attributes including dataset and variable
@@ -52,7 +62,8 @@ read_odf  <-  function(file,
                        languages = "all",
                        nrows = Inf,
                        skip = 0,
-                       select = NULL) {
+                       select = NULL,
+                       na.strings = getOption("datatable.na.strings", "NA")) {
   is_integer <- function(x) {
     x == round(x)
   }
@@ -84,13 +95,15 @@ read_odf  <-  function(file,
   if (skip  !=  0) {
     if (is.null(select)) {
       cnames <- names(data.table::fread(file.path(tempdir(), "data.csv"),
-                                        skip = 0, nrows = 1))
+                                        skip = 0, nrows = 1,
+                                        na.strings = na.strings))
       data  <-  data.table::fread(file.path(tempdir(), "data.csv"),
                                   skip = skip + 1, nrows = nrows,
-                                  col.names = cnames)
+                                  col.names = cnames, na.strings = na.strings)
     } else {
       cnames <- names(data.table::fread(file.path(tempdir(), "data.csv"),
-                                        skip = 0, nrows = 0))
+                                        skip = 0, nrows = 0,
+                                        na.strings = na.strings))
       if (class(select) %in% c("numeric", "integer")) {
         cindex <- select
       } else {
@@ -99,11 +112,13 @@ read_odf  <-  function(file,
       data  <-  data.table::fread(file.path(tempdir(), "data.csv"),
                                   select = cindex, header = FALSE,
                                   skip = skip + 1,
-                                  nrows = nrows, col.names = cnames[cindex])
+                                  nrows = nrows, col.names = cnames[cindex],
+                                  na.strings = na.strings)
     }
   } else {
     data  <-  data.table::fread(file.path(tempdir(), "data.csv"),
-                                select = select, skip = skip, nrows = nrows)
+                                select = select, skip = skip, nrows = nrows,
+                                na.strings = na.strings)
   }
   data <- as_tibble(data)
   #attr(data, "spec") <- NULL

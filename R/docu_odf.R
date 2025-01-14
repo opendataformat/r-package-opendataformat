@@ -108,8 +108,10 @@ docu_odf <- function(input,
   input_lang <- unlist(attr(input, "lang"))
 
   #Check if languages argument is valid
-  if (!(languages %in% c(input_languages, "current", "default", "all")))
+  if (!(languages %in% c(input_languages, "current", "default", "all"))){
     stop("Your language selection is not valid.")
+  }
+    
 
 
   #if languages is set to default, but no default language exists, the current
