@@ -34,6 +34,12 @@ and getmetadata_odf
 
 Retrieve specific metadata like variable labels, or value labels.
 }
+
+\subsection{as_odf_tbl()}{
+
+Convert data frame (data.frame object or any subclass) to an ODF
+tibble (odf_tbl class object).
+}
 }
 \seealso{
 More information about the Open Data Format specification and
