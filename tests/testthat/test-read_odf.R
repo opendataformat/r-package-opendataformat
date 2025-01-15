@@ -168,7 +168,7 @@ test_that("read_odf_de", {
   expect_equal(attributes(df)$description_de,
                "Die Daten wurden im Rahmen der Studie SOEP-Core mittels des Fragebogens „Leben in Deutschland – Befragung 2010 zur sozialen Lage - Personenfragebogen für alle“ erhoben. Dieser Fragebogen richtet sich an die einzelnen Personen im Haushalt. Eine Ansicht des Erhebungsinstrumentes finden Sie hier: https://www.diw.de/documents/dokumentenarchiv/17/diw_01.c.369781.de/soepfrabo_personen_2010.pdf")
   expect_equal(attributes(df)$url, "https://paneldata.org/soep-core/data/bap")
-  expect_equal(attributes(df)$class,  c("odf", "tbl_df", "tbl", "data.frame"))
+  expect_equal(attributes(df)$class,  c("odf_tbl", "tbl_df", "tbl", "data.frame"))
   # - variables content
   expect_equal(attributes(df$bap96)$name, "bap96")
   expect_equal(attributes(df$bap96)$label, "Körpergröße")
@@ -240,7 +240,7 @@ test_that("read_odf_specific_rows", {
                "Die Daten wurden im Rahmen der Studie SOEP-Core mittels des Fragebogens „Leben in Deutschland – Befragung 2010 zur sozialen Lage - Personenfragebogen für alle“ erhoben. Dieser Fragebogen richtet sich an die einzelnen Personen im Haushalt. Eine Ansicht des Erhebungsinstrumentes finden Sie hier: https://www.diw.de/documents/dokumentenarchiv/17/diw_01.c.369781.de/soepfrabo_personen_2010.pdf")
   expect_equal(attributes(df)$url,
                "https://paneldata.org/soep-core/data/bap")
-  expect_equal(attributes(df)$class,  c("odf", "tbl_df", "tbl", "data.frame"))
+  expect_equal(attributes(df)$class,  c("odf_tbl", "tbl_df", "tbl", "data.frame"))
   # - variables content
   expect_equal(attributes(df$bap96)$name, "bap96")
   expect_equal(attributes(df$bap96)$label, "Height")
@@ -319,7 +319,7 @@ test_that("read_odf_specific_rows2", {
                "Die Daten wurden im Rahmen der Studie SOEP-Core mittels des Fragebogens „Leben in Deutschland – Befragung 2010 zur sozialen Lage - Personenfragebogen für alle“ erhoben. Dieser Fragebogen richtet sich an die einzelnen Personen im Haushalt. Eine Ansicht des Erhebungsinstrumentes finden Sie hier: https://www.diw.de/documents/dokumentenarchiv/17/diw_01.c.369781.de/soepfrabo_personen_2010.pdf")
   expect_equal(attributes(df)$url,
                "https://paneldata.org/soep-core/data/bap")
-  expect_equal(attributes(df)$class,  c("odf", "tbl_df", "tbl", "data.frame"))
+  expect_equal(attributes(df)$class,  c("odf_tbl", "tbl_df", "tbl", "data.frame"))
   # - variables content
   expect_equal(attributes(df$bap96)$name, "bap96")
   expect_equal(attributes(df$bap96)$label, "Height")
@@ -398,7 +398,7 @@ test_that("read_odf_specific_variables", {
                "Die Daten wurden im Rahmen der Studie SOEP-Core mittels des Fragebogens „Leben in Deutschland – Befragung 2010 zur sozialen Lage - Personenfragebogen für alle“ erhoben. Dieser Fragebogen richtet sich an die einzelnen Personen im Haushalt. Eine Ansicht des Erhebungsinstrumentes finden Sie hier: https://www.diw.de/documents/dokumentenarchiv/17/diw_01.c.369781.de/soepfrabo_personen_2010.pdf")
   expect_equal(attributes(df)$url,
                "https://paneldata.org/soep-core/data/bap")
-  expect_equal(attributes(df)$class,  c("odf", "tbl_df", "tbl", "data.frame"))
+  expect_equal(attributes(df)$class,  c("odf_tbl", "tbl_df", "tbl", "data.frame"))
   # - variables content
 })
 
@@ -461,7 +461,7 @@ test_that("read_odf_specific_variables", {
                "Die Daten wurden im Rahmen der Studie SOEP-Core mittels des Fragebogens „Leben in Deutschland – Befragung 2010 zur sozialen Lage - Personenfragebogen für alle“ erhoben. Dieser Fragebogen richtet sich an die einzelnen Personen im Haushalt. Eine Ansicht des Erhebungsinstrumentes finden Sie hier: https://www.diw.de/documents/dokumentenarchiv/17/diw_01.c.369781.de/soepfrabo_personen_2010.pdf")
   expect_equal(attributes(df)$url,
                "https://paneldata.org/soep-core/data/bap")
-  expect_equal(attributes(df)$class,  c("odf", "tbl_df", "tbl", "data.frame"))
+  expect_equal(attributes(df)$class,  c("odf_tbl", "tbl_df", "tbl", "data.frame"))
   # - variables content
   expect_equal(attributes(df$bap96)$name, "bap96")
   expect_equal(attributes(df$bap96)$label, "Height")
@@ -543,7 +543,7 @@ test_that("read_odf_specific_rows_and_cols", {
                "Die Daten wurden im Rahmen der Studie SOEP-Core mittels des Fragebogens „Leben in Deutschland – Befragung 2010 zur sozialen Lage - Personenfragebogen für alle“ erhoben. Dieser Fragebogen richtet sich an die einzelnen Personen im Haushalt. Eine Ansicht des Erhebungsinstrumentes finden Sie hier: https://www.diw.de/documents/dokumentenarchiv/17/diw_01.c.369781.de/soepfrabo_personen_2010.pdf")
   expect_equal(attributes(df)$url,
                "https://paneldata.org/soep-core/data/bap")
-  expect_equal(attributes(df)$class,  c("odf", "tbl_df", "tbl", "data.frame"))
+  expect_equal(attributes(df)$class,  c("odf_tbl", "tbl_df", "tbl", "data.frame"))
   # - variables content
   expect_equal(attributes(df$bap9201)$name, "bap9201")
   expect_equal(attributes(df$bap9201)$label,
@@ -630,7 +630,7 @@ test_that("read_odf_specific_rows_and_cols2", {
                "Die Daten wurden im Rahmen der Studie SOEP-Core mittels des Fragebogens „Leben in Deutschland – Befragung 2010 zur sozialen Lage - Personenfragebogen für alle“ erhoben. Dieser Fragebogen richtet sich an die einzelnen Personen im Haushalt. Eine Ansicht des Erhebungsinstrumentes finden Sie hier: https://www.diw.de/documents/dokumentenarchiv/17/diw_01.c.369781.de/soepfrabo_personen_2010.pdf")
   expect_equal(attributes(df)$url,
                "https://paneldata.org/soep-core/data/bap")
-  expect_equal(attributes(df)$class,  c("odf", "tbl_df", "tbl", "data.frame"))
+  expect_equal(attributes(df)$class,  c("odf_tbl", "tbl_df", "tbl", "data.frame"))
   # - variables content
   expect_equal(attributes(df$bap9201)$name, "bap9201")
   expect_equal(attributes(df$bap9201)$label,
@@ -709,7 +709,7 @@ test_that("read_odf_specific_language_rows_and_cols", {
   expect_equal(attributes(df)$description_de,
                "Die Daten wurden im Rahmen der Studie SOEP-Core mittels des Fragebogens „Leben in Deutschland – Befragung 2010 zur sozialen Lage - Personenfragebogen für alle“ erhoben. Dieser Fragebogen richtet sich an die einzelnen Personen im Haushalt. Eine Ansicht des Erhebungsinstrumentes finden Sie hier: https://www.diw.de/documents/dokumentenarchiv/17/diw_01.c.369781.de/soepfrabo_personen_2010.pdf")
   expect_equal(attributes(df)$url, "https://paneldata.org/soep-core/data/bap")
-  expect_equal(attributes(df)$class,  c("odf", "tbl_df", "tbl", "data.frame"))
+  expect_equal(attributes(df)$class,  c("odf_tbl", "tbl_df", "tbl", "data.frame"))
   # - variables content
   expect_equal(attributes(df$bap9201)$name, "bap9201")
   expect_equal(attributes(df$bap9201)$label,
