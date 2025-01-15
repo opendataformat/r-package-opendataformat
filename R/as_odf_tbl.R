@@ -3,11 +3,10 @@
 #' @description Converts a data.frame (or any subclass) object to an odf_tbl 
 #' (Open Data Format tibble).
 #'
-#' @param dataframe
+#' @param x
 #' a data.frame that should be converted to an odf_tbl.
 #' (\code{languages = "all"}).
 #'
-#' odf-format.
 #'
 #' @param active_language
 #' Select the language that should be the active metadata language. 
@@ -25,7 +24,11 @@
 #' @export
 #' @examples
 #' # Create a dataframe with 4 variables id, name, age, and diagnosis
-#' exampledata <- data.frame(id = 1:5, name = c("Klaus", "Anna", "Rebecca", "Kevin", "Janina"), age = c(55, 40, 19, 25, 60), diagnosis = c(1,3,3,2,1))
+#' exampledata <- data.frame(id = 1:5,
+#'                           name = c("Klaus", "Anna", "Rebecca",
+#'                                    "Kevin", "Janina"),
+#'                           age = c(55, 40, 19, 25, 60), 
+#'                           diagnosis = c(1,3,3,2,1))
 #' # Add metadata for dataset
 #' attr(exampledata, "name") <- "patientdata"
 #' attr(exampledata, "label_en") <- "Patient Data"
@@ -43,7 +46,7 @@
 #' names(valuelabels_diagnosis) <- c("Covid", "Influenza", "Common cold", "Tonsillitis")
 #' attr(exampledata$diagnosis, "labels_en") <- valuelabels_diagnosis
 #' # use odf_tibble to transform dataframe to odf_tibble
-#' example_odf  <-  as_odf_tibble(exampledata)
+#' example_odf  <-  as_odf_tbl(exampledata)
 #' 
 #' # Display metadata using docu_odf
 #' docu_odf(example_odf, style = "print")

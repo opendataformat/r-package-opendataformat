@@ -51,12 +51,12 @@ test_that("docu_odf", {
   expect_true(file.exists(paste0(tempdir(), "/docu.html")))
   unlink(paste0(tempdir(), "/*"))
   #' ------ error message: empty language selection
-  expect_error(
+  suppressWarnings(expect_error(
     docu_odf(
       input = df$test,
       style = "html"),
     "Input is not a dataframe or variable in the odf-format."
-  )
+  ))
   unlink(paste0(tempdir(), "/*"))
   #' ------ error message: invalid language selection
   expect_error(

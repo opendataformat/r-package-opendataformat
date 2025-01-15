@@ -217,6 +217,9 @@ docu_odf <- function(input,
   }
   #get url
   url <- attr(input, "url")
+  if (is.null(url)){
+    url <- ""
+  }
   if (url != "" && exists("style_hyperlink")) {
     interactive_url <- cli::style_hyperlink(
       text = url,
