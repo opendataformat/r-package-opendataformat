@@ -421,6 +421,46 @@ write_odf(
 ```
 
 
+## Create ODF tibbles and convert data frames to odf_tbl: `as_odf_tbl()`
+
+To convert a data frame to an ODF tibble in R, the `opendataformat`package  provides the `as_odf_tbl() function`. It transforms a dataframe (or any  subclass) object to an Open Data Format tibble (an object of the odf_tbl class). The metadata in the data frame has to be stored in the attributes according to  the odf_tbl framework: 
+
+Regarding the dataset metadata, the dataset name is stored in the `name`-attribute, a URL can be stored in the `url`-attribute. The multilingual labels and descriptions are stored in the `label_tag` and `description_tag`-attributes with the respective language tag. The dataset label in English language is stored in the  `label_en`-attribute and the English description is stored in the `description_en`-attribute.
+
+Regarding the variable metadata, the variable name is stored in the `name`-attribute, a URL can be stored in the `url`-attribute of each column, and the variable type (`numeric` or `character`) can be stored in the `type`-attribute. The multilingual labels, descriptions and value labels are stored in the `label_tag`, `description_tag`, and `labels_tag`-attributes with the respective language tag. The dataset label in English language is stored in the `label_en`-attribute and the English description is stored in the `description_en`-attribute. The value labels in English (a numeric vector with the labelled values and the value labels in the namespace) are stored in the `labels_en`-attribute of the column.
+
+```{r as_odf_tbl, comment = "", eval = FALSE}
+#Create a data frame with four variables ind 5 rows
+exampledata <- data.frame(id = 1:5,
+                          name = c("Klaus", "Anna", "Rebecca",
+                                   "Kevin", "Janina"),
+                          age = c(55, 40, 19, 25, 60),
+                          diagnosis = c(1,3,3,2,1))
+# Add metadata for dataset according to ODF tibble framework.
+attr(exampledata, "name") <- "patientdata"
+attr(exampledata, "label_en") <- "Patient Data"
+attr(exampledata, "description_en") <- "Patient database of the practice Dr. Sommer"
+attr(exampledata, "url") <- "www.example.url.en"
+
+# Add metadata for diagnosis variable with label, description and value labels.
+attr(exampledata$id, "name") <- "id"
+attr(exampledata$id, "label_en") <- "Patiend ID"
+attr(exampledata$id, "description_en") <- "Practice Patiend ID"
+attr(exampledata$diagnosis, "name") <- "diagnose"
+attr(exampledata$diagnosis, "label_en") <- "Diagnosis"
+attr(exampledata$diagnosis, "description_en") <- "Diagnosis patient last visit"
+valuelabels_diagnosis <- 1:4
+names(valuelabels_diagnosis) <- c("Covid", "Influenza", "Common cold", "Tonsillitis")
+attr(exampledata$diagnosis, "labels_en") <- valuelabels_diagnosis
+# use as_odf_bl to transform dataframe to an ODF tibble ('odf_tbl'-class object)
+example_odf  <-  as_odf_tbl(exampledata)
+
+# Display metadata of diagnosis Variable
+docu_odf(example_odf$diagnosis, style = "print")
+```
+
+
+
 # Let's Analyse and Make Use of the Metadata
 
 Now let's see how we can use the metadata to better understand the data and make more informative plots.

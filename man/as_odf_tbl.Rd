@@ -47,7 +47,7 @@ attr(exampledata$diagnosis, "description_en") <- "Diagnosis patient last visit"
 valuelabels_diagnosis <- 1:4
 names(valuelabels_diagnosis) <- c("Covid", "Influenza", "Common cold", "Tonsillitis")
 attr(exampledata$diagnosis, "labels_en") <- valuelabels_diagnosis
-# use odf_tibble to transform dataframe to odf_tibble
+# use as_odf_tbl() to transform dataframe to odf_tibble
 example_odf  <-  as_odf_tbl(exampledata)
 
 # Display metadata using docu_odf
