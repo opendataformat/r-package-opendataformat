@@ -164,28 +164,28 @@ write_odf  <-  function(x,
     quote = TRUE,  na = "", encoding = "UTF-8")
 
   # Create xml root node with codeBook attributes
-  metadata <- xml_new_root(.value = "codeBook")
+  metadata <- xml2::xml_new_root(.value = "codeBook")
   
   # Create codebook attributes
-  xml_attr(metadata, attr = "xmlns:xsi") <- "http://www.w3.org/2001/XMLSchema-instance"
-  xml_attr(metadata, attr = "xmlns") <- "ddi:codebook:2_5"
-  xml_attr(metadata, attr = "xsi:schemaLocation") <- "ddi:codebook:2_5 http://www.ddialliance.org/Specification/DDI-Codebook/2.5/XMLSchema/codebook.xsd"
-  xml_attr(metadata, attr = "version") <- "2.5"
+  xml2::xml_attr(metadata, attr = "xmlns:xsi") <- "http://www.w3.org/2001/XMLSchema-instance"
+  xml2::xml_attr(metadata, attr = "xmlns") <- "ddi:codebook:2_5"
+  xml2::xml_attr(metadata, attr = "xsi:schemaLocation") <- "ddi:codebook:2_5 http://www.ddialliance.org/Specification/DDI-Codebook/2.5/XMLSchema/codebook.xsd"
+  xml2::xml_attr(metadata, attr = "version") <- "2.5"
   
   # Create mandatory study description metadata
-  stdyDscr <- xml_add_child(metadata, "stdyDscr")
-  citation <- xml_add_child(stdyDscr, "citation")
-  titlStmt <- xml_add_child(citation, "titlStmt")
-  xml_add_child(titlStmt, "titl", attr(x, "study"))
+  stdyDscr <- xml2::xml_add_child(metadata, "stdyDscr")
+  citation <- xml2::xml_add_child(stdyDscr, "citation")
+  titlStmt <- xml2::xml_add_child(citation, "titlStmt")
+  xml2::xml_add_child(titlStmt, "titl", attr(x, "study"))
   
   # Create dataset/file metadata
-  fileDscr <- xml_add_child(metadata, "fileDscr")
-  fileTxt <- xml_add_child(fileDscr, "fileTxt")
-  xml_add_child(fileTxt, "fileName", attr(x, "name"))
+  fileDscr <- xml2::xml_add_child(metadata, "fileDscr")
+  fileTxt <- xml2::xml_add_child(fileDscr, "fileTxt")
+  xml2::xml_add_child(fileTxt, "fileName", attr(x, "name"))
   
   # Add dataset labels
-  fileCitation <- xml_add_child(fileTxt, "fileCitation")
-  fileTitlStmt <- xml_add_child(fileCitation, "titlStmt")
+  fileCitation <- xml2::xml_add_child(fileTxt, "fileCitation")
+  fileTitlStmt <- xml2::xml_add_child(fileCitation, "titlStmt")
   
   if (length(names(attributes(x))[grepl("label", names(attributes(x)))]) > 0) {
     first_lang <- FALSE
@@ -194,16 +194,16 @@ write_odf  <-  function(x,
       if (languages[1] == "all" || lang %in% languages) {
         if (first_lang == FALSE) {
           if (lang == "NA") {
-            xml_add_child(fileTitlStmt, "titl", attr(x, labl))
+            xml2::xml_add_child(fileTitlStmt, "titl", attr(x, labl))
           } else {
-            xml_add_child(fileTitlStmt, "titl", attr(x, labl), "xml:lang" = lang)
+            xml2::xml_add_child(fileTitlStmt, "titl", attr(x, labl), "xml:lang" = lang)
           }
           first_lang <- TRUE
         } else {
           if (lang == "NA") {
-            xml_add_child(fileTitlStmt, "parTitl", attr(x, labl))
+            xml2::xml_add_child(fileTitlStmt, "parTitl", attr(x, labl))
           } else {
-            xml_add_child(fileTitlStmt, "parTitl", attr(x, labl), "xml:lang" = lang)
+            xml2::xml_add_child(fileTitlStmt, "parTitl", attr(x, labl), "xml:lang" = lang)
           }
         }
       }
@@ -217,9 +217,9 @@ write_odf  <-  function(x,
       lang <- strsplit(descr, "_")[[1]][2]
       if (languages[1] == "all" || lang %in% languages) {
         if (lang == "NA") {
-          xml_add_child(fileTxt, "fileCont", attr(x, descr))
+          xml2::xml_add_child(fileTxt, "fileCont", attr(x, descr))
         } else {
-          xml_add_child(fileTxt, "fileCont", attr(x, descr), "xml:lang" = lang)
+          xml2::xml_add_child(fileTxt, "fileCont", attr(x, descr), "xml:lang" = lang)
         }
       }
     }
@@ -228,15 +228,15 @@ write_odf  <-  function(x,
   # Create dataset URL
   url <- attr(x, "url")
   if (is.null(url)) url <- ""
-  notes <- xml_add_child(fileDscr, "notes")
-  xml_add_child(notes, "ExtLink", "URI" = url)
+  notes <- xml2::xml_add_child(fileDscr, "notes")
+  xml2::xml_add_child(notes, "ExtLink", "URI" = url)
   
   # Add data (variable) metadata
-  dataDscr <- xml_add_child(metadata, "dataDscr")
+  dataDscr <- xml2::xml_add_child(metadata, "dataDscr")
   
   # Add metadata for each variable
   for (var in names(x)) {
-    varNode <- xml_add_child(dataDscr, "var", "name" = var)
+    varNode <- xml2::xml_add_child(dataDscr, "var", "name" = var)
     
     # Add variable labels
     if (length(names(attributes(x[[var]]))[grepl("label", names(attributes(x[[var]])))]) > 0) {
@@ -245,9 +245,9 @@ write_odf  <-  function(x,
           lang <- strsplit(labl, "_")[[1]][2]
           if (languages[1] == "all" || lang %in% languages) {
             if (lang == "NA") {
-              xml_add_child(varNode, "labl", attr(x[[var]], labl))
+              xml2::xml_add_child(varNode, "labl", attr(x[[var]], labl))
             } else {
-              xml_add_child(varNode, "labl", attr(x[[var]], labl), "xml:lang" = lang)
+              xml2::xml_add_child(varNode, "labl", attr(x[[var]], labl), "xml:lang" = lang)
             }
           }
         }
@@ -261,9 +261,9 @@ write_odf  <-  function(x,
           lang <- strsplit(descr, "_")[[1]][2]
           if (languages[1] == "all" || lang %in% languages) {
             if (lang == "NA") {
-              xml_add_child(varNode, "txt", attr(x[[var]], descr))
+              xml2::xml_add_child(varNode, "txt", attr(x[[var]], descr))
             } else {
-              xml_add_child(varNode, "txt", attr(x[[var]], descr), "xml:lang" = lang)
+              xml2::xml_add_child(varNode, "txt", attr(x[[var]], descr), "xml:lang" = lang)
             }
           }
         }
@@ -276,8 +276,8 @@ write_odf  <-  function(x,
       values <- unique(unlist(lapply(labels, function(lab) attr(x[[var]], lab))))
       
       for (val in values) {
-        catgryNode <- xml_add_child(varNode, "catgry")
-        xml_add_child(catgryNode, "catValu", val)
+        catgryNode <- xml2::xml_add_child(varNode, "catgry")
+        xml2::xml_add_child(catgryNode, "catValu", val)
         
         for (labl in labels) {
           lang <- strsplit(labl, "_")[[1]][2]
@@ -285,9 +285,9 @@ write_odf  <-  function(x,
             labl_new <- names(attr(x[[var]], labl))[attr(x[[var]], labl) == val]
             if (!is.na(labl_new)) {
               if (lang == "NA") {
-                xml_add_child(catgryNode, "labl", labl_new)
+                xml2::xml_add_child(catgryNode, "labl", labl_new)
               } else {
-                xml_add_child(catgryNode, "labl", labl_new, "xml:lang" = lang)
+                xml2::xml_add_child(catgryNode, "labl", labl_new, "xml:lang" = lang)
               }
             }
           }
@@ -298,18 +298,21 @@ write_odf  <-  function(x,
     # Add variable type
     type <- attr(x[[var]], "type")
     if (is.null(type)) type <- class(x[[var]])
-    xml_add_child(varNode, "varFormat", "type" = type)
+    xml2::xml_add_child(varNode, "varFormat", "type" = type)
     
     # Add URL
     url <- attr(x[[var]], "url")
     if (is.null(url)) url <- ""
-    notesVar <- xml_add_child(varNode, "notes")
-    xml_add_child(notesVar, "ExtLink", "URI" = url)
+    notesVar <- xml2::xml_add_child(varNode, "notes")
+    xml2::xml_add_child(notesVar, "ExtLink", "URI" = url)
   }
   
-  
-  write_xml(metadata, paste0(tempdir(), "/", folder_name, "/metadata.xml"))
-  
+  current_scipen<-getOption("scipen")
+  #Tell R to save large numbers in nonscientific notation (not as e.g. 5.3e-10)
+  options(scipen = 999)
+  xml2::write_xml(metadata, paste0(tempdir(), "/", folder_name, "/metadata.xml"))
+  # Reset the number
+  options(scipen = current_scipen)
 
   #Zip directory
   old_wd <- getwd()

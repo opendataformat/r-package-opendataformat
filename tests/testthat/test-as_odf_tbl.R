@@ -187,6 +187,29 @@ test_that("as_odf_tbl", {
   expect_equal(attributes(df_out$bap96)$url,
                "https://paneldata.org/soep-core/data/bap/bap96")
   expect_equal(unname(attributes(df_out$bap96)$labels_NA), c(-2, -1))
+  
+  
+  library(ISLR)
+  data(Auto)
+  # make xml and data
+  df_out<-as_odf_tbl(x = Auto)
+  expect_equal(dim(df_out), c(392, 9))
+  expect_equal(colnames(df_out), c("mpg", "cylinders", "displacement",
+                                   "horsepower", "weight", "acceleration",
+                                   "year", "origin", "name"))
+  expect_equal(names(attributes(df_out)), c("row.names", "names",
+                                            "languages", "lang", 
+                                            "class"))
+  expect_equal(attributes(df_out)[["name"]],
+               NULL)
+  expect_equal(attributes(df_out)[["languages"]], c("NA"))
+  expect_equal(attributes(df_out)[["lang"]], "NA")
+  expect_equal(attributes(df_out)[["label"]], NULL)
+
+  expect_equal(attributes(df_out$mpg)[["label"]], NULL)
+  expect_equal(attributes(df_out$mpg)[["name"]], "mpg")
+  expect_equal(attributes(df_out$mpg)[["languages"]], "NA")
+  expect_equal(attributes(df_out$mpg)[["lang"]], "NA")
 })
 
 
