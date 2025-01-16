@@ -159,9 +159,19 @@ write_odf  <-  function(x,
 
   dir.create(paste0(tempdir(), "/", folder_name), showWarnings = FALSE)
 
-  if (export_data  == TRUE) data.table::fwrite(
-    x = x, file = paste0(tempdir(), "/", folder_name, "/data.csv"),
-    quote = TRUE,  na = "", encoding = "UTF-8")
+  if (export_data  == TRUE) {
+    
+    # Tell R to save large numbers in non-scientific notation 
+    # (not as e.g. 5.3e-10)
+    current_scipen<-getOption("scipen")
+    options(scipen = 999)
+    data.table::fwrite(
+      x = x, 
+      file = paste0(tempdir(), "/", folder_name, "/data.csv"),
+      na = "", encoding = "UTF-8")
+    # Reset setting
+    options(scipen = current_scipen)
+  }
 
   # Create xml root node with codeBook attributes
   metadata <- xml2::xml_new_root(.value = "codeBook")
@@ -307,12 +317,8 @@ write_odf  <-  function(x,
     xml2::xml_add_child(notesVar, "ExtLink", "URI" = url)
   }
   
-  current_scipen<-getOption("scipen")
-  #Tell R to save large numbers in nonscientific notation (not as e.g. 5.3e-10)
-  options(scipen = 999)
+
   xml2::write_xml(metadata, paste0(tempdir(), "/", folder_name, "/metadata.xml"))
-  # Reset the number
-  options(scipen = current_scipen)
 
   #Zip directory
   old_wd <- getwd()
