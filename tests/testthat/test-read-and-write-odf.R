@@ -60,6 +60,27 @@ test_that("read_write_odf_with_default_language", {
   unlink(paste0(tempdir(), "/*"), recursive = TRUE)
 })
 
+#' write_odf and read_odf: with missings
+test_that("read_write_odf_with_missings", {
+  # - get data
+  df <- read_odf(
+    file = "testdata/data_with_missings.zip",
+    languages = "all"
+  )
+  # make xml and data
+  write_odf(
+    x = df,
+    file = paste0(tempdir(), "/MY_XML.zip")
+  )
+  
+  df_copy <- read_odf(file = paste0(tempdir(), "/MY_XML.zip"))
+  # -- test if objects are equal
+  expect_true(all.equal(df, df_copy))
+  
+  unlink(paste0(tempdir(), "/*"), recursive = TRUE)
+})
+
+
 #' write_odf and read_odf: with extreme values: large numbers, small numbers 
 #' and long strings
 test_that("read_write_odf_with_extreme values", {
