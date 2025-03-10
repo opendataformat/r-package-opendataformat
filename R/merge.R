@@ -71,7 +71,7 @@
 #' @export
 #' @examples
 #' # get path to example data from the opendataformat package (data.zip)
-#' path  <-  system.file("extdata", "data.zip", package = "opendataformat")
+#' path  <-  system.file("extdata", "data.odf.zip", package = "opendataformat")
 #'
 #' # read four columns of example data specified as ODF from ZIP file
 #' df  <-  read_odf(file = path, select = 1:4)

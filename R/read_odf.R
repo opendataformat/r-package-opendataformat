@@ -94,9 +94,9 @@ read_odf  <-  function(file,
     data_file = "data.csv"
     metadata_file = "metadata.xml"
   }
-  vers_major = strsplit(odf_vers, "\\.")[1]
-  vers_minor = strsplit(odf_vers, "\\.")[2]
-  vers_patch = strsplit(odf_vers, "\\.")[3]
+  version_major <- unlist(strsplit(odf_vers, "\\."))[1]
+  version_minor <- unlist(strsplit(odf_vers, "\\."))[2]
+  version_path <- unlist(strsplit(odf_vers, "\\."))[3]
   
   # Step 2: Check content of zip-file
   if (!(data_file %in% zip_filelist) | !(metadata_file %in% zip_filelist)){

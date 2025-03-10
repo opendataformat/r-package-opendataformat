@@ -164,11 +164,14 @@ write_odf  <-  function(x,
 
   dir.create(paste0(tempdir(), "/", folder_name), showWarnings = FALSE)
   
+  version_major <- unlist(strsplit(odf_version, "\\."))[1]
+  version_minor <- unlist(strsplit(odf_version, "\\."))[2]
+  version_path <- unlist(strsplit(odf_version, "\\."))[3]
   #create version file
-  if (odf_version == "1.1.0"){
+  if (version_major > 1 | version_major == 1 & version_minor >= 1){
     json_data <- list(
       fileType = "opendataformat",
-      version = "1.0.0",
+      version = odf_version,
       files = list(
         data = "data.csv",
         metadata = "metadata.xml"
