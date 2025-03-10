@@ -10,7 +10,8 @@ write_odf(
   languages = "all",
   export_data = TRUE,
   verbose = TRUE,
-  compression_level = 5
+  compression_level = 5,
+  odf_version = "1.1.0"
 )
 }
 \arguments{
@@ -33,15 +34,17 @@ exported
 }}
 
 \item{export_data}{Choose, if you want to export the file that holds the
-data (data.csv).Default is TRUE.
-\itemize{
-\item By default the data and metadata are exported (\code{export_data = TRUE}).
-\item To export only metadata and no data, select \code{export_data = FALSE}
-}}
+data (data.csv).Default is TRUE.}
 
 \item{verbose}{Display more messages.}
 
 \item{compression_level}{A number between 1 and 9. 9 compresses best, but it also takes the longest.}
+
+\item{odf_version}{The ODF version of the output file. Default is the actual/most recent version.
+\itemize{
+\item By default the data and metadata are exported (\code{export_data = TRUE}).
+\item To export only metadata and no data, select \code{export_data = FALSE}
+}}
 }
 \value{
 ZIP file and unzipped directory containing the data as CSV file and

@@ -46,7 +46,7 @@ Import data from the Open Data Format to an R data frame.
 }
 \examples{
 # get path to example data from the opendataformat package (data.zip)
-path  <-  system.file("extdata", "data.zip", package = "opendataformat")
+path  <-  system.file("extdata", "data.odf.zip", package = "opendataformat")
 path
 
 # read example data specified as Open Data Format from ZIP file

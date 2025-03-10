@@ -28,11 +28,12 @@
 #' @param compression_level
 #' A number between 1 and 9. 9 compresses best, but it also takes the longest.
 #'
-#'
-#'
 #' @param export_data
 #' Choose, if you want to export the file that holds the
 #' data (data.csv).Default is TRUE.
+#' 
+#' @param odf_version
+#' The ODF version of the output file. Default is the actual/most recent version.
 #'
 #' * By default the data and metadata are exported (\code{export_data = TRUE}).
 #' * To export only metadata and no data, select \code{export_data = FALSE}
@@ -65,7 +66,8 @@ write_odf  <-  function(x,
                         languages = "all",
                         export_data = TRUE,
                         verbose = TRUE,
-                        compression_level = 5) {
+                        compression_level = 5,
+                        odf_version = "1.1.0") {
   if (!("data.frame" %in% class(x))){
     stop("x must be a tibble or data.frame")
   }
@@ -125,7 +127,10 @@ write_odf  <-  function(x,
   if (!file.exists(paste0(unlist(strsplit(file, "/"))[1:(length(unlist(strsplit(file, "/")))-1)], collapse = "/"))) {
     stop("Error: Invalid file path. Output directory does not exist.")
   }
-  if (!grepl(".zip", file)) {
+  if (!grepl(".zip", file) & !grepl(".odf", file)) {
+    file <- paste0(file, ".odf.zip")
+  }
+  if (!grepl(".zip", file) & grepl(".odf", file)) {
     file <- paste0(file, ".zip")
   }
 
@@ -158,7 +163,24 @@ write_odf  <-  function(x,
   }
 
   dir.create(paste0(tempdir(), "/", folder_name), showWarnings = FALSE)
-
+  
+  #create version file
+  if (odf_version == "1.1.0"){
+    json_data <- list(
+      fileType = "opendataformat",
+      version = "1.0.0",
+      files = list(
+        data = "data.csv",
+        metadata = "metadata.xml"
+      )
+    )
+    json_string <- jsonlite::toJSON(json_data, pretty = TRUE, auto_unbox = TRUE)
+    writeLines(json_string, paste0(tempdir(), "/", folder_name, "/odf-version.json"))
+    vers_file = "odf-version.json"
+  } else {
+    vers_file = NULL
+  }
+  
   if (export_data  == TRUE) {
     
     # Tell R to save large numbers in non-scientific notation 
@@ -325,7 +347,7 @@ write_odf  <-  function(x,
   setwd(paste0(tempdir(), "/", folder_name))
   on.exit(setwd(old_wd))
   if (export_data == TRUE) {
-    zip::zip(zipfile = file, files = c("data.csv", "metadata.xml"),
+    zip::zip(zipfile = file, files = c("data.csv", "metadata.xml", vers_file),
              compression_level = compression_level)
   } else {
     zip::zip(zipfile = file, files = c("metadata.xml"),

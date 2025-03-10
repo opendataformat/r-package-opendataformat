@@ -133,7 +133,7 @@ test_that("as_odf_tbl", {
   
   #With default language
   df <- read_odf(
-    file = "testdata/data_with_default.zip",
+    file = "testdata/data_with_default.odf.zip",
     languages = "all"
   )
   
