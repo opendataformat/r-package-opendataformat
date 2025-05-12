@@ -2,7 +2,7 @@ Package: opendataformat
 Title: Reading and Writing Open Data Format Files
 Version: 2.2.1
 Authors@R: c(person("Tom", "Hartl", role = c("aut","cre"),
-    email = "thartl@diw.de", comment = c(ORCID = "0009-0006-4226-9835")),
+    email = "opendataformat-team@diw.de", comment = c(ORCID = "0009-0006-4226-9835")),
     person("Claudia","Saalbach", role = "ctb", 
     email = "csaalbach@diw.de"))
 Maintainer: Tom Hartl <opendataformat-team@diw.de>
