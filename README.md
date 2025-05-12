@@ -20,7 +20,7 @@ Learn more about the Open Data Format in R in `vignette("opendataformat")`.
 
 # opendataformat package from Zenodo:
 install.packages(
-  "https://zenodo.org/records/13683314/files/opendataformat_1.2.1.tar.gz",
+  "https://zenodo.org/records/15012461/files/opendataformat_2.2.0.tar.gz?download=1",
   repos = NULL, method = "libcurl")
 
 
@@ -38,17 +38,19 @@ devtools::install_git(
 library("opendataformat")
 ```
 
-The opendataformat package consists of five main functions:
+The opendataformat package consists of six main functions:
 
 - `read_odf()` to read an Open Data Format file in R. This function takes an input parameter, which is the path to the Open Data Format ZIP file, and points to an R object for further processing.
+
+- `write_odf()` to write the R Dataframe to an Open Data Format ZIP file. By specifying the dataframe input and providing the output directory path the function will generate a ZIP file containing the dataset as "data.csv" and "metadata.xml".
 
 - `docu_odf()` to explore the dataset information. You can set the whole dataset `df` or an selected variable `df$var` as input and you will get an HTML page, displayed either in the RStudio viewer or the Web Browser, with metadata on the respective data level. 
 
 - `setlanguage_odf()` changes the "active" language of a dataset. The metadata for this language is by default displayed with `docu_odf()`.
 
-- `write_odf()` to write the R Dataframe to an Open Data Format ZIP file. By specifying the dataframe input and providing the output directory path the function will generate a ZIP file containing the dataset as "data.csv" and "metadata.xml".
+- `getmetadata_odf()` to retrieve labels and other metadata from an odf-data.frame-object.
 
-- `odf_labels()` to retrieve labels and other metadata from an odf-data.frame-object.
+- `as_odf_tbl()` converts a dataframe or tibble including metadata to an odf_tbl object.
 
 ### Multilingual Datasets
 
