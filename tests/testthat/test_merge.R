@@ -3,6 +3,7 @@
 
 #test merging
 test_that("merge.odf", {
+  skip_if_not_installed("tibble", "3.2.1.9012")
   #' - get data
   df1 <- read_odf("testdata/data.zip", select = c(1:4))
   df2 <- read_odf("testdata/data.zip", select = c(4:7))
@@ -32,8 +33,17 @@ test_that("merge.odf", {
   expect_equal(dim(df_out), c(15, 9))
   expect_equal(colnames(df_out), c("bap9002", "id", "id2", "bap87", "bap9201",
                                    "bap9001", "bap9003", "bap96", "name"))
-  expect_equal(names(attributes(df_out)), c("row.names", "names", ".internal.selfref", "sorted", "name",
-                                            "languages", "lang", "class"))
+  expect_equal(
+    names(attributes(df_out)),
+    c(
+      "row.names",
+      "names",
+      "name",
+      "languages",
+      "lang",
+      "class"
+    )
+  )
   expect_equal(attributes(df_out)[["name"]],
                "dataset merged from other datasets bap bap")
   expect_equal(attributes(df_out)[["languages"]], c("en", "de"))
@@ -75,8 +85,17 @@ test_that("merge.odf", {
   expect_equal(dim(df_out2), c(10, 9))
   expect_equal(colnames(df_out2), c("id", "id2", "bap87", "bap9201", "bap9001",
                                    "bap9002", "bap9003", "bap96", "name"))
-  expect_equal(names(attributes(df_out2)), c("row.names", "names", ".internal.selfref", "sorted", "name",
-                                             "languages", "lang", "class"))
+  expect_equal(
+    names(attributes(df_out2)),
+    c(
+      "row.names",
+      "names",
+      "name",
+      "languages",
+      "lang",
+      "class"
+    )
+  )
   expect_equal(attributes(df_out2)[["name"]],
                "dataset merged from other datasets bap bap bap")
   expect_equal(attributes(df_out2)[["languages"]], c("en", "de"))
@@ -119,9 +138,17 @@ test_that("merge.odf", {
   expect_equal(dim(df_out2), c(5, 9))
   expect_equal(colnames(df_out2), c("id", "id2", "bap9001", "bap9002", "bap87",
                                    "bap9201",  "bap9003", "bap96", "name"))
-  expect_equal(names(attributes(df_out2)),
-               c("row.names", "names", ".internal.selfref", "sorted",  "name",
-                 "languages", "lang", "class"))
+  expect_equal(
+    names(attributes(df_out2)),
+    c(
+      "row.names",
+      "names",
+      "name",
+      "languages",
+      "lang",
+      "class"
+    )
+  )
   expect_equal(attributes(df_out2)[["name"]],
                "dataset merged from other datasets bap bap bap")
   expect_equal(attributes(df_out2)[["languages"]], c("en", "de"))
@@ -165,9 +192,17 @@ test_that("merge.odf", {
   expect_equal(colnames(df_out2), c("bap9002", "bap9003", "bap96", "name", "id",
                                     "id2", "bap87", "bap9201",
                                     "bap9001"))
-  expect_equal(names(attributes(df_out2)),
-               c("row.names", "names", ".internal.selfref", "sorted", "name",
-                 "languages", "lang", "class"))
+  expect_equal(
+    names(attributes(df_out2)),
+    c(
+      "row.names",
+      "names",
+      "name",
+      "languages",
+      "lang",
+      "class"
+    )
+  )
   expect_equal(attributes(df_out2)[["name"]],
                "dataset merged from other datasets bap bap bap")
   expect_equal(attributes(df_out2)[["languages"]], c("en", "de"))

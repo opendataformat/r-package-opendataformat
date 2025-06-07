@@ -3,6 +3,7 @@
 
 #test as_odf_table
 test_that("as_odf_tbl", {
+  skip_if_not_installed("tibble", "3.2.1.9012")
   # create dataframe
   df <- data.frame(id = 1:5, name = c("Klaus", "Anna", "Rebecca", "Kevin", "Janina"), age = c(55, 40, 19, 25, 60), diagnosis = c(1,3,3,2,1))
   # Add metadata for dataset
@@ -69,7 +70,6 @@ test_that("as_odf_tbl", {
   expect_equal(names(attributes(df_out)), c(
     "row.names",
     "names",
-    ".internal.selfref",
     "study",
     "name",
     "description_en",
@@ -143,7 +143,6 @@ test_that("as_odf_tbl", {
   expect_equal(names(attributes(df_out)), c(
     "row.names",
     "names",
-    ".internal.selfref",
     "study",
     "name",
     "description_NA",
