@@ -1,8 +1,8 @@
 Package: opendataformat
 Title: Reading and Writing Open Data Format Files
-Version: 2.2.1
+Version: 2.2.2
 Authors@R: c(person("Tom", "Hartl", role = c("aut","cre"),
-    email = "opendataformat-team@diw.de", comment = c(ORCID = "0009-0006-4226-9835")),
+    email = "tom.hartl96@gmail.com", comment = c(ORCID = "0009-0006-4226-9835")),
     person("Claudia","Saalbach", role = "ctb", 
     email = "csaalbach@diw.de"))
 Maintainer: Tom Hartl <opendataformat-team@diw.de>
@@ -16,5 +16,5 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Imports: cli, zip, magrittr, xml2, data.table, tibble, jsonlite
 Depends: R (>= 3.6)
-Suggests: testthat (>= 3.0.0), knitr, rmarkdown, devtools, ISLR, dplyr, haven
+Suggests: testthat (>= 3.0.0), tibble (>= 3.2.1), knitr, rmarkdown, devtools, ISLR, dplyr, haven
 VignetteBuilder: knitr

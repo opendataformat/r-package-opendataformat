@@ -1,5 +1,6 @@
 #' read_odf: all languages
 test_that("read_odf_all", {
+  skip_if(packageVersion("tibble") < "3.2.1",  "tibble >= 3.2.1 required")
   df <- opendataformat::read_odf(
     file = "testdata/data.odf.zip",
     languages = "all"
@@ -8,7 +9,6 @@ test_that("read_odf_all", {
   expect_equal(names(attributes(df)), c(
     "row.names",
     "names",
-    ".internal.selfref",
     "study",
     "name",
     "description_en",
@@ -72,6 +72,7 @@ test_that("read_odf_all", {
 })
 
 test_that("read_odf_all", {
+  skip_if(packageVersion("tibble") < "3.2.1",  "tibble >= 3.2.1 required")
   df <- opendataformat::read_odf(
     file = "testdata/data.zip",
     languages = "all"
@@ -80,7 +81,6 @@ test_that("read_odf_all", {
   expect_equal(names(attributes(df)), c(
     "row.names",
     "names",
-    ".internal.selfref",
     "study",
     "name",
     "description_en",
@@ -146,6 +146,7 @@ test_that("read_odf_all", {
 
 #' read_odf: with default language
 test_that("read_odf_variables", {
+  skip_if(packageVersion("tibble") < "3.2.1",  "tibble >= 3.2.1 required")
   df <- read_odf(
     file = "testdata/data_with_default.odf.zip",
     languages = "all"
@@ -154,7 +155,6 @@ test_that("read_odf_variables", {
   expect_equal(names(attributes(df)), c(
     "row.names",
     "names",
-    ".internal.selfref",
     "study",
     "name",
     "description_NA",
@@ -202,6 +202,7 @@ test_that("read_odf_variables", {
 
 #' read_odf: "de" languages
 test_that("read_odf_de", {
+  skip_if(packageVersion("tibble") < "3.2.1",  "tibble >= 3.2.1 required")
   df <- read_odf(
     file = "testdata/data.odf.zip",
     languages = "de"
@@ -210,7 +211,6 @@ test_that("read_odf_de", {
   expect_equal(names(attributes(df)), c(
     "row.names",
     "names",
-    ".internal.selfref",
     "study",
     "name",
     "description_de",
@@ -259,6 +259,7 @@ test_that("read_odf_de", {
 
 #' read_odf: nrows=10
 test_that("read_odf_specific_rows", {
+  skip_if(packageVersion("tibble") < "3.2.1",  "tibble >= 3.2.1 required")
   df <- read_odf(
     file = "testdata/data.odf.zip",
     nrows = 10
@@ -267,7 +268,6 @@ test_that("read_odf_specific_rows", {
   expect_equal(names(attributes(df)), c(
     "row.names",
     "names",
-    ".internal.selfref",
     "study",
     "name",
     "description_en",
@@ -337,6 +337,7 @@ test_that("read_odf_specific_rows", {
 
 #' read_odf: nrows = 13, skip = 3
 test_that("read_odf_specific_rows2", {
+  skip_if(packageVersion("tibble") < "3.2.1",  "tibble >= 3.2.1 required")
   df <- read_odf(
     file = "testdata/data.odf.zip",
     nrows = 13,
@@ -346,7 +347,6 @@ test_that("read_odf_specific_rows2", {
   expect_equal(names(attributes(df)), c(
     "row.names",
     "names",
-    ".internal.selfref",
     "study",
     "name",
     "description_en",
@@ -417,6 +417,7 @@ test_that("read_odf_specific_rows2", {
 
 #' read_odf: select =c(1,2,4,5)
 test_that("read_odf_specific_variables", {
+  skip_if(packageVersion("tibble") < "3.2.1",  "tibble >= 3.2.1 required")
   df <- read_odf(
     file = "testdata/data.odf.zip",
     select = c(1, 2, 4, 5)
@@ -425,7 +426,6 @@ test_that("read_odf_specific_variables", {
   expect_equal(names(attributes(df)), c(
     "row.names",
     "names",
-    ".internal.selfref",
     "study",
     "name",
     "description_en",
@@ -479,6 +479,7 @@ test_that("read_odf_specific_variables", {
 
 #' read_odf: select = c("bap87", "bap96", "bap9002", "bap9003")
 test_that("read_odf_specific_variables", {
+  skip_if(packageVersion("tibble") < "3.2.1",  "tibble >= 3.2.1 required")
   df <- read_odf(
     file = "testdata/data.odf.zip",
     select = c("bap87", "bap96", "bap9002",
@@ -488,7 +489,6 @@ test_that("read_odf_specific_variables", {
   expect_equal(names(attributes(df)), c(
     "row.names",
     "names",
-    ".internal.selfref",
     "study",
     "name",
     "description_en",
@@ -560,6 +560,7 @@ test_that("read_odf_specific_variables", {
 
 #' read_odf: rows and cols
 test_that("read_odf_specific_rows_and_cols", {
+  skip_if(packageVersion("tibble") < "3.2.1",  "tibble >= 3.2.1 required")
   df <- read_odf(
     file = "testdata/data.odf.zip",
     nrows = 13,
@@ -570,7 +571,6 @@ test_that("read_odf_specific_rows_and_cols", {
   expect_equal(names(attributes(df)), c(
     "row.names",
     "names",
-    ".internal.selfref",
     "study",
     "name",
     "description_en",
@@ -646,6 +646,7 @@ test_that("read_odf_specific_rows_and_cols", {
 
 #' read_odf: rows and cols2
 test_that("read_odf_specific_rows_and_cols2", {
+  skip_if(packageVersion("tibble") < "3.2.1",  "tibble >= 3.2.1 required")
   df <- read_odf(
     file = "testdata/data.odf.zip",
     nrows = 13,
@@ -657,7 +658,6 @@ test_that("read_odf_specific_rows_and_cols2", {
   expect_equal(names(attributes(df)), c(
     "row.names",
     "names",
-    ".internal.selfref",
     "study",
     "name",
     "description_en",
@@ -733,6 +733,7 @@ test_that("read_odf_specific_rows_and_cols2", {
 
 #' read_odf: language rows and cols
 test_that("read_odf_specific_language_rows_and_cols", {
+  skip_if(packageVersion("tibble") < "3.2.1",  "tibble >= 3.2.1 required")
   df <- read_odf(
     file = "testdata/data.odf.zip",
     nrows = 13,
@@ -745,7 +746,6 @@ test_that("read_odf_specific_language_rows_and_cols", {
   expect_equal(names(attributes(df)), c(
     "row.names",
     "names",
-    ".internal.selfref",
     "study",
     "name",
     "description_de",
@@ -805,5 +805,5 @@ test_that("read_odf_specific_language_rows_and_cols", {
   expect_equal(unname(attributes(df$bap9201)$labels_de), c(-2, -1))
   expect_equal(names(attributes(df$bap9201)$labels_de),
                c("trifft nicht zu", "keine Angabe"))
-    unlink(paste0(tempdir(), "/*"), recursive = TRUE)
+  unlink(paste0(tempdir(), "/*"), recursive = TRUE)
 })

@@ -3,6 +3,8 @@
 
 #test as_odf_table
 test_that("as_odf_tbl", {
+  skip_if(packageVersion("tibble") < "3.2.1",
+          "tibble >= 3.2.1 required")
   # create dataframe
   df <- data.frame(id = 1:5, name = c("Klaus", "Anna", "Rebecca", "Kevin", "Janina"), age = c(55, 40, 19, 25, 60), diagnosis = c(1,3,3,2,1))
   # Add metadata for dataset
@@ -69,7 +71,6 @@ test_that("as_odf_tbl", {
   expect_equal(names(attributes(df_out)), c(
     "row.names",
     "names",
-    ".internal.selfref",
     "study",
     "name",
     "description_en",
@@ -99,7 +100,7 @@ test_that("as_odf_tbl", {
   ))
   # - dataset content
   expect_equal(attributes(df_out)$names, c("bap87", "bap9201", "bap9001", "bap9002",
-                                       "bap9003", "bap96", "name"))
+                                           "bap9003", "bap96", "name"))
   expect_equal(attributes(df_out)$name, "bap")
   expect_equal(attributes(df_out)$label, "Data from individual questionnaires 2010")
   expect_equal(attributes(df_out)$label_de, "Daten vom Personenfragebogen 2010")
@@ -143,7 +144,6 @@ test_that("as_odf_tbl", {
   expect_equal(names(attributes(df_out)), c(
     "row.names",
     "names",
-    ".internal.selfref",
     "study",
     "name",
     "description_NA",
@@ -178,7 +178,7 @@ test_that("as_odf_tbl", {
   ))
   # - dataset content
   expect_equal(attributes(df_out)$names, c("bap87", "bap9201", "bap9001",
-                                       "bap9002", "bap9003", "bap96", "name"))
+                                           "bap9002", "bap9003", "bap96", "name"))
   expect_equal(attributes(df_out)$name, "bap")
   expect_equal(attributes(df_out)$url, "https://paneldata.org/soep-core/data/bap")
   expect_equal(attributes(df_out)$class,  c("odf_tbl", "tbl_df", "tbl", "data.frame"))
@@ -205,7 +205,7 @@ test_that("as_odf_tbl", {
   expect_equal(attributes(df_out)[["languages"]], c("NA"))
   expect_equal(attributes(df_out)[["lang"]], "NA")
   expect_equal(attributes(df_out)[["label"]], NULL)
-
+  
   expect_equal(attributes(df_out$mpg)[["label"]], NULL)
   expect_equal(attributes(df_out$mpg)[["name"]], "mpg")
   expect_equal(attributes(df_out$mpg)[["languages"]], "NA")
@@ -480,7 +480,7 @@ test_that("as_odf_tibble active language argument and metadata without a tag", {
   expect_equal(attributes(df_out$diagnosis)[["label"]], "Diagnose")
   expect_equal(attributes(df_out$diagnosis)[["label_en"]], "Diagnosis")
   expect_equal(attributes(df_out$diagnosis)[["label_de"]], "Diagnose")
-    expect_equal(attributes(df_out$diagnosis)[["description_en"]], "Diagnosis patient last visit")
+  expect_equal(attributes(df_out$diagnosis)[["description_en"]], "Diagnosis patient last visit")
   expect_equal(attributes(df_out$diagnosis)[["description_de"]], "Diagnose Patient letzter Besuch")
   expect_equal(attributes(df_out$diagnosis)[["description"]], NULL)
   
