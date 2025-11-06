@@ -14,7 +14,7 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
-Imports: cli, zip, magrittr, xml2, data.table, tibble, jsonlite
+Imports: cli, zip, magrittr, xml2, data.table, tibble (>= 3.2.1), jsonlite
 Depends: R (>= 3.6)
-Suggests: testthat (>= 3.0.0), tibble (>= 3.2.1), knitr, rmarkdown, devtools, ISLR, dplyr, haven
+Suggests: testthat (>= 3.0.0), knitr, rmarkdown, devtools, ISLR, dplyr, haven
 VignetteBuilder: knitr
