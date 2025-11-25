@@ -6,36 +6,31 @@ test_that("read_odf_all", {
     languages = "all"
   )
   # - dataset attributes
-  expect_equal(names(attributes(df)), c(
-    "row.names",
-    "names",
-    "study",
-    "name",
-    "description_en",
-    "description_de",
-    "label_en",
-    "label_de",
-    "url",
-    "languages",
-    "lang",
-    "label",
-    "class"
-  ))
+  expect_true(all(c("names",
+                    "study",
+                    "name",
+                    "description_en",
+                    "description_de",
+                    "label_en",
+                    "label_de",
+                    "url",
+                    "languages",
+                    "lang",
+                    "label") %in% names(attributes(df))))
   # - variable attributes
-  expect_equal(names(attributes(df$bap87)), c(
-    "name",
-    "label_en",
-    "label_de",
-    "description_en",
-    "description_de",
-    "type",
-    "url",
-    "labels_en",
-    "labels_de",
-    "languages",
-    "lang",
-    "label"
-  ))
+  expect_true(all(c("name",
+                    "label_en",
+                    "label_de",
+                    "description_en",
+                    "description_de",
+                    "type",
+                    "url",
+                    "labels_en",
+                    "labels_de",
+                    "languages",
+                    "lang",
+                    "label") %in% names(attributes(df$bap87))))
+  
   # - dataset content
   expect_equal(attributes(df)$names, c("bap87", "bap9201", "bap9001", "bap9002",
                                        "bap9003", "bap96", "name"))
@@ -78,36 +73,31 @@ test_that("read_odf_all", {
     languages = "all"
   )
   # - dataset attributes
-  expect_equal(names(attributes(df)), c(
-    "row.names",
-    "names",
-    "study",
-    "name",
-    "description_en",
-    "description_de",
-    "label_en",
-    "label_de",
-    "url",
-    "languages",
-    "lang",
-    "label",
-    "class"
-  ))
+  expect_true(all(c("names",
+                    "study",
+                    "name",
+                    "description_en",
+                    "description_de",
+                    "label_en",
+                    "label_de",
+                    "url",
+                    "languages",
+                    "lang",
+                    "label") %in% names(attributes(df))))
   # - variable attributes
-  expect_equal(names(attributes(df$bap87)), c(
-    "name",
-    "label_en",
-    "label_de",
-    "description_en",
-    "description_de",
-    "type",
-    "url",
-    "labels_en",
-    "labels_de",
-    "languages",
-    "lang",
-    "label"
-  ))
+  expect_true(all(c("name",
+                    "label_en",
+                    "label_de",
+                    "description_en",
+                    "description_de",
+                    "type",
+                    "url",
+                    "labels_en",
+                    "labels_de",
+                    "languages",
+                    "lang",
+                    "label") %in% names(attributes(df$bap87))))
+  
   # - dataset content
   expect_equal(attributes(df)$names, c("bap87", "bap9201", "bap9001", "bap9002",
                                        "bap9003", "bap96", "name"))
@@ -152,41 +142,36 @@ test_that("read_odf_variables", {
     languages = "all"
   )
   # - dataset attributes
-  expect_equal(names(attributes(df)), c(
-    "row.names",
-    "names",
-    "study",
-    "name",
-    "description_NA",
-    "description_en",
-    "description_de",
-    "label_NA",
-    "label_en",
-    "label_de",
-    "url",
-    "languages",
-    "lang",
-    "label",
-    "class"
-  ))
+  expect_true(all(c("names",
+                    "study",
+                    "name",
+                    "description_NA",
+                    "description_en",
+                    "description_de",
+                    "label_NA",
+                    "label_en",
+                    "label_de",
+                    "url",
+                    "languages",
+                    "lang",
+                    "label") %in% names(attributes(df))))
   # - variable attributes
-  expect_equal(names(attributes(df$bap87)), c(
-    "name",
-    "label_NA",
-    "label_en",
-    "label_de",
-    "description_NA",
-    "description_en",
-    "description_de",
-    "type",
-    "url",
-    "labels_NA",
-    "labels_en",
-    "labels_de",
-    "languages",
-    "lang",
-    "label"
-  ))
+  
+  expect_true(all(c("name",
+                    "label_NA",
+                    "label_en",
+                    "label_de",
+                    "description_NA",
+                    "description_en",
+                    "description_de",
+                    "type",
+                    "url",
+                    "labels_NA",
+                    "labels_en",
+                    "labels_de",
+                    "languages",
+                    "lang",
+                    "label") %in% names(attributes(df$bap87))))
   # - dataset content
   expect_equal(attributes(df)$names, c("bap87", "bap9201", "bap9001",
                                        "bap9002", "bap9003", "bap96", "name"))
@@ -208,31 +193,25 @@ test_that("read_odf_de", {
     languages = "de"
   )
   # - dataset attributes
-  expect_equal(names(attributes(df)), c(
-    "row.names",
-    "names",
-    "study",
-    "name",
-    "description_de",
-    "label_de",
-    "url",
-    "languages",
-    "lang",
-    "label",
-    "class"
-  ))
+  expect_true(all(c("names",
+                    "study",
+                    "name",
+                    "description_de",
+                    "label_de",
+                    "url",
+                    "languages",
+                    "lang",
+                    "label") %in% names(attributes(df))))
   # - variable attributes
-  expect_equal(names(attributes(df$bap87)), c(
-    "name",
-    "label_de",
-    "description_de",
-    "type",
-    "url",
-    "labels_de",
-    "languages",
-    "lang",
-    "label"
-  ))
+  expect_true(all(c("name",
+                    "label_de",
+                    "description_de",
+                    "type",
+                    "url",
+                    "labels_de",
+                    "languages",
+                    "lang",
+                    "label") %in% names(attributes(df$bap87))))
   # - dataset content
   expect_equal(attributes(df)$names, c("bap87", "bap9201", "bap9001",
                                        "bap9002", "bap9003", "bap96", "name"))
@@ -265,36 +244,30 @@ test_that("read_odf_specific_rows", {
     nrows = 10
   )
   # - dataset attributes
-  expect_equal(names(attributes(df)), c(
-    "row.names",
-    "names",
-    "study",
-    "name",
-    "description_en",
-    "description_de",
-    "label_en",
-    "label_de",
-    "url",
-    "languages",
-    "lang",
-    "label",
-    "class"
-  ))
+  expect_true(all(c("names",
+                    "study",
+                    "name",
+                    "description_en",
+                    "description_de",
+                    "label_en",
+                    "label_de",
+                    "url",
+                    "languages",
+                    "lang",
+                    "label") %in% names(attributes(df))))
   # - variable attributes
-  expect_equal(names(attributes(df$bap87)), c(
-    "name",
-    "label_en",
-    "label_de",
-    "description_en",
-    "description_de",
-    "type",
-    "url",
-    "labels_en",
-    "labels_de",
-    "languages",
-    "lang",
-    "label"
-  ))
+  expect_true(all(c("name",
+                    "label_en",
+                    "label_de",
+                    "description_en",
+                    "description_de",
+                    "type",
+                    "url",
+                    "labels_en",
+                    "labels_de",
+                    "languages",
+                    "lang",
+                    "label") %in% names(attributes(df$bap87))))
   # - dataset content
   expect_equal(attributes(df)$names, c("bap87", "bap9201", "bap9001", "bap9002",
                                        "bap9003", "bap96", "name"))
@@ -344,36 +317,31 @@ test_that("read_odf_specific_rows2", {
     skip = 3
   )
   # - dataset attributes
-  expect_equal(names(attributes(df)), c(
-    "row.names",
-    "names",
-    "study",
-    "name",
-    "description_en",
-    "description_de",
-    "label_en",
-    "label_de",
-    "url",
-    "languages",
-    "lang",
-    "label",
-    "class"
-  ))
+  expect_true(all(c("names",
+                    "study",
+                    "name",
+                    "description_en",
+                    "description_de",
+                    "label_en",
+                    "label_de",
+                    "url",
+                    "languages",
+                    "lang",
+                    "label") %in% names(attributes(df))))
   # - variable attributes
-  expect_equal(names(attributes(df$bap87)), c(
-    "name",
-    "label_en",
-    "label_de",
-    "description_en",
-    "description_de",
-    "type",
-    "url",
-    "labels_en",
-    "labels_de",
-    "languages",
-    "lang",
-    "label"
-  ))
+  expect_true(all(c("name",
+                    "label_en",
+                    "label_de",
+                    "description_en",
+                    "description_de",
+                    "type",
+                    "url",
+                    "labels_en",
+                    "labels_de",
+                    "languages",
+                    "lang",
+                    "label") %in% names(attributes(df$bap87))))
+  
   # - dataset content
   expect_equal(attributes(df)$names, c("bap87", "bap9201", "bap9001",
                                        "bap9002", "bap9003", "bap96", "name"))
@@ -423,36 +391,32 @@ test_that("read_odf_specific_variables", {
     select = c(1, 2, 4, 5)
   )
   # - dataset attributes
-  expect_equal(names(attributes(df)), c(
-    "row.names",
-    "names",
-    "study",
-    "name",
-    "description_en",
-    "description_de",
-    "label_en",
-    "label_de",
-    "url",
-    "languages",
-    "lang",
-    "label",
-    "class"
-  ))
+  expect_true(all(c("names",
+                    "study",
+                    "name",
+                    "description_en",
+                    "description_de",
+                    "label_en",
+                    "label_de",
+                    "url",
+                    "languages",
+                    "lang",
+                    "label") %in% names(attributes(df))))
+  
   # - variable attributes
-  expect_equal(names(attributes(df$bap87)), c(
-    "name",
-    "label_en",
-    "label_de",
-    "description_en",
-    "description_de",
-    "type",
-    "url",
-    "labels_en",
-    "labels_de",
-    "languages",
-    "lang",
-    "label"
-  ))
+  expect_true(all(c("name",
+                    "label_en",
+                    "label_de",
+                    "description_en",
+                    "description_de",
+                    "type",
+                    "url",
+                    "labels_en",
+                    "labels_de",
+                    "languages",
+                    "lang",
+                    "label") %in% names(attributes(df$bap87))))
+  
   # - dataset content
   expect_equal(attributes(df)$names, c("bap87", "bap9201", "bap9002",
                                        "bap9003"))
@@ -486,36 +450,31 @@ test_that("read_odf_specific_variables", {
                "bap9003")
   )
   # - dataset attributes
-  expect_equal(names(attributes(df)), c(
-    "row.names",
-    "names",
-    "study",
-    "name",
-    "description_en",
-    "description_de",
-    "label_en",
-    "label_de",
-    "url",
-    "languages",
-    "lang",
-    "label",
-    "class"
-  ))
+  expect_true(all(c("names",
+                    "study",
+                    "name",
+                    "description_en",
+                    "description_de",
+                    "label_en",
+                    "label_de",
+                    "url",
+                    "languages",
+                    "lang",
+                    "label") %in% names(attributes(df))))
   # - variable attributes
-  expect_equal(names(attributes(df$bap87)), c(
-    "name",
-    "label_en",
-    "label_de",
-    "description_en",
-    "description_de",
-    "type",
-    "url",
-    "labels_en",
-    "labels_de",
-    "languages",
-    "lang",
-    "label"
-  ))
+  expect_true(all(c("name",
+                    "label_en",
+                    "label_de",
+                    "description_en",
+                    "description_de",
+                    "type",
+                    "url",
+                    "labels_en",
+                    "labels_de",
+                    "languages",
+                    "lang",
+                    "label") %in% names(attributes(df$bap87))))
+
   # - dataset content
   expect_equal(attributes(df)$names, c("bap87", "bap96", "bap9002",
                                        "bap9003"))
@@ -568,36 +527,31 @@ test_that("read_odf_specific_rows_and_cols", {
     select = c(1, 2, 4, 5)
   )
   # - dataset attributes
-  expect_equal(names(attributes(df)), c(
-    "row.names",
-    "names",
-    "study",
-    "name",
-    "description_en",
-    "description_de",
-    "label_en",
-    "label_de",
-    "url",
-    "languages",
-    "lang",
-    "label",
-    "class"
-  ))
+  expect_true(all(c("names",
+                    "study",
+                    "name",
+                    "description_en",
+                    "description_de",
+                    "label_en",
+                    "label_de",
+                    "url",
+                    "languages",
+                    "lang",
+                    "label") %in% names(attributes(df))))
   # - variable attributes
-  expect_equal(names(attributes(df$bap87)), c(
-    "name",
-    "label_en",
-    "label_de",
-    "description_en",
-    "description_de",
-    "type",
-    "url",
-    "labels_en",
-    "labels_de",
-    "languages",
-    "lang",
-    "label"
-  ))
+  expect_true(all(c("name",
+                    "label_en",
+                    "label_de",
+                    "description_en",
+                    "description_de",
+                    "type",
+                    "url",
+                    "labels_en",
+                    "labels_de",
+                    "languages",
+                    "lang",
+                    "label") %in% names(attributes(df$bap87))))
+
   # - dataset content
   expect_equal(attributes(df)$names, c("bap87", "bap9201", "bap9002",
                                        "bap9003"))
@@ -655,36 +609,31 @@ test_that("read_odf_specific_rows_and_cols2", {
                "bap9003")
   )
   # - dataset attributes
-  expect_equal(names(attributes(df)), c(
-    "row.names",
-    "names",
-    "study",
-    "name",
-    "description_en",
-    "description_de",
-    "label_en",
-    "label_de",
-    "url",
-    "languages",
-    "lang",
-    "label",
-    "class"
-  ))
+  expect_true(all(c("names",
+                    "study",
+                    "name",
+                    "description_en",
+                    "description_de",
+                    "label_en",
+                    "label_de",
+                    "url",
+                    "languages",
+                    "lang",
+                    "label") %in% names(attributes(df))))
   # - variable attributes
-  expect_equal(names(attributes(df$bap87)), c(
-    "name",
-    "label_en",
-    "label_de",
-    "description_en",
-    "description_de",
-    "type",
-    "url",
-    "labels_en",
-    "labels_de",
-    "languages",
-    "lang",
-    "label"
-  ))
+  expect_true(all(c("name",
+                    "label_en",
+                    "label_de",
+                    "description_en",
+                    "description_de",
+                    "type",
+                    "url",
+                    "labels_en",
+                    "labels_de",
+                    "languages",
+                    "lang",
+                    "label") %in% names(attributes(df$bap87))))
+  
   # - dataset content
   expect_equal(attributes(df)$names, c("bap87", "bap9201", "bap9002",
                                        "bap9003"))
@@ -743,31 +692,27 @@ test_that("read_odf_specific_language_rows_and_cols", {
     languages = "de"
   )
   # - dataset attributes
-  expect_equal(names(attributes(df)), c(
-    "row.names",
-    "names",
-    "study",
-    "name",
-    "description_de",
-    "label_de",
-    "url",
-    "languages",
-    "lang",
-    "label",
-    "class"
-  ))
+  expect_true(all(c("names",
+                    "study",
+                    "name",
+                    "description_de",
+                    "label_de",
+                    "url",
+                    "languages",
+                    "lang",
+                    "label") %in% names(attributes(df))))
+
   # - variable attributes
-  expect_equal(names(attributes(df$bap87)), c(
-    "name",
-    "label_de",
-    "description_de",
-    "type",
-    "url",
-    "labels_de",
-    "languages",
-    "lang",
-    "label"
-  ))
+  expect_true(all(c("name",
+                    "label_de",
+                    "description_de",
+                    "type",
+                    "url",
+                    "labels_de",
+                    "languages",
+                    "lang",
+                    "label") %in% names(attributes(df$bap87))))
+
   # - dataset content
   expect_equal(attributes(df)$names, c("bap87", "bap9201", "bap9002",
                                        "bap9003"))

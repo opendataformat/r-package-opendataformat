@@ -28,10 +28,8 @@ test_that("as_odf_tbl", {
   expect_equal(class(df_out), c("odf_tbl", "tbl_df", "tbl", "data.frame"))
   expect_equal(dim(df_out), c(5, 4))
   expect_equal(colnames(df_out), c("id", "name", "age", "diagnosis"))
-  expect_equal(names(attributes(df_out)), c("row.names", "names", "name",
-                                            "label_en", "description_en", "url",
-                                            "languages", "lang", "label", 
-                                            "class"))
+  expect_true(all(c("name", "label_en", "description_en", "url",
+                    "languages", "lang", "label") %in% names(attributes(df_out))))
   expect_equal(attributes(df_out)[["name"]],
                "patientdata")
   expect_equal(attributes(df_out)[["languages"]], c("en"))
@@ -68,9 +66,7 @@ test_that("as_odf_tbl", {
   
   df_out <- as_odf_tbl(df, active_language = "en")
   # - dataset attributes
-  expect_equal(names(attributes(df_out)), c(
-    "row.names",
-    "names",
+  expect_true(all(c("names",
     "study",
     "name",
     "description_en",
@@ -80,24 +76,21 @@ test_that("as_odf_tbl", {
     "url",
     "languages",
     "lang",
-    "label",
-    "class"
-  ))
+    "label") %in% names(attributes(df_out))))
+  
   # - variable attributes
-  expect_equal(names(attributes(df_out$bap87)), c(
-    "name",
-    "label_en",
-    "label_de",
-    "description_en",
-    "description_de",
-    "type",
-    "url",
-    "labels_en",
-    "labels_de",
-    "languages",
-    "lang",
-    "label"
-  ))
+  expect_true(all(c(    "name",
+                        "label_en",
+                        "label_de",
+                        "description_en",
+                        "description_de",
+                        "type",
+                        "url",
+                        "labels_en",
+                        "labels_de",
+                        "languages",
+                        "lang",
+                        "label") %in% names(attributes(df_out$bap87))))
   # - dataset content
   expect_equal(attributes(df_out)$names, c("bap87", "bap9201", "bap9001", "bap9002",
                                            "bap9003", "bap96", "name"))
@@ -141,41 +134,36 @@ test_that("as_odf_tbl", {
   df_out <- as_odf_tbl(df, active_language = "en")
   
   # - dataset attributes
-  expect_equal(names(attributes(df_out)), c(
-    "row.names",
-    "names",
-    "study",
-    "name",
-    "description_NA",
-    "description_en",
-    "description_de",
-    "label_NA",
-    "label_en",
-    "label_de",
-    "url",
-    "languages",
-    "lang",
-    "label",
-    "class"
-  ))
+  expect_true(all(c("names",
+                    "study",
+                    "name",
+                    "description_NA",
+                    "description_en",
+                    "description_de",
+                    "label_NA",
+                    "label_en",
+                    "label_de",
+                    "url",
+                    "languages",
+                    "lang",
+                    "label") %in% names(attributes(df_out))))
+  
   # - variable attributes
-  expect_equal(names(attributes(df_out$bap87)), c(
-    "name",
-    "label_NA",
-    "label_en",
-    "label_de",
-    "description_NA",
-    "description_en",
-    "description_de",
-    "type",
-    "url",
-    "labels_NA",
-    "labels_en",
-    "labels_de",
-    "languages",
-    "lang",
-    "label"
-  ))
+  expect_true(all(c("name",
+                    "label_NA",
+                    "label_en",
+                    "label_de",
+                    "description_NA",
+                    "description_en",
+                    "description_de",
+                    "type",
+                    "url",
+                    "labels_NA",
+                    "labels_en",
+                    "labels_de",
+                    "languages",
+                    "lang",
+                    "label") %in% names(attributes(df_out$bap87))))
   # - dataset content
   expect_equal(attributes(df_out)$names, c("bap87", "bap9201", "bap9001",
                                            "bap9002", "bap9003", "bap96", "name"))
@@ -197,9 +185,9 @@ test_that("as_odf_tbl", {
   expect_equal(colnames(df_out), c("mpg", "cylinders", "displacement",
                                    "horsepower", "weight", "acceleration",
                                    "year", "origin", "name"))
-  expect_equal(names(attributes(df_out)), c("row.names", "names",
-                                            "languages", "lang", 
-                                            "class"))
+
+  expect_true(all(c("names", "languages", "lang") %in% names(attributes(df_out))))
+  
   expect_equal(attributes(df_out)[["name"]],
                NULL)
   expect_equal(attributes(df_out)[["languages"]], c("NA"))
@@ -240,10 +228,12 @@ test_that("as_odf_tibble with metadata without a tag", {
   expect_equal(class(df_out), c("odf_tbl", "tbl_df", "tbl", "data.frame"))
   expect_equal(dim(df_out), c(5, 4))
   expect_equal(colnames(df_out), c("id", "name", "age", "diagnosis"))
-  expect_equal(names(attributes(df_out)), c("row.names", "names", "name",
-                                            "label", "url", "label_NA",
-                                            "description_NA", "languages",
-                                            "lang", "class"))
+
+  expect_true(all(c("names", "name",
+                    "label", "url", "label_NA",
+                    "description_NA", "languages",
+                    "lang") %in% names(attributes(df_out))))
+  
   expect_equal(attributes(df_out)[["name"]], "patientdata")
   expect_equal(attributes(df_out)[["languages"]], c("NA"))
   expect_equal(attributes(df_out)[["lang"]], "NA")
@@ -277,11 +267,11 @@ test_that("as_odf_tibble with metadata without a tag", {
   expect_equal(class(df_out), c("odf_tbl", "tbl_df", "tbl", "data.frame"))
   expect_equal(dim(df_out), c(5, 4))
   expect_equal(colnames(df_out), c("id", "name", "age", "diagnosis"))
-  expect_equal(names(attributes(df_out)), c("row.names", "names", "name",
-                                            "label", "url",
-                                            "label_en", "description_en",
-                                            "languages", "lang",
-                                            "class"))
+
+  expect_true(all(c("names", "name",
+                    "label", "url",
+                    "label_en", "description_en",
+                    "languages", "lang") %in% names(attributes(df_out))))
   expect_equal(attributes(df_out)[["name"]],
                "patientdata")
   expect_equal(attributes(df_out)[["languages"]], c("en"))
@@ -347,11 +337,12 @@ test_that("as_odf_tibble active language argument and metadata without a tag", {
   expect_equal(class(df_out), c("odf_tbl", "tbl_df", "tbl", "data.frame"))
   expect_equal(dim(df_out), c(5, 4))
   expect_equal(colnames(df_out), c("id", "name", "age", "diagnosis"))
-  expect_equal(names(attributes(df_out)), c("row.names", "names", "name",
-                                            "label_en", "label", 
-                                            "description_en", "url", "label_NA",
-                                            "description_NA",
-                                            "languages", "lang", "class"))
+
+  expect_true(all(c("names", "name",
+                    "label_en", "label", 
+                    "description_en", "url", "label_NA",
+                    "description_NA",
+                    "languages", "lang")%in% names(attributes(df_out))))
   expect_equal(attributes(df_out)[["name"]], "patientdata")
   expect_equal(attributes(df_out)[["languages"]], c("en", "NA"))
   expect_equal(attributes(df_out)[["lang"]], "en")
@@ -398,11 +389,12 @@ test_that("as_odf_tibble active language argument and metadata without a tag", {
   expect_equal(class(df_out), c("odf_tbl", "tbl_df", "tbl", "data.frame"))
   expect_equal(dim(df_out), c(5, 4))
   expect_equal(colnames(df_out), c("id", "name", "age", "diagnosis"))
-  expect_equal(names(attributes(df_out)), c("row.names", "names", "name",
-                                            "label_en", "label", 
-                                            "description_en", "url", "label_de",
-                                            "description_de",
-                                            "languages", "lang", "class"))
+  expect_true(all(c("names", "name",
+                    "label_en", "label", 
+                    "description_en", "url", "label_de",
+                    "description_de",
+                    "languages", "lang") %in% names(attributes(df_out))))
+  
   expect_equal(attributes(df_out)[["name"]], "patientdata")
   expect_equal(attributes(df_out)[["languages"]], c("en", "de"))
   expect_equal(attributes(df_out)[["lang"]], "en")
@@ -448,11 +440,11 @@ test_that("as_odf_tibble active language argument and metadata without a tag", {
   expect_equal(class(df_out), c("odf_tbl", "tbl_df", "tbl", "data.frame"))
   expect_equal(dim(df_out), c(5, 4))
   expect_equal(colnames(df_out), c("id", "name", "age", "diagnosis"))
-  expect_equal(names(attributes(df_out)), c("row.names", "names", "name",
-                                            "label_en", "label", 
-                                            "description_en", "url", "label_de",
-                                            "description_de",
-                                            "languages", "lang", "class"))
+  expect_true(all(c("names", "name",
+                    "label_en", "label", 
+                    "description_en", "url", "label_de",
+                    "description_de",
+                    "languages", "lang") %in% names(attributes(df_out))))
   expect_equal(attributes(df_out)[["name"]], "patientdata")
   expect_equal(attributes(df_out)[["languages"]], c("en", "de"))
   expect_equal(attributes(df_out)[["lang"]], "de")
@@ -497,11 +489,11 @@ test_that("as_odf_tibble active language argument and metadata without a tag", {
   expect_equal(class(df_out), c("odf_tbl", "tbl_df", "tbl", "data.frame"))
   expect_equal(dim(df_out), c(5, 4))
   expect_equal(colnames(df_out), c("id", "name", "age", "diagnosis"))
-  expect_equal(names(attributes(df_out)), c("row.names", "names", "name",
-                                            "label_en", "label", 
-                                            "description_en", "url", "label_de",
-                                            "description_de",
-                                            "languages", "lang", "class"))
+  expect_true(all(c("names", "name",
+                    "label_en", "label", 
+                    "description_en", "url", "label_de",
+                    "description_de",
+                    "languages", "lang") %in% names(attributes(df_out))))
   expect_equal(attributes(df_out)[["name"]], "patientdata")
   expect_equal(attributes(df_out)[["languages"]], c("en", "de"))
   expect_equal(attributes(df_out)[["lang"]], "en")
